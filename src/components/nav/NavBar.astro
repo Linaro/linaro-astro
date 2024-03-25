@@ -1,0 +1,305 @@
+---
+import Dropdown from "./Dropdown.astro";
+import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { getEntry } from "astro:content";
+import CloudinarySvg from "../cloudinary/CloudinarySvg.astro";
+import { Icon } from "astro-icon/components";
+
+const navData = await getEntry("data", "nav");
+
+const activeLink = navData.data.find(
+  (data: any) =>
+    data.url === Astro.url.pathname ||
+    data.children?.some((child: any) => child.url === Astro.url.pathname)
+)?.label;
+---
+
+<header class="w-full relative fade-border-bottom  bg-background z-50">
+  <div
+    class="flex flex-col lg:flex-row justify-start items-start text-white max-w-[100rem] mx-auto my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
+  >
+    <div
+      class="flex w-full lg:w-auto items-start justify-between pl-8 px-2 pt-1"
+    >
+      <a href="/" class="text-lg"
+        ><CloudinarySvg
+          src={"linaro-website/graphics/logo"}
+          alt="Linaro Logo"
+          class="h-auto w-[125px] xl:w-[150px]"
+          width={150}
+          height={52}
+        /></a
+      >
+      <div class="block lg:hidden pr-8">
+        <MenuIcon class="w-6 h-6 text-white" />
+      </div>
+    </div>
+    <div class="w-full basis-full">
+      <MenuItems
+        class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0 font-medium lg:justify-start"
+      >
+        <ul class="flex flex-col lg:flex-row items-start">
+          {
+            navData.data.map((item: any, index: number) => (
+              <>
+                {item.children && (
+                  <Dropdown
+                    title={item.label}
+                    children={item.children}
+                    lastItem={index === item.children.length - 1}
+                  />
+                )}
+
+                {!item.children && (
+                  <div class=" relative">
+                    <div class="transition">
+                      <a
+                        data-nav-group={item.label}
+                        href={item.url}
+                        class:list={[
+                          "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text  whitespace-nowrap",
+                        ]}
+                      >
+                        {item.label}
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </>
+            ))
+          }
+        </ul>
+        <div class="flex items-center basis-full mr-8 hidden">
+          <Icon name="search" class="ml-auto" size={20} />
+        </div>
+      </MenuItems>
+      {
+        navData.data
+          .filter((item: any) => !!item.children)
+          .map((item: any) => {
+            const isActive = item.label === activeLink;
+            console.log(isActive);
+            return (
+              <ul
+                data-nav-children={item.label}
+                class:list={["hidden lg:hidden mt-2"]}
+              >
+                {item.children.map((child: any) => (
+                  <a
+                    class:list={[
+                      "lg:px-3 py-2 text-grey  hover:text-white cursor-pointer whitespace-nowrap text-sm",
+                      // Astro.url.pathname === child.url
+                      //   ? "linaro-gradient-text"
+                      //   : "",
+                    ]}
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </ul>
+            );
+          })
+      }
+    </div>
+  </div>
+</header>
+<style>
+  
+</style>
+<script define:vars={{ closeOnClick: true, activeLink }}>
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  // Function to clone and replace elements
+  function cloneAndReplace(element) {
+    const clone = element.cloneNode(true);
+    element.parentNode.replaceChild(clone, element);
+  }
+
+  function addListeners() {
+    // Clean up existing listeners
+    const oldMenuButton = document.getElementById("astronav-menu");
+    if (oldMenuButton) {
+      cloneAndReplace(oldMenuButton);
+    }
+
+    const oldDropdownMenus = document.querySelectorAll(".astronav-dropdown");
+    oldDropdownMenus.forEach((menu) => {
+      cloneAndReplace(menu);
+    });
+
+    // Mobile nav toggle
+    const menuButton = document.getElementById("astronav-menu");
+    menuButton && menuButton.addEventListener("click", toggleMobileNav);
+
+    // Dropdown menus
+    const dropdownMenus = document.querySelectorAll(".astronav-dropdown");
+
+    // if (activeLink) {
+    //   const activeMenu = Array.from(dropdownMenus).find(
+    //     (menu) => menu.dataset["navGroup"] === activeLink
+    //   );
+    //   toggleMenu(activeMenu);
+    //   // Close one dropdown when selecting another
+    //   Array.from(dropdownMenus)
+    //     .filter((el) => el !== activeMenu && !activeMenu.contains(el))
+    //     .forEach(closeMenu);
+    // }
+
+    dropdownMenus.forEach((menu) => {
+      const button = menu.querySelector("button");
+      button &&
+        button.addEventListener("click", (event) =>
+          toggleDropdownMenu(event, menu, dropdownMenus)
+        );
+
+      // Handle Submenu Dropdowns
+      const dropDownSubmenus = menu.querySelectorAll(
+        ".astronav-dropdown-submenu"
+      );
+
+      dropDownSubmenus.forEach((submenu) => {
+        const submenuButton = submenu.querySelector("button");
+        submenuButton &&
+          submenuButton.addEventListener("click", (event) => {
+            event.stopImmediatePropagation();
+            toggleSubmenuDropdown(event, submenu);
+          });
+      });
+    });
+
+    // Clicking away from dropdown will remove the dropdown class
+    document.addEventListener("click", closeAllDropdowns);
+
+    if (closeOnClick) {
+      handleCloseOnClick();
+    }
+  }
+
+  function toggleMobileNav() {
+    [...document.querySelectorAll(".astronav-toggle")].forEach((el) => {
+      el.classList.toggle("hidden");
+    });
+  }
+
+  function toggleDropdownMenu(event, menu, dropdownMenus) {
+    console.log(menu);
+
+    toggleMenu(menu);
+
+    // Close one dropdown when selecting another
+    Array.from(dropdownMenus)
+      .filter((el) => el !== menu && !menu.contains(el))
+      .forEach(closeMenu);
+
+    event.stopPropagation();
+  }
+
+  function toggleSubmenuDropdown(event, submenu) {
+    event.stopPropagation();
+    toggleMenu(submenu);
+
+    // Close sibling submenus at the same nesting level
+    const siblingSubmenus = submenu
+      .closest(".astronav-dropdown")
+      .querySelectorAll(".astronav-dropdown-submenu");
+    Array.from(siblingSubmenus)
+      .filter((el) => el !== submenu && !submenu.contains(el))
+      .forEach(closeMenu);
+  }
+
+  function closeAllDropdowns(event) {
+    const dropdownMenus = document.querySelectorAll(".dropdown-toggle");
+    const dropdownParent = document.querySelectorAll(
+      ".astronav-dropdown, .astronav-dropdown-submenu"
+    );
+    const isButtonInsideDropdown = [
+      ...document.querySelectorAll(
+        ".astronav-dropdown button, .astronav-dropdown-submenu button, #astronav-menu"
+      ),
+    ].some((button) => button.contains(event.target));
+    if (!isButtonInsideDropdown) {
+      dropdownMenus.forEach((d) => {
+        // console.log("I ran", d);
+        // if (!d.contains(event.target)) {
+        d.classList.remove("open");
+        d.removeAttribute("open");
+        d.classList.add("hidden");
+        // }
+      });
+      dropdownParent.forEach((d) => {
+        d.classList.remove("open");
+        d.removeAttribute("open");
+        d.setAttribute("aria-expanded", "false");
+      });
+    }
+  }
+
+  function toggleMenu(menu) {
+    menu.classList.toggle("open");
+    const expanded = menu.getAttribute("aria-expanded") === "true";
+    menu.setAttribute("aria-expanded", expanded ? "false" : "true");
+    menu.hasAttribute("open")
+      ? menu.removeAttribute("open")
+      : menu.setAttribute("open", "");
+
+    const dropdownToggle = menu.querySelector(".dropdown-toggle");
+    const dropdownExpanded = dropdownToggle.getAttribute("aria-expanded");
+
+    const button = menu.querySelector("button");
+    button.classList.remove("nav-inactive");
+    button.classList.add("nav-active");
+
+    dropdownToggle.classList.toggle("hidden");
+    dropdownToggle.setAttribute(
+      "aria-expanded",
+      dropdownExpanded === "true" ? "false" : "true"
+    );
+    const children = document.querySelector(
+      `[data-nav-children='${menu.dataset["navGroup"]}'`
+    );
+    children.classList.remove("lg:hidden");
+    children.classList.add("lg:block");
+  }
+
+  function closeMenu(menu) {
+    // console.log("closing", menu);
+    menu.classList.remove("open");
+    menu.removeAttribute("open");
+    menu.setAttribute("aria-expanded", "false");
+    const dropdownToggles = menu.querySelectorAll(".dropdown-toggle");
+    dropdownToggles.forEach((toggle) => {
+      toggle.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+
+    const button = menu.querySelector("button");
+    button?.classList.add("nav-inactive");
+    button?.classList.remove("nav-active");
+
+    const children = document.querySelector(
+      `[data-nav-children='${menu.dataset["navGroup"]}'`
+    );
+    children?.classList.add("lg:hidden");
+    children?.classList.remove("lg:block");
+  }
+
+  function handleCloseOnClick() {
+    const navMenuItems = document.querySelector(".astronav-items");
+    const navToggle = document.getElementById("astronav-menu");
+    const navLink = navMenuItems && navMenuItems.querySelectorAll("a");
+
+    const MenuIcons = navToggle.querySelectorAll(".astronav-toggle");
+
+    navLink &&
+      navLink.forEach((item) => {
+        item.addEventListener("click", () => {
+          navMenuItems?.classList.add("hidden");
+          MenuIcons.forEach((el) => {
+            el.classList.toggle("hidden");
+          });
+        });
+      });
+  }
+</script>

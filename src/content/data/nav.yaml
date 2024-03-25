@@ -1,0 +1,25 @@
+- label: Solutions
+  key: solutions
+  children:
+    - label: Linaro Forge
+      url: /solutions/linaro-forge
+    - label: CodeLinaro
+      url: /solutions/codelinaro
+    - label: IoT & Embedded Systems
+      url: /solutions/iot-embedded
+    - label: ONELab
+      url: /solutions/onelab
+    - label: AI & Machine Learning
+      url: /solutions/ai-ml
+- label: Technologies
+  url: /technologies
+- label: Services & Support
+  url: /services
+- label: Collaborative Projects
+  url: /collaborative-projects
+- label: Resource Center
+  url: /resources
+- label: Company
+  url: /company
+- label: Contact Us
+  url: /contact
