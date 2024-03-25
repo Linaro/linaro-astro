@@ -1,0 +1,9 @@
+---
+import { getEntry } from "astro:content";
+import Carousel from "./Carousel.astro";
+const {filename } = Astro.props
+
+const {data: images } = await getEntry("data", filename)
+
+---
+<Carousel images={images} />

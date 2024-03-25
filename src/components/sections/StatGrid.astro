@@ -1,0 +1,14 @@
+---
+const { stats } = Astro.props;
+---
+
+<ul>
+  {
+    stats.map(({ value, label }: { value: number; label: string }) => (
+      <li>
+        <span>{value}</span>
+        <span>{label}</span>
+      </li>
+    ))
+  }
+</ul>
