@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "sofia-pro", sans-serif;
+    @apply bg-background text-white 
+  }
+}
+
+@layer utilities {
+  .nav-hover {
+    :before {
+      @apply w-0 lg:bg-linaro-yellow content-[""] bottom-0 h-1 block absolute left-[50%] duration-150;
+    }
+    :before:hover {
+      @apply w-full left-0;
+    }
+  }
+
+  .nav-active {
+    @apply linaro-gradient-text
+  }
+
+  .nav-inactive {
+    @apply text-white;
+  }
+
+  .linaro-gradient-text {
+    @apply bg-linaro-gradient bg-clip-text text-transparent;
+  }
+
+  .linaro-gradient-button {
+    @apply px-6 py-2 bg-linaro-gradient text-white rounded-full
+  }
+
+  .fade-border {
+    @apply w-full bg-border-gradient h-[2px]
+  }
+
+  .fade-border-bottom::after {
+        content: "";
+        display: inline-block;
+
+        @apply absolute fade-border bottom-0 
+      }
+
+}
