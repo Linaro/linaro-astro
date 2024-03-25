@@ -1,3 +1,4 @@
+---
 layout: ../../layouts/Flow.astro
 slug: ""
 title: Linaro Astro Template
@@ -72,3 +73,23 @@ flow:
             button:
               text: See More
               url: /collaborative-projects
+  - row: container_row
+    title: Our Maintainers Rock!
+    sections:
+      - component: stat_grid
+        stats:
+          - value: 125
+            label: contributions to linux kernel releases
+          - value: 495
+            label: open source software maintaners
+          - value: 943
+            label: open source software maintaners
+          - value: 329
+            label: patches submitted to upstream projects in the past 2 years
+      - component: buttons
+        buttons:
+          - text: Contact Us
+            url: /contact
+            style: linaro-gradient-button
+        
+---
