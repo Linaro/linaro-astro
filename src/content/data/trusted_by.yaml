@@ -1,0 +1,24 @@
+- src: "linaro-website/logos/red-hat"
+  alt: Red Hat Logo
+- src: "linaro-website/logos/google"
+  alt: Google logo
+- src: "linaro-website/logos/samsung"
+  alt: Samsung logo
+- src: "linaro-website/logos/cix"
+  alt: CIX Technology logo
+- src: "linaro-website/logos/quic"
+  alt: Qualcomm Innovation Center logo
+- src: "linaro-website/logos/hisilicon"
+  alt: HiSilicon logo
+- src: "linaro-website/logos/arm"
+  alt: Arm logo
+- src: "linaro-website/logos/amd-xilinx"
+  alt: AMD Xilinx logo
+- src: "linaro-website/logos/remarkable"
+  alt: reMarkable logo
+- src: "linaro-website/logos/microsoft"
+  alt: Microsoft logo
+- src: "linaro-website/logos/fujitsu"
+  alt: Fujitsu logo
+- src: "linaro-website/logos/renesas"
+  alt: Renesas logo

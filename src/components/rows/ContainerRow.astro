@@ -1,0 +1,25 @@
+---
+const { style, title } = Astro.props;
+console.log(title);
+---
+
+<div class:list={["mb-8 container mx-auto px-8 "]}>
+  <div class="flex items-center my-6">
+    {
+      title ? (
+        <>
+          <div class="fade-border" />
+          <h2 class="text-white relative whitespace-prewrap sm:whitespace-nowrap my-0 mx-8 text-3xl lg:text-5xl">
+            {title}
+          </h2>
+          <div class="fade-border" />
+        </>
+      ) : (
+        <div class="fade-border" />
+      )
+    }
+  </div>
+  <div class="py-16">
+    <slot />
+  </div>
+</div>

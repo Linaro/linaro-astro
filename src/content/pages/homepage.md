@@ -11,3 +11,18 @@ hero:
   button:
     text: Contact Us
     url: /contact
+flow:
+  - row: container_row
+    title: Trusted by Leading Companies
+    style:
+    sections:
+      - component: file_carousel
+        filename: trusted_by
+      - component: text
+        text_content: We foster an environment of collaboration, standardization, and optimization to accelerate the deployment of Arm-based products and technologies.
+        style: text-center max-w-4xl mx-auto
+      - component: buttons
+        buttons:
+          - text: Contact Us
+            url: /contact
+            style: linaro-gradient-buton

@@ -1,0 +1,15 @@
+---
+const { buttons } = Astro.props;
+---
+
+<ul class="flex justify-center list-none p-0">
+  {
+    buttons.map(({ text, url, style }: {text: string, url: string, style: string}) => (
+      <li>
+        <a href={url}>
+          <button class:list={[style]}>{text}</button>
+        </a>
+      </li>
+    ))
+  }
+</ul>
