@@ -1,0 +1,69 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+import { Image, getImage } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import * as marked from "marked";
+
+type Props = CollectionEntry<"pages">["data"]["hero"];
+
+console.log(Astro.props);
+const { title, background_image, button, description } = Astro.props!;
+
+const optimizedBackground = await getImage({
+  src: getCloudinarySrc({
+    src: background_image,
+    alt: "",
+    width: 1724.55,
+    height: 1182.9,
+  }),
+  format: "webp",
+  inferSize: true,
+});
+
+const titleMarkdown = marked.parseInline(title);
+const descriptionMarkdown = marked.parseInline(description)
+---
+
+<section
+  class:list={[
+    // style,
+    "relative text-white justify-around h-[calc(100vh)] min-h-[600px] max-h-[1200px] relative w-full max-w-screen overflow-hidden",
+  ]}
+>
+  <div class="container mx-auto flex flex-col justify-center h-full px-8">
+    <div class="max-w-80 flex flex-col items-start">
+      <h1
+        class="hero-title text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic"
+        set:html={titleMarkdown}
+      >
+      </h1>
+      <p class="text-md sm:text-lg" set:html={descriptionMarkdown} />
+      {
+        button && (
+          <a href={button.url}>
+            <button class="linaro-gradient-button">
+              {button.text}
+            </button>
+          </a>
+        )
+      }
+    </div>
+  </div>
+
+  <CloudinaryImg
+    src={background_image}
+    alt=""
+    width={1724.55}
+    height={1182.9}
+    class:list={[
+      "absolute w-full top-[-3%] right-[-10%] lg:right-[-8%] xl:right-0 origin-top-left mix-blend-screen z-[-1]  sm:pl-[20%] xl:pl-[30%]",
+    ]}
+  />
+</section>
+
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+  is:global
+></style>
