@@ -59,6 +59,7 @@ interface Props extends CloudinaryProps {
   src: string;
   alt: string;
   errorImage?: string;
+  class?: string;
 }
 
 const { src, ...props } = Astro.props;
@@ -123,7 +124,6 @@ if (props.effects !== undefined && props.effects !== null) {
     imageSource.effect(effectFunction);
   }
 }
-
 
 if (props.resize !== undefined && props.resize !== null) {
   let resizeFunction;
