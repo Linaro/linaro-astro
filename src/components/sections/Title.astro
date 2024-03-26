@@ -4,7 +4,7 @@ const {
   title_content: { text, size },
 } = Astro.props;
 import * as marked from "marked";
-const markdown = marked.parse(text);
+const markdown = await marked.parse(text);
 const Element = size;
 ---
 

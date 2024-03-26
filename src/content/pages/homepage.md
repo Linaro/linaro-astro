@@ -1,13 +1,13 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: ""
-title: Linaro Astro Template
+title: Linaro
 description: |
-  This is the Astro template for building static Linaro websites.
+  Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
 hero:
   title: > 
     Arm Solutions at *Lightspeed*
-  background_image: linaro-website/graphics/bg-logo-3
+  background_image: linaro-website/graphics/bg-logo
   description: Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
   button:
     text: Contact Us
@@ -26,9 +26,10 @@ flow:
         buttons:
           - text: Contact Us
             url: /contact
-            style: linaro-gradient-buton
+            style: linaro-gradient-button
   - row: container_row
     title: Why Choose Linaro?
+    styles: purple-gradient-container
     sections:
       - component: cards
         card_styles: w-[35ch]
@@ -44,6 +45,7 @@ flow:
             icon: done_outline
   - row: container_row
     title: We are Experts of
+    styles: bg-transparent z-0
     sections:
       - component: cards
         container_styles: max-w-4xl mx-auto
@@ -75,21 +77,28 @@ flow:
               url: /collaborative-projects
   - row: container_row
     title: Our Maintainers Rock!
+    styles: purple-gradient-container
     sections:
       - component: stat_grid
         stats:
-          - value: 125
+          - value: "+125"
             label: contributions to linux kernel releases
-          - value: 495
+          - value: "+495"
             label: open source software maintaners
-          - value: 943
+          - value: "+943"
             label: open source software maintaners
-          - value: 329
+          - value: "+329"
             label: patches submitted to upstream projects in the past 2 years
       - component: buttons
         buttons:
           - text: Contact Us
             url: /contact
             style: linaro-gradient-button
+  - row: container_row
+    title: Don't miss our *latest updates*
+    background_image: linaro-website/graphics/bg-logo-4
+    styles: bg-left pb-[8rem] mb-[-8rem]
+    sections:
+      - component: socials
         
 ---

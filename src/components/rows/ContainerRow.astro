@@ -1,25 +1,58 @@
 ---
-const { style, title } = Astro.props;
+import { getCloudinarySrc } from "@/lib/cloudinary";
+import { getImage } from "astro:assets";
+import * as marked from "marked";
+const { styles, title, background_image } = Astro.props;
 console.log(title);
+const titleMarkdown =  await marked.parseInline(title);
+
+let optimizedBackground = {src: ""}
+console.log(background_image)
+if (background_image) {
+  optimizedBackground = await getImage({
+    src: getCloudinarySrc({
+      src: background_image,
+      alt: "",
+      width: 1500,
+      height: 1500,
+    }),
+    format: "webp",
+    inferSize: true,
+  });
+}
+
 ---
 
-<div class:list={["mb-8 container mx-auto px-8 "]}>
-  <div class="flex items-center my-6">
-    {
-      title ? (
-        <>
+<section class:list={["w-full", background_image ? "container-background-image" : "", styles]}>
+  <div class:list={[" container mx-auto px-8"]}>
+    <div class="flex items-center">
+      {
+        title ? (
+          <>
+            <div class="fade-border" />
+            <h2
+              class="text-white relative whitespace-prewrap sm:whitespace-nowrap my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic"
+              set:html={titleMarkdown}
+            />
+            <div class="fade-border" />
+          </>
+        ) : (
           <div class="fade-border" />
-          <h2 class="text-white relative whitespace-prewrap sm:whitespace-nowrap my-0 mx-8 text-3xl lg:text-5xl">
-            {title}
-          </h2>
-          <div class="fade-border" />
-        </>
-      ) : (
-        <div class="fade-border" />
-      )
-    }
-  </div>
-  <div class="py-16">
-    <slot />
-  </div>
-</div>
+        )
+      }
+    </div>
+    <div class="py-36">
+      <slot />
+    </div>
+</section>
+
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+>
+  .container-background-image {
+    background: var(--backgroundUrl);
+    background-position: center top 0%
+  }
+
+</style>

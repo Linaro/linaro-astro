@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages
-    .filter((page) => page.id !== "404.md")
+    // .filter((page) => page.id !== "404.md")
     .map((page) => {
       return {
         params: {

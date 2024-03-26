@@ -14,7 +14,7 @@ module.exports = {
       },
       backgroundImage: {
         'linaro-gradient': 'linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%)',
-        'bg-gradient': 'linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #6715E8 44%, #6715E8 55%, rgba(58, 12, 130, 0.00) 100%)',
+        'purple-gradient': 'linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #6715E8 44%, #6715E8 55%, rgba(58, 12, 130, 0.00) 100%)',
         'border-gradient': 'linear-gradient(90deg, #222025 0%, #545454 49%, #222025 100%);'
 
       },

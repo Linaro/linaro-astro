@@ -18,6 +18,8 @@ const pages = defineCollection({
         .array(
           z.object({
             row: reference("rows"),
+            styles: z.string().optional(),
+            background_image: z.string().optional(),
             sections: z.array(
               z
                 .object({

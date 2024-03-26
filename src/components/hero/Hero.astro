@@ -21,8 +21,8 @@ const optimizedBackground = await getImage({
   inferSize: true,
 });
 
-const titleMarkdown = marked.parseInline(title);
-const descriptionMarkdown = marked.parseInline(description)
+const titleMarkdown = await marked.parseInline(title);
+const descriptionMarkdown = await marked.parseInline(description)
 ---
 
 <section
@@ -62,8 +62,3 @@ const descriptionMarkdown = marked.parseInline(description)
   />
 </section>
 
-<style
-  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
-  lang="scss"
-  is:global
-></style>

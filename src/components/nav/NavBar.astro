@@ -2,7 +2,7 @@
 import Dropdown from "./Dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
-import CloudinarySvg from "../cloudinary/CloudinarySvg.astro";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import { Icon } from "astro-icon/components";
 
 const navData = await getEntry("data", "nav");
@@ -14,15 +14,15 @@ const activeLink = navData.data.find(
 )?.label;
 ---
 
-<header class="w-full relative fade-border-bottom  bg-background z-50">
+<header class="w-full relative fade-border-bottom  bg-background z-50" id="top-nav">
   <div
-    class="flex flex-col lg:flex-row justify-start items-start text-white max-w-[100rem] mx-auto my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
+    class="flex flex-col lg:flex-row justify-start items-center lg:items-start text-white max-w-[100rem] mx-auto my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
   >
     <div
       class="flex w-full lg:w-auto items-start justify-between pl-8 px-2 pt-1"
     >
       <a href="/" class="text-lg"
-        ><CloudinarySvg
+        ><CloudinaryImg
           src={"linaro-website/graphics/logo"}
           alt="Linaro Logo"
           class="h-auto w-[125px] xl:w-[150px]"

@@ -46,4 +46,7 @@
         @apply absolute fade-border bottom-0 
       }
 
+  .purple-gradient-container {
+    @apply bg-purple-gradient py-24  pb-[8rem] mb-[-8rem]
+  }
 }

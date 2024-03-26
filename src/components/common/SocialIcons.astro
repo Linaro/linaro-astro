@@ -1,0 +1,34 @@
+---
+import { Icon } from "astro-icon/components";
+import { number } from "astro/zod";
+import { getEntry } from "astro:content";
+
+const { data: icons } = await getEntry("data", "socials");
+
+type Props = {
+  size?: number;
+  color?: string;
+  outline?: boolean;
+  styles?: string;
+};
+
+const { size, color, outline,  styles } = Astro.props;
+const iconColor = color ? `text-${color}` : "text-white"
+const borderColor = color ? `border-${color}` : `border-white`
+---
+
+<ul class:list={["not-prose flex flex-wrap", styles]}>
+  {
+    icons.map(
+      ({ label, url, icon }: { url: string; icon: string; label: string }) => (
+        <a href={url} target="_blank">
+          <li class:list={[ borderColor, outline ? `p-3 border-2 rounded-full` : "border-none"]}>
+            <Icon name={icon} size={size || 20} class:list={[iconColor, ]}/>
+          </li>
+        </a>
+      )
+    )
+  }
+</ul>
+
+

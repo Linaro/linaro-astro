@@ -7,9 +7,14 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   output: "static",
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
+  cacheDir: "./cache",
   integrations: [icon(
     {iconDir: "src/assets/icons",}
   ), tailwind({
     applyBaseStyles: false
-  }), sitemap()]
+  }), sitemap()],
+  
 });

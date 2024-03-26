@@ -2,12 +2,12 @@
 const { stats } = Astro.props;
 ---
 
-<ul>
+<ul class="text-white list-none grid grid-cols-1 sm:grid-cols-2 max-w-lg mx-auto p-0 justify-center items-center sm:items-start mb-16 pl-12">
   {
-    stats.map(({ value, label }: { value: number; label: string }) => (
-      <li>
-        <span>{value}</span>
-        <span>{label}</span>
+    stats.map(({ value, label }: { value: string; label: string }) => (
+      <li class="flex flex-col max-w-[20ch] mx-0">
+        <span class="linaro-gradient-text text-7xl font-bold">{value}</span>
+        <span class="text-lg">{label}</span>
       </li>
     ))
   }
