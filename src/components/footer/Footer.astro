@@ -1,64 +1,80 @@
 ---
 import { getEntry } from "astro:content";
-import { Image } from "astro:assets";
-import { Icon } from 'astro-icon/components'
-import LinaroLogo from "../../assets/images/linaro-logo-white.svg";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import SocialIcons from "../common/SocialIcons.astro";
+import { Icon } from "astro-icon/components";
 const footer = await getEntry("data", "footer");
-const { data }: any = footer;
+
+const { data: nav } = await getEntry("data", "nav");
+const {
+  data: { company_links },
+} = await getEntry("data", "footer");
 ---
 
-<footer class="justify-self-end mt-auto bg-neutral-500 text-white pt-8 px-2">
-  <div class="flex flex-wrap flex-row items-center justify-center gap-4">
-    <a
-      href="https://github.com/Linaro/linaro-astro-template"
-      class="flex gap-2 hover:underline"
-    >
-      <Icon name="mdi:github" class="w-6 text-inherit" />View on GitHub
-    </a>
-  </div>
-  <ul class="flex flex-wrap flex-row items-center justify-center gap-4 my-6">
-    <span class="text-center">
-      Copyright © {new Date().getFullYear()}
-    </span>
-    {
-      data.company_links.map((link: any) => (
-        <li>
-          <a
-            href={link.url}
-            class="before:content-['•'] before:mr-4 text-white"
-          >
-            <span class="hover:underline">{link.label}</span>
-          </a>
-        </li>
-      ))
-    }
-    <div
-      class="flex flex-row justify-center items-center flex-wrap h-full gap-8 ml-4 before:content-['•']"
-    >
-      <a href="https://twitter.com/linaroorg" class="h-full">
-        <Icon name="mdi:twitter" class="w-5 text-white" />
-      </a>
-      <a href="https://www.facebook.com/LinaroOrg" class="h-full">
-        <Icon name="mdi:facebook" class="w-5 text-white" />
-      </a>
-      <a href="https://www.linkedin.com/company/1026961" class="h-full">
-        <Icon name="mdi:linkedin" class="w-5 text-white" />
-      </a>
-      <a href="https://instagram.com/linaroorg">
-        <Icon name="mdi:instagram" class="w-5 text-white" />
-      </a>
-      <a href="https://www.youtube.com/linaroorg">
-        <Icon name="mdi:youtube" class="w-5 text-white" />
-      </a>
-      <a href="https://github.com/Linaro">
-        <Icon name="mdi:github" class="w-5 text-white" />
-      </a>
+<footer
+  class="container mx-auto px-8 text-grey text-sm flex flex-col items-center"
+>
+  <div class="fade-border"></div>
+  <div
+    class="pt-12 flex gap-16 xl:gap-24 justify-center lg:justify-between xl:px-12 w-full"
+  >
+    <div class="max-w-[30ch]">
+      <a href="/" class="text-lg"
+        ><CloudinaryImg
+          src={"linaro-website/graphics/logo-white"}
+          alt="Linaro Logo"
+          class="h-auto w-[125px] xl:w-[150px] mb-8"
+          width={150}
+          height={52}
+        /></a
+      >
+      <p>Linaro Limited</p>
+      <p>Harston Mill / Harston</p>
+      <p class="mb-4">Cambridge / CB22 7GG</p>
+      <SocialIcons size={15} color="grey" styles="gap-6 justify-start" />
     </div>
-  </ul>
-
-  <div class="flex flex-row justify-center my-4">
-    <a href="/">
-      <Image class="w-[60px]" src={LinaroLogo} alt="logo" />
-    </a>
+    <ul class="gap-8 hidden lg:flex mb-8">
+      {
+        nav.map((item: any) =>
+          item.children ? (
+            <li class="max-w-[15ch]">
+              <p class="text-white text-[1rem] mb-4">{item.label}</p>
+              <ul>
+                {item.children.map((item: any) => (
+                  <li class="mb-2">
+                    <a href={item.url}>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={item.url} class="text-white text-[1rem] mb-4">
+                {item.label}
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+  </div>
+  <a
+    class="text-lg text-white my-8 flex lg:hidden items-center gap-2"
+    href="/#top-nav">Back to top<Icon name="mdi:arrow-up-right" /></a
+  >
+  <div class="fade-border"></div>
+  <div
+    class="flex flex-col md:flex-row mb-12 md:mb-24 gap-4 xl:gap-24 items-center justify-start md:justify-between w-full xl:px-12 mt-8"
+  >
+    <ul class="flex gap-4">
+      {
+        company_links.map(({ url, label }: { url: string; label: string }) => (
+          <li>
+            <a href={url}>{label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <span>Copyright © {new Date().getFullYear()} Linaro Limited</span>
   </div>
 </footer>
