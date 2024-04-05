@@ -1,0 +1,21 @@
+---
+import BlogListing from "@/components/blog/BlogListing.astro";
+import Search from "@/components/blog/Search";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const tags = await getCollection("tags");
+---
+
+<BaseLayout title="Linaro | Blogs" description="A list of blogs">
+  <main class="container mx-auto px-8">
+    <Search client:only="solid-js" type="blog" tags={tags} />
+    <!-- <ul class="flex flex-wrap gap-16 my-24">
+      {
+        blogs.map((blog) => {
+          return <BlogListing {...blog} />;
+        })
+      }
+    </ul> -->
+  </main>
+</BaseLayout>

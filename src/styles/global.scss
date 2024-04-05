@@ -39,7 +39,7 @@
   .linaro-gradient-border {
     position: relative;
     background-clip: padding-box; /* !importanté */
-    border: solid 10px transparent; /* !importanté */
+    // border: solid 10px transparent; /* !importanté */
   }
 
   .linaro-gradient-border::before {

@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /technologies/lk-lts
+slug: /solutions/lts
 title: LTS | Linaro
 description: |
   The security and support solution for your Linux boot-to-kernel product needs levelled-up with advanced Continuous Integration (CI) pipelines and LAVA technology

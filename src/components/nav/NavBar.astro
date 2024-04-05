@@ -19,14 +19,16 @@ const activeLink = navData.data.find(
   id="top-nav"
 >
   <div
-    class="flex flex-col lg:flex-row justify-start items-center lg:items-start text-white container mx-auto px-8 my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
+    class="flex flex-col lg:flex-row justify-start items-center lg:items-start text-white max-w-7xl xl:container mx-auto px-8 my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
   >
-    <div class="flex w-full lg:w-auto items-start justify-between pt-1">
+    <div
+      class="flex w-full lg:w-auto items-start justify-between pt-1 min-w-[125px] xl:min-w-[150px]"
+    >
       <a href="/" class="text-lg"
         ><CloudinaryImg
           src={"linaro-website/graphics/logo"}
           alt="Linaro Logo"
-          class="h-auto w-[125px] xl:w-[150px]"
+          class="h-auto w-[125px] xl:w-[150px] mt-[-4px]"
           width={150}
           height={52}
         /></a

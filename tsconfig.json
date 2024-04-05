@@ -3,9 +3,13 @@
   "compilerOptions": {
     "allowJs": true,
     "strictNullChecks": true,
-    "baseUrl": ".",
+    "baseUrl": "/home/louis/Dev/LinaroWebsite",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   }
 }

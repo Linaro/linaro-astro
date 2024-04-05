@@ -32,7 +32,10 @@ const { title, lastItem, children } = Astro.props;
         >
           {
             children.map((item: any) => (
-              <a href={item.url} class=" px-3 py-1 text-grey  hover:text-white ">
+              <a
+                href={item.url}
+                class=" px-3 py-1 text-grey  hover:text-white "
+              >
                 {item.label}
               </a>
             ))

@@ -7,7 +7,8 @@ import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 import { getEntries } from "astro:content";
 import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
-import { componentIsHTMLElement } from "astro/runtime/server/render/dom.js";
+import { remark } from "remark";
+import stripMarkdown from "strip-markdown";
 
 type Props = {
   post: CollectionEntry<"blogs">;
@@ -40,26 +41,55 @@ const optimizedBackground = await getImage({
   inferSize: true,
 });
 const { Content, headings } = await render();
+
+const summary =
+  String(
+    await remark()
+      .use(stripMarkdown, {
+        remove: ["heading"],
+      })
+      .process(body)
+  )
+    .split(" ")
+    .slice(0, 30)
+    .join(" ")
+    .replace("\\", "") + "...";
 ---
 
 <BaseLayout title={title} description={description}>
-  <main>
+  <main data-pagefind-body data-pagefind-filter="type:blog">
     <section
       class:list={[
-        "hero-background-image",
-        "py-32  container mx-auto max-w-5xl px-8",
+        "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
       <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
-      <p class="text-2xl mb-4">{`${author.first_name} ${author.last_name}`}</p>
+      <div class="flex items-center gap-6">
+        {
+          author.image && (
+            <CloudinaryImg
+              src={author.image}
+              alt={author.name}
+              width={75}
+              height={75}
+              class="aspect-square object-cover rounded-full my-4"
+              data-pagefind-meta="author_image[src]"
+            />
+          )
+        }
+        <p class="text-2xl" data-pagefind-meta="author">
+          {`${author.first_name} ${author.last_name}`}
+        </p>
+      </div>
       <p class="flex gap-4 flex-wrap">
-        <span>{dayjs(date).format("dddd, MMMM D, YYYY")}</span><span>|</span
-        ><span>{readTime}</span>
+        <span data-pagefind-meta={`date:${date}`}
+          >{dayjs(date).format("dddd, MMMM D, YYYY")}</span
+        ><span>|</span><span>{readTime}</span>
       </p>
       <ul class="flex flex-wrap gap-4 my-8">
         {
           tags.map(({ slug, data: { name } }) => (
-            <li>
+            <li data-pagefind-filter={`tags:${slug}`} data-pagefind-ignore>
               <a href={`/blog/tags/${slug}`}>
                 <button class="linaro-gradient-button">{name}</button>
               </a>
@@ -67,16 +97,18 @@ const { Content, headings } = await render();
           ))
         }
       </ul>
+      <span data-pagefind-meta="summary" class="hidden">{summary}</span>
     </section>
     <section
-      class="container max-w-5xl mx-auto rounded-[24px] linaro-gradient-border bg-dark"
+      class="container max-w-5xl mx-auto rounded-[24px] linaro-gradient-border bg-dark mb-24"
     >
       <CloudinaryImg
         src={image}
         alt=""
         width={1000}
         height={1000}
-        class="w-full object-cover max-h-[40rem] rounded-[14px] p-0"
+        class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
+        data-pagefind-meta="image[src], image_alt[alt]"
       />
       <article
         class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24"
@@ -93,6 +125,6 @@ const { Content, headings } = await render();
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-    background-position: top right;
+    background-position: top right -50%;
   }
 </style>

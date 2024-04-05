@@ -1,27 +1,18 @@
-- label: Solutions
+- label: Products & Solutions
   key: solutions
   children:
-    - label: Linaro Forge
+    - label: HPC
       url: /solutions/linaro-forge
-    - label: CodeLinaro
-      url: /solutions/codelinaro
     - label: IoT & Embedded Systems
       url: /solutions/iot-embedded
-    - label: ONELab
-      url: /solutions/onelab
     - label: AI & Machine Learning
       url: /solutions/ai-ml
-- label: Technologies
-  key: technologies
-  children:
-    - label: Linux Kernel LTS
-      url: /technologies/lk-lts
-    - label: Apache Big Top
-      url: /technologies/apache-big-top
-    - label: Cloud Computing & Data Center
-      url: /technologies/cloud-computing
-    - label: Arm Open Source Projects
-      url: /technologies/arm-open-source
+    - label: Automotive
+      url: /solutions/automotive
+    - label: Application Regression
+      url: /solutions/application-regression
+    - label: Long Term Support
+      url: /solutions/lts
 - label: Services & Support
   key: Services
   children:
@@ -37,7 +28,7 @@
     - label: Android Ecosystem
       url: /projects/android
     - label: Automative, IoT & Edge
-      url: /projects/automotive
+      url: /projects/automotive-iot-edge
     - label: Cloud Computing & Servers
       url: /projects/cloud-computing
     - label: Qualcomm Platform Services
@@ -59,8 +50,6 @@
       url: /solutions-briefs
     - label: Events
       url: /events
-    - label: Linaro Connect
-      url: /events/linaro-connect
 - label: Company
   key: company
   children:
@@ -68,6 +57,7 @@
       url: /about
     - label: Careers
       url: /careers
-    - label: Contact
-      url: /contact
+- label: Contact Us
+  key: contact
+  url: /contact
 
