@@ -12,7 +12,7 @@ const { title, lastItem, children } = Astro.props;
     <div class="duration-300">
       <button
         class:list={[
-          "flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text",
+          "flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text nav-inactive",
         ]}
       >
         <span>{title}</span>
@@ -32,7 +32,7 @@ const { title, lastItem, children } = Astro.props;
         >
           {
             children.map((item: any) => (
-              <a href={item.url} class=" px-3 py-1  hover:text-white ">
+              <a href={item.url} class=" px-3 py-1 text-grey  hover:text-white ">
                 {item.label}
               </a>
             ))

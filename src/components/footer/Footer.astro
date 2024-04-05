@@ -9,6 +9,8 @@ const { data: nav } = await getEntry("data", "nav");
 const {
   data: { company_links },
 } = await getEntry("data", "footer");
+
+const path = Astro.url.pathname;
 ---
 
 <footer
@@ -16,7 +18,7 @@ const {
 >
   <div class="fade-border"></div>
   <div
-    class="pt-12 flex gap-16 xl:gap-24 justify-center lg:justify-between xl:px-12 w-full"
+    class="pt-12 flex gap-16 xl:gap-24 justify-center lg:justify-between w-full"
   >
     <div class="max-w-[30ch]">
       <a href="/" class="text-lg"
@@ -60,11 +62,11 @@ const {
   </div>
   <a
     class="text-lg text-white my-8 flex lg:hidden items-center gap-2"
-    href="/#top-nav">Back to top<Icon name="mdi:arrow-up-right" /></a
+    href={`${path}#top-nav`}>Back to top<Icon name="mdi:arrow-up-right" /></a
   >
   <div class="fade-border"></div>
   <div
-    class="flex flex-col md:flex-row mb-12 md:mb-24 gap-4 xl:gap-24 items-center justify-start md:justify-between w-full xl:px-12 mt-8"
+    class="flex flex-col md:flex-row mb-12 md:mb-24 gap-4 xl:gap-24 items-center justify-start md:justify-between w-full mt-8"
   >
     <ul class="flex gap-4">
       {

@@ -1,8 +1,6 @@
 ---
-// import NavBar from '../components/Nav/NavBar.astro';
-
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
-import { getCollection, getEntries } from "astro:content";
+import {  getEntries } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Hero from "@/components/hero/Hero.astro";
@@ -19,19 +17,19 @@ const page = await getEntryBySlug("pages", slug)
 const { title, description, flow, hero } = page.data
 
 const allComponents = import.meta.glob("../components/{sections,rows}/*.astro") as Record<string, () => Promise<{default: AstroComponentFactory}>>
-console.log(allComponents)
 const rowComponents = {} as Record<string, {default: AstroComponentFactory} >;
 const sectionComponents = {} as Record<
   string,
    {default: AstroComponentFactory }
 >;
 
+
 if (flow && flow?.length > 0) {
-  for (const rowData of await getEntries(flow.map((row) => row.row))) {
+  for (const rowData of await getEntries(flow.map((row) => row.row) as {collection: "rows", slug: CollectionEntry<"rows">["slug"]}[])) {
     rowComponents[rowData.slug] = await allComponents[rowData.data.path.replace("@/components", "../components")]() as {default: AstroComponentFactory}
   }
 
-for (const sectionData of await getEntries(flow.map((row) => row.sections!.map((section) => section.component)).flat())) {
+for (const sectionData of await getEntries(flow.map((row) => row.sections!.map((section) => section.component)).flat() as {collection: "sections", slug: CollectionEntry<"sections">["slug"]}[]) ) {
     sectionComponents[sectionData.slug] = await allComponents[sectionData.data.path.replace("@/components", "../components")]() as {default: AstroComponentFactory}
   }
 }
@@ -39,7 +37,7 @@ for (const sectionData of await getEntries(flow.map((row) => row.sections!.map((
 ---
 
 <BaseLayout title={title} description={description}  >
-    <main class="prose mx-0 max-w-full prose-headings:text-white prose:text-white prose-p:text-white">
+    <main class="prose mx-0 max-w-full prose-invert">
       {hero && <Hero {...hero} />}
       {
         flow?.map((row: any) => {

@@ -2,57 +2,64 @@
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
 import * as marked from "marked";
-const { styles, title, background_image } = Astro.props;
-console.log(title);
-const titleMarkdown =  await marked.parseInline(title);
+const { styles, title, background_image, animation, no_border } = Astro.props;
+let titleMarkdown;
+if (title) {
+  titleMarkdown = await marked.parseInline(title);
+}
 
-let optimizedBackground = {src: ""}
-console.log(background_image)
+let optimizedBackground = { src: "" };
 if (background_image) {
   optimizedBackground = await getImage({
     src: getCloudinarySrc({
       src: background_image,
       alt: "",
-      width: 1500,
+      width: 2000,
       height: 1500,
     }),
     format: "webp",
     inferSize: true,
   });
 }
-
 ---
 
-<section class:list={["w-full", background_image ? "container-background-image" : "", styles]}>
+<section
+  class:list={[
+    "w-full",
+    background_image ? "container-background-image" : "",
+    styles,
+  ]}
+>
   <div class:list={[" container mx-auto px-8"]}>
     <div class="flex items-center">
       {
         title ? (
           <>
-            <div class="fade-border" />
+            {!no_border && <div class="fade-border" />}
             <h2
-              class="text-white relative whitespace-prewrap sm:whitespace-nowrap my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic"
+              class="text-white relative whitespace-prewrap md:min-w-[20ch] my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center"
               set:html={titleMarkdown}
             />
-            <div class="fade-border" />
+            {!no_border && <div class="fade-border" />}
           </>
         ) : (
-          <div class="fade-border" />
+          !no_border && <div class="fade-border" />
         )
       }
     </div>
-    <div class="py-36">
+    <div
+      class="py-36 invisible animate-delay-100"
+      data-animate={animation ?? "animate-fade-down"}
+    >
       <slot />
     </div>
+  </div>
 </section>
-
 <style
   define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
   lang="scss"
 >
   .container-background-image {
-    background: var(--backgroundUrl);
-    background-position: center top 0%
+    background-image: var(--backgroundUrl);
   }
-
 </style>

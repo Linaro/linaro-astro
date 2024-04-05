@@ -1,34 +1,24 @@
 ---
+import type { cardsSchema } from "@/content/schemas/sections";
 import { Icon } from "astro-icon/components";
-
-const { cards, card_styles, container_styles } = Astro.props;
+import type { z } from "astro/zod";
+type Props = z.infer<typeof cardsSchema>;
+const { cards, styles } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap justify-center p-0 gap-x-28 gap-y-20", container_styles]}>
+<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
   {
-    cards.map(
-      ({
-        icon,
-        title,
-        text,
-        button,
-      }: {
-        icon: string;
-        title: string;
-        text: string;
-        button: { text: string; url: string };
-      }) => (
-        <li class:list={[card_styles]}>
-          {icon && <Icon name={icon} size={100} class="my-0" />}
-          <h3 class="text-4xl my-5">{title}</h3>
-          <p class="text-xl">{text}</p>
-          {button && (
-            <a href={button.url}>
-              <button class="linaro-gradient-button">{button.text}</button>
-            </a>
-          )}
-        </li>
-      )
-    )
+    cards.map(({ icon, title, text, button }) => (
+      <li class:list={[styles?.card]}>
+        {icon && <Icon name={icon} size={100} class="my-0" />}
+        <h3 class="text-4xl my-5">{title}</h3>
+        <p class="text-xl">{text}</p>
+        {button && (
+          <a href={button.url}>
+            <button class="linaro-gradient-button">{button.text}</button>
+          </a>
+        )}
+      </li>
+    ))
   }
 </ul>

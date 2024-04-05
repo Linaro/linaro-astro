@@ -5,23 +5,25 @@ title: Linaro
 description: |
   Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
 hero:
-  title: > 
+  title: >
     Arm Solutions at *Lightspeed*
   background_image: linaro-website/graphics/bg-logo
   description: Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
   button:
     text: Contact Us
     url: /contact
+  styles:
+    text_container: max-w-80
+    background: bg-right-top
 flow:
   - row: container_row
     title: Trusted by Leading Companies
-    style:
     sections:
       - component: file_carousel
         filename: trusted_by
       - component: text
         text_content: We foster an environment of collaboration, standardization, and optimization to accelerate the deployment of Arm-based products and technologies.
-        style: text-center max-w-4xl mx-auto
+        style: text-center max-w-4xl mx-auto text-xl
       - component: buttons
         buttons:
           - text: Contact Us
@@ -32,7 +34,9 @@ flow:
     styles: purple-gradient-container
     sections:
       - component: cards
-        card_styles: w-[35ch]
+        styles:
+          card: w-[35ch]
+          container: justify-around gap-x-28 gap-y-20
         cards:
           - title: Trust
             text: We are transparent and our open approach fosters trust among partners, developers, and the community. We build trust ensuring the reliability and credibility of Arm-based solutions.
@@ -48,8 +52,9 @@ flow:
     styles: bg-transparent z-0
     sections:
       - component: cards
-        container_styles: max-w-4xl mx-auto
-        card_styles: w-[35ch]
+        styles:
+          container: max-w-6xl mx-auto justify-around gap-x-28 gap-y-20
+          card: w-[35ch]
         cards:
           - title: Solutions
             text: hdhdhdhdh ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -97,8 +102,7 @@ flow:
   - row: container_row
     title: Don't miss our *latest updates*
     background_image: linaro-website/graphics/bg-logo-4
-    styles: bg-left pb-[8rem] mb-[-8rem]
+    styles: bg-center-bottom bg-no-repeat bg-[center_top_0%] bg-[length:200%] md:bg-[length:150%] lg:bg-[length:100%] xl:bg-[length:90%] pb-[8rem] mb-[-8rem]
     sections:
       - component: socials
-        
 ---

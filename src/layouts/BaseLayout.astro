@@ -18,5 +18,32 @@ const { title, description, type = "website" } = Astro.props;
     <NavBar />
     <slot />
     <Footer />
+    <script>
+      const animatedElements = document.querySelectorAll("[data-animate]");
+
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!(entry.target instanceof HTMLElement)) return;
+            const animatedClass = entry.target.dataset["animate"] as string;
+            console.log(entry);
+            if (entry.isIntersecting) {
+              entry.target.classList.add(animatedClass);
+              entry.target.classList.remove("invisible");
+              observer.unobserve(entry.target);
+            } else {
+              entry.target.classList.remove(animatedClass);
+            }
+          });
+        },
+        {
+          rootMargin: "-300px 0px -300px 0px",
+        }
+      );
+
+      animatedElements.forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
   </body>
 </html>

@@ -11,6 +11,7 @@ module.exports = {
         'linaro-purple': "#6715E8",
         'grey': '#6B6B6B',
         "background": "#222025",
+        'dark': '#222025'
       },
       backgroundImage: {
         'linaro-gradient': 'linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%)',
@@ -30,6 +31,7 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            color: "white"
             // enter default text styles here
            
           },
@@ -43,6 +45,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tw-elements/plugin.cjs"),
+    require('tailwindcss-animated')
     // ...
   ],
 };

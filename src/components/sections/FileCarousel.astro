@@ -1,9 +1,12 @@
 ---
 import { getEntry } from "astro:content";
 import Carousel from "./Carousel.astro";
-const {filename } = Astro.props
+import type { fileCarouselSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
 
-const {data: images } = await getEntry("data", filename)
-
+type Props = z.infer<typeof fileCarouselSchema>;
+const { filename } = Astro.props;
+const { data: images } = await getEntry("data", filename.id);
 ---
+
 <Carousel images={images} />

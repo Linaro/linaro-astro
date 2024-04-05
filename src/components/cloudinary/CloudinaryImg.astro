@@ -62,7 +62,12 @@ interface Props extends CloudinaryProps {
   class?: string;
 }
 
-const { src, ...props } = Astro.props;
+const { src: initialSrc, ...props } = Astro.props;
+
+let src = initialSrc;
+if (src.startsWith("/")) {
+  src = initialSrc.slice(1);
+}
 
 const imageSource = src.startsWith("https://")
   ? cloudinaryMedia.image(src).setDeliveryType("fetch")
@@ -198,4 +203,4 @@ if (props.errorImage !== "") {
 }
 ---
 
-<Image src={imageSource.toURL()} loading="lazy" {...props} />
+<Image src={imageSource.toURL()} loading="lazy" inferSize={true} {...props} />

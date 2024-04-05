@@ -1,4 +1,5 @@
 import { z, defineCollection, reference } from "astro:content";
+import rowSchemas from "./schemas/rows";
 
 const pages = defineCollection({
   type: "content",
@@ -11,23 +12,26 @@ const pages = defineCollection({
           title: z.string(),
           background_image: z.string(),
           description: z.string(),
-          button: z.object({text: z.string(), url: z.string()}).optional()
+          button: z.object({ text: z.string(), url: z.string() }).optional(),
+          styles: z
+            .object({
+              text_container: z.string().optional(),
+              background: z.string().optional(),
+              title: z.string().optional(),
+              description: z.string().optional(),
+            })
+            .optional(),
         })
         .optional(),
       flow: z
         .array(
-          z.object({
-            row: reference("rows"),
-            styles: z.string().optional(),
-            background_image: z.string().optional(),
-            sections: z.array(
-              z
-                .object({
-                  component: reference("sections"),
-                })
-                .catchall(z.any())
-            ),
-          }).catchall(z.any())
+          rowSchemas.transform((val) => ({
+            ...val,
+            row: {
+              collection: "rows",
+              slug: val.row,
+            },
+          }))
         )
         .optional(),
     }),
@@ -52,6 +56,35 @@ const data = defineCollection({
   schema: z.any(),
 });
 
+const blogs = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.date(),
+    image: z.string(),
+    tags: z.array(reference("tags")),
+    author: reference("authors"),
+    related: z.array(reference("blogs")),
+  }),
+});
+
+const authors = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: z.string(),
+    first_name: z.string(),
+    last_name: z.string(),
+    username: z.string().optional(),
+    image: z.string().optional(),
+  }),
+});
+
+const tags = defineCollection({
+  type: "content",
+  schema: z.object({ name: z.string() }),
+});
+
 // Expose your defined collection to Astro
 // with the `collections` export
 export const collections = {
@@ -59,4 +92,7 @@ export const collections = {
   rows,
   sections,
   data,
+  blogs,
+  authors,
+  tags,
 };

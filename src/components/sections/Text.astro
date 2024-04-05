@@ -1,8 +1,12 @@
 ---
-const { style, text_content } = Astro.props;
+import type { textSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
 import * as marked from "marked";
-console.log(text_content)
+
+type Props = z.infer<typeof textSchema>;
+
+const { style, text_content } = Astro.props;
 const markdown = await marked.parseInline(text_content);
 ---
 
-<p class:list={[style, "prose-lg md:prose-xl px-4"]} set:html={markdown} />
+<p class:list={[style]} set:html={markdown} />

@@ -1,0 +1,98 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+import BaseLayout from "./BaseLayout.astro";
+import { getImage, Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import dayjs from "dayjs";
+import { getEntries } from "astro:content";
+import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
+import { componentIsHTMLElement } from "astro/runtime/server/render/dom.js";
+
+type Props = {
+  post: CollectionEntry<"blogs">;
+};
+
+const {
+  post: {
+    data: { title, author: authorRef, description, date, tags: tagList, image },
+    body,
+    render,
+  },
+} = Astro.props;
+
+const { data: author } = (await getEntry(
+  authorRef
+)) as CollectionEntry<"authors">;
+
+const tags = await getEntries(tagList);
+
+const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
+
+const optimizedBackground = await getImage({
+  src: getCloudinarySrc({
+    src: "linaro-website/graphics/bg-logo-3",
+    alt: "",
+    width: 1724.55,
+    height: 1182.9,
+  }),
+  format: "webp",
+  inferSize: true,
+});
+const { Content, headings } = await render();
+---
+
+<BaseLayout title={title} description={description}>
+  <main>
+    <section
+      class:list={[
+        "hero-background-image",
+        "py-32  container mx-auto max-w-5xl px-8",
+      ]}
+    >
+      <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
+      <p class="text-2xl mb-4">{`${author.first_name} ${author.last_name}`}</p>
+      <p class="flex gap-4 flex-wrap">
+        <span>{dayjs(date).format("dddd, MMMM D, YYYY")}</span><span>|</span
+        ><span>{readTime}</span>
+      </p>
+      <ul class="flex flex-wrap gap-4 my-8">
+        {
+          tags.map(({ slug, data: { name } }) => (
+            <li>
+              <a href={`/blog/tags/${slug}`}>
+                <button class="linaro-gradient-button">{name}</button>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <section
+      class="container max-w-5xl mx-auto rounded-[24px] linaro-gradient-border bg-dark"
+    >
+      <CloudinaryImg
+        src={image}
+        alt=""
+        width={1000}
+        height={1000}
+        class="w-full object-cover max-h-[40rem] rounded-[14px] p-0"
+      />
+      <article
+        class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24"
+      >
+        <Content components={{ img: CloudinaryImg }} />
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+>
+  .hero-background-image {
+    background-image: var(--backgroundUrl);
+    background-repeat: no-repeat;
+    background-position: top right;
+  }
+</style>

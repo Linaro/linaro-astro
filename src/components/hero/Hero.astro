@@ -1,14 +1,13 @@
 ---
 import { getCloudinarySrc } from "@/lib/cloudinary";
-import { Image, getImage } from "astro:assets";
+import {  getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import * as marked from "marked";
 
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
 console.log(Astro.props);
-const { title, background_image, button, description } = Astro.props!;
+const { title, background_image, button, description, styles } = Astro.props!;
 
 const optimizedBackground = await getImage({
   src: getCloudinarySrc({
@@ -22,43 +21,41 @@ const optimizedBackground = await getImage({
 });
 
 const titleMarkdown = await marked.parseInline(title);
-const descriptionMarkdown = await marked.parseInline(description)
+const descriptionMarkdown = await marked.parseInline(description);
 ---
 
 <section
   class:list={[
     // style,
-    "relative text-white justify-around h-[calc(100vh)] min-h-[600px] max-h-[1200px] relative w-full max-w-screen overflow-hidden",
+    `relative text-white h-[calc(100vh)] min-h-[600px] max-h-[1200px] w-full max-w-screen overflow-hidden`,
   ]}
 >
-  <div class="container mx-auto flex flex-col justify-center h-full px-8">
-    <div class="max-w-80 flex flex-col items-start">
+<div class="absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container">
+  <div class:list={["w-full h-full hero-background-image  bg-no-repeat bg-contain z-10 top-[-3%] right-[-10%] lg:right-0 xl:right-0", styles?.background]} />
+</div>
+  <div class:list={["relative container mx-auto flex flex-col justify-center h-full px-8 z-20"]}>
+    <div class:list={["flex flex-col items-start", styles?.text_container]}>
       <h1
-        class="hero-title text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic"
+        class:list={["text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic", styles?.title]}
         set:html={titleMarkdown}
-      >
-      </h1>
-      <p class="text-md sm:text-lg" set:html={descriptionMarkdown} />
+      />
+      <p class:list={["text-md sm:text-lg", styles?.description]} set:html={descriptionMarkdown} />
       {
         button && (
-          <a href={button.url}>
-            <button class="linaro-gradient-button">
-              {button.text}
-            </button>
+          <a href={button.url} class="mt-12">
+            <button class="linaro-gradient-button">{button.text}</button>
           </a>
         )
       }
     </div>
   </div>
-
-  <CloudinaryImg
-    src={background_image}
-    alt=""
-    width={1724.55}
-    height={1182.9}
-    class:list={[
-      "absolute w-full top-[-3%] right-[-10%] lg:right-[-8%] xl:right-0 origin-top-left mix-blend-screen z-[-1]  sm:pl-[20%] xl:pl-[30%]",
-    ]}
-  />
 </section>
 
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+>
+  .hero-background-image {
+    background-image: var(--backgroundUrl);
+  }
+</style>

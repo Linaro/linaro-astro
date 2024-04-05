@@ -1,10 +1,14 @@
 ---
+import type { buttonsSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+
+type Props = z.infer<typeof buttonsSchema>;
 const { buttons } = Astro.props;
 ---
 
 <ul class="flex justify-center list-none p-0">
   {
-    buttons.map(({ text, url, style }: {text: string, url: string, style: string}) => (
+    buttons.map(({ text, url, style }) => (
       <li>
         <a href={url}>
           <button class:list={[style]}>{text}</button>

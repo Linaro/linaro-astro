@@ -14,13 +14,14 @@ const activeLink = navData.data.find(
 )?.label;
 ---
 
-<header class="w-full relative fade-border-bottom  bg-background z-50" id="top-nav">
+<header
+  class="w-full relative fade-border-bottom bg-background z-50"
+  id="top-nav"
+>
   <div
-    class="flex flex-col lg:flex-row justify-start items-center lg:items-start text-white max-w-[100rem] mx-auto my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
+    class="flex flex-col lg:flex-row justify-start items-center lg:items-start text-white container mx-auto px-8 my-3 lg:mt-4 lg:mb-5 lg:text-sm xl:text-[1rem] w-full py-4"
   >
-    <div
-      class="flex w-full lg:w-auto items-start justify-between pl-8 px-2 pt-1"
-    >
+    <div class="flex w-full lg:w-auto items-start justify-between pt-1">
       <a href="/" class="text-lg"
         ><CloudinaryImg
           src={"linaro-website/graphics/logo"}
@@ -38,7 +39,9 @@ const activeLink = navData.data.find(
       <MenuItems
         class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0 font-medium lg:justify-start"
       >
-        <ul class="flex flex-col lg:flex-row items-start">
+        <ul
+          class="flex flex-col lg:flex-row items-start mx-auto max-w-2xl lg:mx-0 lg:max-w-full"
+        >
           {
             navData.data.map((item: any, index: number) => (
               <>
@@ -57,7 +60,7 @@ const activeLink = navData.data.find(
                         data-nav-group={item.label}
                         href={item.url}
                         class:list={[
-                          "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text  whitespace-nowrap",
+                          "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
                         ]}
                       >
                         {item.label}
@@ -78,7 +81,6 @@ const activeLink = navData.data.find(
           .filter((item: any) => !!item.children)
           .map((item: any) => {
             const isActive = item.label === activeLink;
-            console.log(isActive);
             return (
               <ul
                 data-nav-children={item.label}
@@ -86,11 +88,9 @@ const activeLink = navData.data.find(
               >
                 {item.children.map((child: any) => (
                   <a
+                    href={child.url}
                     class:list={[
-                      "lg:px-3 py-2 text-grey  hover:text-white cursor-pointer whitespace-nowrap text-sm",
-                      // Astro.url.pathname === child.url
-                      //   ? "linaro-gradient-text"
-                      //   : "",
+                      "lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm",
                     ]}
                   >
                     {child.label}
@@ -103,9 +103,7 @@ const activeLink = navData.data.find(
     </div>
   </div>
 </header>
-<style>
-  
-</style>
+<style></style>
 <script define:vars={{ closeOnClick: true, activeLink }}>
   ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
     document.addEventListener(event, addListeners);
@@ -184,8 +182,6 @@ const activeLink = navData.data.find(
   }
 
   function toggleDropdownMenu(event, menu, dropdownMenus) {
-    console.log(menu);
-
     toggleMenu(menu);
 
     // Close one dropdown when selecting another
@@ -248,8 +244,14 @@ const activeLink = navData.data.find(
     const dropdownExpanded = dropdownToggle.getAttribute("aria-expanded");
 
     const button = menu.querySelector("button");
-    button.classList.remove("nav-inactive");
-    button.classList.add("nav-active");
+
+    if (button.classList.contains("nav-inactive")) {
+      button.classList.remove("nav-inactive");
+      button.classList.add("nav-active");
+    } else {
+      button.classList.add("nav-inactive");
+      button.classList.remove("nav-active");
+    }
 
     dropdownToggle.classList.toggle("hidden");
     dropdownToggle.setAttribute(
@@ -259,8 +261,13 @@ const activeLink = navData.data.find(
     const children = document.querySelector(
       `[data-nav-children='${menu.dataset["navGroup"]}'`
     );
-    children.classList.remove("lg:hidden");
-    children.classList.add("lg:block");
+    if (children.classList.contains("lg:hidden")) {
+      children.classList.remove("lg:hidden");
+      children.classList.add("lg:block");
+    } else {
+      children.classList.add("lg:hidden");
+      children.classList.remove("lg:block");
+    }
   }
 
   function closeMenu(menu) {

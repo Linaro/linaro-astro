@@ -1,0 +1,28 @@
+---
+import type { twoColumnSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import { marked } from "marked";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+
+type Props = z.infer<typeof twoColumnSchema>;
+const { columns, container_styles } = Astro.props;
+---
+
+<div class:list={["flex flex-col lg:flex-row items-center", container_styles]}>
+  {
+    columns.map((column) => {
+      if (column.type === "text") {
+        const markdown = marked.parse(column.text_content);
+        return (
+          <div class:list={[column.styles]}>
+            <p set:html={markdown} />
+          </div>
+        );
+      }
+
+      if (column.type === "image") {
+        return <CloudinaryImg {...column.image} class:list={[column.styles]} />;
+      }
+    })
+  }
+</div>
