@@ -1,6 +1,6 @@
 ---
 import { getCloudinarySrc } from "@/lib/cloudinary";
-import {  getImage } from "astro:assets";
+import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import * as marked from "marked";
 
@@ -30,16 +30,34 @@ const descriptionMarkdown = await marked.parseInline(description);
     `relative text-white h-[calc(100vh)] min-h-[600px] max-h-[1200px] w-full max-w-screen overflow-hidden`,
   ]}
 >
-<div class="absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container">
-  <div class:list={["w-full h-full hero-background-image  bg-no-repeat bg-contain z-10 top-[-3%] right-[-10%] lg:right-0 xl:right-0", styles?.background]} />
-</div>
-  <div class:list={["relative container mx-auto flex flex-col justify-center h-full px-8 z-20"]}>
+  <div
+    class="absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container"
+  >
+    <div
+      class:list={[
+        "w-full h-full hero-background-image bg-no-repeat bg-contain z-10 top-[-3%] right-[-10%] lg:right-0 xl:right-0",
+        styles?.background,
+      ]}
+    >
+    </div>
+  </div>
+  <div
+    class:list={[
+      "relative container mx-auto flex flex-col justify-center h-full px-8 z-20",
+    ]}
+  >
     <div class:list={["flex flex-col items-start", styles?.text_container]}>
       <h1
-        class:list={["text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic", styles?.title]}
+        class:list={[
+          "text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
+          styles?.title,
+        ]}
         set:html={titleMarkdown}
       />
-      <p class:list={["text-md sm:text-lg", styles?.description]} set:html={descriptionMarkdown} />
+      <p
+        class:list={["text-md sm:text-lg", styles?.description]}
+        set:html={descriptionMarkdown}
+      />
       {
         button && (
           <a href={button.url} class="mt-12">
