@@ -107,6 +107,7 @@ export const moreInfoSchema = z.object({
     z.object({
       title: z.string(), 
       icon: z.string().optional(),
+      url: z.string()
     })
   ),
 });
