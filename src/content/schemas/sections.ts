@@ -102,7 +102,7 @@ export const moreInfoSchema = z.object({
       container: z.string().optional(),
     })
     .optional(),
-  cards: z.array(
+  more_info: z.array(
     z.object({
       title: z.string(), 
       icon: z.string().optional(),

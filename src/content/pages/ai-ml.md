@@ -53,7 +53,7 @@ flow:
         styles:
           container: justify-around border-2 border-[#6B6B6B] rounded-3xl py-10
           card: max-w-md  text-center
-        cards:
+        more_info:
           - title: Check out the most read blogs
             icon: grade
           - title: Watch presentations and webinars
