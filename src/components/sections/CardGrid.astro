@@ -11,7 +11,7 @@ const { cards, styles } = Astro.props;
     cards.map(({ icon, title, text, button }) => (
       <li class:list={[styles?.card]}>
         {icon && <Icon name={icon} size={100} class="my-0" />}
-        <h3 class="text-4xl my-5">{title}</h3>
+        <h3 class:list={["text-4xl my-5", styles?.card_heading]}>{title}</h3>
         <p class="text-xl">{text}</p>
         {button && (
           <a href={button.url}>
