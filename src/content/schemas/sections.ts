@@ -112,7 +112,21 @@ export const twoColumnSchema = z.object({
     ])
   ),
 });
-
+export const moreInfoSchema = z.object({
+  component: component("more_info"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  more_info: z.array(
+    z.object({
+      title: z.string(),
+      icon: z.string().optional(),
+    })
+  ),
+});
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,

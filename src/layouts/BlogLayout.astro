@@ -82,7 +82,9 @@ const summary =
         </p>
       </div>
       <p class="flex gap-4 flex-wrap">
-        <span data-pagefind-meta={`date:${date}`}
+        <span
+          data-pagefind-meta={`date:${date}`}
+          data-pagefind-sort={`date:${new Date(date).getTime()}`}
           >{dayjs(date).format("dddd, MMMM D, YYYY")}</span
         ><span>|</span><span>{readTime}</span>
       </p>
