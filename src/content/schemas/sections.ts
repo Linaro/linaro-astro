@@ -141,6 +141,16 @@ export const logoGridSchema = z.object({
   ),
 });
 
+export const graphicSchema = z.object({
+  component: component("graphic"),
+  src: z.string(),
+  mobile_src: z.string().optional(),
+  alt: z.string(),
+  accessible_version: z.string().optional(),
+  width: z.number(),
+  height: z.number(),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -153,4 +163,5 @@ export default z.discriminatedUnion("component", [
   backcardsSchema,
   moreInfoSchema,
   logoGridSchema,
+  graphicSchema,
 ]);
