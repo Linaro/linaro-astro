@@ -45,7 +45,7 @@
     - label: Newsroom
       url: /news
     - label: Videos & Webinars
-      url: /videos
+      url: https://resources.linaro.org/
     - label: Solutions Briefs
       url: /solutions-briefs
     - label: Events

@@ -8,7 +8,7 @@ type Props = z.infer<typeof twoColumnSchema>;
 const { columns, container_styles } = Astro.props;
 ---
 
-<div class:list={["flex flex-col lg:flex-row items-center", container_styles]}>
+<div class:list={["flex flex-col lg:flex-row ", container_styles]}>
   {
     columns.map((column) => {
       if (column.type === "text") {
