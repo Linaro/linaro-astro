@@ -26,7 +26,7 @@ export const cardsSchema = z.object({
     .object({
       card: z.string().optional(),
       container: z.string().optional(),
-      card_heading: z.string().optional(),
+      cardTitle: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -34,12 +34,30 @@ export const cardsSchema = z.object({
       title: z.string(),
       text: z.string().optional(),
       icon: z.string().optional(),
+      style: z.string().optional(),
       button: z
         .object({
           text: z.string(),
           url: z.string(),
         })
         .optional(),
+    })
+  ),
+});
+
+export const backcardsSchema = z.object({
+  component: component("backcards"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  background_image: z.string().optional(),
+  cards: z.array(
+    z.object({
+      text: z.string().optional(),
+      style: z.string().optional(),
     })
   ),
 });
@@ -95,6 +113,7 @@ export const twoColumnSchema = z.object({
     ])
   ),
 });
+
 export const moreInfoSchema = z.object({
   component: component("more_info"),
   styles: z
@@ -105,12 +124,23 @@ export const moreInfoSchema = z.object({
     .optional(),
   more_info: z.array(
     z.object({
-      title: z.string(), 
+      title: z.string(),
       icon: z.string().optional(),
       url: z.string()
     })
   ),
 });
+
+export const logoGridSchema = z.object({
+  component: component("logo_grid"),
+  logos: z.array(
+    z.object({
+      src: z.string(),
+      alt: z.string(),
+    })
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -120,7 +150,7 @@ export default z.discriminatedUnion("component", [
   textSchema,
   contactSchema,
   twoColumnSchema,
-  moreInfoSchema
+  backcardsSchema,
+  moreInfoSchema,
+  logoGridSchema,
 ]);
-
-

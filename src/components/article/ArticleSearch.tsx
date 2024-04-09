@@ -149,7 +149,7 @@ const Search = ({
   const [results] = createResource(search, fetchResults);
 
   createEffect(() => {
-    console.log(pathParams());
+    console.log(results());
   });
 
   const [isExpanded, setIsExpanded] = createSignal(false);
@@ -213,10 +213,10 @@ const Search = ({
             </Show>
         </div>
       
-        <Collapse value={isExpanded()} class="my-transition">
+        <Collapse value={isExpanded()} >
           <Show when={!!tags}>
-            <ul class="flex flex-wrap gap-x-4 gap-y-8 py-8 justify-self-end">
-              <For each={tags}>
+            <ul class="flex flex-wrap gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-8 py-8 justify-self-end">
+              <For each={tags!.filter((tag) => results()?.filters.tags[tag.slug] > 0)}>
                 {(tag) => (
                   <li>
                     <button
