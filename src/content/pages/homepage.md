@@ -15,6 +15,7 @@ hero:
   styles:
     text_container: max-w-80
     background: bg-right-top
+    description: text-md sm:text-lg
 flow:
   - row: container_row
     title: Trusted by Leading Companies

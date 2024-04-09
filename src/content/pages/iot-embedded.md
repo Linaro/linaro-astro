@@ -51,7 +51,7 @@ flow:
             text: ONELab revolutionizes edge and IoT device interoperability testing.
             button:
               text: Find out more
-              url: /onelab
+              url: /solutions/onelab
           - title: CodeLinaro
             text: Revolutionize Your Embedded Software Development with CodeLinaro
             button:

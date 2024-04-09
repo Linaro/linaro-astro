@@ -15,8 +15,9 @@ hero:
   styles:
     text_container: max-w-4xl
     title: max-w-3xl
-    description: max-w-80
-    background: top-[-0%] right-[-10%]
+    description: max-w-80 text-md sm:text-lg
+    background_container: pt-[10%]
+    background: bg-center
 flow:
   - row: container_row
     title: Why you can trust Linaro LTS
@@ -48,7 +49,7 @@ flow:
         text_content: Linaro’s world class open source engineering team, monitors and integrates the latest fixes and CVEs for the Linux Kernel, OP-TEE, Trusted Firmware-A and U-Boot.
         style: max-w-5xl text-3xl mx-auto
       - component: two_column
-        container_styles: justify-start gap-8 lg:gap-24 max-w-5xl mx-auto
+        container_styles: justify-start gap-8 lg:gap-24 max-w-5xl mx-auto items-center
         columns:
           - type: text
             text_content: |

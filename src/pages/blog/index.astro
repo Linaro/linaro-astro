@@ -7,7 +7,7 @@ const tags = await getCollection("tags");
 ---
 
 <BaseLayout title="Linaro | Blogs" description="A list of blogs">
-  <main class="container mx-auto px-8">
+  <main class="container mx-auto px-2 sm:px-4 md:px-8">
     <Search client:only="solid-js" type="blog" tags={tags} />
   </main>
 </BaseLayout>
