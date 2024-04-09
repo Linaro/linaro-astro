@@ -26,6 +26,7 @@ export const cardsSchema = z.object({
     .object({
       card: z.string().optional(),
       container: z.string().optional(),
+      cardTitle: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -33,12 +34,29 @@ export const cardsSchema = z.object({
       title: z.string(),
       text: z.string().optional(),
       icon: z.string().optional(),
+      style: z.string().optional(),
       button: z
         .object({
           text: z.string(),
           url: z.string(),
         })
         .optional(),
+    })
+  ),
+});
+export const backcardsSchema = z.object({
+  component: component("backcards"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  background_image: z.string().optional(),
+  cards: z.array(
+    z.object({
+      text: z.string().optional(),
+      style: z.string().optional(),
     })
   ),
 });
@@ -104,4 +122,5 @@ export default z.discriminatedUnion("component", [
   textSchema,
   contactSchema,
   twoColumnSchema,
+  backcardsSchema,
 ]);
