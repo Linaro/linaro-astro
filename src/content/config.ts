@@ -37,6 +37,42 @@ const pages = defineCollection({
     }),
 });
 
+const solutions = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      hero: z
+        .object({
+          title: z.string(),
+          background_image: z.string(),
+          description: z.string(),
+          button: z.object({ text: z.string(), url: z.string() }).optional(),
+          styles: z
+            .object({
+              text_container: z.string().optional(),
+              background: z.string().optional(),
+              title: z.string().optional(),
+              description: z.string().optional(),
+            })
+            .optional(),
+        })
+        .optional(),
+      flow: z
+        .array(
+          rowSchemas.transform((val) => ({
+            ...val,
+            row: {
+              collection: "rows",
+              slug: val.row,
+            },
+          }))
+        )
+        .optional(),
+    }),
+});
+
 const rows = defineCollection({
   type: "content",
   schema: z.object({
@@ -95,4 +131,5 @@ export const collections = {
   blogs,
   authors,
   tags,
+  solutions,
 };
