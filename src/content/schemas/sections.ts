@@ -27,6 +27,7 @@ export const cardsSchema = z.object({
       card: z.string().optional(),
       container: z.string().optional(),
       cardTitle: z.string().optional(),
+      card_heading: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -137,4 +138,5 @@ export default z.discriminatedUnion("component", [
   contactSchema,
   twoColumnSchema,
   backcardsSchema,
+  moreInfoSchema,
 ]);
