@@ -14,7 +14,7 @@ hero:
     url: /contact
   styles:
     text_container: max-w-4xl
-    title: max-w-4xl
+    title: max-w-md
     description: max-w-80
     background: bg-center
 flow:
@@ -57,6 +57,21 @@ flow:
             button:
               text: Request a demo
               url: https://www.codelinaro.org/
+  - row: container_row
+    title: Explore Related Resources
+    styles: bg-transparent z-0
+    sections:
+      - component: more_info
+        styles:
+          container: justify-around border-2 border-[#6B6B6B] rounded-3xl py-10
+          card: max-w-md  text-center
+        more_info:
+          - title: Check out the most read blogs
+            icon: grade
+            url: /blog
+          - title: Watch presentations and webinars
+            icon: grade
+            url: https://resources.linaro.org/
 #   - row: container_row
 #     title: Explore Related Resources
 #     styles: purple-gradient-container

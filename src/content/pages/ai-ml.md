@@ -56,6 +56,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: grade
+            url: /blog
           - title: Watch presentations and webinars
             icon: grade
+            url: https://resources.linaro.org/
 ---
