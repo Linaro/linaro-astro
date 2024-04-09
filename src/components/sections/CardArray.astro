@@ -1,0 +1,42 @@
+---
+import type { backcardsSchema } from "@/content/schemas/sections";
+import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
+import type { z } from "astro/zod";
+type Props = z.infer<typeof backcardsSchema>;
+const { cards, styles, background_image } = Astro.props;
+---
+
+<div class="relative">
+  {
+    background_image && background_image !== undefined && (
+      <CloudinaryImg
+        src={background_image}
+        class="absolute lg:top-[40%] top-[45%] left-1/2 w-[20rem] h-[28rem] transform -translate-x-1/2 -translate-y-1/2"
+        alt="Background Image"
+        data-pagefind-meta="image[src], image_alt[alt]"
+        width={1000}
+        height={1000}
+      />
+    )
+  }
+  <div
+    class="absolute top-[11%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-10 text-center"
+  >
+  </div>
+
+  <ul
+    class:list={[
+      "list-none flex flex-col lg:flex-row mx-auto p-0",
+      styles?.container,
+    ]}
+    style="z-index: 1;justify-content: center; align-items: center;"
+  >
+    {
+      cards.map(({ text, style }) => (
+        <li class:list={[styles?.card]}>
+          <p class={`text-white ${style ? style : "text-lg"}`}>{text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
