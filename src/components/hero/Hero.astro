@@ -21,7 +21,9 @@ const optimizedBackground = await getImage({
 });
 
 const titleMarkdown = await marked.parseInline(title);
-const descriptionMarkdown = await marked.parseInline(description);
+const descriptionMarkdown = await marked.parse(description);
+
+console.log(styles);
 ---
 
 <section
@@ -31,11 +33,14 @@ const descriptionMarkdown = await marked.parseInline(description);
   ]}
 >
   <div
-    class="absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container"
+    class:list={[
+      "absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container",
+      styles?.background_container,
+    ]}
   >
     <div
       class:list={[
-        "w-full h-full hero-background-image bg-no-repeat bg-contain z-10 top-[-3%] right-[-10%] lg:right-0 xl:right-0",
+        "w-full h-full hero-background-image bg-no-repeat bg-contain z-10",
         styles?.background,
       ]}
     >
@@ -54,10 +59,7 @@ const descriptionMarkdown = await marked.parseInline(description);
         ]}
         set:html={titleMarkdown}
       />
-      <p
-        class:list={["text-md sm:text-lg", styles?.description]}
-        set:html={descriptionMarkdown}
-      />
+      <div class:list={[styles?.description]} set:html={descriptionMarkdown} />
       {
         button && (
           <a href={button.url} class="mt-12">
