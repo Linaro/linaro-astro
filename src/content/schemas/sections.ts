@@ -26,6 +26,7 @@ export const cardsSchema = z.object({
     .object({
       card: z.string().optional(),
       container: z.string().optional(),
+      card_heading: z.string().optional(),
     })
     .optional(),
   cards: z.array(
