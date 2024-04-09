@@ -47,4 +47,33 @@ flow:
 
           With ONE Lab you can focus on your core business, ensuring seamless compatibility with your partner products.
         styles: max-w-4xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
+  - row: container_row
+    title: Supporting Partners
+    sections:
+      - component: logo_grid
+        logos:
+          - src: "linaro-website/logos/red-hat"
+            alt: Red Hat Logo
+          - src: "linaro-website/logos/google"
+            alt: Google logo
+          - src: "linaro-website/logos/samsung"
+            alt: Samsung logo
+          - src: "linaro-website/logos/cix"
+            alt: CIX Technology logo
+          - src: "linaro-website/logos/quic"
+            alt: Qualcomm Innovation Center logo
+          - src: "linaro-website/logos/hisilicon"
+            alt: HiSilicon logo
+          - src: "linaro-website/logos/arm"
+            alt: Arm logo
+          - src: "linaro-website/logos/amd-xilinx"
+            alt: AMD Xilinx logo
+          - src: "linaro-website/logos/remarkable"
+            alt: reMarkable logo
+          - src: "linaro-website/logos/microsoft"
+            alt: Microsoft logo
+          - src: "linaro-website/logos/fujitsu"
+            alt: Fujitsu logo
+          - src: "linaro-website/logos/renesas"
+            alt: Renesas logo
 ---

@@ -30,15 +30,15 @@ flow:
           - type: text
             text_content: |
               As vehicles evolve to meet the demands of today's tech-savvy consumers, automakers are seeking ways to enhance the driving experience with intuitive, interactive features. To meet these expectations and deliver new features profitably, automakers face the challenge of accelerating development while managing dependencies between hardware and software.
-            styles: w-1/2
+            styles: w-full lg:w-1/2
           - type: text
             text_content: At Linaro, we are at the forefront of driving innovation in the automotive industry. Our Automotive and SOAFEE (Standardized Open Architecture for Embedded Edge) Lab is dedicated to advancing the development of cutting-edge technologies and solutions for the automotive sector. With our expertise in open-source software and collaborative engineering, we are shaping the future of automotive systems and enabling the next generation of connected and autonomous vehicles.
-            styles: w-1/2
+            styles: w-full lg:w-1/2
   - row: container_row
     title: SOAFEE Lab
     sections:
       - component: two_column
-        container_styles: items-start justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl
+        container_styles: items-center lg:items-start  justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl
         columns:
           - type: text
             text_content: |
@@ -53,4 +53,17 @@ flow:
           - text: Go to the SOAFEE Lab
             url: /
             style: linaro-gradient-button mt-12
+  - row: container_row
+    title: Explore Related Resources
+    styles: bg-transparent z-0
+    sections:
+      - component: more_info
+        styles:
+          container: justify-around border-2 border-[#6B6B6B] rounded-3xl py-10
+          card: max-w-md  text-center
+        more_info:
+          - title: Check out the most read blogs
+            icon: grade
+          - title: Watch presentations and webinars
+            icon: grade
 ---
