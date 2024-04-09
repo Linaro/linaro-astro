@@ -16,7 +16,7 @@ hero:
     text_container: max-w-4xl
     title: max-w-3xl
     description: max-w-80
-    background: bg-center
+    background: top-[-0%] right-[-10%]
 flow:
   - row: container_row
     title: Why you can trust Linaro LTS
@@ -30,14 +30,11 @@ flow:
           - title: Extensive Expertise
             text: Since 2010, our contributions span multiple areas, including Arm SoC, Power, Thermal, IO, LLVM, Android, RT, and more.
             icon: thumb_up
-
           - title: Proven Quality
             text: We conduct over a billion tests annually, ensuring the highest level of quality.
             icon: grade
-
           - title: Tailored LTS
             text: We deliver, maintain, test Long Term Support Linux Kernels for arm, arm64 and x86_64.
-
             icon: done_outline
           - title: Customization
             text: Out-of-tree patches, hardware inclusion in the Linaro-hosted test farm, uprevving of patches, additional test suites, and more.
