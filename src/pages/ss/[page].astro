@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+
+export async function getStaticPaths() {
+  const solutions = await getCollection("solutions");
+  console.log("solutions", solutions);
+  return solutions.map((page) => {
+    return {
+      params: {
+        page: page.data.slug || "default-slug",
+      },
+      props: {
+        page,
+      },
+    };
+  });
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<Content />
