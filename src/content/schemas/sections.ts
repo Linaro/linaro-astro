@@ -94,7 +94,21 @@ export const twoColumnSchema = z.object({
     ])
   ),
 });
-
+export const moreInfoSchema = z.object({
+  component: component("more_info"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  cards: z.array(
+    z.object({
+      title: z.string(), 
+      icon: z.string().optional(),
+    })
+  ),
+});
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -104,4 +118,7 @@ export default z.discriminatedUnion("component", [
   textSchema,
   contactSchema,
   twoColumnSchema,
+  moreInfoSchema
 ]);
+
+

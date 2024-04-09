@@ -3,7 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "strictNullChecks": true,
-    "baseUrl": "/home/louis/Dev/LinaroWebsite",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
         "src/*"
