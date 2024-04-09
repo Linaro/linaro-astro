@@ -1,0 +1,13 @@
+---
+import type { graphicSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+
+type Props = z.infer<typeof graphicSchema>;
+const { src, alt, accessible_version, width, height } = Astro.props;
+---
+
+<div>
+  <CloudinaryImg src={src} alt={alt} width={width} height={height} />
+  <div set:html={accessible_version} class="sr-only" />
+</div>
