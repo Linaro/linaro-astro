@@ -44,6 +44,7 @@ export const cardsSchema = z.object({
     })
   ),
 });
+
 export const backcardsSchema = z.object({
   component: component("backcards"),
   styles: z
@@ -112,6 +113,7 @@ export const twoColumnSchema = z.object({
     ])
   ),
 });
+
 export const moreInfoSchema = z.object({
   component: component("more_info"),
   styles: z
@@ -127,6 +129,17 @@ export const moreInfoSchema = z.object({
     })
   ),
 });
+
+export const logoGridSchema = z.object({
+  component: component("logo_grid"),
+  logos: z.array(
+    z.object({
+      src: z.string(),
+      alt: z.string(),
+    })
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -137,4 +150,6 @@ export default z.discriminatedUnion("component", [
   contactSchema,
   twoColumnSchema,
   backcardsSchema,
+  moreInfoSchema,
+  logoGridSchema,
 ]);

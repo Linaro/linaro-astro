@@ -1,0 +1,25 @@
+---
+import type { logoGridSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+
+type Props = z.infer<typeof logoGridSchema>;
+
+const { logos } = Astro.props;
+---
+
+<ul class="list-none flex flex-wrap gap-8 md:gap-16 justify-center">
+  {
+    logos.map((logo) => (
+      <li>
+        <CloudinaryImg
+          src={logo.src}
+          alt={logo.alt}
+          width={200}
+          height={200}
+          class="w-[100px] md:w-[200px]"
+        />
+      </li>
+    ))
+  }
+</ul>
