@@ -184,6 +184,26 @@ export const moreInfoSchema = z.object({
   ),
 });
 
+export const bulletPointSchema = z.object({
+  component: component("bullet_point"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  bullet_point: z.array(
+    z.object({
+      title: z.string(),
+      sub_text: z.array(
+        z.object({
+          text: z.string(),
+        })
+      ),
+    })
+  ),
+});
+
 export const logoGridSchema = z.object({
   component: component("logo_grid"),
   logos: z.array(
@@ -204,6 +224,11 @@ export const graphicSchema = z.object({
   height: z.number(),
 });
 
+export const videosSchema = z.object({
+  component: component("videos"),
+  videos: z.array(z.object({ src: z.string(), title: z.string() })),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -219,4 +244,6 @@ export default z.discriminatedUnion("component", [
   logoGridSchema,
   membershipSchema,
   graphicSchema,
+  videosSchema,
+  bulletPointSchema,
 ]);

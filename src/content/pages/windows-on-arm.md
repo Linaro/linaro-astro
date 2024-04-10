@@ -20,7 +20,6 @@ hero:
     background_container: ml-[5%]
 flow:
   - row: container_row
-    styles: purple-gradient-container
     sections:
       - component: text
         text_content: Growing the Arm open source ecosystem for Windows involves setting up CI and testing, coordinating with vendors to analyze and fix regressions and establishing relationships with project maintainers.
@@ -96,10 +95,14 @@ flow:
             image:
               src: linaro-website/logos/tcltk
               alt: Tcl/Tk logo
+  - row: container_row
+    no_border: true
+    styles: purple-gradient-container
+    sections:
       - component: cards
         styles:
           card: max-w-[50ch] text-center flex flex-col items-start gap-8 text-left prose-invert prose-p:text-left prose-p:text-xl prose-h4:text-3xl prose-headings:text-left prose-h4:my-4 prose-h4:mt-0
-          container: justify-center gap-36 mt-36
+          container: justify-center gap-36
           card_title: text-linaro-yellow text-5xl text-left w-full
         cards:
           - title: Client PC
@@ -118,6 +121,39 @@ flow:
             button:
               text: Learn More
               url: https://linaro.atlassian.net/wiki/spaces/WPERF
+  - row: container_row
+    title: Watch the Windows on Arm Testimonials
+    sections:
+      - component: videos
+        videos:
+          - src: linaro-website/videos/microsoft-woa
+            title: Marcus Perryman  |  Principle Engineer Microsoft
+          - src: linaro-website/videos/arm-woa
+            title: David Whaley  |  Director Ecosystem Partnerships, Arm
+          - src: linaro-website/videos/cix-woa
+            title: Fang Liu  |  CTO CIX Technology
+  - row: container_row
+    sections:
+      - component: membership
+        form_id: "4"
+        description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
+        styles:
+          card: max-w-[30ch] text-center flex flex-col items-center
+        text: "Check the different possibilities to become a project member:"
+        MemberManagementPanel:
+          - title: Become a
+            title_style: whitespace-nowrap
+            name: Project Member
+            description: Access One Project
+          - title: Become a
+            title_style: whitespace-nowrap
+            name: Group Member
+            description: Access a group and enter its entire projects portfolio
+          - title: Become a
+            title_style: whitespace-nowrap
+            name: Core & Club Member
+            description: Access all Linaro driven projects & groups Access One Project
+        style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
   - row: container_row
     title: Explore Related Resources
     styles: bg-transparent z-0
