@@ -152,6 +152,7 @@ export const moreInfoSchema = z.object({
     z.object({
       title: z.string(),
       icon: z.string().optional(),
+      url: z.string(),
     })
   ),
 });
@@ -164,6 +165,16 @@ export const logoGridSchema = z.object({
       alt: z.string(),
     })
   ),
+});
+
+export const graphicSchema = z.object({
+  component: component("graphic"),
+  src: z.string(),
+  mobile_src: z.string().optional(),
+  alt: z.string(),
+  accessible_version: z.string().optional(),
+  width: z.number(),
+  height: z.number(),
 });
 
 export default z.discriminatedUnion("component", [
@@ -179,4 +190,5 @@ export default z.discriminatedUnion("component", [
   moreInfoSchema,
   logoGridSchema,
   membershipSchema,
+  graphicSchema,
 ]);
