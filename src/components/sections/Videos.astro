@@ -1,0 +1,45 @@
+---
+import type { videosSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
+
+type Props = z.infer<typeof videosSchema>;
+const { videos } = Astro.props;
+---
+
+<ul
+  class="flex flex-wrap justify-center not-prose gap-12 border-[0.5px] border-grey px-4 py-12 rounded-2xl"
+>
+  {
+    videos.map((video) => (
+      <li class="w-[45ch]">
+        <CloudinaryVideo src={video.src} />
+        <p class="text-2xl mt-4">{video.title}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  import cloudinary from "cloudinary-video-player";
+  class CloudinaryVideo extends HTMLVideoElement {
+    constructor() {
+      super();
+      console.log("hello");
+      const src = this.dataset.videoSrc!;
+      console.log(src);
+      // Read the message from the data attribute.
+      const demoplayer = cloudinary.videoPlayer(this.id, {
+        cloudName: "dl7c2wmhi",
+        controls: true,
+        fluid: true,
+      });
+
+      demoplayer.source(src);
+    }
+  }
+
+  customElements.define("cloudinary-video", CloudinaryVideo, {
+    extends: "video",
+  });
+</script>
