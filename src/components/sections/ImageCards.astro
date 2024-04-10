@@ -3,31 +3,35 @@ import type { imageCardsSchema } from "@/content/schemas/sections";
 import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
+import { marked } from "marked";
 type Props = z.infer<typeof imageCardsSchema>;
 const { cards, styles } = Astro.props;
 ---
 
 <ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
   {
-    cards.map(({ image, title, text, button }) => (
-      <li class:list={[styles?.card]}>
-        {image && (
-          <CloudinaryImg
-            src={image.src}
-            alt={image.alt}
-            width={500}
-            height={500}
-            class:list={[styles?.image]}
-          />
-        )}
-        <h3 class:list={[styles?.card_title]}>{title}</h3>
-        <p class="text-xl">{text}</p>
-        {button && (
-          <a href={button.url}>
-            <button class={`linaro-gradient-button `}>{button.text}</button>
-          </a>
-        )}
-      </li>
-    ))
+    cards.map(async ({ image, title, text, button }) => {
+      const content = text ? await marked.parse(text) : null;
+      return (
+        <li class:list={[styles?.card]}>
+          {image && (
+            <CloudinaryImg
+              src={image.src}
+              alt={image.alt}
+              width={500}
+              height={500}
+              class:list={[styles?.image]}
+            />
+          )}
+          <h3 class:list={[styles?.card_title]}>{title}</h3>
+          <div class="text-xl" set:html={content}></div>
+          {button && (
+            <a href={button.url}>
+              <button class={`linaro-gradient-button `}>{button.text}</button>
+            </a>
+          )}
+        </li>
+      );
+    })
   }
 </ul>
