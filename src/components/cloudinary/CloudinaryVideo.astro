@@ -1,0 +1,9 @@
+---
+const { src } = Astro.props;
+---
+
+<video
+  is="cloudinary-video"
+  data-video-src={src}
+  id={src}
+  class="cld-video-player cld-fluid"></video>
