@@ -1,0 +1,21 @@
+---
+import type { bulletPointSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+type Props = z.infer<typeof bulletPointSchema>;
+const { bullet_point, styles } = Astro.props;
+---
+
+<ul class=`lg:grid lg:grid-cols-2 list-none ${styles?.container}`>
+  {
+    bullet_point.map(({ sub_text, title }) => (
+      <li class:list={[styles?.card]}>
+        <h3 class="text-[1.7rem] md:text-4xl">{title}</h3>
+        <ul class="marker:text-white">
+          {sub_text.map(({ text }) => (
+            <li class="text-xl">{text}</li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ul>
