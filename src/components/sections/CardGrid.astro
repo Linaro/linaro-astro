@@ -2,23 +2,27 @@
 import type { cardsSchema } from "@/content/schemas/sections";
 import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
+import { marked } from "marked";
 type Props = z.infer<typeof cardsSchema>;
 const { cards, styles } = Astro.props;
 ---
 
 <ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
   {
-    cards.map(({ icon, title, text, button }) => (
-      <li class:list={[styles?.card]}>
-        {icon && <Icon name={icon} size={100} class="my-0" />}
-        <h3 class:list={["text-4xl my-5", styles?.cardTitle]}>{title}</h3>
-        <p class="text-xl">{text}</p>
-        {button && (
-          <a href={button.url}>
-            <button class={`linaro-gradient-button `}>{button.text}</button>
-          </a>
-        )}
-      </li>
-    ))
+    cards.map(async ({ icon, title, text, button }) => {
+      const content = text ? await marked.parse(text) : null;
+      return (
+        <li class:list={[styles?.card]}>
+          {icon && <Icon name={icon} size={100} class="my-0" />}
+          <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
+          <div set:html={content} class:list={["text-xl"]} />
+          {button && (
+            <a href={button.url}>
+              <button class={`linaro-gradient-button `}>{button.text}</button>
+            </a>
+          )}
+        </li>
+      );
+    })
   }
 </ul>
