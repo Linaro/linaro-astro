@@ -27,6 +27,7 @@ export const cardsSchema = z.object({
       card: z.string().optional(),
       container: z.string().optional(),
       cardTitle: z.string().optional(),
+      card_heading: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -89,6 +90,30 @@ export const contactSchema = z.object({
   content: z.string(),
   styles: z.string(),
 });
+export const membershipSchema = z.object({
+  component: component("membership"),
+  form_id: z.string(),
+  description: z.string(),
+  text: z.string(),
+  style: z.string().optional(),
+  styles: z.object({
+    card: z.string().optional(),
+    container: z.string().optional(),
+    // cardTitle: z.string().optional(),
+    // card_heading: z.string().optional(),
+  }),
+  MemberManagementPanel: z
+    .array(
+      z.object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        name: z.string().optional(),
+        title_style: z.string().optional(),
+        style: z.string().optional(),
+      })
+    )
+    .optional(),
+});
 
 export const twoColumnSchema = z.object({
   component: component("two_column"),
@@ -97,6 +122,7 @@ export const twoColumnSchema = z.object({
     z.discriminatedUnion("type", [
       z.object({
         type: z.literal("text"),
+        title: z.string().optional(),
         text_content: z.string(),
         styles: z.string().optional(),
       }),
@@ -126,7 +152,7 @@ export const moreInfoSchema = z.object({
     z.object({
       title: z.string(),
       icon: z.string().optional(),
-      url: z.string()
+      url: z.string(),
     })
   ),
 });
@@ -163,5 +189,6 @@ export default z.discriminatedUnion("component", [
   backcardsSchema,
   moreInfoSchema,
   logoGridSchema,
+  membershipSchema,
   graphicSchema,
 ]);

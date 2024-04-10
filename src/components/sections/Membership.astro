@@ -1,0 +1,23 @@
+---
+import type { z } from "astro/zod";
+import type { membershipSchema } from "@/content/schemas/sections";
+import MembershipForm from "../forms/MembershipForm.astro";
+
+type Props = z.infer<typeof membershipSchema>;
+
+const { style, form_id, description, text, MemberManagementPanel, styles } =
+  Astro.props;
+
+let markdownContent;
+---
+
+<div class="flex flex-col xl:flex-row justify-between items-center gap-12">
+  <article set:html={markdownContent} class:list={["text-white", style]} />
+  <MembershipForm
+    form_id={form_id}
+    description={description}
+    text={text}
+    MemberManagementPanel={MemberManagementPanel}
+    styles={styles}
+  />
+</div>
