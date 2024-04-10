@@ -26,8 +26,7 @@ export const cardsSchema = z.object({
     .object({
       card: z.string().optional(),
       container: z.string().optional(),
-      cardTitle: z.string().optional(),
-      card_heading: z.string().optional(),
+      card_title: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -46,8 +45,34 @@ export const cardsSchema = z.object({
   ),
 });
 
-export const backcardsSchema = z.object({
-  component: component("backcards"),
+export const imageCardsSchema = z.object({
+  component: component("image_cards"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+      card_title: z.string().optional(),
+      image: z.string().optional(),
+    })
+    .optional(),
+  cards: z.array(
+    z.object({
+      title: z.string(),
+      text: z.string().optional(),
+      image: z.object({ src: z.string(), alt: z.string() }),
+      style: z.string().optional(),
+      button: z
+        .object({
+          text: z.string(),
+          url: z.string(),
+        })
+        .optional(),
+    })
+  ),
+});
+
+export const threeColumnSchema = z.object({
+  component: component("three_column"),
   styles: z
     .object({
       card: z.string().optional(),
@@ -181,12 +206,13 @@ export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
   cardsSchema,
+  imageCardsSchema,
   statGridSchema,
   socialsSchema,
   textSchema,
   contactSchema,
   twoColumnSchema,
-  backcardsSchema,
+  threeColumnSchema,
   moreInfoSchema,
   logoGridSchema,
   membershipSchema,
