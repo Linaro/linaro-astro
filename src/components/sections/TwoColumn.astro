@@ -15,6 +15,7 @@ const { columns, container_styles } = Astro.props;
         const markdown = marked.parse(column.text_content);
         return (
           <div class:list={[column.styles]}>
+            <h3 class:list={["text-4xl my-5"]}>{column.title}</h3>
             <p set:html={markdown} />
           </div>
         );
