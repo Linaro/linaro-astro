@@ -22,7 +22,7 @@ flow:
     title: IoT & Embedded Applications
     styles: purple-gradient-container
     sections:
-      - component: backcards
+      - component: three_column
         styles:
           card: max-w-[30ch] text-center flex flex-col items-center
           container: justify-center gap-24
@@ -45,7 +45,7 @@ flow:
         styles:
           card: max-w-[30ch] text-center flex flex-col items-center prose-headings:text-[1.5rem]
           container: justify-center gap-24
-          cardTitle: text-linaro-yellow
+          card_title: text-linaro-yellow
         cards:
           - title: ONELab
             text: ONELab revolutionizes edge and IoT device interoperability testing.
