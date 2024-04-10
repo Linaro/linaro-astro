@@ -26,7 +26,7 @@ flow:
         style: text-center text-4xl mx-auto font-bold mb-24
       - component: image_cards
         styles:
-          container: gap-12 justify-center
+          container: gap-12 justify-center flex flex-wrap
           card: flex flex-col justify-between items-center bg-white linaro-gradient-border aspect-square px-8
           card_title: text-xl m-0 text-black font-normal
           image: w-[10ch] my-auto

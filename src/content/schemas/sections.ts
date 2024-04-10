@@ -50,6 +50,7 @@ export const imageCardsSchema = z.object({
   styles: z
     .object({
       card: z.string().optional(),
+      button_style: z.string().optional(),
       container: z.string().optional(),
       card_title: z.string().optional(),
       image: z.string().optional(),
@@ -57,7 +58,8 @@ export const imageCardsSchema = z.object({
     .optional(),
   cards: z.array(
     z.object({
-      title: z.string(),
+      title: z.string().optional(),
+      description: z.string().optional(),
       text: z.string().optional(),
       image: z.object({ src: z.string(), alt: z.string() }),
       style: z.string().optional(),
