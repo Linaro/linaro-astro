@@ -1,8 +1,8 @@
 ---
-import type { backcardsSchema } from "@/content/schemas/sections";
+import type { threeColumnSchema } from "@/content/schemas/sections";
 import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
 import type { z } from "astro/zod";
-type Props = z.infer<typeof backcardsSchema>;
+type Props = z.infer<typeof threeColumnSchema>;
 const { cards, styles, background_image } = Astro.props;
 ---
 
