@@ -202,6 +202,11 @@ export const graphicSchema = z.object({
   height: z.number(),
 });
 
+export const videosSchema = z.object({
+  component: component("videos"),
+  videos: z.array(z.object({ src: z.string(), title: z.string() })),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -217,4 +222,5 @@ export default z.discriminatedUnion("component", [
   logoGridSchema,
   membershipSchema,
   graphicSchema,
+  videosSchema,
 ]);
