@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /services/training
-title: LTS | Linaro
+title: Training and Learning | Linaro
 description: |
-  The security and support solution for your Linux boot-to-kernel product needs levelled-up with advanced Continuous Integration (CI) pipelines and LAVA technology
+  With our expert knowledge of open source licenses, code reviews, and hands-on Linux training, we help companies eliminate risk, achieve compliance, and build strong relationships with open source communities. Our customized training courses cover a wide range of topics and can be tailored to meet the specific needs of your team. Gain the skills and expertise to embrace emerging technologies and best practices in the world of Linux and Arm technology.
 hero:
   title: >
     Training & Learning
