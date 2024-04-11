@@ -70,7 +70,6 @@ flow:
         description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
         styles:
           card: max-w-[30ch] text-center flex flex-col items-center
-          container: justify-center gap-24
         text: "Check the different possibilities to become a project member:"
         MemberManagementPanel:
           - title: Become a
