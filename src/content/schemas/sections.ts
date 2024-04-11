@@ -27,11 +27,12 @@ export const cardsSchema = z.object({
       card: z.string().optional(),
       container: z.string().optional(),
       card_title: z.string().optional(),
+      button_style: z.string().optional(),
     })
     .optional(),
   cards: z.array(
     z.object({
-      title: z.string(),
+      title: z.string().optional(),
       text: z.string().optional(),
       icon: z.string().optional(),
       style: z.string().optional(),
