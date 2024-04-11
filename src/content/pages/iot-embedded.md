@@ -67,10 +67,10 @@ flow:
           card: max-w-md  text-center
         more_info:
           - title: Check out the most read blogs
-            icon: grade
+            icon: blogs
             url: /blog
           - title: Watch presentations and webinars
-            icon: grade
+            icon: webinar
             url: https://resources.linaro.org/
 #   - row: container_row
 #     title: Explore Related Resources

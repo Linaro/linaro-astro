@@ -32,19 +32,19 @@ flow:
         cards:
           - title: Edge AI Solutions
             text: Accelerate AI inference at the edge with optimized software solutions for IoT devices, embedded systems, and edge servers.
-            icon: diversity
+            icon: edge_ai
 
           - title: Custom AI Solutions
             text: Leverage our expertise to develop custom AI and machine learning solutions that address your unique business challenges and objectives.
-            icon: diversity
+            icon: custom_ai
 
           - title: AI Development Tools
             text: Access a comprehensive suite of development tools and resources for building, testing, and optimizing AI and machine learning applications on ARM-based platforms.
-            icon: done_outline
+            icon: ai_dev
 
           - title: Cloud AI Solutions
             text: Deploy scalable and efficient AI models in the cloud with our optimized software frameworks, libraries, and tools for data processing, training, and inference.
-            icon: diversity
+            icon: cloud_ai
   - row: container_row
     title: Explore Related Resources
     styles: bg-transparent z-0
@@ -55,9 +55,9 @@ flow:
           card: max-w-md  text-center
         more_info:
           - title: Check out the most read blogs
-            icon: grade
+            icon: blogs
             url: /blog
           - title: Watch presentations and webinars
-            icon: grade
+            icon: webinar
             url: https://resources.linaro.org/
 ---
