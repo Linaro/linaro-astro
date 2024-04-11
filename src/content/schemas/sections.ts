@@ -50,6 +50,7 @@ export const imageCardsSchema = z.object({
   styles: z
     .object({
       card: z.string().optional(),
+      button_style: z.string().optional(),
       container: z.string().optional(),
       card_title: z.string().optional(),
       image: z.string().optional(),
@@ -57,7 +58,8 @@ export const imageCardsSchema = z.object({
     .optional(),
   cards: z.array(
     z.object({
-      title: z.string(),
+      title: z.string().optional(),
+      description: z.string().optional(),
       text: z.string().optional(),
       image: z.object({ src: z.string(), alt: z.string() }),
       style: z.string().optional(),
@@ -195,9 +197,9 @@ export const bulletPointSchema = z.object({
       title: z.string(),
       sub_text: z.array(
         z.object({
-          text: z.string()
+          text: z.string(),
         })
-      )
+      ),
     })
   ),
 });
@@ -222,6 +224,11 @@ export const graphicSchema = z.object({
   height: z.number(),
 });
 
+export const videosSchema = z.object({
+  component: component("videos"),
+  videos: z.array(z.object({ src: z.string(), title: z.string() })),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -237,5 +244,6 @@ export default z.discriminatedUnion("component", [
   logoGridSchema,
   membershipSchema,
   graphicSchema,
-  bulletPointSchema
+  videosSchema,
+  bulletPointSchema,
 ]);
