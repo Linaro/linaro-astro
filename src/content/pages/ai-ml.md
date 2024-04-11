@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /solutions/ai-ml
-title: LTS | Linaro
+title: AI & Machine Learning | Linaro
 description: |
-  The security and support solution for your Linux boot-to-kernel product needs levelled-up with advanced Continuous Integration (CI) pipelines and LAVA technology
+  Our expertise in the Arm ecosystem enables us to deliver high-performance, efficient, and scalable solutions for your AI-driven applications. From optimized frameworks to hardware acceleration, we provide a comprehensive suite of tools and technologies designed to empower developers, data scientists, and businesses to unlock the true potential of artificial intelligence.
 hero:
   title: >
     Discover the Future of Computing
