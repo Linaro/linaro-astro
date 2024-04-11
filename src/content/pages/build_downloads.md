@@ -105,7 +105,7 @@ flow:
             styles: lg:w-96
             text_content: |
               <table>
-              <thead>
+              <thead style="text-align:left">
                 <tr>
                   <th>Qualcomm</th>
                   <th>Linux OS
