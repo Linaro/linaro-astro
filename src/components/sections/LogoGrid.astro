@@ -8,7 +8,9 @@ type Props = z.infer<typeof logoGridSchema>;
 const { logos } = Astro.props;
 ---
 
-<ul class="list-none flex flex-wrap gap-8 md:gap-16 justify-center">
+<ul
+  class="list-none flex flex-wrap gap-8 md:gap-16 justify-center items-center"
+>
   {
     logos.map((logo) => (
       <li>
@@ -17,7 +19,8 @@ const { logos } = Astro.props;
           alt={logo.alt}
           width={200}
           height={200}
-          class="w-[100px] md:w-[200px]"
+          class="max-h-[75px] w-auto"
+          svg={true}
         />
       </li>
     ))
