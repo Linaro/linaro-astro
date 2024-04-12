@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /projects/automotive-iot-edge
-title: AutomotiveIotEdge | Linaro
+title: Automotive, IoT & Edge | Linaro
 description: |
   Linaro collaborates with member companies to develop open standards and interfaces that accelerate and secure the deployment of Automotive, IoT, and Edge solutions. Join us in revolutionizing the way we drive innovation at the edge.
 hero:
@@ -75,7 +75,7 @@ flow:
           - title: Become a
             title_style: whitespace-nowrap
             name: Project Member
-            description: Access One Project
+            description: Access one project
           - title: Become a
             title_style: whitespace-nowrap
             name: Group Member
@@ -83,6 +83,6 @@ flow:
           - title: Become a
             title_style: whitespace-nowrap
             name: Core & Club Member
-            description: Access all Linaro driven projects & groups Access One Project
+            description: Access all Linaro driven projects & groups
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
 ---

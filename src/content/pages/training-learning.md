@@ -15,7 +15,7 @@ hero:
   styles:
     text_container: max-w-4xl
     title: max-w-md
-    description: max-w-md
+    description: max-w-2xl
     background: bg-center
 flow:
   - row: container_row
