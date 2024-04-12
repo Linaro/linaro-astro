@@ -1,9 +1,7 @@
 import "solid-js";
 import {
   For,
-  Match,
   Show,
-  Switch,
   createEffect,
   createMemo,
   createResource,
@@ -11,8 +9,7 @@ import {
   type JSX,
 } from "solid-js";
 import type { CollectionEntry } from "astro:content";
-import ArticleResults from "./ArticleResults";
-import { Collapse } from "solid-collapse";
+import BlogResults from "./BlogResults";
 import { FaSolidChevronRight, FaSolidXmark } from "solid-icons/fa";
 import { AiFillTags } from "solid-icons/ai";
 
@@ -34,13 +31,9 @@ const fetchResults = async ({
   return await pagefind.search(query, {
     filters,
     sort: {
-      date: "desc"
-    }
+      date: "desc",
+    },
   });
-};
-
-const fetchFilterOptions = async () => {
-  return await pagefind.filters();
 };
 
 const getQueryParams = ({ filters, query }: SearchQuery) => {
@@ -53,12 +46,12 @@ const getQueryParams = ({ filters, query }: SearchQuery) => {
   return url;
 };
 
-const Search = ({
-  type,
+const BlogSearch = ({
   tags,
+  type,
 }: {
-  type: "blog";
-  tags?: CollectionEntry<"tags">[];
+  tags: CollectionEntry<"tags">[];
+  type: "blogs" | "news";
 }) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
@@ -156,8 +149,7 @@ const Search = ({
 
   return (
     <div class={`w-full flex flex-col mt-12`}>
-      
-      <div class="w-full flex flex-col md:flex-row justify-between items-stretch mb-3 gap-3 md:gap-0">
+      <div class="w-full lg:w-1/2 flex flex-col md:flex-row justify-between items-stretch mb-3 gap-3 md:gap-0">
         <form
           class="bg-white text-black basis-full rounded-full flex flex-row py-2 px-1 items-center pl-6"
           onSubmit={(e) => {
@@ -169,9 +161,10 @@ const Search = ({
             name="blog-search"
             value={search().query ?? ""}
             onInput={(e) => {
+              const value = e.target.value === "" ? null : e.target.value;
               setSearch({
                 ...search(),
-                query: e.target.value ?? null,
+                query: value ?? null,
               });
             }}
             class="w-full h-full px-3"
@@ -185,62 +178,62 @@ const Search = ({
           </button>
         </form>
       </div>
-      <div class="mt-4">
+      <div class="mt-4 w-full lg:w-1/2">
         <div class="flex gap-4">
-        <button
-          onClick={() => setIsExpanded(!isExpanded())}
-          class="flex text-2xl items-center align-middle"
-        >
-          <AiFillTags class="mr-1" />
-          <span class="mb-2 mr-4">
-            {`Tags` +
-              (search().filters.tags.length > 0
-                ? ` (${search().filters.tags.length})`
-                : "")}
-          </span>
-          <span class={`${isExpanded() ? "rotate-90" : ""}`}>
-            <FaSolidChevronRight size={20} />
-          </span>
-        </button>
-        <Show when={search().filters.tags.length > 0}>
-              <button
-                class="py-2 rounded-full text-grey flex items-center gap-2"
-                onClick={onClearTags}
-              >
-                <FaSolidXmark size={20} />
-                Clear tags
-              </button>
-            </Show>
-        </div>
-      
-        <Collapse value={isExpanded()} >
-          <Show when={!!tags}>
-            <ul class="flex flex-wrap gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-8 py-8 justify-self-end">
-              <For each={tags!.filter((tag) => results()?.filters.tags[tag.slug] > 0)}>
-                {(tag) => (
-                  <li>
-                    <button
-                      data-tag={tag.slug}
-                      class="bg-grey px-6 py-2 rounded-full"
-                      classList={{
-                        "linaro-gradient-button":
-                          search().filters.tags.includes(tag.slug),
-                      }}
-                      onClick={onClickTag}
-                    >
-                      {`${tag.data.name} (${
-                        results()?.filters.tags[tag.slug] ?? 0
-                      })`}
-                    </button>
-                  </li>
-                )}
-              </For>
-            </ul>
+          <button
+            onClick={() => setIsExpanded(!isExpanded())}
+            class="flex text-2xl items-center align-middle"
+          >
+            <AiFillTags class="mr-1" />
+            <span class="mb-2 mr-4">
+              {`Tags` +
+                (search().filters.tags.length > 0
+                  ? ` (${search().filters.tags.length})`
+                  : "")}
+            </span>
+            <span class={`${isExpanded() ? "rotate-90" : ""}`}>
+              <FaSolidChevronRight size={20} />
+            </span>
+          </button>
+          <Show when={search().filters.tags.length > 0}>
+            <button
+              class="py-2 rounded-full text-grey flex items-center gap-2"
+              onClick={onClearTags}
+            >
+              <FaSolidXmark size={20} />
+              Clear tags
+            </button>
           </Show>
-         
-        </Collapse>
+        </div>
+
+        <Show when={isExpanded()}>
+          <ul class="flex flex-wrap gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-8 py-8 justify-self-end">
+            <For
+              each={tags.filter((tag) => results()?.filters.tags[tag.slug] > 0)}
+            >
+              {(tag) => (
+                <li>
+                  <button
+                    data-tag={tag.slug}
+                    class="bg-grey px-6 py-2 rounded-full"
+                    classList={{
+                      "linaro-gradient-button": search().filters.tags.includes(
+                        tag.slug
+                      ),
+                    }}
+                    onClick={onClickTag}
+                  >
+                    {`${tag.data.name} (${
+                      results()?.filters.tags[tag.slug] ?? 0
+                    })`}
+                  </button>
+                </li>
+              )}
+            </For>
+          </ul>
+        </Show>
       </div>
-      <ArticleResults
+      <BlogResults
         results={results}
         onClearSearch={onClearSearch}
         tags={tags}
@@ -249,4 +242,4 @@ const Search = ({
   );
 };
 
-export default Search;
+export default BlogSearch;

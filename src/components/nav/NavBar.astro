@@ -28,7 +28,7 @@ const activeLink = navData.data.find(
         ><CloudinaryImg
           src={"linaro-website/graphics/logo"}
           alt="Linaro Logo"
-          class="h-auto w-[125px] xl:w-[150px] mt-[-4px]"
+          class="h-auto w-[125px] xl:w-[150px] mt-[-2px] ml-[-10px]"
           width={150}
           height={52}
         /></a
@@ -64,6 +64,9 @@ const activeLink = navData.data.find(
                         class:list={[
                           "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
                         ]}
+                        target={
+                          item.url.startsWith("https") ? "_blank" : "_self"
+                        }
                       >
                         {item.label}
                       </a>
@@ -94,6 +97,7 @@ const activeLink = navData.data.find(
                     class:list={[
                       "lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm",
                     ]}
+                    target={child.url.startsWith("https") ? "_blank" : "_self"}
                   >
                     {child.label}
                   </a>

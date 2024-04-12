@@ -14,7 +14,7 @@ import { getCollection } from "astro:content";
 import BlogListing from "@/components/article/blog/BlogListing.astro";
 
 type Props = {
-  post: CollectionEntry<"blogs">;
+  post: CollectionEntry<"news">;
 };
 
 const {
@@ -45,7 +45,7 @@ const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
 
 const optimizedBackground = await getImage({
   src: getCloudinarySrc({
-    src: "linaro-website/graphics/bg-logo-3",
+    src: "linaro-website/graphics/purple-map",
     alt: "",
     width: 1724.55,
     height: 1182.9,
@@ -73,12 +73,7 @@ if (related.length > 0) {
   relatedPosts = await getEntries(related);
 } else {
   relatedPosts = (
-    await getCollection("blogs", ({ data, slug: thisSlug }) => {
-      return (
-        thisSlug !== slug &&
-        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug))
-      );
-    })
+    await getCollection("news", ({ slug: thisSlug }) => thisSlug !== slug)
   )
     .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
     .slice(0, 3);
@@ -125,7 +120,7 @@ if (related.length > 0) {
         {
           tags.map(({ slug, data: { name } }) => (
             <li data-pagefind-filter={`tags:${slug}`} data-pagefind-ignore>
-              <a href={`/blog?tags=${slug}`}>
+              <a href={`/news?tags=${slug}`}>
                 <button class="linaro-gradient-button">{name}</button>
               </a>
             </li>
@@ -137,7 +132,7 @@ if (related.length > 0) {
     <ArticleContent Content={Content} image={image} />
   </main>
   <aside class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24">
-    <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Related Posts</h2>
+    <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Latest News</h2>
     <ul class="flex flex-wrap gap-8 justify-center">
       {relatedPosts?.map((post) => <BlogListing {...post} />)}
     </ul>

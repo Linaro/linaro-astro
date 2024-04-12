@@ -1,0 +1,156 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+import BaseLayout from "./BaseLayout.astro";
+import { getImage, Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import dayjs from "dayjs";
+import { getEntries } from "astro:content";
+import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
+import { remark } from "remark";
+import stripMarkdown from "strip-markdown";
+import ArticleContent from "@/components/article/ArticleContent.astro";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import dayOfYear from "dayjs/plugin/dayOfYear";
+import { getCollection } from "astro:content";
+import EventListing from "@/components/article/events/EventListing.astro";
+dayjs.extend(advancedFormat);
+dayjs.extend(dayOfYear);
+
+type Props = {
+  post: CollectionEntry<"events">;
+};
+
+const {
+  post: {
+    data: {
+      title,
+      description,
+      image,
+      event_start,
+      event_end,
+      location,
+      button,
+    },
+    body,
+    render,
+  },
+} = Astro.props;
+
+const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
+
+const optimizedBackground = await getImage({
+  src: getCloudinarySrc({
+    src: "linaro-website/graphics/yellow-map",
+    alt: "",
+    width: 1724.55,
+    height: 1182.9,
+  }),
+  format: "webp",
+  inferSize: true,
+});
+const { Content, headings } = await render();
+
+const summary =
+  String(
+    await remark()
+      .use(stripMarkdown, {
+        remove: ["heading"],
+      })
+      .process(body)
+  )
+    .split(" ")
+    .slice(0, 30)
+    .join(" ")
+    .replace("\\", "") + "...";
+
+let formattedDate;
+const eventStart = dayjs(event_start);
+const eventEnd = dayjs(event_end);
+if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
+  formattedDate = `${dayjs(event_start).format("D MMMM, YYYY")}`;
+} else {
+  formattedDate = `${dayjs(event_start).format("D")}-${dayjs(event_end).format("DD MMMM, YYYY")}`;
+}
+
+const upcomingEvents = (
+  await getCollection(
+    "events",
+    ({ data }) => new Date(data.event_start).getTime() > Date.now()
+  )
+)
+  .sort((a, b) => dayjs(b.data.event_start).diff(a.data.event_start))
+  .slice(0, 3);
+---
+
+<BaseLayout title={title} description={description}>
+  <main data-pagefind-body data-pagefind-filter="type:event">
+    <section
+      class:list={[
+        "relative hero-background-image pt-32 pb-16 container mx-auto max-w-5xl px-8 xl:px-0 flex flex-col",
+      ]}
+    >
+      <h1 class="text-5xl font-bold mb-12 max-w-4xl">{title}</h1>
+      <p class="flex gap-4 flex-wrap items-start block">
+        <div
+          data-pagefind-meta={`event_start`}
+          data-pagefind-sort={`event_start`}
+          class="hidden"
+        >
+          {new Date(event_start).getTime()}
+        </div>
+        <div
+          data-pagefind-meta={`event_end`}
+          data-pagefind-sort={`event_end`}
+          class="hidden"
+        >
+          {new Date(event_end).getTime()}
+        </div>
+        <span data-pagefind-meta={`dates`}>{formattedDate}</span>
+        {
+          location && (
+            <span class="before:content-['|'] before:mr-4">{location}</span>
+          )
+        }
+      </p>
+      {
+        button && (
+          <a
+            href={button.url}
+            data-pagefind-meta="button_text, button_url[href]"
+            target="_blank"
+            class="mt-4"
+          >
+            <button class="linaro-gradient-button block">{button.text}</button>
+          </a>
+        )
+      }
+      <span data-pagefind-meta="summary" class="hidden">{summary}</span>
+    </section>
+    <ArticleContent Content={Content} image={image} />
+  </main>
+  {
+    upcomingEvents.length > 0 && (
+      <aside class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24">
+        <h2 class="text-5xl text-linaro-yellow font-bold mb-16">
+          Upcoming Events
+        </h2>
+        <ul class="flex flex-wrap gap-8 justify-center">
+          {upcomingEvents.map((event) => (
+            <EventListing {...event} />
+          ))}
+        </ul>
+      </aside>
+    )
+  }
+</BaseLayout>
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+>
+  .hero-background-image {
+    background-image: var(--backgroundUrl);
+    background-repeat: no-repeat;
+    background-position: top right -50%;
+  }
+</style>
