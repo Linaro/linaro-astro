@@ -144,7 +144,7 @@ flow:
           - title: Become a
             title_style: whitespace-nowrap
             name: Project Member
-            description: Access One Project
+            description: Access one project
           - title: Become a
             title_style: whitespace-nowrap
             name: Group Member
@@ -152,7 +152,7 @@ flow:
           - title: Become a
             title_style: whitespace-nowrap
             name: Core & Club Member
-            description: Access all Linaro driven projects & groups Access One Project
+            description: Access all Linaro driven projects & groups
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
   - row: container_row
     title: Explore Related Resources
@@ -164,10 +164,10 @@ flow:
           card: max-w-md  text-center
         more_info:
           - title: Check out the most read blogs
-            icon: grade
+            icon: blogs
             url: /blog
           - title: Watch presentations and webinars
-            icon: grade
+            icon: webinar
             url: https://resources.linaro.org/
 #   - row: container_row
 #     title: Explore Related Resources
