@@ -1,0 +1,67 @@
+---
+import type { CollectionEntry } from "astro:content";
+import CloudinaryImg from "../../cloudinary/CloudinaryImg.astro";
+import { getEntry } from "astro:content";
+import { remark } from "remark";
+import strip from "strip-markdown";
+import { getEntries } from "astro:content";
+import dayjs from "dayjs";
+
+type Props = CollectionEntry<"events">;
+const { slug, data: event, body } = Astro.props;
+
+const content =
+  String(
+    await remark()
+      .use(strip, {
+        remove: ["heading"],
+      })
+      .process(body)
+  )
+    .split(" ")
+    .slice(0, 30)
+    .join(" ")
+    .replace("\\", "") + "...";
+
+let formattedDate;
+const eventStart = dayjs(event.event_start);
+const eventEnd = dayjs(event.event_end);
+if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
+  formattedDate = `${eventStart.format("D MMMM, YYYY")}`;
+} else {
+  formattedDate = `${eventStart.format("D")}-${eventEnd.format("DD MMMM, YYYY")}`;
+}
+---
+
+<li
+  class="w-full sm:w-80 max-w-full border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between"
+>
+  <a
+    href={`/events/${slug}`}
+    class="w-full px-4 pt-8 pb-12 inline-block basis-full"
+  >
+    <CloudinaryImg
+      src={event.image}
+      alt=""
+      width={800}
+      height={800}
+      class="w-full h-36 object-cover rounded-lg"
+    />
+    <h2 class="text-2xl my-6">{event.title}</h2>
+    <p class="text-neutral-400 mb-2">{formattedDate}</p>
+    <p>{content}</p>
+  </a>
+  {
+    event.button && (
+      <div class="px-4 py-8 justify-self-end">
+        <a
+          class="linaro-gradient-button"
+          href={event.button.url}
+          target="_blank"
+        >
+          {event.button.text}
+        </a>
+      </div>
+    )
+  }
+</li>

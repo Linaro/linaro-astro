@@ -32,8 +32,7 @@ flow:
         cards:
           - title: Edge AI Solutions
             text: Accelerate AI inference at the edge with optimized software solutions for IoT devices, embedded systems, and edge servers.
-            icon: diversity
-
+            icon: test-2
           - title: Custom AI Solutions
             text: Leverage our expertise to develop custom AI and machine learning solutions that address your unique business challenges and objectives.
             icon: diversity

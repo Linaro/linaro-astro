@@ -8,7 +8,6 @@ import {
   Match,
   Show,
   Switch,
-  type Accessor,
   type Resource,
 } from "solid-js";
 
@@ -20,12 +19,12 @@ const getArticle = async (result: any) => {
   return await result.data();
 };
 
-const ArticleResult = ({
+const BlogResult = ({
   result,
   tags,
 }: {
   result: any;
-  tags?: CollectionEntry<"tags">[];
+  tags: CollectionEntry<"tags">[];
 }) => {
   const [article] = createResource(result, getArticle);
 
@@ -52,7 +51,9 @@ const ArticleResult = ({
             class="aspect-square object-cover rounded-full my-4 max-w-full"
           />
         </Show>
-        <p class="text-linaro-yellow mt-2">{[article()?.meta.author].join(" ")}</p>
+        <p class="text-linaro-yellow mt-2">
+          {[article()?.meta.author].join(" ")}
+        </p>
         <p class="text-neutral-400 mb-2">
           {dayjs(article()?.meta.date).format("dddd, MMMM D, YYYY")}
         </p>
@@ -71,14 +72,14 @@ const ArticleResult = ({
   );
 };
 
-const ArticleResults = ({
+const BlogResults = ({
   results,
   onClearSearch,
   tags,
 }: {
   results: Resource<any>;
   onClearSearch: () => void;
-  tags?: CollectionEntry<"tags">[];
+  tags: CollectionEntry<"tags">[];
 }) => {
   const [page, setPage] = createSignal(1);
   const [paginatedResults, setPaginatedResults] = createSignal([]);
@@ -93,19 +94,17 @@ const ArticleResults = ({
 
   return (
     <div class="flex flex-col mt-8 mb-24 gap-12 items-center w-full">
-      
       <Switch>
         <Match when={results.loading}>
           <div>Loading results...</div>
         </Match>
         <Match when={results()?.results.length > 0}>
-        <p class="font-bold text-2xl self-start">
-           {results()?.results.length}{" "}
-            results
+          <p class="font-bold text-2xl self-start">
+            {results()?.results.length} results
           </p>
           <ul class="flex flex-wrap gap-16  justify-center">
             <For each={paginatedResults()}>
-              {(result) => <ArticleResult result={result} tags={tags} />}
+              {(result) => <BlogResult result={result} tags={tags} />}
             </For>
           </ul>
           <p class="font-bold text-2xl">
@@ -113,15 +112,15 @@ const ArticleResults = ({
             results
           </p>
           <Show when={paginatedResults().length < results().results.length}>
-          <button
-            class="px-10 py-2 bg-white hover:bg-slate-300 border-white text-black font-bold border rounded-full"
-            onClick={onClickMore}
-          >
-            Load more
-          </button>
-        </Show>
+            <button
+              class="px-10 py-2 bg-white hover:bg-slate-300 border-white text-black font-bold border rounded-full"
+              onClick={onClickMore}
+            >
+              Load more
+            </button>
+          </Show>
         </Match>
-        
+
         <Match when={results()?.results.length === 0}>
           <p class="font-bold text-2xl">{results().results.length} results</p>
 
@@ -137,4 +136,4 @@ const ArticleResults = ({
   );
 };
 
-export default ArticleResults;
+export default BlogResults;
