@@ -46,13 +46,11 @@ const EventResult = ({ event }: { event: any }) => {
         <p>{event.meta.summary}</p>
       </a>
       <div class="px-4 py-8 justify-self-end">
-        <a
-          class="linaro-gradient-button"
-          href={event.meta.button_url}
-          target="_blank"
-        >
-          {event.meta.button_text}
-        </a>
+        <button class="linaro-gradient-button">
+          <a href={event.meta.button_url} target="_blank">
+            {event.meta.button_text}
+          </a>
+        </button>
       </div>
     </li>
   );

@@ -9,7 +9,11 @@ const { more_info, styles } = Astro.props;
 <ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
   {
     more_info.map(({ icon, title, url }) => (
-      <a href={url} class="no-underline max-w-full px-2">
+      <a
+        href={url}
+        class="no-underline max-w-full px-2"
+        target={url.startsWith("https") ? "_blank" : "self"}
+      >
         <li class:list={[styles?.card]}>
           {icon && <Icon name={icon} size={100} class="my-0 mx-auto" />}
           <h3 class="text-4xl my-5">{title}</h3>

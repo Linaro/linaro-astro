@@ -12,9 +12,9 @@ type Props = {
   styles?: string;
 };
 
-const { size, color, outline,  styles } = Astro.props;
-const iconColor = color ? `text-${color}` : "text-white"
-const borderColor = color ? `border-${color}` : `border-white`
+const { size, color, outline, styles } = Astro.props;
+const iconColor = color ? `text-${color}` : "text-white";
+const borderColor = color ? `border-${color}` : `border-white`;
 ---
 
 <ul class:list={["not-prose flex flex-wrap", styles]}>
@@ -22,13 +22,20 @@ const borderColor = color ? `border-${color}` : `border-white`
     icons.map(
       ({ label, url, icon }: { url: string; icon: string; label: string }) => (
         <a href={url} target="_blank">
-          <li class:list={[ borderColor, outline ? `p-3 border-2 rounded-full` : "border-none"]}>
-            <Icon name={icon} size={size || 20} class:list={[iconColor, ]}/>
+          <li
+            class:list={[
+              borderColor,
+              outline ? `p-3 border-2 rounded-full` : "border-none",
+            ]}
+          >
+            <Icon
+              name={icon}
+              size={size || 20}
+              class:list={[iconColor, "hover:text-linaro-yellow"]}
+            />
           </li>
         </a>
       )
     )
   }
 </ul>
-
-
