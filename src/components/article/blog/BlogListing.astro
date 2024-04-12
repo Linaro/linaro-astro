@@ -32,7 +32,7 @@ const content =
   class="w-80 border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between"
 >
   <a
-    href={`/${collection}/${slug}`}
+    href={`/${collection === "blogs" ? "blog" : collection}/${slug}`}
     class="w-full px-4 pt-8 pb-12 inline-block basis-full"
   >
     <CloudinaryImg
@@ -40,6 +40,7 @@ const content =
       alt=""
       width={800}
       height={800}
+      effects={["grayscale"]}
       class="w-full h-36 object-cover rounded-lg"
     />
     <h2 class="text-2xl my-6">{blog.title}</h2>

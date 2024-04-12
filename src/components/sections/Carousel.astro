@@ -13,7 +13,14 @@ const { images } = Astro.props;
     {
       images.map(({ src, alt }: { src: string; alt: string }) => (
         <li>
-          <CloudinaryImg src={src} alt={alt} width={150} height={150} />
+          <CloudinaryImg
+            src={src}
+            alt={alt}
+            width={150}
+            height={150}
+            class="max-h-[75px] w-auto"
+            svg={true}
+          />
         </li>
       ))
     }
@@ -25,7 +32,14 @@ const { images } = Astro.props;
     {
       images.map(({ src, alt }: { src: string; alt: string }) => (
         <li>
-          <CloudinaryImg src={src} alt={alt} width={150} height={150} />
+          <CloudinaryImg
+            src={src}
+            alt={alt}
+            width={150}
+            height={150}
+            class="max-h-[75px] w-auto"
+            svg={true}
+          />
         </li>
       ))
     }

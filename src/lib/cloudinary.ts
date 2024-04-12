@@ -44,6 +44,7 @@ interface Props extends CloudinaryProps {
   src: string;
   alt: string;
   errorImage?: string;
+  svg?: boolean;
 }
 
 export const getCloudinarySrc = ({ src, ...props }: Props) => {
@@ -64,9 +65,9 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
     : cloudinaryMedia.image(src);
 
   if (props.effects !== undefined && props.effects !== null) {
-    for (var i = 0; i < props.effects.length; i++) {
+    for (const effect of props.effects) {
       let effectFunction;
-      switch (props.effects[i]) {
+      switch (effect) {
         case "blur":
           effectFunction = blur();
           break;
@@ -120,8 +121,9 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
     }
   }
 
-  imageSource.format("auto").quality("auto");
-
+  props.svg
+    ? imageSource.format("svg").quality("auto")
+    : imageSource.format("auto").quality("auto");
   if (props.resize !== undefined && props.resize !== null) {
     let resizeFunction;
     switch (props.resize) {
@@ -188,6 +190,5 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
   if (props.rotate !== undefined && props.rotate !== null) {
     imageSource.rotate(byAngle(props.rotate));
   }
-
   return imageSource.toURL();
 };
