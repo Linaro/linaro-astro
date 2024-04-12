@@ -2,15 +2,15 @@
 import type { imageCardsSchema } from "@/content/schemas/sections";
 import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 import { marked } from "marked";
+import { style } from "solid-js/web";
 type Props = z.infer<typeof imageCardsSchema>;
 const { cards, styles } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+<ul class:list={["list-none   p-0 ", styles?.container]}>
   {
-    cards.map(async ({ image, title, text, button }) => {
+    cards.map(async ({ image, title, text, button, style }) => {
       const content = text ? await marked.parse(text) : null;
       return (
         <li class:list={[styles?.card]}>
@@ -24,10 +24,17 @@ const { cards, styles } = Astro.props;
             />
           )}
           <h3 class:list={[styles?.card_title]}>{title}</h3>
-          <div class="text-xl" set:html={content}></div>
+          <div class:list={["text-xl", style]} set:html={content} />
           {button && (
-            <a href={button.url}>
-              <button class={`linaro-gradient-button `}>{button.text}</button>
+            <a href={button.url} class="self-start">
+              <button
+                class:list={[
+                  `linaro-gradient-button justify-self-start items-start `,
+                  styles?.button_style,
+                ]}
+              >
+                {button.text}
+              </button>
             </a>
           )}
         </li>

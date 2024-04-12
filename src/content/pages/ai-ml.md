@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /solutions/ai-ml
-title: LTS | Linaro
+title: AI & Machine Learning | Linaro
 description: |
-  The security and support solution for your Linux boot-to-kernel product needs levelled-up with advanced Continuous Integration (CI) pipelines and LAVA technology
+  Our expertise in the Arm ecosystem enables us to deliver high-performance, efficient, and scalable solutions for your AI-driven applications. From optimized frameworks to hardware acceleration, we provide a comprehensive suite of tools and technologies designed to empower developers, data scientists, and businesses to unlock the true potential of artificial intelligence.
 hero:
   title: >
     Discover the Future of Computing
@@ -32,18 +32,19 @@ flow:
         cards:
           - title: Edge AI Solutions
             text: Accelerate AI inference at the edge with optimized software solutions for IoT devices, embedded systems, and edge servers.
-            icon: test-2
+            icon: edge_ai
+
           - title: Custom AI Solutions
             text: Leverage our expertise to develop custom AI and machine learning solutions that address your unique business challenges and objectives.
-            icon: diversity
+            icon: custom_ai
 
           - title: AI Development Tools
             text: Access a comprehensive suite of development tools and resources for building, testing, and optimizing AI and machine learning applications on ARM-based platforms.
-            icon: done_outline
+            icon: ai_dev
 
           - title: Cloud AI Solutions
             text: Deploy scalable and efficient AI models in the cloud with our optimized software frameworks, libraries, and tools for data processing, training, and inference.
-            icon: diversity
+            icon: cloud_ai
   - row: container_row
     title: Explore Related Resources
     styles: bg-transparent z-0
@@ -54,9 +55,9 @@ flow:
           card: max-w-md  text-center
         more_info:
           - title: Check out the most read blogs
-            icon: grade
+            icon: blogs
             url: /blog
           - title: Watch presentations and webinars
-            icon: grade
+            icon: webinar
             url: https://resources.linaro.org/
 ---
