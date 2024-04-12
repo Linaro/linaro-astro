@@ -28,11 +28,6 @@ export default defineConfig({
       external: ["/pagefind/pagefind.js"],
     },
   },
-  vite: {
-    ssr: {
-      noExternal: ['cloudinary-video-player'],
-    }
-  },
   cacheDir: "./cache",
   integrations: [
     solidJs(),

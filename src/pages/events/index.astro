@@ -1,24 +1,22 @@
 ---
-import BlogSearch from "@/components/article/blog/BlogSearch";
+import EventSearch from "@/components/article/events/EventSearch";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
-import { getCollection } from "astro:content";
 
-const tags = await getCollection("tags");
 const optimizedBackground = await getImage({
   src: getCloudinarySrc({
-    src: "linaro-website/graphics/bg-logo-3",
+    src: "linaro-website/graphics/yellow-map",
     alt: "",
-    width: 1724.55,
-    height: 1182.9,
+    width: 1000,
+    height: 500,
   }),
   format: "webp",
   inferSize: true,
 });
 ---
 
-<BaseLayout title="Linaro | Blogs" description="A list of blogs">
+<BaseLayout title="Linaro | Events" description="A list of blogs">
   <div
     class="purple-gradient-container absolute h-[50rem] w-full z-[-1] top-[30rem]"
   >
@@ -26,8 +24,8 @@ const optimizedBackground = await getImage({
   <main
     class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
   >
-    <h1 class="text-5xl my-12 font-bold">Blog</h1>
-    <BlogSearch client:only="solid-js" tags={tags} type="blogs" />
+    <h1 class="text-5xl my-12 font-bold">Events</h1>
+    <EventSearch client:only="solid-js" />
   </main>
 </BaseLayout>
 <style
@@ -37,6 +35,6 @@ const optimizedBackground = await getImage({
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-    @apply bg-[top_right] xl:bg-[top_-1rem_right] bg-[size:100%] lg:bg-[size:50%];
+    @apply bg-[top_right] xl:bg-[top_-2%_right] bg-[size:100%] lg:bg-[size:50%];
   }
 </style>

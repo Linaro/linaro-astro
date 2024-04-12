@@ -2,7 +2,7 @@
   key: solutions
   children:
     - label: HPC
-      url: /solutions/linaro-forge
+      url: https://www.linaroforge.com
     - label: IoT & Embedded Systems
       url: /solutions/iot-embedded
     - label: AI & Machine Learning

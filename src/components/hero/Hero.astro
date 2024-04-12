@@ -6,7 +6,6 @@ import * as marked from "marked";
 
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
-console.log(Astro.props);
 const { title, background_image, button, description, styles } = Astro.props!;
 
 const optimizedBackground = await getImage({
@@ -22,8 +21,6 @@ const optimizedBackground = await getImage({
 
 const titleMarkdown = await marked.parseInline(title);
 const descriptionMarkdown = await marked.parse(description);
-
-console.log(styles);
 ---
 
 <section

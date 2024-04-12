@@ -118,6 +118,7 @@ export const contactSchema = z.object({
   content: z.string(),
   styles: z.string(),
 });
+
 export const membershipSchema = z.object({
   component: component("membership"),
   form_id: z.string(),
