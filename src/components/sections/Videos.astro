@@ -25,9 +25,7 @@ const { videos } = Astro.props;
   class CloudinaryVideo extends HTMLVideoElement {
     constructor() {
       super();
-      console.log("hello");
       const src = this.dataset.videoSrc!;
-      console.log(src);
       // Read the message from the data attribute.
       const demoplayer = cloudinary.videoPlayer(this.id, {
         cloudName: "dl7c2wmhi",
