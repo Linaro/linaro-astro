@@ -56,7 +56,10 @@ const descriptionMarkdown = await marked.parse(description);
         ]}
         set:html={titleMarkdown}
       />
-      <div class:list={[styles?.description]} set:html={descriptionMarkdown} />
+      <div
+        class:list={["text-xl", styles?.description]}
+        set:html={descriptionMarkdown}
+      />
       {
         button && (
           <a href={button.url} class="mt-12">
