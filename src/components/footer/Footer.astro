@@ -44,14 +44,19 @@ const path = Astro.url.pathname;
               <ul>
                 {item.children.map((item: any) => (
                   <li class="mb-2">
-                    <a href={item.url}>{item.label}</a>
+                    <a href={item.url} class="hover:text-linaro-yellow">
+                      {item.label}
+                    </a>
                   </li>
                 ))}
               </ul>
             </li>
           ) : (
             <li>
-              <a href={item.url} class="text-white text-[1rem] mb-4">
+              <a
+                href={item.url}
+                class="text-white text-[1rem] mb-4 hover:text-linaro-yellow"
+              >
                 {item.label}
               </a>
             </li>
@@ -72,7 +77,9 @@ const path = Astro.url.pathname;
       {
         company_links.map(({ url, label }: { url: string; label: string }) => (
           <li>
-            <a href={url}>{label}</a>
+            <a href={url} class="hover:text-linaro-yellow">
+              {label}
+            </a>
           </li>
         ))
       }

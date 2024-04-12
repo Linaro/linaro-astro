@@ -10,7 +10,7 @@ const { buttons } = Astro.props;
   {
     buttons.map(({ text, url, style }) => (
       <li>
-        <a href={url}>
+        <a href={url} target={url.startsWith("https") ? "_blank" : "self"}>
           <button class:list={[style]}>{text}</button>
         </a>
       </li>

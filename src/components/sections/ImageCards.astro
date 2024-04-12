@@ -26,7 +26,11 @@ const { cards, styles } = Astro.props;
           <h3 class:list={[styles?.card_title]}>{title}</h3>
           <div class:list={["text-xl", style]} set:html={content} />
           {button && (
-            <a href={button.url} class="self-start">
+            <a
+              href={button.url}
+              class="self-start"
+              target={button.url.startsWith("https") ? "_blank" : "self"}
+            >
               <button
                 class:list={[
                   `linaro-gradient-button justify-self-start items-start `,

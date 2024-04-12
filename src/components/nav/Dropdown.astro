@@ -35,6 +35,7 @@ const { title, lastItem, children } = Astro.props;
               <a
                 href={item.url}
                 class=" px-3 py-1 text-grey  hover:text-white "
+                target={item.url.startsWith("https") ? "_blank" : "_self"}
               >
                 {item.label}
               </a>

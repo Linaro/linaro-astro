@@ -33,16 +33,6 @@ const inputFields = [
         </>
       ))
     }
-    <label for={name} class="sr-only">
-      {label}
-    </label>
-    <input
-      type={type as any}
-      name={name}
-      required
-      placeholder={label}
-      class="text-black pl-2 h-12 w-full"
-    />
     <label for="agreed" class="text-white"
       ><input type="checkbox" name="agreed" class="mr-2" required />I’ve read
       and agreed to Linaro’s <a href="/privacy-policy" class="text-white"
