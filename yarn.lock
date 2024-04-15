@@ -131,10 +131,10 @@
     sitemap "^7.1.1"
     zod "^3.22.4"
 
-"@astrojs/solid-js@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/@astrojs/solid-js/-/solid-js-4.0.1.tgz"
-  integrity sha512-XjViecwQDEO/e3OWCCORPYtYLS7MUNWvAWGVvNkzhAyVYZbM2fzckp94WkhX/qPu1rPUyNxSMXnN6IXkiVRTwA==
+"@astrojs/solid-js@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@astrojs/solid-js/-/solid-js-4.1.0.tgz#b8c5ff8be27797094db010561f3ba196f8ad1a93"
+  integrity sha512-q7zZF1P/zaCHYbE3KyA7be31VSlH3FGUiU/1xutifrYRdk+kbiELUW3Z2DjEGf05lJ2GKtZyHmFufxX8tvMoQA==
   dependencies:
     vite-plugin-solid "^2.8.0"
 
