@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "postcss": "^8.4.38",
-    "sass": "^1.72.0",
+    "sass": "^1.75.0",
     "tailwindcss-animated": "^1.0.1"
   }
 }
