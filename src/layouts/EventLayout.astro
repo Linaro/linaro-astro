@@ -83,8 +83,8 @@ const upcomingEvents = (
   .slice(0, 3);
 ---
 
-<BaseLayout title={title} description={description}>
-  <main data-pagefind-body data-pagefind-filter="type:event">
+<BaseLayout title={title + " | Events"} description={description}>
+  <main data-pagefind-body data-pagefind-filter="type:events">
     <section
       class:list={[
         "relative hero-background-image pt-32 pb-16 container mx-auto max-w-5xl px-8 xl:px-0 flex flex-col",
@@ -95,6 +95,7 @@ const upcomingEvents = (
         <div
           data-pagefind-meta={`event_start`}
           data-pagefind-sort={`event_start`}
+          data-pagefind-ignore
           class="hidden"
         >
           {new Date(event_start).getTime()}
@@ -102,6 +103,7 @@ const upcomingEvents = (
         <div
           data-pagefind-meta={`event_end`}
           data-pagefind-sort={`event_end`}
+          data-pagefind-ignore
           class="hidden"
         >
           {new Date(event_end).getTime()}
@@ -109,7 +111,12 @@ const upcomingEvents = (
         <span data-pagefind-meta={`dates`}>{formattedDate}</span>
         {
           location && (
-            <span class="before:content-['|'] before:mr-4">{location}</span>
+            <span
+              class="before:content-['|'] before:mr-4"
+              data-pagefind-meta="location"
+            >
+              {location}
+            </span>
           )
         }
       </p>
@@ -125,7 +132,9 @@ const upcomingEvents = (
           </a>
         )
       }
-      <span data-pagefind-meta="summary" class="hidden">{summary}</span>
+      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
+        >{summary}</span
+      >
     </section>
     <ArticleContent Content={Content} image={image} />
   </main>

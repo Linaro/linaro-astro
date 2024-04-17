@@ -21,6 +21,7 @@ const optimizedBackground = await getImage({
 
 const titleMarkdown = await marked.parseInline(title);
 const descriptionMarkdown = await marked.parse(description);
+console.log(title);
 ---
 
 <section
@@ -56,6 +57,7 @@ const descriptionMarkdown = await marked.parse(description);
         ]}
         set:html={titleMarkdown}
       />
+
       <div
         class:list={["text-xl", styles?.description]}
         set:html={descriptionMarkdown}
@@ -67,6 +69,10 @@ const descriptionMarkdown = await marked.parse(description);
           </a>
         )
       }
+    </div>
+    <span class="hidden" data-pagefind-meta={`summary`}>{description}</span>
+    <span class="hidden" data-pagefind-meta={`heading`}>{title}</span>
+    <div class="hidden" data-pagefind-meta={`image:${optimizedBackground.src}`}>
     </div>
   </div>
 </section>

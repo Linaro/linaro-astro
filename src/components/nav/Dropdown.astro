@@ -3,7 +3,7 @@ import { DropdownItems } from "astro-navbar";
 const { title, lastItem, children } = Astro.props;
 ---
 
-<li class="relative" class="border-b-2">
+<li class="border-b-2">
   <menu
     class:list={["astronav-dropdown group"]}
     aria-expanded="false"
@@ -18,18 +18,16 @@ const { title, lastItem, children } = Astro.props;
         <span>{title}</span>
       </button>
     </div>
-    <DropdownItems class="block lg:hidden">
+    <DropdownItems class="block">
       <div
         class:list={[
-          "lg:absolute w-full lg:w-48 z-10 mt-1",
+          "lg:absolute w-full z-10 mt-1",
           lastItem
             ? "lg:right-0 origin-top-right"
             : "lg:left-0 origin-top-left",
         ]}
       >
-        <div
-          class="lg:py-2 lg:bg-white lg:rounded-md lg:shadow lg:border flex flex-col"
-        >
+        <div class="flex flex-col lg:flex-row">
           {
             children.map((item: any) => (
               <a
@@ -44,5 +42,24 @@ const { title, lastItem, children } = Astro.props;
         </div>
       </div>
     </DropdownItems>
+    <!-- <menu
+      role="menu"
+      data-nav-children={title}
+      class:list={["hidden lg:hidden mt-2 absolute"]}
+    >
+      {
+        children.map((child: any) => (
+          <a
+            href={child.url}
+            class:list={[
+              "lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm",
+            ]}
+            target={child.url.startsWith("https") ? "_blank" : "_self"}
+          >
+            {child.label}
+          </a>
+        ))
+      }
+    </menu> -->
   </menu>
 </li>

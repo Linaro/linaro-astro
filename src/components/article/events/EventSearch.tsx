@@ -52,7 +52,7 @@ const EventSearch = () => {
   }>({
     query: pathParams().query ?? null,
     filters: {
-      type: ["event"],
+      type: ["events"],
     },
   });
 
@@ -66,7 +66,7 @@ const EventSearch = () => {
     setSearch({
       query: null,
       filters: {
-        type: ["event"],
+        type: ["events"],
       },
     });
     window.history.pushState(
