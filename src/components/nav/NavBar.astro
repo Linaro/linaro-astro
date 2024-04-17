@@ -39,42 +39,38 @@ const navData = await getEntry("data", "nav");
         ]}
       >
         <ul
-          class="flex flex-col lg:flex-row items-start mx-auto max-w-2xl lg:mx-0 lg:max-w-full relative"
+          class="flex flex-col lg:flex-row items-center mx-auto max-w-2xl lg:mx-0 w-full lg:max-w-full relative"
         >
           {
-            navData.data.map((item: any, index: number) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.label}
-                    children={item.children}
-                    lastItem={index === item.children.length - 1}
-                  />
-                )}
-
-                {!item.children && (
-                  <li class="" aria-label={item.label}>
-                    <div class="transition">
-                      <a
-                        data-nav-group={item.label}
-                        href={item.url}
-                        class:list={[
-                          "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
-                        ]}
-                        target={
-                          item.url.startsWith("https") ? "_blank" : "_self"
-                        }
-                      >
-                        {item.label}
-                      </a>
-                    </div>
-                  </li>
-                )}
-              </>
-            ))
+            navData.data.map((item: any, index: number) =>
+              item.children ? (
+                <Dropdown
+                  title={item.label}
+                  children={item.children}
+                  lastItem={index === item.children.length - 1}
+                />
+              ) : (
+                <li class="" aria-label={item.label}>
+                  <div class="transition">
+                    <a
+                      data-nav-group={item.label}
+                      href={item.url}
+                      class:list={[
+                        "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
+                      ]}
+                      target={item.url.startsWith("https") ? "_blank" : "_self"}
+                    >
+                      {item.label}
+                    </a>
+                  </div>
+                </li>
+              )
+            )
           }
+          <li class="grow">
+            <SearchModal id="nav-search" />
+          </li>
         </ul>
-        <SearchModal id="nav-search" />
       </nav>
     </div>
   </div>
