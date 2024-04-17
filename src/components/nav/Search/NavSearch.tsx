@@ -7,6 +7,7 @@ import {
   type ResourceFetcher,
 } from "solid-js";
 import SearchResults from "./NavResults";
+import { FaSolidXmark } from "solid-icons/fa";
 
 const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
 const pagefind = await import(/* @vite-ignore */ `${bundlePath}pagefind.js`);
@@ -67,7 +68,7 @@ const NavSearch = () => {
     <form onSubmit={onSubmit}>
       <div class={`w-full flex flex-col`}>
         <div class="w-full  md:gap-0">
-          <div class="bg-transparent text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2 ring-black border-grey border-2">
+          <div class="bg-transparent text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2">
             <input
               placeholder="Search linaro.org"
               name="nav-search"
@@ -81,7 +82,7 @@ const NavSearch = () => {
               aria-label="Clear search query"
               type="button"
             >
-              Clear
+              <FaSolidXmark size={20} />
             </button>
           </div>
         </div>
