@@ -15,7 +15,7 @@ const {
 const page = await getEntryBySlug("pages", slug)
 
 const { title, description, flow, hero } = page.data
-
+console.log(title)
 const allComponents = import.meta.glob("../components/{sections,rows}/*.astro") as Record<string, () => Promise<{default: AstroComponentFactory}>>
 const rowComponents = {} as Record<string, {default: AstroComponentFactory} >;
 const sectionComponents = {} as Record<
@@ -36,8 +36,13 @@ for (const sectionData of await getEntries(flow.map((row) => row.sections!.map((
 
 ---
 
-<BaseLayout title={title} description={description}  >
-    <main class="prose mx-0 max-w-full prose-invert">
+<BaseLayout title={title} description={description}>
+    <main 
+      class="prose mx-0 max-w-full prose-invert" 
+      data-pagefind-body
+      data-pagefind-filter="type:page"
+    >
+<span  data-pagefind-meta="title" class="hidden">{title}</span>
       {hero && <Hero {...hero} />}
       {
         flow?.map((row: any) => {

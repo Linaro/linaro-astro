@@ -120,10 +120,10 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
       imageSource.effect(effectFunction);
     }
   }
+  if (props.svg) {
+    imageSource.format("svg").quality("auto");
+  }
 
-  props.svg
-    ? imageSource.format("svg").quality("auto")
-    : imageSource.format("auto").quality("auto");
   if (props.resize !== undefined && props.resize !== null) {
     let resizeFunction;
     switch (props.resize) {

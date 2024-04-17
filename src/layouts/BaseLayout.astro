@@ -13,7 +13,7 @@ const { title, description, type = "website" } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title} description={description} type={type} />
+  <BaseHead title={title + " | Linaro"} description={description} type={type} />
   <body class="min-h-screen flex flex-col text-white">
     <NavBar />
     <slot />

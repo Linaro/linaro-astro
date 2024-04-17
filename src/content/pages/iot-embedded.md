@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /solutions/iot-embedded
-title: IoT & Embedded | Linaro
+title: IoT & Embedded
 description: |
   Where Innovation Meets Efficiency
 hero:

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /careers
-title: Careers | Linaro
+title: Careers
 description: |
   Careers at the cutting-edge of Arm technology
 hero:
