@@ -76,7 +76,7 @@ const navData = await getEntry("data", "nav");
   </div>
 </header>
 
-<script define:vars={{ closeOnClick: true }}>
+<script define:vars={{ closeOnClick: false }}>
   ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
     document.addEventListener(event, addListeners);
   });
