@@ -1,11 +1,11 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /technologies/apache-big-top
-title: Apache Bigtop | Linaro
+title: Apache Bigtop
 description: |
   Automate and ease your Big Data processes on Arm with Linaro’s Apache Bigtop Consulting.
 hero:
-  title: > 
+  title: >
     Automate and ease your Big Data processes on Arm with Linaro’s Apache Bigtop Consulting.
   background_image: linaro-website/graphics/big-data
   description: We are your gateway to discovering the true power of Apache Bigtop, the leading open-source Big Data distribution.
@@ -27,7 +27,7 @@ flow:
         style: text-center text-3xl max-w-[54ch] mx-auto font-bold mb-24
       - component: cards
         styles:
-          card: max-w-[30ch] text-center flex flex-col items-center prose-headings:text-[1.5rem] 
+          card: max-w-[30ch] text-center flex flex-col items-center prose-headings:text-[1.5rem]
           container: justify-center gap-24
         cards:
           - title: Customize Your Big Data Ecosystem
@@ -54,5 +54,4 @@ flow:
           - Creation of Bigtop Extensions through Mpack 
           - Apache Ambari Enhancements for Enhanced Monitoring and Deployment
         styles: max-w-2xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-ul:text-xl prose-headings:leading-tight
-        
 ---

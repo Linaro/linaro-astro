@@ -1,5 +1,5 @@
 ---
-import BlogSearch from "@/components/article/blog/BlogSearch";
+import SiteSearch from "@/components/search/SiteSearch";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
@@ -26,8 +26,8 @@ const optimizedBackground = await getImage({
   <main
     class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
   >
-    <h1 class="text-5xl my-12 font-bold">Blog</h1>
-    <BlogSearch client:only="solid-js" tags={tags} type="blogs" />
+    <h1 class="text-5xl my-12 font-bold">Search</h1>
+    <SiteSearch client:only="solid-js" tags={tags} />
   </main>
 </BaseLayout>
 <style

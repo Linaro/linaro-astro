@@ -28,7 +28,7 @@ const fetchResults = async ({
   filters: Filters;
 }) => {
   console.log("fetching", query);
-  return await pagefind.search(query, {
+  return await pagefind.debouncedSearch(query, {
     filters,
     sort: {
       date: "desc",
@@ -145,19 +145,21 @@ const BlogSearch = ({
     console.log(results());
   });
 
-  const [isExpanded, setIsExpanded] = createSignal(false);
+  const [isExpanded, setIsExpanded] = createSignal(
+    !!(pathParams()?.tags?.length > 0)
+  );
 
   return (
     <div class={`w-full flex flex-col mt-12`}>
       <div class="w-full lg:w-1/2 flex flex-col md:flex-row justify-between items-stretch mb-3 gap-3 md:gap-0">
         <form
-          class="bg-white text-black basis-full rounded-full flex flex-row py-2 px-1 items-center pl-6"
+          class="bg-transparent text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2"
           onSubmit={(e) => {
             e.preventDefault();
           }}
         >
           <input
-            placeholder="Search for blogs"
+            placeholder={`Search for ${type}`}
             name="blog-search"
             value={search().query ?? ""}
             onInput={(e) => {
@@ -167,7 +169,7 @@ const BlogSearch = ({
                 query: value ?? null,
               });
             }}
-            class="w-full h-full px-3"
+            class="w-full h-full px-3 w-full h-full px-1 bg-transparent outline-none"
           />
           <button
             class="py-2 px-2"
