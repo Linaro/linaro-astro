@@ -21,20 +21,20 @@ const borderColor = color ? `border-${color}` : `border-white`;
   {
     icons.map(
       ({ label, url, icon }: { url: string; icon: string; label: string }) => (
-        <a href={url} target="_blank">
-          <li
-            class:list={[
-              borderColor,
-              outline ? `p-3 border-2 rounded-full` : "border-none",
-            ]}
-          >
+        <li
+          class:list={[
+            borderColor,
+            outline ? `p-3 border-2 rounded-full` : "border-none",
+          ]}
+        >
+          <a href={url} target="_blank">
             <Icon
               name={icon}
               size={size || 20}
               class:list={[iconColor, "hover:text-linaro-yellow"]}
             />
-          </li>
-        </a>
+          </a>
+        </li>
       )
     )
   }
