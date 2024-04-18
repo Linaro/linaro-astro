@@ -84,13 +84,13 @@ const upcomingEvents = (
 ---
 
 <BaseLayout title={title + " | Events"} description={description}>
-  <main data-pagefind-body data-pagefind-filter="type:events">
+  <main data-pagefind-body data-pagefind-filter="type:events" class="z-0">
     <section
       class:list={[
-        "relative hero-background-image pt-32 pb-16 container mx-auto max-w-5xl px-8 xl:px-0 flex flex-col",
+        "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
-      <h1 class="text-5xl font-bold mb-12 max-w-4xl">{title}</h1>
+      <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
       <p class="flex gap-4 flex-wrap items-start block">
         <div
           data-pagefind-meta={`event_start`}
@@ -112,7 +112,7 @@ const upcomingEvents = (
         {
           location && (
             <span
-              class="before:content-['|'] before:mr-4"
+              class="block sm:inline-block sm:before:content-['|'] sm:before:mx-4"
               data-pagefind-meta="location"
             >
               {location}
@@ -120,18 +120,20 @@ const upcomingEvents = (
           )
         }
       </p>
-      {
-        button && (
-          <a
-            href={button.url}
-            data-pagefind-meta="button_text, button_url[href]"
-            target="_blank"
-            class="mt-4"
-          >
-            <button class="linaro-gradient-button block">{button.text}</button>
-          </a>
-        )
-      }
+      <div>
+        {
+          button && (
+            <a
+              href={button.url}
+              data-pagefind-meta="button_text, button_url[href]"
+              target="_blank"
+              class="my-8 no-underline inline-block"
+            >
+              <div class="linaro-gradient-button ">{button.text}</div>
+            </a>
+          )
+        }
+      </div>
       <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
         >{summary}</span
       >
@@ -160,6 +162,7 @@ const upcomingEvents = (
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-    background-position: top right -50%;
+    /* background-position: top right -50%; */
+    @apply bg-[top_left] lg:bg-[top_right_-50%] pb-[36rem] mb-[-36rem];
   }
 </style>

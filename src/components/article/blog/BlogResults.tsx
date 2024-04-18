@@ -61,9 +61,11 @@ const BlogResult = ({
       </a>
       <ul class="flex flex-wrap gap-x-4 gap-y-8 px-4 py-8 justify-self-end">
         {article()?.filters.tags.map((tag: string) => (
-          <li class="linaro-gradient-button">
+          <li>
             <a href={`/blog?tags=${tag}`}>
-              {tags?.find(({ slug }) => slug === tag)?.data.name}
+              <div class="linaro-gradient-button">
+                {tags?.find(({ slug }) => slug === tag)?.data.name}
+              </div>
             </a>
           </li>
         ))}
