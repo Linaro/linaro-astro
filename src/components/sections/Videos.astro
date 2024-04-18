@@ -2,6 +2,7 @@
 import type { videosSchema } from "@/content/schemas/sections";
 import type { z } from "astro/zod";
 import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
+import "cloudinary-video-player/cld-video-player.min.css";
 
 type Props = z.infer<typeof videosSchema>;
 const { videos } = Astro.props;
