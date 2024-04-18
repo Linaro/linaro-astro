@@ -21,15 +21,16 @@ const { cards, styles } = Astro.props;
           {button && (
             <a
               href={button.url}
-              target={button.url.startsWith("https") ? "_blank" : "self"}
+              target={button.url.startsWith("https") ? "_blank" : "_self"}
+              class="no-underline inline-block"
             >
-              <button
+              <div
                 class:list={[
                   `linaro-gradient-button ${index !== 0 ? styles?.button_style : ""}`,
                 ]}
               >
                 {button.text}
-              </button>
+              </div>
             </a>
           )}
         </li>

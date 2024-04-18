@@ -116,19 +116,22 @@ if (related.length > 0) {
           {`${author.first_name} ${author.last_name}`}
         </p>
       </div>
-      <p class="flex gap-4 flex-wrap" data-pagefind-ignore>
+      <p class="" data-pagefind-ignore>
         <span
           data-pagefind-meta={`date:${date}`}
           data-pagefind-sort={`date:${new Date(date).getTime()}`}
           >{dayjs(date).format("dddd, MMMM D, YYYY")}</span
-        ><span>|</span><span>{readTime}</span>
+        ><span
+          class="block sm:inline-block sm:before:content-['|'] sm:before:mx-4"
+          >{readTime}</span
+        >
       </p>
       <ul class="flex flex-wrap gap-4 my-8">
         {
           tags.map(({ slug, data: { name } }) => (
             <li data-pagefind-filter={`tags:${slug}`} data-pagefind-ignore>
               <a href={`/blog?tags=${slug}`}>
-                <button class="linaro-gradient-button">{name}</button>
+                <div class="linaro-gradient-button">{name}</div>
               </a>
             </li>
           ))
@@ -150,6 +153,7 @@ if (related.length > 0) {
     </ul>
   </aside>
 </BaseLayout>
+
 <style
   define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
   lang="scss"
@@ -157,6 +161,7 @@ if (related.length > 0) {
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-    background-position: top right -50%;
+    /* background-position: top right -50%; */
+    @apply bg-[top_left] lg:bg-[top_right_-50%]  pb-[36rem] mb-[-36rem];
   }
 </style>
