@@ -1,60 +1,13 @@
 ---
-import { Cloudinary } from "@cloudinary/url-gen";
-import {
-  crop,
-  fill,
-  scale,
-  minimumPad,
-  fit,
-  limitFit,
-  thumbnail,
-  limitFill,
-  minimumFit,
-  limitPad,
-  fillPad,
-} from "@cloudinary/url-gen/actions/resize";
-import { autoGravity, focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
-import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { ResizeFillAction } from "@cloudinary/url-gen/actions/resize/ResizeFillAction";
-import { byRadius, max } from "@cloudinary/url-gen/actions/roundCorners";
-import { byAngle } from "@cloudinary/url-gen/actions/rotate";
-import {
-  blur,
-  grayscale,
-  sepia,
-  shadow,
-  colorize,
-  oilPaint,
-  cartoonify,
-  outline,
-  blackwhite,
-  makeTransparent,
-  vectorize,
-  gradientFade,
-  assistColorBlind,
-  backgroundRemoval,
-  dropShadow,
-} from "@cloudinary/url-gen/actions/effect";
-
 import { type CloudinaryProps } from "../../types/CloudinaryProps";
 import { Image } from "astro:assets";
 import { getCloudinarySrc } from "@/lib/cloudinary";
 
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
-const apiKey = import.meta.env.CLOUDINARY_API_KEY;
-const apiSecret = import.meta.env.CLOUDINARY_API_SECRET;
 
 if (cloudName === undefined || cloudName === null || cloudName === "") {
   throw new Error("Cloudinary cloud name is not defined");
 }
-
-const cloudinaryMedia = new Cloudinary({
-  cloud: {
-    cloudName: cloudName,
-    apiKey: apiKey,
-    apiSecret,
-  },
-});
 
 interface Props extends CloudinaryProps {
   src: string;

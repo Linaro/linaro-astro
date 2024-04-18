@@ -1,48 +1,46 @@
 ---
-import { DropdownItems } from "astro-navbar";
 const { title, lastItem, children } = Astro.props;
 ---
 
-<li class="relative" class="border-b-2">
-  <menu
-    class:list={["astronav-dropdown group"]}
+<menu
+  class:list={["astronav-dropdown group "]}
+  aria-expanded="false"
+  data-nav-group={title}
+>
+  <div class="duration-300">
+    <button
+      class:list={[
+        "flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text nav-inactive",
+      ]}
+    >
+      <span>{title}</span>
+    </button>
+  </div>
+  <div
+    class:list={[" astronav-dropdown dropdown-toggle hidden"]}
     aria-expanded="false"
-    data-nav-group={title}
   >
-    <div class="duration-300">
-      <button
-        class:list={[
-          "flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text nav-inactive",
-        ]}
-      >
-        <span>{title}</span>
-      </button>
-    </div>
-    <DropdownItems class="block lg:hidden">
-      <div
-        class:list={[
-          "lg:absolute w-full lg:w-48 z-10 mt-1",
-          lastItem
-            ? "lg:right-0 origin-top-right"
-            : "lg:left-0 origin-top-left",
-        ]}
-      >
-        <div
-          class="lg:py-2 lg:bg-white lg:rounded-md lg:shadow lg:border flex flex-col"
-        >
-          {
-            children.map((item: any) => (
-              <a
-                href={item.url}
-                class=" px-3 py-1 text-grey  hover:text-white "
-                target={item.url.startsWith("https") ? "_blank" : "_self"}
-              >
-                {item.label}
-              </a>
-            ))
-          }
-        </div>
+    <div class:list={[" lg:absolute w-full z-10 mt-1 lg:left-0"]}>
+      <div class="flex flex-col lg:flex-row w-full">
+        {
+          children.map((item: any) => (
+            <a
+              href={item.url}
+              class=" lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm"
+              target={item.url.startsWith("https") ? "_blank" : "_self"}
+            >
+              {item.label}
+            </a>
+          ))
+        }
       </div>
-    </DropdownItems>
-  </menu>
-</li>
+    </div>
+  </div>
+</menu>
+<style lang="scss">
+  .open {
+    button {
+      @apply bg-linaro-gradient bg-clip-text text-transparent;
+    }
+  }
+</style>

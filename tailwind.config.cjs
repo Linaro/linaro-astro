@@ -11,6 +11,7 @@ module.exports = {
         'linaro-purple': "#6715E8",
         'grey': '#6B6B6B',
         "background": "#222025",
+        "darker": "#1B181C",
         'dark': '#222025'
       },
       backgroundImage: {

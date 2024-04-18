@@ -3,15 +3,9 @@ import Dropdown from "./Dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
-import { Icon } from "astro-icon/components";
+import SearchModal from "../search/NavSearch/SearchModal.astro";
 
 const navData = await getEntry("data", "nav");
-
-const activeLink = navData.data.find(
-  (data: any) =>
-    data.url === Astro.url.pathname ||
-    data.children?.some((child: any) => child.url === Astro.url.pathname)
-)?.label;
 ---
 
 <header
@@ -38,79 +32,51 @@ const activeLink = navData.data.find(
       </div>
     </div>
     <div class="w-full basis-full">
-      <MenuItems
-        class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0 font-medium lg:justify-start"
+      <nav
+        class:list={[
+          "astronav-items astronav-toggle",
+          "hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0 font-medium lg:justify-start ",
+        ]}
       >
         <ul
-          class="flex flex-col lg:flex-row items-start mx-auto max-w-2xl lg:mx-0 lg:max-w-full"
+          class="flex flex-col lg:flex-row items-start lg:items-center lg:mx-auto max-w-2xl lg:mx-0 w-full lg:max-w-full relative gap-4 lg:gap-0 my-8 lg:my-0 has-[.open]:mb-4"
         >
           {
-            navData.data.map((item: any, index: number) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.label}
-                    children={item.children}
-                    lastItem={index === item.children.length - 1}
-                  />
-                )}
-
-                {!item.children && (
-                  <div class=" relative">
-                    <div class="transition">
-                      <a
-                        data-nav-group={item.label}
-                        href={item.url}
-                        class:list={[
-                          "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
-                        ]}
-                        target={
-                          item.url.startsWith("https") ? "_blank" : "_self"
-                        }
-                      >
-                        {item.label}
-                      </a>
-                    </div>
+            navData.data.map((item: any, index: number) =>
+              item.children ? (
+                <Dropdown
+                  title={item.label}
+                  children={item.children}
+                  lastItem={index === item.children.length - 1}
+                />
+              ) : (
+                <li class="" aria-label={item.label}>
+                  <div class="transition">
+                    <a
+                      data-nav-group={item.label}
+                      href={item.url}
+                      class:list={[
+                        "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
+                      ]}
+                      target={item.url.startsWith("https") ? "_blank" : "_self"}
+                    >
+                      {item.label}
+                    </a>
                   </div>
-                )}
-              </>
-            ))
+                </li>
+              )
+            )
           }
+          <li class="grow mt-4 lg:mt-0">
+            <SearchModal id="nav-search" />
+          </li>
         </ul>
-        <div class="flex items-center basis-full mr-8 hidden">
-          <Icon name="search" class="ml-auto" size={20} />
-        </div>
-      </MenuItems>
-      {
-        navData.data
-          .filter((item: any) => !!item.children)
-          .map((item: any) => {
-            const isActive = item.label === activeLink;
-            return (
-              <ul
-                data-nav-children={item.label}
-                class:list={["hidden lg:hidden mt-2"]}
-              >
-                {item.children.map((child: any) => (
-                  <a
-                    href={child.url}
-                    class:list={[
-                      "lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm",
-                    ]}
-                    target={child.url.startsWith("https") ? "_blank" : "_self"}
-                  >
-                    {child.label}
-                  </a>
-                ))}
-              </ul>
-            );
-          })
-      }
+      </nav>
     </div>
   </div>
 </header>
-<style></style>
-<script define:vars={{ closeOnClick: true, activeLink }}>
+
+<script define:vars={{ closeOnClick: false }}>
   ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
     document.addEventListener(event, addListeners);
   });
@@ -139,18 +105,6 @@ const activeLink = navData.data.find(
 
     // Dropdown menus
     const dropdownMenus = document.querySelectorAll(".astronav-dropdown");
-
-    // if (activeLink) {
-    //   const activeMenu = Array.from(dropdownMenus).find(
-    //     (menu) => menu.dataset["navGroup"] === activeLink
-    //   );
-    //   toggleMenu(activeMenu);
-    //   // Close one dropdown when selecting another
-    //   Array.from(dropdownMenus)
-    //     .filter((el) => el !== activeMenu && !activeMenu.contains(el))
-    //     .forEach(closeMenu);
-    // }
-
     dropdownMenus.forEach((menu) => {
       const button = menu.querySelector("button");
       button &&
@@ -223,9 +177,12 @@ const activeLink = navData.data.find(
     ].some((button) => button.contains(event.target));
     if (!isButtonInsideDropdown) {
       dropdownMenus.forEach((d) => {
+        // console.log("I ran", d);
+        // if (!d.contains(event.target)) {
         d.classList.remove("open");
         d.removeAttribute("open");
         d.classList.add("hidden");
+        // }
       });
       dropdownParent.forEach((d) => {
         d.classList.remove("open");
@@ -245,35 +202,15 @@ const activeLink = navData.data.find(
 
     const dropdownToggle = menu.querySelector(".dropdown-toggle");
     const dropdownExpanded = dropdownToggle.getAttribute("aria-expanded");
-
-    const button = menu.querySelector("button");
-
-    if (button.classList.contains("nav-inactive")) {
-      button.classList.remove("nav-inactive");
-      button.classList.add("nav-active");
-    } else {
-      button.classList.add("nav-inactive");
-      button.classList.remove("nav-active");
-    }
-
     dropdownToggle.classList.toggle("hidden");
     dropdownToggle.setAttribute(
       "aria-expanded",
       dropdownExpanded === "true" ? "false" : "true"
     );
-    const children = document.querySelector(
-      `[data-nav-children='${menu.dataset["navGroup"]}'`
-    );
-    if (children.classList.contains("lg:hidden")) {
-      children.classList.remove("lg:hidden");
-      children.classList.add("lg:block");
-    } else {
-      children.classList.add("lg:hidden");
-      children.classList.remove("lg:block");
-    }
   }
 
   function closeMenu(menu) {
+    // console.log("closing", menu);
     menu.classList.remove("open");
     menu.removeAttribute("open");
     menu.setAttribute("aria-expanded", "false");
@@ -282,16 +219,6 @@ const activeLink = navData.data.find(
       toggle.classList.add("hidden");
       toggle.setAttribute("aria-expanded", "false");
     });
-
-    const button = menu.querySelector("button");
-    button?.classList.add("nav-inactive");
-    button?.classList.remove("nav-active");
-
-    const children = document.querySelector(
-      `[data-nav-children='${menu.dataset["navGroup"]}'`
-    );
-    children?.classList.add("lg:hidden");
-    children?.classList.remove("lg:block");
   }
 
   function handleCloseOnClick() {

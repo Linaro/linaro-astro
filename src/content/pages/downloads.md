@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /downloads
-title: Downloads | Linaro
+title: Downloads
 description: |
   ONELab revolutionizes edge and IoT device interoperability testing. We help Silicon Vendors and Device Makers to conduct continuous interoperability tests among different Operating Systems and Cloud Services.
 hero:

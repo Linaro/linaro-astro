@@ -85,7 +85,7 @@ if (related.length > 0) {
 }
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title + " | Blog"} description={description}>
   <main
     data-pagefind-body
     data-pagefind-filter={`type:${collection}`}
@@ -96,7 +96,9 @@ if (related.length > 0) {
         "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
-      <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
+      <h1 class="text-5xl font-bold mb-16 max-w-4xl">
+        {title}
+      </h1>
       <div class="flex items-center gap-6">
         {
           author.image && (
@@ -114,7 +116,7 @@ if (related.length > 0) {
           {`${author.first_name} ${author.last_name}`}
         </p>
       </div>
-      <p class="flex gap-4 flex-wrap">
+      <p class="flex gap-4 flex-wrap" data-pagefind-ignore>
         <span
           data-pagefind-meta={`date:${date}`}
           data-pagefind-sort={`date:${new Date(date).getTime()}`}
@@ -132,11 +134,16 @@ if (related.length > 0) {
           ))
         }
       </ul>
-      <span data-pagefind-meta="summary" class="hidden">{summary}</span>
+      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
+        >{summary}</span
+      >
     </section>
     <ArticleContent Content={Content} image={image} />
   </main>
-  <aside class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24">
+  <aside
+    class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24"
+    data-pagefind-ignore
+  >
     <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Related Posts</h2>
     <ul class="flex flex-wrap gap-8 justify-center">
       {relatedPosts?.map((post) => <BlogListing {...post} />)}

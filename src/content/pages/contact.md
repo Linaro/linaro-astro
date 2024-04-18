@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Flow.astro
 slug: /contact
-title: Linaro
+title: Contact
 description: |
   Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
 hero:
