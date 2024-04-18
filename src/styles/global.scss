@@ -34,9 +34,7 @@
 
   // gradient button
   .linaro-gradient-button {
-    @apply relative px-6 py-2 bg-linaro-gradient text-white rounded-full overflow-hidden;
-    position: relative;
-    overflow: hidden;
+    @apply  px-6 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
 
   }
 

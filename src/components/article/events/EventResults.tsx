@@ -91,7 +91,7 @@ const EventResults = ({
     <div class="flex flex-col mt-8 mb-24 gap-12 items-center w-full">
       <Switch>
         <Match when={results.loading}>
-          <div>Loading results...</div>
+          <div class="h-56">Loading results...</div>
         </Match>
         <Match when={results()?.results.length > 0}>
           {/* <p class="font-bold text-2xl self-start">
@@ -117,27 +117,21 @@ const EventResults = ({
               </For>
             </ul>
           </Show>
-          <p class="font-bold text-2xl">
+          <p class=" text-2xl">
             Showing {paginatedResults().length} of {results().results.length}{" "}
             results
           </p>
           <Show when={paginatedResults().length < results().results.length}>
-            <button
-              class="px-10 py-2 bg-white hover:bg-slate-300 border-white text-black font-bold border rounded-full"
-              onClick={onClickMore}
-            >
+            <button class="linaro-gradient-button" onClick={onClickMore}>
               Load more
             </button>
           </Show>
         </Match>
 
         <Match when={results()?.results.length === 0}>
-          <p class="font-bold text-2xl">{results().results.length} results</p>
+          <p class=" text-2xl">{results().results.length} results</p>
 
-          <button
-            class="px-10 py-2 bg-white hover:bg-slate-300 border-white text-black font-bold border rounded-full"
-            onClick={onClearSearch}
-          >
+          <button class=" linaro-gradient-button" onClick={onClearSearch}>
             Clear search
           </button>
         </Match>
