@@ -1,0 +1,42 @@
+---
+import SiteSearch from "@/components/search/SiteSearch";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCloudinarySrc } from "@/lib/cloudinary";
+import { getImage } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const tags = await getCollection("tags");
+const optimizedBackground = await getImage({
+  src: getCloudinarySrc({
+    src: "linaro-website/graphics/bg-logo-3",
+    alt: "",
+    width: 1724.55,
+    height: 1182.9,
+  }),
+  format: "webp",
+  inferSize: true,
+});
+---
+
+<BaseLayout title="Blog" description="A list of blogs">
+  <div
+    class="purple-gradient-container absolute h-[50rem] w-full z-[-1] top-[30rem]"
+  >
+  </div>
+  <main
+    class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
+  >
+    <h1 class="text-5xl my-12 font-bold">Search</h1>
+    <SiteSearch client:only="solid-js" tags={tags} />
+  </main>
+</BaseLayout>
+<style
+  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  lang="scss"
+>
+  .hero-background-image {
+    background-image: var(--backgroundUrl);
+    background-repeat: no-repeat;
+    @apply bg-[top_right] xl:bg-[top_-1rem_right] bg-[size:100%] lg:bg-[size:50%] pb-[36rem] mb-[-36rem];
+  }
+</style>

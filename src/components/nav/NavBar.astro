@@ -3,7 +3,7 @@ import Dropdown from "./Dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
-import SearchModal from "./Search/SearchModal.astro";
+import SearchModal from "../search/NavSearch/SearchModal.astro";
 
 const navData = await getEntry("data", "nav");
 ---

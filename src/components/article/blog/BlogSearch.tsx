@@ -145,7 +145,9 @@ const BlogSearch = ({
     console.log(results());
   });
 
-  const [isExpanded, setIsExpanded] = createSignal(false);
+  const [isExpanded, setIsExpanded] = createSignal(
+    !!(pathParams()?.tags?.length > 0)
+  );
 
   return (
     <div class={`w-full flex flex-col mt-12`}>

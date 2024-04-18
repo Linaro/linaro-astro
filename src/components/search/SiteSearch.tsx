@@ -1,11 +1,16 @@
+import "solid-js";
 import {
+  Show,
   createEffect,
   createMemo,
   createResource,
   createSignal,
+  type JSX,
 } from "solid-js";
-import { FaSolidXmark } from "solid-icons/fa";
-import EventResults from "./EventResults";
+import SiteResults from "./SiteResults";
+import { FaSolidChevronRight, FaSolidXmark } from "solid-icons/fa";
+import { AiFillTags } from "solid-icons/ai";
+import type { CollectionEntry } from "astro:content";
 
 const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
 const pagefind = await import(/* @vite-ignore */ `${bundlePath}pagefind.js`);
@@ -24,19 +29,20 @@ const fetchResults = async ({
   console.log("fetching", query);
   return await pagefind.debouncedSearch(query, {
     filters,
-    sort: {
-      event_start: "desc",
-    },
   });
 };
 
 const getQueryParams = ({ filters, query }: SearchQuery) => {
   const url = new URL(window.location.origin + window.location.pathname);
   if (query) url.searchParams.append("query", query);
+  if (filters.tags?.length > 0) {
+    url.searchParams.append("tags", filters.tags.join(","));
+  }
+
   return url;
 };
 
-const EventSearch = () => {
+const SiteSearch = ({ tags }: { tags: CollectionEntry<"tags">[] }) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
@@ -52,7 +58,7 @@ const EventSearch = () => {
   }>({
     query: pathParams().query ?? null,
     filters: {
-      type: ["events"],
+      type: [],
     },
   });
 
@@ -66,7 +72,7 @@ const EventSearch = () => {
     setSearch({
       query: null,
       filters: {
-        type: ["events"],
+        type: [],
       },
     });
     window.history.pushState(
@@ -100,8 +106,8 @@ const EventSearch = () => {
           }}
         >
           <input
-            placeholder="Search for events"
-            name="event-search"
+            placeholder={`Search linaro.org`}
+            name="site-search"
             value={search().query ?? ""}
             onInput={(e) => {
               const value = e.target.value === "" ? null : e.target.value;
@@ -121,9 +127,13 @@ const EventSearch = () => {
           </button>
         </form>
       </div>
-      <EventResults results={results} onClearSearch={onClearSearch} />
+      <SiteResults
+        results={results}
+        onClearSearch={onClearSearch}
+        tags={tags}
+      />
     </div>
   );
 };
 
-export default EventSearch;
+export default SiteSearch;

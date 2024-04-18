@@ -34,8 +34,11 @@ const NavResult = ({ result }: { result: any }) => {
   const [article] = createResource(result, getArticle);
   createEffect(() => console.log(article()));
   return (
-    <li class="w-full py-2 my-4 hover:outline-grey hover:outline-2 rounded-xl bg-darker">
-      <a href={article()?.url} class="w-full px-4  inline-block  flex gap-8">
+    <li class="w-full ">
+      <a
+        href={article()?.url}
+        class="w-full px-4  inline-block  flex gap-8 outline-none  hover:outline-grey hover:outline-2  focus:outline-grey focus:outline-2 rounded-xl bg-darker py-2  my-4 "
+      >
         <Switch>
           <Match when={article()?.filters.type.includes("page")}>
             <div class="basis-full">

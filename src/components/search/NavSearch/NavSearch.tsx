@@ -6,7 +6,7 @@ import {
   type JSX,
   type ResourceFetcher,
 } from "solid-js";
-import SearchResults from "./NavResults";
+import NavResults from "./NavResults";
 import { FaSolidXmark } from "solid-icons/fa";
 
 const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
@@ -86,7 +86,7 @@ const NavSearch = () => {
             </button>
           </div>
         </div>
-        <SearchResults results={results} onClearSearch={onClearSearch} />
+        <NavResults results={results} onClearSearch={onClearSearch} />
         <Show when={!!search()}>
           <div class="mx-auto mt-4">
             <button class="linaro-gradient-button block" type="submit">

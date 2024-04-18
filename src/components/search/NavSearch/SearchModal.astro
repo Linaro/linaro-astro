@@ -28,11 +28,12 @@ const { id } = Astro.props;
   class="ml-auto mr-4 float-right p-2"
   onclick={`window.${id}.showModal()`}><Icon name="search" size={20} /></button
 >
-<div class="relative">
-  <dialog id="modal-dialog" class="bg-transparent rounded-xl">
-    <div
-      class="relative bg-background max-w-full w-[60rem] text-white p-4 rounded-xl"
-    >
+<div class="relative w-full">
+  <dialog
+    id="modal-dialog"
+    class="bg-transparent rounded-xl mx-auto w-full max-w-6xl"
+  >
+    <div class="relative bg-background text-white p-4 rounded-xl">
       <NavSearch client:only="solid-js" />
     </div>
   </dialog>
