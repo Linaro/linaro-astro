@@ -115,7 +115,7 @@ const EventResults = ({
             </h2>
             <ul class="flex flex-wrap gap-16  justify-center">
               <For each={past()}>
-                {(event) => <EventResult event={event} />}
+                {(event) => <EventResult event={event} isSsr={isSsr} />}
               </For>
             </ul>
           </Show>
