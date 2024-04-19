@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /projects/windows-on-arm
+slug: projects/windows-on-arm
 title: Windows on Arm
 description: |
   Thanks to the collaborative work among Linaro, Arm, CIX Technology, Microsoft and Qualcomm we are building the Windows on Arm ecosystem for native development unlocking better user experiences and broader adoption of Windows on Arm platforms.

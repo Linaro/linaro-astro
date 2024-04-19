@@ -9,8 +9,6 @@
       url: /solutions/ai-ml
     - label: Automotive
       url: /solutions/automotive
-    - label: Application Regression
-      url: /solutions/application-regression
     - label: Long Term Support
       url: /solutions/lts
 - label: Services & Support
@@ -25,8 +23,6 @@
   children:
     - label: Windows on Arm
       url: /projects/windows-on-arm
-    - label: Android Ecosystem
-      url: /projects/android
     - label: Automative, IoT & Edge
       url: /projects/automotive-iot-edge
     - label: Cloud Computing & Servers
@@ -46,8 +42,6 @@
       url: /news
     - label: Videos & Webinars
       url: https://resources.linaro.org/
-    - label: Solutions Briefs
-      url: /solutions-briefs
     - label: Events
       url: /events
 - label: Company

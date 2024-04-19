@@ -1,6 +1,6 @@
 ---
 import NewsLayout from "@/layouts/NewsLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
   const news = await getCollection("news");
   return news.map((post) => {
@@ -15,7 +15,14 @@ export async function getStaticPaths() {
   });
 }
 
-const { post } = Astro.props;
+type Props = { post: CollectionEntry<"news"> };
+const { post } = Astro.params;
+let data;
+if (import.meta.env.SSR) {
+  data = await getEntry("news", post);
+} else {
+  data = Astro.props.post;
+}
 ---
 
-<NewsLayout post={post} />
+<NewsLayout post={data} />
