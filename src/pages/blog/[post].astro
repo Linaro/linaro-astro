@@ -1,6 +1,6 @@
 ---
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
   const blogs = await getCollection("blogs");
   return blogs.map((post) => {
@@ -14,8 +14,14 @@ export async function getStaticPaths() {
     };
   });
 }
-
-const { post } = Astro.props;
+type Props = { post: CollectionEntry<"blogs"> };
+const { post } = Astro.params;
+let data;
+if (import.meta.env.SSR) {
+  data = await getEntry("blogs", post);
+} else {
+  data = Astro.props.post;
+}
 ---
 
-<BlogLayout post={post} />
+<BlogLayout post={data} />
