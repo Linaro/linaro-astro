@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /careers
+slug: careers
 title: Careers
 description: |
   Careers at the cutting-edge of Arm technology
