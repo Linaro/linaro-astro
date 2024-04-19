@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /technologies/apache-big-top
+slug: technologies/apache-big-top
 title: Apache Bigtop
 description: |
   Automate and ease your Big Data processes on Arm with Linaro’s Apache Bigtop Consulting.

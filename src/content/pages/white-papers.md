@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /white-papers
+slug: white-papers
 title: WhitePapers
 description: |
   We like to share our knowledge and success stories.  Please check back to the page regularly to read our latest insights on various industry trends and technologies.

@@ -1,15 +1,70 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
-import icon from "astro-icon";
+import aws from "astro-sst";
 import sitemap from "@astrojs/sitemap";
+import tailwind from "@astrojs/tailwind";
+import solidJs from "@astrojs/solid-js";
 import pagefind from "./integrations/pagefind";
+import auth from "./integrations/auth";
+import { loadEnv } from "vite";
+import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
 
-import solidJs from "@astrojs/solid-js";
+const { IS_PUBLIC, PRE_BUILD, CUSTOM_DOMAIN } = loadEnv(
+  process.env.NODE_ENV,
+  process.cwd(),
+  ""
+);
+const is_public = IS_PUBLIC === "true";
+const is_pre_build = PRE_BUILD === "true";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
+  ...(is_public
+    ? {
+        output: "static",
+        integrations: [
+          sitemap(),
+          pagefind({
+            is_pre_build: is_pre_build,
+            is_public: is_public,
+          }),
+          tailwind({
+            applyBaseStyles: false,
+          }),
+          solidJs(),
+          icon({
+            iconDir: "src/assets/icons",
+          }),
+          mdx(),
+        ],
+      }
+    : {
+        output: PRE_BUILD ? "hybrid" : "server",
+        adapter: aws({
+          serverRoutes: ["/api/*"],
+        }),
+        integrations: [
+          sitemap(),
+          pagefind({
+            is_pre_build: is_pre_build,
+            is_public: is_public,
+          }),
+          tailwind({
+            applyBaseStyles: false,
+          }),
+          solidJs(),
+          icon({
+            iconDir: "src/assets/icons",
+          }),
+          mdx(),
+          auth({
+            injectEndpoints: true,
+          }),
+        ],
+      }),
+  site: `https://${CUSTOM_DOMAIN}`,
+  cacheDir: "./cache",
+  compressHTML: true,
   image: {
     remotePatterns: [
       {
@@ -27,21 +82,9 @@ export default defineConfig({
     rollupOptions: {
       external: ["/pagefind/pagefind.js"],
     },
+    redirects: false,
   },
-  cacheDir: "./cache",
-  integrations: [
-    solidJs(),
-    icon({
-      iconDir: "src/assets/icons",
-    }),
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    sitemap(),
-    pagefind({
-      is_pre_build: false,
-      is_public: true,
-    }),
-    mdx(),
-  ],
+  vite: {
+    optimizeDeps: { exclude: ["auth:config"] },
+  },
 });

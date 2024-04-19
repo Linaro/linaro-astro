@@ -1,6 +1,6 @@
 ---
 import EventLayout from "@/layouts/EventLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
   const blogs = await getCollection("events");
   return blogs.map((post) => {
@@ -14,8 +14,14 @@ export async function getStaticPaths() {
     };
   });
 }
-
-const { post } = Astro.props;
+type Props = { post: CollectionEntry<"events"> };
+const { post } = Astro.params;
+let data;
+if (import.meta.env.SSR) {
+  data = await getEntry("events", post);
+} else {
+  data = Astro.props.post;
+}
 ---
 
-<EventLayout post={post} />
+<EventLayout post={data} />

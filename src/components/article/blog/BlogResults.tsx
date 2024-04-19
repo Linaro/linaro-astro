@@ -11,8 +11,7 @@ import {
   type Resource,
 } from "solid-js";
 
-const isDev = import.meta.env.DEV;
-
+const isDev = false;
 const PAGE_SIZE = 12;
 
 const getArticle = async (result: any) => {
@@ -22,9 +21,11 @@ const getArticle = async (result: any) => {
 const BlogResult = ({
   result,
   tags,
+  isSsr,
 }: {
   result: any;
   tags: CollectionEntry<"tags">[];
+  isSsr: boolean;
 }) => {
   const [article] = createResource(result, getArticle);
 
@@ -35,7 +36,7 @@ const BlogResult = ({
         class="w-full px-4 pt-8 pb-12 inline-block basis-full"
       >
         <img
-          src={isDev ? "/placeholder.jpg" : article()?.meta.image}
+          src={isDev || isSsr ? "/placeholder.jpg" : article()?.meta.image}
           alt=""
           width={800}
           height={800}
@@ -44,7 +45,9 @@ const BlogResult = ({
         <h2 class="text-2xl my-6">{article()?.meta.title}</h2>
         <Show when={article()?.meta.author_image}>
           <img
-            src={isDev ? "/placeholder.jpg" : article()?.meta.author_image}
+            src={
+              isDev || isSsr ? "/placeholder.jpg" : article()?.meta.author_image
+            }
             alt={article()?.meta.author}
             width={75}
             height={75}
@@ -78,10 +81,12 @@ const BlogResults = ({
   results,
   onClearSearch,
   tags,
+  isSsr,
 }: {
   results: Resource<any>;
   onClearSearch: () => void;
   tags: CollectionEntry<"tags">[];
+  isSsr: boolean;
 }) => {
   const [page, setPage] = createSignal(1);
   const [paginatedResults, setPaginatedResults] = createSignal([]);
@@ -104,7 +109,9 @@ const BlogResults = ({
           <p class="text-2xl self-start">{results()?.results.length} results</p>
           <ul class="flex flex-wrap gap-16  justify-center">
             <For each={paginatedResults()}>
-              {(result) => <BlogResult result={result} tags={tags} />}
+              {(result) => (
+                <BlogResult result={result} tags={tags} isSsr={isSsr} />
+              )}
             </For>
           </ul>
           <p class="text-2xl">
