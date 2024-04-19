@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /solutions/lts
+slug: solutions/lts
 title: LTS
 description: |
   The security and support solution for your Linux boot-to-kernel product needs levelled-up with advanced Continuous Integration (CI) pipelines and LAVA technology

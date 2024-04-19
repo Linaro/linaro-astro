@@ -36,7 +36,7 @@ const getQueryParams = ({ filters, query }: SearchQuery) => {
   return url;
 };
 
-const EventSearch = () => {
+const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
@@ -121,7 +121,11 @@ const EventSearch = () => {
           </button>
         </form>
       </div>
-      <EventResults results={results} onClearSearch={onClearSearch} />
+      <EventResults
+        results={results}
+        onClearSearch={onClearSearch}
+        isSsr={isSsr}
+      />
     </div>
   );
 };
