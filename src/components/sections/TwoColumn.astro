@@ -16,7 +16,7 @@ const { columns, container_styles } = Astro.props;
         return (
           <div class:list={[column.styles]}>
             <h3 class:list={["text-4xl my-5"]}>{column.title}</h3>
-            <p set:html={markdown} class="text-xl" />
+            <p set:html={markdown} />
           </div>
         );
       }

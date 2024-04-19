@@ -12,6 +12,7 @@ import {
 } from "solid-js";
 
 const isDev = import.meta.env.DEV;
+const isSsr = import.meta.env.SSR;
 
 const PAGE_SIZE = 12;
 
@@ -78,7 +79,9 @@ const SiteResult = ({
             <div class="flex gap-4">
               <div class="w-full max-w-[10rem] rounded-xl">
                 <img
-                  src={isDev ? "/placeholder.jpg" : article()?.meta.image}
+                  src={
+                    isDev || isSsr ? "/placeholder.jpg" : article()?.meta.image
+                  }
                   alt=""
                   class="h-full w-full object-cover rounded-xl"
                 />

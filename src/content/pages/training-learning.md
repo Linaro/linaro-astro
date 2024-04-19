@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: /services/training
+slug: services/training
 title: Training and Learning
 description: |
   With our expert knowledge of open source licenses, code reviews, and hands-on Linux training, we help companies eliminate risk, achieve compliance, and build strong relationships with open source communities. Our customized training courses cover a wide range of topics and can be tailored to meet the specific needs of your team. Gain the skills and expertise to embrace emerging technologies and best practices in the world of Linux and Arm technology.

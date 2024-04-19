@@ -5,21 +5,23 @@ type Props = { Content: AstroComponentFactory; image: string };
 const { Content, image } = Astro.props;
 ---
 
-<section
-  class="container max-w-5xl mx-auto rounded-[24px] linaro-gradient-border bg-dark mb-24"
->
-  <CloudinaryImg
-    src={image}
-    alt=""
-    width={1000}
-    height={1000}
-    class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
-    data-pagefind-meta="image[src], image_alt[alt]"
-    effects={["grayscale"]}
-  />
-  <article
-    class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24"
+<section class="px-[10px]">
+  <div
+    class="container rounded-[24px] linaro-gradient-border bg-dark mb-24 max-w-5xl mx-auto"
   >
-    <Content components={{ img: CloudinaryImg }} />
-  </article>
+    <CloudinaryImg
+      src={image}
+      alt=""
+      width={1000}
+      height={1000}
+      class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
+      data-pagefind-meta="image[src], image_alt[alt]"
+      effects={["grayscale"]}
+    />
+    <article
+      class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24"
+    >
+      <Content components={{ img: CloudinaryImg }} />
+    </article>
+  </div>
 </section>

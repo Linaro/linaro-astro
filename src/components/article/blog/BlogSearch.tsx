@@ -49,9 +49,11 @@ const getQueryParams = ({ filters, query }: SearchQuery) => {
 const BlogSearch = ({
   tags,
   type,
+  isSsr,
 }: {
   tags: CollectionEntry<"tags">[];
   type: "blogs" | "news";
+  isSsr: boolean;
 }) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
@@ -146,7 +148,7 @@ const BlogSearch = ({
   });
 
   const [isExpanded, setIsExpanded] = createSignal(
-    !!(pathParams()?.tags?.length > 0)
+    pathParams()?.tags?.length <= 0
   );
 
   return (
@@ -239,6 +241,7 @@ const BlogSearch = ({
         results={results}
         onClearSearch={onClearSearch}
         tags={tags}
+        isSsr={isSsr}
       />
     </div>
   );

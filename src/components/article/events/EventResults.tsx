@@ -18,7 +18,7 @@ const getEvents = async (results: any[]) => {
   return await Promise.all(results.map((result) => result.data()));
 };
 
-const EventResult = ({ event }: { event: any }) => {
+const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
   return (
     <li class="w-full sm:w-80 max-w-full border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between">
       <a
@@ -26,7 +26,7 @@ const EventResult = ({ event }: { event: any }) => {
         class="w-full px-4 pt-8 pb-12 inline-block basis-full"
       >
         <img
-          src={isDev ? "/placeholder.jpg" : event.meta.image}
+          src={isDev || isSsr ? "/placeholder.jpg" : event.meta.image}
           alt=""
           width={800}
           height={800}
@@ -59,9 +59,11 @@ const EventResult = ({ event }: { event: any }) => {
 const EventResults = ({
   results,
   onClearSearch,
+  isSsr,
 }: {
   results: Resource<any>;
   onClearSearch: () => void;
+  isSsr: boolean;
 }) => {
   const [page, setPage] = createSignal(1);
   const [paginatedResults, setPaginatedResults] = createSignal([]);
@@ -103,7 +105,7 @@ const EventResults = ({
             </h2>
             <ul class="flex flex-wrap gap-16  justify-center">
               <For each={upcoming()}>
-                {(event) => <EventResult event={event} />}
+                {(event) => <EventResult event={event} isSsr={isSsr} />}
               </For>
             </ul>
           </Show>
