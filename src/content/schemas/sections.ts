@@ -114,9 +114,12 @@ export const textSchema = z.object({
 export const contactSchema = z.object({
   component: component("contact"),
   form_id: z.string(),
-  description: z.string(),
-  content: z.string(),
-  styles: z.string(),
+  description: z.string().optional(),
+  content: z.string().optional(),
+  styles: z.object({
+    card: z.string().optional(),
+    container: z.string().optional(),
+  }),
 });
 
 export const membershipSchema = z.object({

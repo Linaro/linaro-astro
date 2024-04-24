@@ -14,7 +14,7 @@ if (content) {
 }
 ---
 
-<div class="flex flex-col xl:flex-row justify-between items-center gap-12">
+<div class:list={["items-center gap-12",styles?.card]}>
   <article set:html={markdownContent} class:list={["text-white", styles]} />
   <ContactForm form_id={form_id} description={description} />
 </div>
