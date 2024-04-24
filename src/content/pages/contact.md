@@ -13,7 +13,7 @@ hero:
     text_container: max-w-[45rem]
     background: bg-center
     description: text-md sm:text-lg
-    image_size: h-[calc(50vh)]
+    image_size: h-[calc(50vh)].
 flow:
   - row: container_row
     sections:
