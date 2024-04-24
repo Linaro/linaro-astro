@@ -82,7 +82,7 @@ flow:
             description: Access a group and enter its entire projects portfolio
           - title: Become a
             title_style: whitespace-nowrap
-            name: Core & Club Member
+            name: Core Member
             description: Access all Linaro driven projects & groups
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
 ---
