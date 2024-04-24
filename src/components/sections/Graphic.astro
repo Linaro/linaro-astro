@@ -4,10 +4,16 @@ import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 
 type Props = z.infer<typeof graphicSchema>;
-const { src, alt, accessible_version, width, height } = Astro.props;
+const { src, alt, accessible_version, width, height, mobile_src } = Astro.props;
 ---
 
 <div>
-  <CloudinaryImg src={src} alt={alt} width={width} height={height} />
+  <!-- Hidden on medium screens and larger, visible on small screens -->
+  <CloudinaryImg src={mobile_src} alt={alt} width={width} height={height} class="md:hidden" />
+
+  <!-- Visible on medium screens and larger, hidden on small screens -->
+  <CloudinaryImg src={src} alt={alt} width={width} height={height} class="hidden md:block" />
+  
   <div set:html={accessible_version} class="sr-only" />
 </div>
+
