@@ -94,7 +94,7 @@ flow:
         styles:
           container: mx-auto flex justify-around my-24 marker:text-white border-2 border-[#6B6B6B] rounded-3xl py-10
           card: w-[50ch]
-          card_title: text-2xl font-thin
+          card_title: text-[31px]
         cards:
           - title: Upstream Releases
             text: |
@@ -107,10 +107,10 @@ flow:
               * U-Boot powered
               * Single Kernel image for all platforms
               * Single disk image for all platforms
-          - title: Arm SystemReady-IR Compliance
-            text: |
-              * Work via Linaro Ledge (PR coming!)
-              * RB3, RB5, RB2, RB1
+
+              ## Arm SystemReady-IR Compliance
+               * Work via Linaro Ledge (PR coming!)
+               * RB3, RB5, RB2, RB1
       - component: membership
         form_id: "4"
         description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
