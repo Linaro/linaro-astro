@@ -197,11 +197,14 @@ export const bulletPointSchema = z.object({
   bullet_point: z.array(
     z.object({
       title: z.string(),
-      sub_text: z.array(
-        z.object({
-          text: z.string(),
-        })
-      ),
+      sub_text: z
+        .array(
+          z.object({
+            text: z.string(),
+          })
+        )
+        .optional(),
+      text: z.string().optional(),
     })
   ),
 });
