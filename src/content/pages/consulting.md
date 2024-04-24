@@ -45,6 +45,7 @@ flow:
     sections:
       - component: graphic
         src: linaro-website/graphics/content/consultancy-lifecycle
+        mobile_src: linaro-website/graphics/content/artboard-consulting
         alt: diagram explaining how Linaro what consultancy services Linaro can provide at each stage of the software lifecycle
         width: 2000
         height: 2000
@@ -106,23 +107,6 @@ flow:
           </ol>
   - row: container_row
     title: Focus on What is Important to You
-    sections:
-      - component: two_column
-        container_styles: items-center border-grey border-[0.25px] rounded-xl px-2 sm:px-8
-        columns:
-          - type: text
-            text_content: We deliver and maintain Yocto Project based distros and BSPs
-            styles: w-full lg:w-1/2 text-2xl sm:text-3xl lg:px-24 font-bold
-          - type: image
-            image:
-              src: linaro-website/graphics/content/consultancy-expertise
-              alt: |
-                Your expertise: your application. Our expertise: 3rd Party & System Libraries, Operation System and Toolchain.
-              height: 1000
-              width: 1000
-            styles: w-full lg:w-1/2
-  - row: container_row
-    title: The TuxSuite Way
     sections:
       - component: two_column
         container_styles: items-center border-grey border-[0.25px] rounded-xl px-2 sm:px-8
