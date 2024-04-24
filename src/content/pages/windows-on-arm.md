@@ -125,6 +125,8 @@ flow:
     title: Watch the Windows on Arm Testimonials
     sections:
       - component: videos
+        styles:
+          container: border-[0.5px] border-grey
         videos:
           - src: linaro-website/videos/microsoft-woa
             title: Marcus Perryman  |  Principle Engineer Microsoft
