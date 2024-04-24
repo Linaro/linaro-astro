@@ -33,7 +33,7 @@ flow:
       - component: cards
         styles:
           container: w-full mx-auto justify-around
-          card: md:w-64
+          card: md:w-[50ch]
         cards:
           - title: Land
             text: Introduce support for Qualcomm SoCs and technologies in open source (kernel,      toolchain, bootloader, QEMU, etc). Track open source projects, adapt and maintain
@@ -74,7 +74,7 @@ flow:
               alt: ""
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 prose-a:text-blue-300 border-2 border-[#6B6B6B] rounded-3xl py-10
+          container: mx-auto flex justify-around my-24 prose-a:text-blue-300 border-2 border-[#6B6B6B] rounded-3xl p-6
           card: w-[50ch] text-left
           card_title: text-2xl font-thin
         cards:
@@ -84,15 +84,16 @@ flow:
           - title: Upstream reference builds
             text: |
               [https://releases.linaro.org/96boards/rb5/linaro/](https://releases.linaro.org/96boards/rb5/linaro/)
-              [https://releases.linaro.org/96boards/
-              dragonboard845c/linaro/](https://releases.linaro.org/96boards/dragonboard845c/linaro/)
+
+              [https://releases.linaro.org/96boards/dragonboard845c/linaro/](https://releases.linaro.org/96boards/dragonboard845c/linaro/)
+
               [https://releases.linaro.org/96boards/rb2/linaro/](https://releases.linaro.org/96boards/rb2/linaro/)
       - component: text
         text_content: OS images and releases
         style: text-center text-3xl font-bold
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-[#6B6B6B] rounded-3xl py-10
+          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-[#6B6B6B] rounded-3xl p-6
           card: w-[50ch]
           card_title: text-[31px]
         cards:
@@ -128,7 +129,7 @@ flow:
             description: Access a group and enter its entire projects portfolio
           - title: Become a
             title_style: whitespace-nowrap
-            name: Core & Club Member
+            name: Core Member
             description: Access all Linaro driven projects & groups
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
   - row: container_row
