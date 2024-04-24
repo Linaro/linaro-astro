@@ -26,7 +26,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: justify-center xl:gap-36 gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
+          container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           card: max-w-[60ch]
         cards:
           - title: gnu gcc compiler download
@@ -45,11 +45,10 @@ flow:
               Interested in Cortex-R and Cortex-M bare-metal targeted toolchains for Arm embedded processors? We’re working with Arm to supply a new release every year (with quarterly updates). Releases are maintained for two years. You can get these directly from [the Arm website.](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
   - row: container_row
     title: Linaro’s Continuous Integration & Validation Tools
-
     sections:
       - component: cards
         styles:
-          container: justify-center xl:gap-36 gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
+          container: flex justify-center xl:justify-normal gap-14 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           card: max-w-[60ch]
         cards:
           - title: Tuxsuite
@@ -90,7 +89,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: justify-center xl:gap-36 gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
+          container: flex justify-center  gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           card: max-w-[80ch]
         cards:
           - title: LAVA - Linaro’s Automated Validation Architecture
