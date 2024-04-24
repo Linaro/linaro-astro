@@ -3757,7 +3757,7 @@ astro-navbar@^2.3.1:
   resolved "https://registry.yarnpkg.com/astro-navbar/-/astro-navbar-2.3.1.tgz#c035d6c1ada1b3f2079f1b3868e5ca5e3135102b"
   integrity sha512-lLvhWS03Qc3heMU23adFwEnBUJFlL6gxYi0xPvIyX1atb2oCov4kOS/MaWOPGnvj2nK63szebUzlG+NdIoUZzQ==
 
-astro-pagefind@^1.5.0:
+astro-pagefind@^1.4.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/astro-pagefind/-/astro-pagefind-1.5.0.tgz#2721d635933a76e84de38b2164cee82c80a2260b"
   integrity sha512-CN7Afe9qW640U1qliCQMXN259Dl6VPUnl8FneLfKE7STV4HLiif4PbNZejylC6yXYyP6uyNVDHNOfJfBBW5h6A==
