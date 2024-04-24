@@ -228,6 +228,12 @@ export const graphicSchema = z.object({
 
 export const videosSchema = z.object({
   component: component("videos"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
   videos: z.array(z.object({ src: z.string(), title: z.string() })),
 });
 
