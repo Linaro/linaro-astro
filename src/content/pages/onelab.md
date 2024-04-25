@@ -7,7 +7,7 @@ description: |
 hero:
   title: >
     In an era where connectivity is king, compatibility is your kingdom
-  background_image: linaro-website/graphics/onelab
+  background_image: linaro-website/graphics/onelab-bg
   description: |
     ONELab revolutionizes edge and IoT device interoperability testing. 
 
@@ -22,6 +22,28 @@ flow:
   - row: container_row
     title: ONELab is innovation done right
     styles: purple-gradient-container
+    sections:
+      - component: graphic
+        src: linaro-website/graphics/onelab-diagram
+        mobile_src: linaro-website/graphics/onelab-diagram-mobile
+        alt: diagram explaining how onelab innovation is done at each stage of the lifecycle
+        width: 2000
+        height: 2000
+        accessible_version: |
+          <ul>
+            <li>Board Providers</li>
+            <li>Board names</li>
+            <li>SoCs</li>
+            <li>Run continuous tets</li>
+            <li>Issues track</li>
+            <li>Compatibility framework</li>
+            <li>Identify and address interoperability issues before they impact customers</li>
+            <li>Share your devices' cloud-native capabilities with potential customers</li>
+            <li>Allow users to collaborate on shared issues, such as enabling new hardware defaults in an OS</li>
+            <li>Identify firmware changes in advance</li>
+          </ul>
+
+  - row: container_row
     sections:
       - component: cards
         styles:
@@ -38,6 +60,7 @@ flow:
             text: Provide evidence that products are cloud-native edge-ready and ensures products work seamlessly together.
             icon: shield_person
   - row: container_row
+    styles: purple-gradient-container
     sections:
       - component: contact
         form_id: "7"
