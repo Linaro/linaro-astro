@@ -5,15 +5,15 @@ import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
 import "cloudinary-video-player/cld-video-player.min.css";
 
 type Props = z.infer<typeof videosSchema>;
-const { videos } = Astro.props;
+const { videos, styles } = Astro.props;
 ---
 
 <ul
-  class="flex flex-wrap justify-center not-prose gap-12 border-[0.5px] border-grey px-4 py-12 rounded-2xl"
+  class:list={["flex flex-wrap justify-center not-prose gap-12  px-4 py-12 rounded-2xl", styles?.container]}
 >
   {
     videos.map((video) => (
-      <li class="w-[45ch]">
+      <li class:list={[styles?.card]}>
         <CloudinaryVideo src={video.src} />
         <p class="text-2xl mt-4">{video.title}</p>
       </li>

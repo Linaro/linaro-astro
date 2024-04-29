@@ -99,6 +99,6 @@ flow:
           Are you ready to redefine your Linux Kernel LTS experience? 
 
           ## Get your *full package* quote now.
-
-        styles: max-w-4xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
+        styles:
+          card: max-w-8xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center flex flex-col xl:flex-row justify-between
 ---
