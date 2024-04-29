@@ -69,7 +69,8 @@ flow:
           Solving the challenges of cloud-native edge computing requires collaboration among all contributing players.
 
           With ONE Lab you can focus on your core business, ensuring seamless compatibility with your partner products.
-        styles: max-w-4xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
+        styles:
+          card: max-w-8xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center flex
   - row: container_row
     title: Supporting Partners
     sections:
