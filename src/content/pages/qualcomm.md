@@ -99,7 +99,7 @@ flow:
         cards:
           - title: Upstream Releases
             text: |
-              * Yocto Project Compatible meta-qcom BSPs layer
+              * Yocto Project Compatible meta-qcomBSPs layer
                 https://git.yoctoproject.org/meta-qcom/
               * Linaro Images based on latest stable kernel
               * Mainline Snapshot Images

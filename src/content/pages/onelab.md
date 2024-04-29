@@ -17,7 +17,7 @@ hero:
     title: max-w-3xl mb-12
     description: max-w-2xl text-xl
     background: bg-right-top
-    background_container: md:p-[10%]
+    background_container: lg:p-[10%]
 flow:
   - row: container_row
     title: ONELab is innovation done right
@@ -25,7 +25,10 @@ flow:
     sections:
       - component: graphic
         src: linaro-website/graphics/onelab-diagram
-        mobile_src: linaro-website/graphics/onelab-diagram-mobile
+        mobile:
+          src: linaro-website/graphics/onelab-diagram-mobile
+          width: 1000
+          height: 1000
         alt: diagram explaining how onelab innovation is done at each stage of the lifecycle
         width: 2000
         height: 2000
@@ -70,34 +73,26 @@ flow:
 
           With ONE Lab you can focus on your core business, ensuring seamless compatibility with your partner products.
         styles:
-          card: max-w-8xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center flex
+          card: max-w-8xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-2xl text-center flex flex-col lg:flex-row
   - row: container_row
     title: Supporting Partners
     sections:
       - component: logo_grid
         logos:
-          - src: "linaro-website/logos/red-hat"
-            alt: Red Hat Logo
-          - src: "linaro-website/logos/google"
-            alt: Google logo
-          - src: "linaro-website/logos/samsung"
-            alt: Samsung logo
-          - src: "linaro-website/logos/cix"
-            alt: CIX Technology logo
-          - src: "linaro-website/logos/quic"
-            alt: Qualcomm Innovation Center logo
-          - src: "linaro-website/logos/hisilicon"
-            alt: HiSilicon logo
+          - src: "linaro-website/logos/adlink"
+            alt: ADLINK logo
           - src: "linaro-website/logos/arm"
             alt: Arm logo
           - src: "linaro-website/logos/amd-xilinx"
             alt: AMD Xilinx logo
-          - src: "linaro-website/logos/remarkable"
-            alt: reMarkable logo
-          - src: "linaro-website/logos/microsoft"
-            alt: Microsoft logo
-          - src: "linaro-website/logos/fujitsu"
-            alt: Fujitsu logo
+          - src: "linaro-website/logos/bosch"
+            alt: Bosch logo
+          - src: "linaro-website/logos/openeuler"
+            alt: OpenEuler logo
+          - src: "linaro-website/logos/qualcomm"
+            alt: Qualcomm logo
           - src: "linaro-website/logos/renesas"
             alt: Renesas logo
+          - src: "linaro-website/logos/texas-instruments"
+            alt: Texas Instruments logo
 ---
