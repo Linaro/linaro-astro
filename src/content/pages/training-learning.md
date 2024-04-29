@@ -20,7 +20,8 @@ hero:
 flow:
   - row: container_row
     title: Most Popular Courses
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: bullet_point
         styles:

@@ -1,11 +1,12 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import CloudinaryImg from "../../cloudinary/CloudinaryImg.astro";
-import { getEntry } from "astro:content";
 import { remark } from "remark";
 import strip from "strip-markdown";
-import { getEntries } from "astro:content";
 import dayjs from "dayjs";
+import dayOfYear from "dayjs/plugin/dayOfYear";
+
+dayjs.extend(dayOfYear);
 
 type Props = CollectionEntry<"events">;
 const { slug, data: event, body } = Astro.props;
@@ -24,7 +25,9 @@ const content =
     .replace("\\", "") + "...";
 
 let formattedDate;
+console.log(event);
 const eventStart = dayjs(event.event_start);
+console.log(eventStart);
 const eventEnd = dayjs(event.event_end);
 if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   formattedDate = `${eventStart.format("D MMMM, YYYY")}`;
@@ -54,13 +57,11 @@ if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   {
     event.button && (
       <div class="px-4 py-8 justify-self-end">
-        <a
-          class="linaro-gradient-button"
-          href={event.button.url}
-          target="_blank"
-        >
-          {event.button.text}
-        </a>
+        <button class="linaro-gradient-button">
+          <a href={event.button.url} target="_blank">
+            {event.button.text}
+          </a>
+        </button>
       </div>
     )
   }

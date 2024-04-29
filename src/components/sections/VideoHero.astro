@@ -1,0 +1,19 @@
+---
+import type { videoHeroSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+
+type Props = z.infer<typeof videoHeroSchema>;
+const { src, type, styles } = Astro.props;
+---
+
+<section
+  class:list={[
+    // style,
+    `relative text-white lg:h-[calc(50vh)] lg:h-full lg:min-h-[400px] max-h-[800px] w-full `,
+    styles?.container,
+  ]}
+>
+  <video autoplay loop controls muted class="object-contain mx-auto">
+    <source src={src} type={type} />
+  </video>
+</section>

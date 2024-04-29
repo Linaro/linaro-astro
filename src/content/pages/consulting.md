@@ -21,7 +21,8 @@ hero:
     background_container: ml-[10%]
 flow:
   - row: container_row
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: cards
         styles:

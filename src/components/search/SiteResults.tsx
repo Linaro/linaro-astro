@@ -36,9 +36,11 @@ const getType = (type: "blogs" | "news" | "events" | "page") => {
 const SiteResult = ({
   result,
   tags,
+  isSsr,
 }: {
   result: any;
   tags: CollectionEntry<"tags">[];
+  isSsr: boolean;
 }) => {
   const [article] = createResource(result, getArticle);
 
@@ -53,7 +55,9 @@ const SiteResult = ({
             <div class="flex gap-4">
               <div class="w-full max-w-[10rem] rounded-xl">
                 <img
-                  src={isDev ? "/placeholder.jpg" : article()?.meta.image}
+                  src={
+                    isDev || isSsr ? "/placeholder.jpg" : article()?.meta.image
+                  }
                   alt=""
                   class="h-full w-full object-cover rounded-xl"
                 />
@@ -135,10 +139,12 @@ const BlogResults = ({
   results,
   onClearSearch,
   tags,
+  isSsr,
 }: {
   results: Resource<any>;
   onClearSearch: () => void;
   tags: CollectionEntry<"tags">[];
+  isSsr: boolean;
 }) => {
   const [page, setPage] = createSignal(1);
   const [paginatedResults, setPaginatedResults] = createSignal([]);
@@ -161,7 +167,9 @@ const BlogResults = ({
           <p class="text-2xl self-start">{results()?.results.length} results</p>
           <ul class="">
             <For each={paginatedResults()}>
-              {(result) => <SiteResult result={result} tags={tags} />}
+              {(result) => (
+                <SiteResult result={result} tags={tags} isSsr={isSsr} />
+              )}
             </For>
           </ul>
           <p class="text-2xl">

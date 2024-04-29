@@ -33,6 +33,11 @@ const inputFields = [
         </>
       ))
     }
+    <textarea
+      name="customfield_13365"
+      required
+      placeholder="How can Linaro help you?"
+      class="text-black pl-2 h-12 w-full h-24"></textarea>
     <label for="agreed" class="text-white"
       ><input type="checkbox" name="agreed" class="mr-2" required />I’ve read
       and agreed to Linaro’s <a href="/privacy-policy" class="text-white"
@@ -92,6 +97,7 @@ const inputFields = [
       "customfield_13156",
       "email",
       "customfield_13368",
+      "customfield_13365",
       "form_id",
     ].reduce(
       (obj, key) => ({
