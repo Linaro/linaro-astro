@@ -22,7 +22,8 @@ hero:
 flow:
   - row: container_row
     title: Linaro's GNU and LLVM Toolchains
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: cards
         styles:
@@ -85,7 +86,8 @@ flow:
               [Click here to find out more about SQUAD](https://squad.readthedocs.io/en/latest/)
   - row: container_row
     title: Linaro Linux releases for Qualcomm™ Snapdragon® processors
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: cards
         styles:

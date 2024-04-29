@@ -46,11 +46,9 @@ const { id } = Astro.props;
 
   openButton?.addEventListener("click", () => {
     dialog?.showModal();
-    console.log("show modal");
   });
   closeButton?.addEventListener("click", () => {
     dialog?.close();
-    console.log("close modal");
   });
 
   dialog.addEventListener("click", function (event) {

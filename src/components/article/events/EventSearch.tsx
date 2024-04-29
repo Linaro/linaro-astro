@@ -21,7 +21,6 @@ const fetchResults = async ({
   query: string | null;
   filters: Filters;
 }) => {
-  console.log("fetching", query);
   return await pagefind.debouncedSearch(query, {
     filters,
     sort: {
@@ -40,7 +39,6 @@ const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
-    console.log(url.searchParams.get("tags"));
     return {
       query: url.searchParams.get("query"),
     };
@@ -85,10 +83,6 @@ const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
   };
 
   const [results] = createResource(search, fetchResults);
-
-  createEffect(() => {
-    console.log(results());
-  });
 
   return (
     <div class={`w-full flex flex-col mt-12`}>

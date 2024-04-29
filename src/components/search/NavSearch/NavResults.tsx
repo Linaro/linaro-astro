@@ -32,7 +32,6 @@ const getType = (type: "blogs" | "news" | "events" | "page") => {
 
 const NavResult = ({ result }: { result: any }) => {
   const [article] = createResource(result, getArticle);
-  createEffect(() => console.log(article()));
   return (
     <li class="w-full ">
       <a

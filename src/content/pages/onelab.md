@@ -21,7 +21,8 @@ hero:
 flow:
   - row: container_row
     title: ONELab is innovation done right
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: graphic
         src: linaro-website/graphics/onelab-diagram
@@ -63,7 +64,8 @@ flow:
             text: Provide evidence that products are cloud-native edge-ready and ensures products work seamlessly together.
             icon: shield_person
   - row: container_row
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: contact
         form_id: "7"
@@ -71,7 +73,7 @@ flow:
         content: |
           Solving the challenges of cloud-native edge computing requires collaboration among all contributing players.
 
-          With ONE Lab you can focus on your core business, ensuring seamless compatibility with your partner products.
+          With ONELab you can focus on your core business, ensuring seamless compatibility with your partner products.
         styles:
           card: max-w-8xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-2xl text-center flex flex-col lg:flex-row
   - row: container_row
