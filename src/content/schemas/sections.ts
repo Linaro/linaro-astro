@@ -224,12 +224,16 @@ export const logoGridSchema = z.object({
 
 export const graphicSchema = z.object({
   component: component("graphic"),
+  mobile: z.object({
+    src: z.string(),
+    width: z.number(),
+    height: z.number(),
+  }),
   src: z.string(),
-  mobile_src: z.string(),
   alt: z.string(),
-  accessible_version: z.string().optional(),
   width: z.number(),
   height: z.number(),
+  accessible_version: z.string().optional(),
 });
 
 export const videosSchema = z.object({
