@@ -27,7 +27,6 @@ const fetchResults = async ({
   query: string | null;
   filters: Filters;
 }) => {
-  console.log("fetching", query);
   return await pagefind.debouncedSearch(query, {
     filters,
     sort: {
@@ -58,7 +57,6 @@ const BlogSearch = ({
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
-    console.log(url.searchParams.get("tags"));
     return {
       query: url.searchParams.get("query"),
       tags: url.searchParams.get("tags")?.split(",") ?? [],
@@ -142,10 +140,6 @@ const BlogSearch = ({
     };
 
   const [results] = createResource(search, fetchResults);
-
-  createEffect(() => {
-    console.log(results());
-  });
 
   const [isExpanded, setIsExpanded] = createSignal(
     pathParams()?.tags?.length <= 0

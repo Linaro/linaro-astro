@@ -1,5 +1,10 @@
 import { z } from "astro/zod";
-import { reference, type CollectionEntry } from "astro:content";
+import { defineCollection } from "astro:content";
+import {
+  reference,
+  type CollectionEntry,
+  type CollectionKey,
+} from "astro:content";
 
 const component = (filename: CollectionEntry<"sections">["slug"]) =>
   z.literal(filename);
@@ -62,7 +67,12 @@ export const imageCardsSchema = z.object({
       title: z.string().optional(),
       description: z.string().optional(),
       text: z.string().optional(),
-      image: z.object({ src: z.string(), alt: z.string() }),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+        width: z.number().optional().default(500),
+        height: z.number().optional().default(500),
+      }),
       style: z.string().optional(),
       button: z
         .object({
@@ -95,7 +105,7 @@ export const statGridSchema = z.object({
   component: component("stat_grid"),
   stats: z.array(
     z.object({
-      value: z.string(),
+      value: z.number(),
       label: z.string(),
     })
   ),
@@ -247,6 +257,39 @@ export const videosSchema = z.object({
   videos: z.array(z.object({ src: z.string(), title: z.string() })),
 });
 
+export const videoHeroSchema = z.object({
+  component: component("video_hero"),
+  styles: z
+    .object({
+      video: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  src: z.string(),
+  type: z.string(),
+});
+
+export const articlesSchema = z.object({
+  component: component("articles"),
+  title: z.string().optional(),
+  posts: z.array(
+    z.discriminatedUnion("collection", [
+      z.object({
+        collection: z.literal("blogs"),
+        post: reference("blogs"),
+      }),
+      z.object({
+        collection: z.literal("events"),
+        post: reference("events"),
+      }),
+      z.object({
+        collection: z.literal("news"),
+        post: reference("news"),
+      }),
+    ])
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -264,4 +307,6 @@ export default z.discriminatedUnion("component", [
   graphicSchema,
   videosSchema,
   bulletPointSchema,
+  videoHeroSchema,
+  articlesSchema,
 ]);

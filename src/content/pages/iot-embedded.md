@@ -20,7 +20,8 @@ hero:
 flow:
   - row: container_row
     title: IoT & Embedded Applications
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: three_column
         styles:
@@ -58,7 +59,8 @@ flow:
               url: https://www.codelinaro.org/
   - row: container_row
     title: Explore Related Resources
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: more_info
         styles:

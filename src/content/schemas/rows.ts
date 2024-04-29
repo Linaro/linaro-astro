@@ -9,7 +9,12 @@ export const containerRowSchema = z.object({
   row: rowReference("container_row"),
   no_border: z.boolean().optional(),
   title: z.string().optional(),
-  styles: z.string().optional(),
+  styles: z
+    .object({
+      outer: z.string().optional(),
+      inner: z.string().optional(),
+    })
+    .optional(),
   background_image: z.string().optional(),
   sections: z.array(
     sectionSchemas.transform((val) => ({

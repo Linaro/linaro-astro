@@ -21,7 +21,8 @@ hero:
 flow:
   - row: container_row
     title: Why you can trust Linaro LTS
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: cards
         styles:
@@ -66,12 +67,14 @@ flow:
               height: 1000
   - row: container_row
     background_image: linaro-website/graphics/film-globe
-    styles: pb-[36rem] mb-[-36rem] mt-[-12rem] bg-[center_top_50%] md:bg-[center_top_60%] lg:bg-[center_top_30%] xl:bg-[center_top_30%] bg-[length:200%] md:bg-[length:150%] xl:bg-[length:100%] bg-no-repeat
+    styles:
+      outer: pb-[36rem] mb-[-36rem] mt-[-12rem] bg-[center_top_50%] md:bg-[center_top_60%] lg:bg-[center_top_30%] xl:bg-[center_top_30%] bg-[length:200%] md:bg-[length:150%] xl:bg-[length:100%] bg-no-repeat
     no_border: true
     sections: []
   - row: container_row
     title: Enter a world of benefits
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: cards
         styles:

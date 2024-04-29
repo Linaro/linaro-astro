@@ -1,0 +1,42 @@
+---
+import type { z } from "astro/zod";
+import BlogListing from "../article/blog/BlogListing.astro";
+import EventListing from "../article/events/EventListing.astro";
+import type { articlesSchema } from "@/content/schemas/sections";
+import { getEntries } from "astro:content";
+import type { CollectionKey } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+type Props = z.infer<typeof articlesSchema>;
+
+const { title } = Astro.props;
+
+type GetEntriesType<T extends "blogs" | "events" | "news"> = {
+  collection: T;
+  slug: CollectionEntry<T>["slug"];
+};
+
+const posts = await getEntries(Astro.props.posts.map((post) => post.post));
+---
+
+<div
+  class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24 not-prose"
+  data-pagefind-ignore
+>
+  {
+    title && (
+      <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Related Posts</h2>
+    )
+  }
+  <ul class="flex flex-wrap gap-8 justify-center">
+    {
+      posts?.map((post) => {
+        if (post.collection === "events") {
+          return <EventListing {...post} />;
+        } else {
+          return <BlogListing {...post} />;
+        }
+      })
+    }
+  </ul>
+</div>

@@ -20,7 +20,8 @@ hero:
 flow:
   - row: container_row
     title: Unlock the Power of AI & Machine Learning
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: text
         text_content: Linaro offers a wide range of AI and machine learning solutions tailored to various industries and use cases. Our offerings include
@@ -47,7 +48,8 @@ flow:
             icon: cloud_ai
   - row: container_row
     title: Explore Related Resources
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: more_info
         styles:
