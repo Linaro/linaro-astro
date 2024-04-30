@@ -22,9 +22,7 @@ export async function getStaticPaths() {
 }
 type Props = { page: CollectionEntry<"pages"> };
 const { slug } = Astro.params;
-console.log(slug);
 let page;
-console.log(import.meta.env.SSR);
 if (import.meta.env.SSR) {
   if (!slug) {
     page = await getEntry("pages", "/");
@@ -34,8 +32,6 @@ if (import.meta.env.SSR) {
 } else {
   page = Astro.props.page;
 }
-
-console.log(page);
 
 const { Content } = page ? await page.render() : { Content: "<></>" };
 ---

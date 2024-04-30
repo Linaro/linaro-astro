@@ -21,13 +21,13 @@ const optimizedBackground = await getImage({
 
 const titleMarkdown = await marked.parseInline(title);
 const descriptionMarkdown = await marked.parse(description);
-console.log(title);
 ---
 
 <section
   class:list={[
     // style,
-    `relative text-white h-[calc(100vh)] min-h-[600px] max-h-[1200px] w-full max-w-screen overflow-hidden`, styles?.image_size
+    `relative text-white h-[calc(100vh)] min-h-[800px] max-h-[1200px] w-full max-w-screen overflow-hidden`,
+    styles?.image_size,
   ]}
 >
   <div

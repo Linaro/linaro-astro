@@ -21,12 +21,13 @@ hero:
     background_container: ml-[10%]
 flow:
   - row: container_row
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     title: Linaro's Core Values
     sections:
       - component: image_cards
         styles:
-          container: mx-auto flex justify-around gap-8
+          container: mx-auto flex justify-around gap-8 flex-wrap
           card: w-[40ch] bg-background px-8 rounded-[1.5rem] border-[1px] border-grey
           card_title: text-4xl m-0
         cards:

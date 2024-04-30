@@ -27,7 +27,6 @@ const fetchResults = async ({
   query: string | null;
   filters: Filters;
 }) => {
-  console.log("fetching", query);
   return await pagefind.debouncedSearch(query, {
     filters,
     sort: {
@@ -58,7 +57,6 @@ const BlogSearch = ({
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
-    console.log(url.searchParams.get("tags"));
     return {
       query: url.searchParams.get("query"),
       tags: url.searchParams.get("tags")?.split(",") ?? [],
@@ -143,10 +141,6 @@ const BlogSearch = ({
 
   const [results] = createResource(search, fetchResults);
 
-  createEffect(() => {
-    console.log(results());
-  });
-
   const [isExpanded, setIsExpanded] = createSignal(
     pathParams()?.tags?.length <= 0
   );
@@ -155,7 +149,7 @@ const BlogSearch = ({
     <div class={`w-full flex flex-col mt-12`}>
       <div class="w-full lg:w-1/2 flex flex-col md:flex-row justify-between items-stretch mb-3 gap-3 md:gap-0">
         <form
-          class="bg-transparent text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2"
+          class="bg-background text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2"
           onSubmit={(e) => {
             e.preventDefault();
           }}
@@ -171,7 +165,7 @@ const BlogSearch = ({
                 query: value ?? null,
               });
             }}
-            class="w-full h-full px-3 w-full h-full px-1 bg-transparent outline-none"
+            class="w-full h-full px-3 w-full h-full px-1 bg-background outline-none"
           />
           <button
             class="py-2 px-2"
