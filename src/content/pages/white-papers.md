@@ -17,7 +17,8 @@ hero:
 flow:
   - row: container_row
     title: White Papers
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: image_cards
         styles:

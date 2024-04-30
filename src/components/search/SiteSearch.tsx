@@ -26,7 +26,6 @@ const fetchResults = async ({
   query: string | null;
   filters: Filters;
 }) => {
-  console.log("fetching", query);
   return await pagefind.debouncedSearch(query, {
     filters,
   });
@@ -42,11 +41,16 @@ const getQueryParams = ({ filters, query }: SearchQuery) => {
   return url;
 };
 
-const SiteSearch = ({ tags }: { tags: CollectionEntry<"tags">[] }) => {
+const SiteSearch = ({
+  tags,
+  isSsr,
+}: {
+  tags: CollectionEntry<"tags">[];
+  isSsr: boolean;
+}) => {
   const pathParams = createMemo(() => {
     const url_string = window.location.href;
     const url = new URL(url_string);
-    console.log(url.searchParams.get("tags"));
     return {
       query: url.searchParams.get("query"),
     };
@@ -92,15 +96,11 @@ const SiteSearch = ({ tags }: { tags: CollectionEntry<"tags">[] }) => {
 
   const [results] = createResource(search, fetchResults);
 
-  createEffect(() => {
-    console.log(results());
-  });
-
   return (
     <div class={`w-full flex flex-col mt-12`}>
       <div class="w-full lg:w-1/2 flex flex-col md:flex-row justify-between items-stretch mb-3 gap-3 md:gap-0">
         <form
-          class="bg-transparent text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2"
+          class="bg-background text-white basis-full rounded-lg flex flex-row py-1 px-1 items-center pl-2  border-grey border-2"
           onSubmit={(e) => {
             e.preventDefault();
           }}
@@ -116,7 +116,7 @@ const SiteSearch = ({ tags }: { tags: CollectionEntry<"tags">[] }) => {
                 query: value ?? null,
               });
             }}
-            class="w-full h-full px-3 w-full h-full px-1 bg-transparent outline-none"
+            class="w-full h-full px-3 w-full h-full px-1 bg-background outline-none"
           />
           <button
             class="py-2 px-2"
@@ -131,6 +131,7 @@ const SiteSearch = ({ tags }: { tags: CollectionEntry<"tags">[] }) => {
         results={results}
         onClearSearch={onClearSearch}
         tags={tags}
+        isSsr={isSsr}
       />
     </div>
   );

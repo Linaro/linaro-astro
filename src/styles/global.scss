@@ -97,4 +97,8 @@
   .purple-gradient-container {
     @apply bg-purple-gradient py-24  pb-[12rem] mb-[-12rem];
   }
+
+  .purple-gradient-container-no-padding {
+    @apply bg-purple-gradient  pb-[12rem] mb-[-12rem];
+  }
 }

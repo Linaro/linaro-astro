@@ -14,7 +14,70 @@ if (content) {
 }
 ---
 
-<div class:list={["items-center gap-12",styles?.card]}>
+<div class:list={["items-center gap-12", styles?.card]}>
   <article set:html={markdownContent} class:list={["text-white", styles]} />
   <ContactForm form_id={form_id} description={description} />
 </div>
+<script>
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function addListeners() {
+    const forms = document.querySelectorAll(
+      "[data-contact-form]"
+    ) as NodeListOf<HTMLFormElement>;
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", (event) => onSubmit(event, form));
+    });
+  }
+
+  function onSubmit(e: SubmitEvent, form: HTMLFormElement) {
+    e.preventDefault();
+
+    const feedback = form.parentElement!.querySelector("#contact-feedback");
+    const feedbackText = form.parentElement!.querySelector(
+      "#contact-feedback-text"
+    ) as HTMLParagraphElement;
+
+    const button = form.querySelector("#contact-submit");
+    const loader = form.querySelector("#contact-submitting");
+
+    if (!e.target) return;
+
+    const data = new FormData(e.target as HTMLFormElement);
+    const payload = {} as Record<string, any>;
+
+    data.forEach((value, key) => (payload[key] = value));
+
+    button?.classList.add("hidden");
+    loader?.classList.remove("hidden");
+
+    fetch(
+      "https://avqfk3gzg2.execute-api.us-east-1.amazonaws.com/prod/formSubmit",
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "X-Api-Key": "ox9fSkYfRK16mxy5Gv6pM121H7iAubAQ6uzsDmoW",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        form.classList.add("hidden");
+        feedback!.classList.remove("hidden");
+        feedbackText!.innerText = result.message;
+      })
+      .catch(() => {
+        feedback!.classList.remove("hidden");
+        feedbackText!.innerText =
+          "There was an error during submission. Please try again later.";
+        button?.classList.remove("hidden");
+      })
+      .finally(() => {
+        loader?.classList.add("hidden");
+      });
+  }
+</script>

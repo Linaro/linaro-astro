@@ -87,8 +87,6 @@ const EventResults = ({
       events()?.filter((event) => event.meta.event_start <= Date.now()) ?? []
   );
 
-  createEffect(() => console.log(past()));
-
   return (
     <div class="flex flex-col mt-8 mb-24 gap-12 items-center w-full">
       <Switch>
@@ -115,7 +113,7 @@ const EventResults = ({
             </h2>
             <ul class="flex flex-wrap gap-16  justify-center">
               <For each={past()}>
-                {(event) => <EventResult event={event} />}
+                {(event) => <EventResult event={event} isSsr={isSsr} />}
               </For>
             </ul>
           </Show>

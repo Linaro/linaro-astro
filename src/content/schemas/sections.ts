@@ -1,5 +1,10 @@
 import { z } from "astro/zod";
-import { reference, type CollectionEntry } from "astro:content";
+import { defineCollection } from "astro:content";
+import {
+  reference,
+  type CollectionEntry,
+  type CollectionKey,
+} from "astro:content";
 
 const component = (filename: CollectionEntry<"sections">["slug"]) =>
   z.literal(filename);
@@ -62,7 +67,12 @@ export const imageCardsSchema = z.object({
       title: z.string().optional(),
       description: z.string().optional(),
       text: z.string().optional(),
-      image: z.object({ src: z.string(), alt: z.string() }),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+        width: z.number().optional().default(500),
+        height: z.number().optional().default(500),
+      }),
       style: z.string().optional(),
       button: z
         .object({
@@ -95,7 +105,7 @@ export const statGridSchema = z.object({
   component: component("stat_grid"),
   stats: z.array(
     z.object({
-      value: z.string(),
+      value: z.number(),
       label: z.string(),
     })
   ),
@@ -122,6 +132,37 @@ export const contactSchema = z.object({
   }),
 });
 
+export const contactButtonsSchema = z.object({
+  component: component("contact_buttons"),
+  buttons: z.array(
+    z.discriminatedUnion("type", [
+      z.object({
+        title: z.string(),
+        type: z.literal("link"),
+        icon: z.string().optional(),
+        url: z.string(),
+        button_text: z.string(),
+        style: z.string().optional(),
+      }),
+      z.object({
+        title: z.string(),
+        type: z.literal("form"),
+        icon: z.string().optional(),
+        form_id: z.string(),
+        modal_id: z.string(),
+        button_text: z.string(),
+        style: z.string().optional(),
+        description: z.string().optional(),
+      }),
+    ])
+  ),
+  styles: z.object({
+    card: z.string().optional(),
+    container: z.string().optional(),
+    card_title: z.string().optional(),
+  }),
+});
+
 export const membershipSchema = z.object({
   component: component("membership"),
   form_id: z.string(),
@@ -131,8 +172,6 @@ export const membershipSchema = z.object({
   styles: z.object({
     card: z.string().optional(),
     container: z.string().optional(),
-    // cardTitle: z.string().optional(),
-    // card_heading: z.string().optional(),
   }),
   MemberManagementPanel: z
     .array(
@@ -189,29 +228,6 @@ export const moreInfoSchema = z.object({
   ),
 });
 
-export const bulletPointSchema = z.object({
-  component: component("bullet_point"),
-  styles: z
-    .object({
-      card: z.string().optional(),
-      container: z.string().optional(),
-    })
-    .optional(),
-  bullet_point: z.array(
-    z.object({
-      title: z.string(),
-      sub_text: z
-        .array(
-          z.object({
-            text: z.string(),
-          })
-        )
-        .optional(),
-      text: z.string().optional(),
-    })
-  ),
-});
-
 export const logoGridSchema = z.object({
   component: component("logo_grid"),
   logos: z.array(
@@ -224,12 +240,16 @@ export const logoGridSchema = z.object({
 
 export const graphicSchema = z.object({
   component: component("graphic"),
+  mobile: z.object({
+    src: z.string(),
+    width: z.number(),
+    height: z.number(),
+  }),
   src: z.string(),
-  mobile_src: z.string(),
   alt: z.string(),
-  accessible_version: z.string().optional(),
   width: z.number(),
   height: z.number(),
+  accessible_version: z.string().optional(),
 });
 
 export const videosSchema = z.object({
@@ -243,6 +263,39 @@ export const videosSchema = z.object({
   videos: z.array(z.object({ src: z.string(), title: z.string() })),
 });
 
+export const videoHeroSchema = z.object({
+  component: component("video_hero"),
+  styles: z
+    .object({
+      video: z.string().optional(),
+      container: z.string().optional(),
+    })
+    .optional(),
+  src: z.string(),
+  type: z.string(),
+});
+
+export const articlesSchema = z.object({
+  component: component("articles"),
+  title: z.string().optional(),
+  posts: z.array(
+    z.discriminatedUnion("collection", [
+      z.object({
+        collection: z.literal("blogs"),
+        post: reference("blogs"),
+      }),
+      z.object({
+        collection: z.literal("events"),
+        post: reference("events"),
+      }),
+      z.object({
+        collection: z.literal("news"),
+        post: reference("news"),
+      }),
+    ])
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -252,6 +305,7 @@ export default z.discriminatedUnion("component", [
   socialsSchema,
   textSchema,
   contactSchema,
+  contactButtonsSchema,
   twoColumnSchema,
   threeColumnSchema,
   moreInfoSchema,
@@ -259,5 +313,6 @@ export default z.discriminatedUnion("component", [
   membershipSchema,
   graphicSchema,
   videosSchema,
-  bulletPointSchema,
+  videoHeroSchema,
+  articlesSchema,
 ]);

@@ -22,7 +22,8 @@ hero:
 flow:
   - row: container_row
     title: Placeholder Text
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: two_column
         container_styles: items-start justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl
@@ -55,7 +56,8 @@ flow:
             style: linaro-gradient-button mt-12
   - row: container_row
     title: Explore Related Resources
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: more_info
         styles:

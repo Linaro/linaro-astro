@@ -48,10 +48,7 @@ const NavSearch = () => {
     }
   };
 
-  createEffect(() => console.log(results()));
-
   const onInput: JSX.InputEventHandler<HTMLInputElement, InputEvent> = (e) => {
-    console.log(e.target.value);
     if (!e.target.value || e.target.value === "") {
       setSearch(null);
       mutate(null);

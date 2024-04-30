@@ -25,7 +25,8 @@ hero:
 flow:
   - row: container_row
     title: Qualcomm and Linaro
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: text
         text_content: Ten years of open-source innovation
@@ -74,7 +75,7 @@ flow:
               alt: ""
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 prose-a:text-blue-300 border-2 border-[#6B6B6B] rounded-3xl p-6
+          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6
           card: w-[50ch] text-left
           card_title: text-2xl font-thin
         cards:
@@ -93,13 +94,13 @@ flow:
         style: text-center text-3xl font-bold
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-[#6B6B6B] rounded-3xl p-6
-          card: w-[50ch]
+          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-grey rounded-3xl p-6
+          card: w-[50ch] prose-a:break-all
           card_title: text-[31px]
         cards:
           - title: Upstream Releases
             text: |
-              * Yocto Project Compatible meta-qcom BSPs layer
+              * Yocto Project Compatible meta-qcomBSPs layer
                 https://git.yoctoproject.org/meta-qcom/
               * Linaro Images based on latest stable kernel
               * Mainline Snapshot Images
@@ -134,11 +135,12 @@ flow:
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
   - row: container_row
     title: Explore Related Resources
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: more_info
         styles:
-          container: justify-around border-2 border-[#6B6B6B] rounded-3xl py-10
+          container: justify-around border-2 border-grey rounded-3xl py-10
           card: max-w-md  text-center
         more_info:
           - title: Check out the most read blogs
