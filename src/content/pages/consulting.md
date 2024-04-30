@@ -17,11 +17,12 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-center
+    background: bg-right-top
     background_container: ml-[10%]
 flow:
   - row: container_row
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: cards
         styles:
@@ -45,7 +46,10 @@ flow:
     sections:
       - component: graphic
         src: linaro-website/graphics/content/consultancy-lifecycle
-        mobile_src: linaro-website/graphics/content/artboard-consulting
+        mobile:
+          src: linaro-website/graphics/content/artboard-consulting
+          width: 1000
+          height: 1000
         alt: diagram explaining how Linaro what consultancy services Linaro can provide at each stage of the software lifecycle
         width: 2000
         height: 2000

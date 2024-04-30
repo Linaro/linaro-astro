@@ -37,7 +37,8 @@ flow:
 
   - row: container_row
     title: From autonomous AI-driven features to software-defined vehicles
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: two_column
         container_styles: items-start justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl

@@ -7,22 +7,24 @@ description: |
   Since 2010, we have played a pivotal role in shaping the Arm ecosystem, fostering collaboration, standardization, and optimization to drive innovation and accelerate product deployment.
 flow:
   - row: container_row
+    no_border: true
+    styles:
+      inner: py-8
     sections:
-      - component: cards
-        cards:
-          - title: ""
-            text: |
-              <video autoplay loop  >
-                  <source src="/NEW Linaro.mp4" type="video/mp4" > 
-              </video>
+      - component: video_hero
+        src: /videos/linaro.mp4
+        type: video/mp4
   - row: container_row
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container-no-padding py-24
+      inner: pt-12 pb-24
+    title: About Linaro
     sections:
       - component: cards
         styles:
-          container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
+          container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-p:text-2xl
           card: max-w-[60ch]
-          card_title: text-yellow-500
+          card_title: text-linaro-yellow
         cards:
           - text: |
               At Linaro, we represent a global community of engineers, developers, and technology enthusiasts dedicated to pushing the boundaries of what's possible with Arm-based technologies. 
@@ -31,40 +33,50 @@ flow:
           - title: Collaboration lies at the heart of everything we do at Linaro.
             text: We work closely with industry leaders, open-source communities, and technology partners to co-create, standardize, and optimize solutions that drive innovation and enable seamless integration across diverse platforms and environments.
   - row: container_row
+    styles:
+      inner: max-w-5xl mx-auto
     sections:
       - component: cards
         cards:
           - text: |
-              *Linaro is about*
+              ### *Linaro is about*
         styles:
-          card: prose-em:linaro-gradient-text prose-p:text-3xl
+          card: prose-em:linaro-gradient-text prose-em:font-bold prose-em:not-italic prose-p:text-3xl prose-headings:text-5xl
           container: flex justify-center
       - component: cards
         styles:
-          container: flex justify-around
+          container: flex justify-between mx-[20%]
         cards:
           - text: Expertise
           - text: Innovation
       - component: image_cards
         styles:
-          container: flex justify-center
-          image: w-[1000px] object-cover scale-125 max-h-[30rem] object-center
+          container: w-full
+          image: w-full object-cover object-center
         cards:
           - image:
-              src: linaro-website/graphics/Infinito
+              src: linaro-website/graphics/infinito
               alt: "Linaro is about expertise, innovation, open standards and community"
+              width: 1000
+              height: 1000
+      - component: cards
+        styles:
+          container: flex justify-between mx-[20%]
+        cards:
+          - text: Open Standards
+          - text: Community
   - row: container_row
     sections:
       - component: cards
         styles:
           container: flex justify-center
-          card_title: text-yellow-500
+          card_title: text-linaro-yellow
           card: text-center
         cards:
           - title: Ready to embark on a journey of innovation and  collaboration with Linaro?
             text: Contact us today to learn more about our services, solutions, and how we can help you achieve your technology goals. Together, let's shape the future of technology and drive positive change in the Arm ecosystem.
       - component: contact
-        form_id: "6"
+        form_id: "7"
         styles:
           card: flex justify-center
 ---

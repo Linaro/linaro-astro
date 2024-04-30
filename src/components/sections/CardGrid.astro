@@ -16,7 +16,7 @@ const { cards, styles } = Astro.props;
           {icon && <Icon name={icon} size={100} class="my-0" />}
           <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
 
-          <div class={`text-xl`} set:html={content} />
+          <div class={`text-xl prose-a:text-blue-300`} set:html={content} />
 
           {button && (
             <a

@@ -97,7 +97,8 @@ flow:
               alt: Tcl/Tk logo
   - row: container_row
     no_border: true
-    styles: purple-gradient-container
+    styles:
+      outer: purple-gradient-container
     sections:
       - component: cards
         styles:
@@ -158,7 +159,8 @@ flow:
         style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
   - row: container_row
     title: Explore Related Resources
-    styles: bg-transparent z-0
+    styles:
+      outer: bg-transparent z-0
     sections:
       - component: more_info
         styles:

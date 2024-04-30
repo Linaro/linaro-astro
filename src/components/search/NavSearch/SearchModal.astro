@@ -24,13 +24,13 @@ const { id } = Astro.props;
 </style>
 
 <button
-  id="modal-open-button"
+  id="search-modal-open-button"
   class="ml-auto mr-4 float-right p-2"
   onclick={`window.${id}.showModal()`}><Icon name="search" size={20} /></button
 >
 <div class="relative w-full">
   <dialog
-    id="modal-dialog"
+    id="search-modal-dialog"
     class="bg-transparent rounded-xl mx-auto w-full max-w-6xl"
   >
     <div class="relative bg-background text-white p-4 rounded-xl">
@@ -40,17 +40,17 @@ const { id } = Astro.props;
 </div>
 
 <script>
-  const dialog = document.getElementById("modal-dialog") as HTMLDialogElement;
-  const openButton = document.getElementById("modal-open-button");
-  const closeButton = document.getElementById("modal-close-button");
+  const dialog = document.getElementById(
+    "search-modal-dialog"
+  ) as HTMLDialogElement;
+  const openButton = document.getElementById("search-modal-open-button");
+  const closeButton = document.getElementById("search-modal-close-button");
 
   openButton?.addEventListener("click", () => {
     dialog?.showModal();
-    console.log("show modal");
   });
   closeButton?.addEventListener("click", () => {
     dialog?.close();
-    console.log("close modal");
   });
 
   dialog.addEventListener("click", function (event) {
