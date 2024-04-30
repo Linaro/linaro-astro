@@ -16,7 +16,7 @@ hero:
     text_container: max-w-4xl
     title: max-w-md
     description: max-w-80 text-xl
-    background: bg-center
+    background: bg-right-top
 flow:
   - row: container_row
     title: IoT & Embedded Applications

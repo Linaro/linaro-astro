@@ -11,39 +11,42 @@ hero:
   description: ""
   styles:
     text_container: max-w-[45rem]
-    background: bg-center
+    background: bg-right-top md:bg-center
     description: text-md sm:text-lg
     image_size: h-[calc(50vh)]
 flow:
   - row: container_row
     sections:
-      - component: cards
+      - component: contact_buttons
         styles:
           card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center
           container: justify-around gap-x-5 gap-y-20
           button_style: mt-8
           card_title: text-[2rem] text-center
-        cards:
+        buttons:
           - title: Membership & General Enquiries
+            type: form
             icon: workspaces
-            button:
-              text: Get in Touch
-              url: mailto:contact@linaro.org
+            button_text: Get in Touch
+            form_id: "7"
+            modal_id: general
           - title: Media Enquiries
+            type: form
             icon: flash_on
-            button:
-              text: Get in Touch
-              url: mailto:marketing@linaro.org
+            button_text: Get in Touch
+            form_id: "8"
+            modal_id: marketing
           - title: Services Enquiries
+            type: form
             icon: rocket_launch
-            button:
-              text: Get in Touch
-              url: mailto:contact@linaro.org
+            button_text: Get in Touch
+            form_id: "1"
+            modal_id: services
           - title: Careers Enquiries
+            type: link
             icon: handshake
-            button:
-              text: Get in Touch
-              url: https://careers.linaro.org/
+            button_text: Get in Touch
+            url: https://careers.linaro.org/
   - row: container_row
     styles:
       outer: purple-gradient-container

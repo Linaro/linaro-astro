@@ -17,7 +17,7 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-center
+    background: bg-right-top
     background_container: ml-[10%]
 flow:
   - row: container_row

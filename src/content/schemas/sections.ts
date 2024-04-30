@@ -132,6 +132,37 @@ export const contactSchema = z.object({
   }),
 });
 
+export const contactButtonsSchema = z.object({
+  component: component("contact_buttons"),
+  buttons: z.array(
+    z.discriminatedUnion("type", [
+      z.object({
+        title: z.string(),
+        type: z.literal("link"),
+        icon: z.string().optional(),
+        url: z.string(),
+        button_text: z.string(),
+        style: z.string().optional(),
+      }),
+      z.object({
+        title: z.string(),
+        type: z.literal("form"),
+        icon: z.string().optional(),
+        form_id: z.string(),
+        modal_id: z.string(),
+        button_text: z.string(),
+        style: z.string().optional(),
+        description: z.string().optional(),
+      }),
+    ])
+  ),
+  styles: z.object({
+    card: z.string().optional(),
+    container: z.string().optional(),
+    card_title: z.string().optional(),
+  }),
+});
+
 export const membershipSchema = z.object({
   component: component("membership"),
   form_id: z.string(),
@@ -141,8 +172,6 @@ export const membershipSchema = z.object({
   styles: z.object({
     card: z.string().optional(),
     container: z.string().optional(),
-    // cardTitle: z.string().optional(),
-    // card_heading: z.string().optional(),
   }),
   MemberManagementPanel: z
     .array(
@@ -195,29 +224,6 @@ export const moreInfoSchema = z.object({
       title: z.string(),
       icon: z.string().optional(),
       url: z.string(),
-    })
-  ),
-});
-
-export const bulletPointSchema = z.object({
-  component: component("bullet_point"),
-  styles: z
-    .object({
-      card: z.string().optional(),
-      container: z.string().optional(),
-    })
-    .optional(),
-  bullet_point: z.array(
-    z.object({
-      title: z.string(),
-      sub_text: z
-        .array(
-          z.object({
-            text: z.string(),
-          })
-        )
-        .optional(),
-      text: z.string().optional(),
     })
   ),
 });
@@ -299,6 +305,7 @@ export default z.discriminatedUnion("component", [
   socialsSchema,
   textSchema,
   contactSchema,
+  contactButtonsSchema,
   twoColumnSchema,
   threeColumnSchema,
   moreInfoSchema,
@@ -306,7 +313,6 @@ export default z.discriminatedUnion("component", [
   membershipSchema,
   graphicSchema,
   videosSchema,
-  bulletPointSchema,
   videoHeroSchema,
   articlesSchema,
 ]);

@@ -1,0 +1,130 @@
+---
+import type { contactButtonsSchema } from "@/content/schemas/sections";
+import { Icon } from "astro-icon/components";
+import type { z } from "astro/zod";
+import ContactModal from "../forms/ContactModal.astro";
+
+type Props = z.infer<typeof contactButtonsSchema>;
+
+const { buttons, styles } = Astro.props;
+---
+
+<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+  {
+    buttons.map(({ icon, title, button_text, style, ...props }, index) => {
+      return (
+        <li class:list={[styles?.card]}>
+          {icon && <Icon name={icon} size={100} class="my-0" />}
+          <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
+
+          {() => {
+            if (props.type === "link") {
+              return (
+                <a
+                  class:list={[`linaro-gradient-button`]}
+                  href={props.url}
+                  target={props.url.startsWith("https") ? "_blank" : "_self"}
+                  class="no-underline inline-block"
+                >
+                  <div>{button_text}</div>
+                </a>
+              );
+            }
+
+            if (props.type === "form") {
+              return (
+                <ContactModal
+                  form_id={props.form_id}
+                  modal_id={props.modal_id}
+                  button_text={button_text}
+                  description={title}
+                />
+              );
+            }
+          }}
+        </li>
+      );
+    })
+  }
+</ul>
+<script>
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function addListeners() {
+    const dialogs = document.querySelectorAll(
+      "[data-contact-modal]"
+    ) as NodeListOf<HTMLDialogElement>;
+
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener("click", function (event) {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (!isInDialog) {
+          dialog.close();
+        }
+      });
+    });
+
+    const forms = document.querySelectorAll(
+      "[data-contact-form]"
+    ) as NodeListOf<HTMLFormElement>;
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", (event) => onSubmit(event, form));
+    });
+  }
+
+  function onSubmit(e: SubmitEvent, form: HTMLFormElement) {
+    e.preventDefault();
+
+    const feedback = form.parentElement!.querySelector("#contact-feedback");
+    const feedbackText = form.parentElement!.querySelector(
+      "#contact-feedback-text"
+    ) as HTMLParagraphElement;
+
+    const button = form.querySelector("#contact-submit");
+    const loader = form.querySelector("#contact-submitting");
+
+    if (!e.target) return;
+
+    const data = new FormData(e.target as HTMLFormElement);
+    const payload = {} as Record<string, any>;
+
+    data.forEach((value, key) => (payload[key] = value));
+
+    button?.classList.add("hidden");
+    loader?.classList.remove("hidden");
+
+    fetch(
+      "https://avqfk3gzg2.execute-api.us-east-1.amazonaws.com/prod/formSubmit",
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "X-Api-Key": "ox9fSkYfRK16mxy5Gv6pM121H7iAubAQ6uzsDmoW",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        form.classList.add("hidden");
+        feedback!.classList.remove("hidden");
+        feedbackText!.innerText = result.message;
+      })
+      .catch(() => {
+        feedback!.classList.remove("hidden");
+        feedbackText!.innerText =
+          "There was an error during submission. Please try again later.";
+        button?.classList.remove("hidden");
+      })
+      .finally(() => {
+        loader?.classList.add("hidden");
+      });
+  }
+</script>
