@@ -16,48 +16,48 @@ hero:
     text_container: max-w-4xl
     title: max-w-md
     description: max-w-2xl
-    background: bg-center
+    background: bg-right-top
 flow:
   - row: container_row
     title: Most Popular Courses
     styles:
       outer: purple-gradient-container
     sections:
-      - component: bullet_point
+      - component: cards
         styles:
-          container: justify-around lg:justify-items-center
-          card: lg:max-w-md
-        bullet_point:
+          container: grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-16 mx-auto lg:justify-items-center marker:text-white
+          card: lg:max-w-[50ch]
+        cards:
           - title: Introduction to Kernel Development
-            sub_text:
-              - text: Introduction to Devicetree
-              - text: Pragmatic Linux driver development - Part 1
-              - text: Pragmatic Linux driver development - Part 2
-              - text: Symbolic debugging for Linux kernel and userspace
+            text: |
+              - Introduction to Devicetree
+              - Pragmatic Linux driver development - Part 1
+              - Pragmatic Linux driver development - Part 2
+              - Symbolic debugging for Linux kernel and userspace
           - title: A Practical Introduction to OpenEmbedded/Yocto
-            sub_text:
-              - text: Introduction to Devicetree
-              - text: Pragmatic Linux driver development - Part 1
-              - text: Pragmatic Linux driver development - Part 2
-              - text: Symbolic debugging for Linux kernel and userspace
+            text: |
+              - Introduction to Devicetree
+              - Pragmatic Linux driver development - Part 1
+              - Pragmatic Linux driver development - Part 2
+              - Symbolic debugging for Linux kernel and userspace
           - title: Advanced Kernel Debugging
-            sub_text:
-              - text: Kernel debug stories
-              - text: Tracing with ftrace
-              - text: Debugging with eBPF
-              - text: Using perf on Arm platforms
+            text: |
+              - Kernel debug stories
+              - Tracing with ftrace
+              - Debugging with eBPF
+              - Using perf on Arm platforms
           - title: Building Custom Systems with OpenEmbedded/Yocto
-            sub_text:
-              - text: Introduction to OpenEmbedded and the Yocto Project
-              - text: OpenEmbedded main concepts
-              - text: Build workflow
-              - text: OpenEmbedded advanced concepts
-              - text: Debug the build
-              - text: Toolchain
+            text: |
+              - Introduction to OpenEmbedded and the Yocto Project
+              - OpenEmbedded main concepts
+              - Build workflow
+              - OpenEmbedded advanced concepts
+              - Debug the build
+              - Toolchain
           - title: Trusted Firmware A for Armv8 systems
-            sub_text:
-              - text: ARMv8 exception model and boot
-              - text: Secure monitor and power management
+            text: |
+              - ARMv8 exception model and boot
+              - Secure monitor and power management
   - row: container_row
     sections:
       - component: text

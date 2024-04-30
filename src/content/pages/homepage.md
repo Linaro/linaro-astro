@@ -16,7 +16,7 @@ hero:
     text_container: max-w-80
     background: bg-right-top
     description: text-md sm:text-lg
-    background_container: mr-[20%] xl:pr-[20%]
+    background_container: mr-[20%] xl:pr-[20%] mt-[-10%] lg:mt-0
 flow:
   - row: container_row
     title: Trusted by Leading Companies

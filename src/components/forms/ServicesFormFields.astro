@@ -1,0 +1,42 @@
+---
+const checkboxes = [
+  { label: "Upstream Services", value: "13614" },
+  { label: "Kernel Services", value: "13615" },
+  { label: "Training & Support", value: "13616" },
+  { label: "Security", value: "13617" },
+  { label: "Trusted Firmware", value: "13618" },
+  { label: "OP-TEE", value: "13619" },
+  { label: "Long Term Support Builds", value: "13620" },
+  { label: "Arm Server Deployment", value: "13621" },
+  { label: "BSPs and Board Bring-Up", value: "13622" },
+  { label: "Embedded and Mobile Platforms", value: "13623" },
+];
+---
+
+<fieldset class="text-white">
+  <legend class="text-2xl font-bold my-3"
+    >Which services are you interested in?</legend
+  >
+  {
+    checkboxes.map(({ label, value }, index) => (
+      <div class="flex gap-2">
+        <input
+          type="checkbox"
+          name="customfield_13367"
+          id={`customfield_13367-${index}`}
+          value={value}
+        />
+        <label for={`customfield_13367-${index}`}>{label}</label>
+      </div>
+    ))
+  }
+  <label for="customfield_13369" class="text-xl font-bold my-3 block"
+    >Other</label
+  >
+  <input
+    type="text"
+    name="customfield_13369"
+    id="customfield_13369"
+    class="text-black pl-2 h-12 w-full"
+  />
+</fieldset>

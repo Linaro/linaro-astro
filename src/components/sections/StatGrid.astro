@@ -8,7 +8,8 @@ const { stats } = Astro.props;
 ---
 
 <ul
-  class="text-white list-none flex flex-wrap gap-x-12 gap-y-24 mx-auto p-0 justify-center items-center sm:items-start mb-16 pl-12"
+  class="text-white list-none flex flex-wrap gap-x-12 gap-y-24 mx-auto p-0 justify-center items-center sm:items-start mb-16"
+  id="stat-grid-container"
 >
   {
     stats.map(({ value, label }) => (
@@ -48,25 +49,20 @@ const { stats } = Astro.props;
 
   const stats = document.querySelectorAll("[data-stat-count]");
 
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (!(entry.target instanceof HTMLElement)) return;
-        if (entry.isIntersecting) {
-          animateValue(
-            entry.target,
-            0,
-            Number(entry.target.dataset.statCount),
-            5000
-          );
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      rootMargin: "-300px 0px -300px 0px",
-    }
-  );
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!(entry.target instanceof HTMLElement)) return;
+      if (entry.isIntersecting) {
+        animateValue(
+          entry.target,
+          0,
+          Number(entry.target.dataset.statCount),
+          5000
+        );
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {});
 
   stats.forEach((el) => {
     observer.observe(el);

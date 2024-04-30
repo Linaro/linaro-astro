@@ -27,7 +27,7 @@ flow:
     sections:
       - component: image_cards
         styles:
-          container: mx-auto flex justify-around gap-8
+          container: mx-auto flex justify-around gap-8 flex-wrap
           card: w-[40ch] bg-background px-8 rounded-[1.5rem] border-[1px] border-grey
           card_title: text-4xl m-0
         cards:
