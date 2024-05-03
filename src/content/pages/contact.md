@@ -24,7 +24,7 @@ flow:
           button_style: mt-8
           card_title: text-[2rem] text-center
         buttons:
-          - title: Membership & General Enquiries
+          - title: Sales Enquiries
             type: form
             icon: workspaces
             button_text: Get in Touch
@@ -36,12 +36,6 @@ flow:
             button_text: Get in Touch
             form_id: "8"
             modal_id: marketing
-          - title: Services Enquiries
-            type: form
-            icon: rocket_launch
-            button_text: Get in Touch
-            form_id: "1"
-            modal_id: services
           - title: Careers Enquiries
             type: link
             icon: handshake

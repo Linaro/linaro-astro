@@ -33,7 +33,7 @@ flow:
           - title: gnu gcc compiler download
             text: |
               GNU Toolchain plays an essential role in the development of Linux. Created by the GNU Project, it is a group of programming tools used for developing software applications and operating systems.
-              The official Arm releases of the pre-built GNU cross-toolchain for AArch64 and ARM 32-bit A-Profile cores are available on the [Arm Developer website.](https://developer.arm.com/downloads/-/gnu-a)
+              The official Arm releases of the pre-built GNU cross-toolchain for AArch64 and ARM 32-bit A-Profile cores are available on the [Arm Developer website.](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 
               Linaro also provides monthly [GNU Toolchain Integration Builds](https://snapshots.linaro.org/gnu-toolchain/?_gl=1*6okto9*_ga*NzMzMTExNTgyLjE3MTIxMzg2MTM.*_ga_E12E6FXFVK*MTcxMjc1MTQ1Mi43LjAuMTcxMjc1MTQ1Mi4wLjAuMA..) which offer users a snapshot of the upstream build. These builds allow developers to test features from a pre-built binary as soon as it is upstream.
           - title: LLVM Toolchain
