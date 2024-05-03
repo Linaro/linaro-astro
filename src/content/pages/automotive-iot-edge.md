@@ -12,8 +12,8 @@ hero:
     Linaro collaborates with member companies to develop open standards and interfaces that accelerate and secure the deployment of Automotive, IoT, and Edge solutions. Join us in revolutionizing the way we drive innovation at the edge.
 
   button:
-    text: Learn more
-    url: /
+    text: Contact Us
+    url: /contact
   styles:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
@@ -40,30 +40,28 @@ flow:
     styles:
       outer: purple-gradient-container
     sections:
-      - component: two_column
-        container_styles: items-start justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl
-        columns:
-          - type: text
-            title: Project Stratos
-            text_content: |
-              There is a growing trend towards virtualization in areas other than the traditional server environment. The server enviroment is uniform in nature but as we move towards a richer ecosystem in automotive, medical and general mobile and IoT spaces, the rich array of hypervisors and SoCs become a problem. Project Stratos is working towards developing hypervisor agnostic Virtio interfaces and standards.
-            styles: w-full lg:w-1/2
-          - type: text
-            title: Trusted Substrate
-            text_content: Trusted Substrate is a BIOS that brings standards based secure booting and over-the-air (OTA) updates to the most trust demanding embedded computing projects such as automotive and robotics. The project aims to upstream all necessary technologies in multiple projects to enable Arm SystemReady compliance.
-            styles: w-full lg:w-1/2
+      - component: cards
+        styles:
+          card: max-w-[60ch]
+          container: justify-start gap-x-16
+        cards:
+          - title: Trusted Substrate
+            text: Trusted Substrate is a BIOS that brings standards based secure booting and over-the-air (OTA) updates to the most trust demanding embedded computing projects such as automotive and robotics. The project aims to upstream all necessary technologies in multiple projects to enable Arm SystemReady compliance.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/TS/overview
+          - title: Heterogeneous Platform
+            text: The Heterogeneous Platform project is focused on software that allows the different core types or OS types to work together and creates a standards based framework to make the system developers job easier. The majority of Automotive SOCs use multiple CPU core types. Adding M profile or R profile cores to a SOC with A profile cores, allows the A profile cores to focus on the Linux tasks it is designed for, while M/R cores can focus on low latency sense/control loops, isolated security, or increased safety.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/HPP/overview
+          - title: Project Orko
+            text: |
+              Project Orko delivers the foundational work needed to support VirtIO interfaces in the upstream. This is done by providing both the specs and implementations that the automotive industry can leverage in their future platforms.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/ORKO/overview
 
-      - component: two_column
-        container_styles: items-start justify-start gap-8 lg:gap-24 w-full mx-auto text-2xl
-        columns:
-          - type: text
-            title: Oniro
-            text_content: Oniro OS is a publicly available open source version of the HarmonyOS operating system. Linaro is working with Huawei to further the capabilities of the Oniro OS (around trusted-boot and over-the-air updates), create a collaborative, Oniro OS Open CI testing system, and onboard Linaro Oniro project members and their devices into the project.
-            styles: w-full lg:w-1/2
-          - type: text
-            title: Heterogeneous Platform
-            text_content: The Heterogeneous Platform project is focused on software that allows the different core types or OS types to work together and creates a standards based framework to make the system developers job easier. The majority of Automotive SOCs use multiple CPU core types. Adding M profile or R profile cores to a SOC with A profile cores, allows the A profile cores to focus on the Linux tasks it is designed for, while M/R cores can focus on low latency sense/control loops, isolated security, or increased safety.
-            styles: w-full lg:w-1/2
   - row: container_row
     sections:
       - component: membership

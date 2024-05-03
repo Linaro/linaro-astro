@@ -3,12 +3,12 @@ layout: ../../layouts/Flow.astro
 slug: "/"
 title: Linaro | Arm solutions at lightspeed
 description: |
-  Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
+  Linaro empowers rapid product deployment within the dynamic Arm ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
 hero:
   title: >
     Arm Solutions at *Lightspeed*
   background_image: linaro-website/graphics/bg-logo-6
-  description: Linaro empowers rapid product deployment within the dynamic ARM ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
+  description: Linaro empowers rapid product deployment within the dynamic Arm ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of Arm-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
   button:
     text: Contact Us
     url: /contact
@@ -113,14 +113,14 @@ flow:
           card: w-[35ch]
           container: justify-around gap-x-28 gap-y-20
         cards:
-          - title: Production & Solutions
+          - title: Products & Solutions
             text: From optimized software platforms to cutting-edge development tools
             icon: rocket_launch
           - title: Services & Support
             text: Tailor-made solutions to meet your needs
             icon: settings
           - title: Collaborative Projects
-            text: Where industry leaders and open source ecosystems come together to innovate, develop and optmize.
+            text: Where industry leaders and open source ecosystems come together to innovate, develop and optimize.
             icon: diversity
   - row: container_row
     title: Our Maintainers Rock!
