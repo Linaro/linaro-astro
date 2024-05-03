@@ -49,7 +49,7 @@ flow:
             icon: shield_person
 
           - title: Deploy
-            text: Support Qualcomm’s customers and devices makers with customizations, compliance artifacts, OS production-grade releases, support and maintenance
+            text: Support Qualcomm’s customers and device makers with customizations, compliance artifacts, OS production-grade releases, support and maintenance
             icon: rocket_launch
   - row: container_row
     sections:

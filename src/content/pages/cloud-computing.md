@@ -26,23 +26,33 @@ flow:
       outer: purple-gradient-container
     sections:
       - component: text
-        text_content:
-          Discover Linaro driven projects with the best in class software
-          for Arm-based Servers
+        text_content: Discover Linaro driven projects with the best in class software for Arm-based Servers
         style: text-center text-3xl mx-auto font-bold mb-24 max-w-[49ch]
       - component: cards
         styles:
-          container: w-full mx-auto flex justify-around
+          container: w-full mx-auto flex justify-around gap-y-16
           card: w-[55ch]
         cards:
           - title: Big Data & Data Science
             text: Big Data and Data Science technologies play a vital role in enabling businesses to become more efficient and succesful. This project focuses on the engineering activities Linaro is driving in this area, focusing specifically on ARMv8 builds for Apache BigTop, Ambari, Spark and Hadoop.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/BDDS/overview
           - title: System Ready Compliant Platform Collaboration
             text: This project focuses on Server Standardisation. This involves working on architectures such as SBSA and xBBR to enable simplified adoption of mainline builds on new server hardware.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/SRCPC/overview
           - title: Enhance Software-Defined-Storage on Arm Servers
             text: There is a shift towards using all-flash storage solutions (SSD/NVME) as opposed to traditional HDD disks due to improvements in performance. The goal of this project is to collaborate with industry leaders in the Arm server ecosystem so that we can provide competitive and leading storage solutions with Arm servers.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/STOR/overview
           - title: Deploy CCA on Arm platforms
             text: Confidential computing is a security and privacy-enhancing computational technique focused on protecting data in use. Arm’s solution for this is specified in the Confidential Computing Architecture (CCA) which only looks at hardware and system software. This project fills the gap by focusing on lower level bits, as well as the user space and higher level applications.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/CCR/overview
   - row: container_row
     sections:
       - component: membership

@@ -11,8 +11,8 @@ hero:
   description: |
     We guide you through every step of this journey, ensuring fast time to market, exceptional quality, security, and cost-effective long-term maintenance.
   button:
-    text: Learn more
-    url: /
+    text: Contact Us
+    url: /contact
   styles:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
