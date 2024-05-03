@@ -3,12 +3,12 @@ layout: ../../layouts/Flow.astro
 slug: projects/windows-on-arm
 title: Windows on Arm
 description: |
-  Thanks to the collaborative work among Linaro, Arm, CIX Technology, Microsoft and Qualcomm we are building the Windows on Arm ecosystem for native development unlocking better user experiences and broader adoption of Windows on Arm platforms.
+  Thanks to the collaborative work among Linaro, Arm, CIX Technology, Microsoft and Qualcomm we are building the Windows on Arm ecosystem for native development, unlocking better user experiences and broader adoption of Windows on Arm platforms.
 hero:
   title: >
     Advancing the Arm ecosystem across diverse platforms
   background_image: linaro-website/graphics/man-sofa
-  description: Thanks to the collaborative work among Linaro, Arm, CIX Technology, Microsoft and Qualcomm we are building the Windows on Arm ecosystem for native development unlocking better user experiences and broader adoption of Windows on Arm platforms.
+  description: Thanks to the collaborative work among Linaro, Arm, CIX Technology, Microsoft and Qualcomm we are building the Windows on Arm ecosystem for native development, unlocking better user experiences and broader adoption of Windows on Arm platforms.
   button:
     text: Contact Us
     url: /contact

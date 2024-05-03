@@ -10,8 +10,8 @@ hero:
   background_image: linaro-website/graphics/ai-ml-bg-logo
   description: Our expertise in the Arm ecosystem enables us to deliver high-performance, efficient, and scalable solutions for your AI-driven applications. From optimized frameworks to hardware acceleration, we provide a comprehensive suite of tools and technologies designed to empower developers, data scientists, and businesses to unlock the true potential of artificial intelligence.
   button:
-    text: Learn more
-    url: /learn-more
+    text: Contact Us
+    url: /contact
   styles:
     text_container: max-w-4xl
     title: max-w-md
