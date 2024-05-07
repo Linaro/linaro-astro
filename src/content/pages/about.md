@@ -12,7 +12,7 @@ flow:
       inner: py-8
     sections:
       - component: video_hero
-        src: /videos/linaro.mp4
+        src: https://static.linaro.org/videos/linaro.mp4
         type: video/mp4
   - row: container_row
     styles:
@@ -43,28 +43,11 @@ flow:
         styles:
           card: prose-em:linaro-gradient-text prose-em:font-bold prose-em:not-italic prose-p:text-3xl prose-headings:text-5xl
           container: flex justify-center
-      - component: cards
-        styles:
-          container: flex justify-between mx-[20%]
-        cards:
-          - text: Expertise
-          - text: Innovation
-      - component: image_cards
-        styles:
-          container: w-full
-          image: w-full object-cover object-center
-        cards:
-          - image:
-              src: linaro-website/graphics/infinito
-              alt: "Linaro is about expertise, innovation, open standards and community"
-              width: 1000
-              height: 1000
-      - component: cards
-        styles:
-          container: flex justify-between mx-[20%]
-        cards:
-          - text: Open Standards
-          - text: Community
+      - component: graphic
+        src: linaro-website/graphics/content/linaro-is-about
+        alt: "Linaro is about joining together expertise, innovation, open standards and community"
+        width: 2000
+        height: 2000
   - row: container_row
     sections:
       - component: cards
