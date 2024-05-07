@@ -24,8 +24,6 @@ const sectionComponents = {} as Record<
 
 
 if (flow && flow?.length > 0) {
-  console.log(flow.map((row) => row.row))
-
   for (const rowData of await getEntries(flow.map((row: any) => row.row) as {collection: "rows", slug: CollectionEntry<"rows">["slug"]}[])) {
     console.log(rowData)
     rowComponents[rowData.slug] = await allComponents[rowData.data.path.replace("@/components", "../components")]() as {default: AstroComponentFactory}
@@ -40,7 +38,7 @@ for (const sectionData of await getEntries(flow.map((row: any) => row.sections!.
 
 <BaseLayout title={title} description={description}>
     <main 
-      class="prose mx-0 max-w-full prose-invert " 
+      class="prose mx-0 max-w-full prose-invert marker:text-white " 
       data-pagefind-body
       data-pagefind-filter="type:page"
     >

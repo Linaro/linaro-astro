@@ -240,11 +240,13 @@ export const logoGridSchema = z.object({
 
 export const graphicSchema = z.object({
   component: component("graphic"),
-  mobile: z.object({
-    src: z.string(),
-    width: z.number(),
-    height: z.number(),
-  }),
+  mobile: z
+    .object({
+      src: z.string(),
+      width: z.number(),
+      height: z.number(),
+    })
+    .optional(),
   src: z.string(),
   alt: z.string(),
   width: z.number(),
@@ -260,7 +262,13 @@ export const videosSchema = z.object({
       container: z.string().optional(),
     })
     .optional(),
-  videos: z.array(z.object({ src: z.string(), title: z.string() })),
+  videos: z.array(
+    z.object({
+      src: z.string(),
+      title: z.string(),
+      thumbnail: z.string().optional(),
+    })
+  ),
 });
 
 export const videoHeroSchema = z.object({
@@ -296,6 +304,17 @@ export const articlesSchema = z.object({
   ),
 });
 
+export const tabsSchema = z.object({
+  component: component("tabs"),
+  tabs: z.array(
+    z.object({
+      title: z.string(),
+      id: z.string(),
+      content: z.string(),
+    })
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -315,4 +334,5 @@ export default z.discriminatedUnion("component", [
   videosSchema,
   videoHeroSchema,
   articlesSchema,
+  tabsSchema,
 ]);
