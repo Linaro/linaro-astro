@@ -3,5 +3,5 @@ company_links:
     url: /contact
   - label: Legal
     url: /legal
-  - label: Cookies
-    url: /cookies
+  # - label: Cookies
+  #   url: /cookies

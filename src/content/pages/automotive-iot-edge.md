@@ -43,7 +43,7 @@ flow:
       - component: cards
         styles:
           card: max-w-[60ch]
-          container: justify-start gap-x-16
+          container: justify-between mx-auto gap-x-16
         cards:
           - title: Trusted Substrate
             text: Trusted Substrate is a BIOS that brings standards based secure booting and over-the-air (OTA) updates to the most trust demanding embedded computing projects such as automotive and robotics. The project aims to upstream all necessary technologies in multiple projects to enable Arm SystemReady compliance.

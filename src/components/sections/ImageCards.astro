@@ -31,7 +31,7 @@ const { cards, styles } = Astro.props;
           {button && (
             <a
               href={button.url}
-              class="self-start"
+              class="no-underline"
               target={button.url.startsWith("https") ? "_blank" : "_self"}
             >
               <div

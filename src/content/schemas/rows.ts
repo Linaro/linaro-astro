@@ -15,6 +15,7 @@ export const containerRowSchema = z.object({
       inner: z.string().optional(),
     })
     .optional(),
+  animation: z.string().optional(),
   background_image: z.string().optional(),
   sections: z.array(
     sectionSchemas.transform((val) => ({

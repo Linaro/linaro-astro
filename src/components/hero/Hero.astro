@@ -1,5 +1,6 @@
 ---
 import { getCloudinarySrc } from "@/lib/cloudinary";
+import type { GetImageResult } from "astro";
 import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import * as marked from "marked";
@@ -7,17 +8,19 @@ import * as marked from "marked";
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
 const { title, background_image, button, description, styles } = Astro.props!;
-
-const optimizedBackground = await getImage({
-  src: getCloudinarySrc({
-    src: background_image,
-    alt: "",
-    width: 1724.55,
-    height: 1182.9,
-  }),
-  format: "webp",
-  inferSize: true,
-});
+let optimizedBackground: GetImageResult | undefined;
+if (background_image) {
+  optimizedBackground = await getImage({
+    src: getCloudinarySrc({
+      src: background_image,
+      alt: "",
+      width: 1724.55,
+      height: 1182.9,
+    }),
+    format: "webp",
+    inferSize: true,
+  });
+}
 
 const titleMarkdown = await marked.parseInline(title);
 const descriptionMarkdown = await marked.parse(description);
@@ -26,8 +29,10 @@ const descriptionMarkdown = await marked.parse(description);
 <section
   class:list={[
     // style,
-    `relative text-white h-[calc(100vh)] min-h-[800px] max-h-[1200px] w-full max-w-screen overflow-hidden`,
-    styles?.image_size,
+    `relative text-white  w-full max-w-screen overflow-hidden`,
+    styles?.image_size
+      ? styles.image_size
+      : "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
   ]}
 >
   <div
@@ -40,6 +45,7 @@ const descriptionMarkdown = await marked.parse(description);
       class:list={[
         "w-full h-full hero-background-image bg-no-repeat bg-contain z-10",
         styles?.background,
+        background_image && "hero-background-image",
       ]}
     >
     </div>
@@ -64,7 +70,11 @@ const descriptionMarkdown = await marked.parse(description);
       />
       {
         button && (
-          <a href={button.url} class="mt-12 no-underline inline-block">
+          <a
+            href={button.url}
+            target={button.url.startsWith("https://") ? "_blank" : "self"}
+            class="mt-12 no-underline inline-block"
+          >
             <div class="linaro-gradient-button">{button.text}</div>
           </a>
         )
@@ -72,13 +82,19 @@ const descriptionMarkdown = await marked.parse(description);
     </div>
     <span class="hidden" data-pagefind-meta={`summary`}>{description}</span>
     <span class="hidden" data-pagefind-meta={`heading`}>{title}</span>
-    <div class="hidden" data-pagefind-meta={`image:${optimizedBackground.src}`}>
-    </div>
+    {
+      optimizedBackground && (
+        <div
+          class="hidden"
+          data-pagefind-meta={`image:${optimizedBackground.src}`}
+        />
+      )
+    }
   </div>
 </section>
 
 <style
-  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
+  define:vars={{ backgroundUrl: `url(${optimizedBackground?.src ?? ""})` }}
   lang="scss"
 >
   .hero-background-image {

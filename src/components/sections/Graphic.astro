@@ -8,7 +8,8 @@ const { src, alt, accessible_version, width, height, mobile } = Astro.props;
 ---
 
 <div>
-  <!-- Hidden on medium screens and larger, visible on small screens -->
+  {
+    mobile &&  <!-- Hidden on medium screens and larger, visible on small screens -->
   <CloudinaryImg
     src={mobile.src}
     alt={alt}
@@ -16,13 +17,15 @@ const { src, alt, accessible_version, width, height, mobile } = Astro.props;
     height={mobile.height}
     class="lg:hidden"
   />
+  }
+ 
   <!-- Visible on medium screens and larger, hidden on small screens -->
   <CloudinaryImg
     src={src}
     alt={alt}
     width={width}
     height={height}
-    class="hidden lg:block"
+    class:list={[mobile && "hidden lg:block"]}
   />
   <div set:html={accessible_version} class="sr-only" />
 </div>
