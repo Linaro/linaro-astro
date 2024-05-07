@@ -128,13 +128,17 @@ flow:
       - component: videos
         styles:
           container: border-[0.5px] border-grey
+          card: max-w-[40ch]
         videos:
-          - src: linaro-website/videos/microsoft-woa
+          - src: https://static.linaro.org/videos/woa_microsoft.mp4
             title: Marcus Perryman  |  Principle Engineer Microsoft
-          - src: linaro-website/videos/arm-woa
+            thumbnail: /videos/woa_microsoft.png
+          - src: https://static.linaro.org/videos/woa_arm.mp4
             title: David Whaley  |  Director Ecosystem Partnerships, Arm
-          - src: linaro-website/videos/cix-woa
+            thumbnail: /videos/woa_arm.png
+          - src: https://static.linaro.org/videos/woa_cix.mp4
             title: Fang Liu  |  CTO CIX Technology
+            thumbnail: /videos/woa_cix.png
   - row: container_row
     sections:
       - component: membership

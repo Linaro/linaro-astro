@@ -49,7 +49,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: flex justify-center xl:justify-normal gap-14 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
+          container: flex justify-around mx-auto gap-14 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           card: max-w-[60ch]
         cards:
           - title: Tuxsuite
