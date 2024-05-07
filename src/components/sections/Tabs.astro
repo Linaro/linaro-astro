@@ -1,0 +1,105 @@
+---
+import { marked } from "marked";
+
+const { tabs } = Astro.props;
+
+const url = Astro.url;
+console.log(url.hash);
+---
+
+<!--Tabs navigation-->
+<ul
+  class="mb-5 flex list-none flex-row flex-wrap border-b-0 ps-0"
+  role="tablist"
+>
+  {
+    tabs.map((tab: any, index: number) => (
+      <li role="presentation">
+        <a
+          href={`#${tab.id}`}
+          class="my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-linaro-yellow hover:text-linaro-yellow  focus:isolate focus:border-transparent data-[tab-nav-active]:border-linaro-yellow data-[tab-nav-active]:text-linaro-yellow [tab-nav-active]:text-linaro-yellow no-underline"
+          data-tab-target={`${tab.id}`}
+          data-tab-nav-active={index === 0}
+          role="tab"
+          aria-controls={tab.id}
+          id={tab.id}
+          aria-selected={index === 0}
+        >
+          {tab.title}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<!--Tabs content-->
+<div class="mb-6">
+  {
+    tabs.map((tab: any, index: number) => {
+      const content = marked.parse(tab.content);
+      return (
+        <div
+          class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[tab-active]:block"
+          role="tabpanel"
+          aria-labelledby={tab.id}
+          data-tab-content={tab.id}
+          data-tab-active={index === 0}
+          set:html={content}
+        />
+      );
+    })
+  }
+</div>
+<script>
+  // Initialization for ES Users
+
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function addListeners() {
+    const tabs = document.querySelectorAll(
+      "[data-tab-target]"
+    ) as NodeListOf<HTMLAnchorElement>;
+    const contents = document.querySelectorAll(
+      "[data-tab-content]"
+    ) as NodeListOf<HTMLDivElement>;
+
+    const toggleTab = (tab: HTMLAnchorElement) => {
+      Array.from(contents).forEach((el) => {
+        if (el.dataset.tabContent === tab.dataset.tabTarget) {
+          el.dataset.tabActive = "";
+        } else {
+          delete el.dataset.tabActive;
+        }
+      });
+
+      Array.from(tabs).forEach((el) => {
+        if (el.dataset.tabTarget === tab.dataset.tabTarget) {
+          el.dataset.tabNavActive = "";
+          el.setAttribute("aria-selected", "");
+        } else {
+          el.removeAttribute("aria-selected");
+          delete el.dataset.tabNavActive;
+        }
+      });
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", (e) => {
+        history.pushState(null, document.title, tab.href);
+        e.preventDefault();
+        toggleTab(tab);
+      });
+    });
+
+    if (window.location.hash) {
+      const active = document.querySelector(
+        `[data-tab-target=${window.location.hash.slice(1)}]`
+      ) as HTMLAnchorElement;
+
+      if (active) {
+        toggleTab(active);
+      }
+    }
+  }
+</script>
