@@ -22,38 +22,37 @@ flow:
     sections:
       - component: image_cards
         styles:
-          container: gap-2 justify-center flex flex-col md:flex-row
+          container: gap-2 justify-center flex flex-wrap
           button_style: my-4
-          card: flex  px-4 flex-col justify-between items-center rounded-2xl text-white bg-black aspect-square px-1
+          card: flex  px-4 flex-col justify-between items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch]
           card_title: text-xl m-0 text-black font-normal
-          image: w-full mt-[10px] mx-[10px]
-
+          image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
           - text: Linaro Automotive Strategy
             image:
               src: linaro-website/graphics/Automotive_strategy1_rgrqe8
-              alt: Automotive_strategy logo
+              alt: ""
             button:
               text: Read more
               url: https://static.linaro.org/assets/Linaro_Automotive_Strategy_Document_v4.3.pdf
           - text: Standardisation in Edge Device Firmware
             image:
               src: linaro-website/graphics/sdv_1_vacr4z
-              alt: Firmware logo
+              alt: ""
             button:
               text: Read more
               url: https://static.linaro.org/assets/Protecting-Investment-in-Code-Optimisation-with-Toolchain-CI-Linaro-White-Paper.pdf
           - text: Protecting Investment in Code Optimisation with Toolchain CI
             image:
               src: linaro-website/graphics/toolchain_1_zcsqgl
-              alt: Optimisation logo
+              alt: ""
             button:
               text: Read more
               url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
           - text: Software Defined Vehicles and the Need for Standardisation
             image:
               src: linaro-website/graphics/AV_white_paper_1_ngtke8
-              alt: Software logo
+              alt: ""
             button:
               text: Read more
               url: https://static.linaro.org/assets/TrustedSubstrateWhitePaper_v2.pdf
