@@ -10,10 +10,11 @@ hero:
   background_image: linaro-website/graphics/close-up-woman_sbf1xz
   description: ""
   styles:
-    text_container: max-w-[45rem]
-    background: bg-right-top md:bg-center
+    text_container: text-center w-full
+    title: w-full text-center
+    background: bg-right-top md:bg-top opacity-50
     description: text-md sm:text-lg
-    image_size: h-[calc(50vh)]
+    image_size: max-h-[30rem] min-h-[30ch] h-[30vh]
 flow:
   - row: container_row
     sections:

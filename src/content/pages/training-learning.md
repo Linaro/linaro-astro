@@ -11,7 +11,7 @@ hero:
   description: With our expert knowledge of open source licenses, code reviews, and hands-on Linux training, we help companies eliminate risk, achieve compliance, and build strong relationships with open source communities. Our customized training courses cover a wide range of topics and can be tailored to meet the specific needs of your team. Gain the skills and expertise to embrace emerging technologies and best practices in the world of Linux and Arm technology.
   button:
     text: Download our Catalogue
-    url: /docs/Linaro_Training_Catalogue_February_2023.pdf
+    url: https://static.linaro.org/assets/Linaro_Training_Catalogue_January_2024.pdf
   styles:
     text_container: max-w-4xl
     title: max-w-md
