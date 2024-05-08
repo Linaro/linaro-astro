@@ -20,11 +20,11 @@ interface Props extends CloudinaryProps {
 const { src: initialSrc, ...props } = Astro.props;
 
 let src = initialSrc;
-if (src.startsWith("/")) {
-  src = initialSrc.slice(1);
+if (!src.startsWith("https://")) {
+  src = getCloudinarySrc({ ...props, src: initialSrc });
 }
 
-const url = getCloudinarySrc({ ...props, src: initialSrc });
+const url = src;
 ---
 
 <Image src={url} loading="lazy" inferSize={true} {...props} />
