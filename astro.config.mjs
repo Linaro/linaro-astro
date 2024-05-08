@@ -96,5 +96,6 @@ export default defineConfig({
     '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
     '/services/qualcomm-platforms-services': '/projects/qualcomm-platform',
     '/services/hands-on-training': '/services/training'
+    
   }
 });
