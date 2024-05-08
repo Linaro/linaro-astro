@@ -87,4 +87,14 @@ export default defineConfig({
   vite: {
     optimizeDeps: { exclude: ["auth:config"] },
   },
+  redirects: {
+    '/lts': '/solutions/lts',
+    '/automotive-iot-and-edge-devices': '/projects/automotive-iot-edge',
+    '/cloud-computing-and-servers': '/projects/cloud-computing',
+    '/windows-on-arm': '/projects/windows-on-arm',
+    '/onelab': '/solutions/onelab',
+    '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
+    '/services/qualcomm-platforms-services': '/projects/qualcomm-platform',
+    '/services/hands-on-training': '/services/training'
+  }
 });
