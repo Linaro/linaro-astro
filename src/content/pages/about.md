@@ -48,6 +48,10 @@ flow:
         alt: "Linaro is about joining together expertise, innovation, open standards and community"
         width: 2000
         height: 2000
+        mobile:
+          src: linaro-website/graphics/content/linaro-is-about-mobile
+          width: 1000
+          height: 1000
   - row: container_row
     sections:
       - component: cards
