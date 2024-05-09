@@ -45,7 +45,7 @@ flow:
             text: We are transparent and our open approach fosters trust among partners, developers, and the community. We build trust ensuring the reliability and credibility of Arm-based solutions.
             icon: handshake
           - title: Collaboration
-            text: We provide an ecosystem where experts, developers, and businesses collaborate seamlessly, pooling their knowledge and skills to drive innovation in the Arm ecosystem. We ensure that the collective intelligence of the Arm community can be harnessed to create exceptional, cutting-edge solutions.
+            text: We provide an ecosystem where experts, developers, and businesses collaborate seamlessly, pooling their knowledge and skills to drive innovation in the Arm ecosystem.
             icon: workspaces
           - title: Quality
             text: Our dedication to quality ensures that the software and tools we deliver to the Arm ecosystem are reliable, efficient, and of the highest standard. Our commitment to quality contributes to the success and trustworthiness of Arm-based technologies.
@@ -112,6 +112,7 @@ flow:
         styles:
           card: w-[35ch]
           container: justify-around gap-x-28 gap-y-20
+          card_title: lg:min-h-[4ch]
         cards:
           - title: Products & Solutions
             text: From optimized software platforms to cutting-edge development tools

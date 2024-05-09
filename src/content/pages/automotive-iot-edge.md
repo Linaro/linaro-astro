@@ -18,7 +18,7 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-right-top
+    background: bg-right-top brightness-50
     background_container: p-[5%] ml-[5%] xl:ml-0
 flow:
   - row: container_row
@@ -45,6 +45,12 @@ flow:
           card: max-w-[60ch]
           container: justify-between mx-auto gap-x-16
         cards:
+          - title: Project Orko
+            text: |
+              Project Orko delivers the foundational work needed to support VirtIO interfaces in the upstream. This is done by providing both the specs and implementations that the automotive industry can leverage in their future platforms.
+            button:
+              text: See More
+              url: https://linaro.atlassian.net/wiki/spaces/ORKO/overview
           - title: Trusted Substrate
             text: Trusted Substrate is a BIOS that brings standards based secure booting and over-the-air (OTA) updates to the most trust demanding embedded computing projects such as automotive and robotics. The project aims to upstream all necessary technologies in multiple projects to enable Arm SystemReady compliance.
             button:
@@ -55,13 +61,6 @@ flow:
             button:
               text: See More
               url: https://linaro.atlassian.net/wiki/spaces/HPP/overview
-          - title: Project Orko
-            text: |
-              Project Orko delivers the foundational work needed to support VirtIO interfaces in the upstream. This is done by providing both the specs and implementations that the automotive industry can leverage in their future platforms.
-            button:
-              text: See More
-              url: https://linaro.atlassian.net/wiki/spaces/ORKO/overview
-
   - row: container_row
     sections:
       - component: membership

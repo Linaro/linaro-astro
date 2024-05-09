@@ -31,7 +31,7 @@ flow:
       - component: cards
         styles:
           container: w-full mx-auto flex justify-around gap-y-16
-          card: w-[55ch]
+          card: w-[55ch] border-grey border rounded-2xl p-6 md:p-12
         cards:
           - title: Big Data & Data Science
             text: Big Data and Data Science technologies play a vital role in enabling businesses to become more efficient and succesful. This project focuses on the engineering activities Linaro is driving in this area, focusing specifically on ARMv8 builds for Apache BigTop, Ambari, Spark and Hadoop.
@@ -87,8 +87,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=datacenter
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/themes/04687b37-4cdc-4716-a26b-64e0e55ed988
 ---

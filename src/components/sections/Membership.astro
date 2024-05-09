@@ -5,7 +5,7 @@ import MembershipForm from "../forms/MembershipForm.astro";
 
 type Props = z.infer<typeof membershipSchema>;
 
-const { style, form_id, description, text, MemberManagementPanel, styles } =
+const { style, form_id, description, MemberManagementPanel, styles } =
   Astro.props;
 
 let markdownContent;
@@ -16,7 +16,6 @@ let markdownContent;
   <MembershipForm
     form_id={form_id}
     description={description}
-    text={text}
     MemberManagementPanel={MemberManagementPanel}
     styles={styles}
   />

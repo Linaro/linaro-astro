@@ -58,8 +58,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=ai-ml
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/themes/d6090241-cd9d-4534-bd53-ce29c2814671
 ---

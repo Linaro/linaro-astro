@@ -9,9 +9,7 @@ hero:
     Builds & Downloads
   background_image: linaro-website/graphics/bg-logo-2
   description: |
-    Since 2010, Linaro has played a key role in upstreaming Arm software, with many of its engineers actively maintaining open source projects. This page provides links to downloads currently produced by Linaro’s engineering teams. 
-
-    If you have any technical queries, go to Linaro’s support page to log a ticket with the Linaro Developer Technical Support team. For any other queries click here.
+    Since 2010, Linaro has played a key role in upstreaming Arm software, with many of its engineers actively maintaining open source projects. This page provides links to downloads currently produced by Linaro’s engineering teams.
 
   styles:
     text_container: max-w-2xl
@@ -78,11 +76,12 @@ flow:
 
               [Click here to find out more about LAVA.](https://validation.linaro.org/?_gl=1*145svnc*_ga*NzMzMTExNTgyLjE3MTIxMzg2MTM.*_ga_E12E6FXFVK*MTcxMjc1NDc3Ny44LjEuMTcxMjc1NTY4OS4wLjAuMA..)
           - title: Squad - Linaro’s Reporting Tool
-            text:
+            text: |
               SQUAD is a web based reporting tool. It was created by Linaro to cover basic test result reporting for Linaro teams. It can collect pass/fail results and benchmarks from direct submissions or from testing tools like LAVA.
 
 
               [Click here to download SQUAD](https://pypi.org/project/squad-client/)
+
               [Click here to find out more about SQUAD](https://squad.readthedocs.io/en/latest/)
   - row: container_row
     title: Linaro Linux releases for Qualcomm™ Snapdragon® processors
