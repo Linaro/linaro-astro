@@ -17,13 +17,13 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-center
+    background: bg-right-top brightness-75
     background_container: ml-[10%]
 flow:
   - row: container_row
     styles:
       outer: purple-gradient-container
-    title: Linaro's Core Values
+    title: The Linaro Way
     sections:
       - component: image_cards
         styles:

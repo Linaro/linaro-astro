@@ -4,7 +4,7 @@ import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 
 type Props = z.infer<typeof graphicSchema>;
-const { src, alt, accessible_version, width, height, mobile } = Astro.props;
+const { src, alt, accessible_version, width, height, mobile, svg } = Astro.props;
 ---
 
 <div>
@@ -13,6 +13,7 @@ const { src, alt, accessible_version, width, height, mobile } = Astro.props;
   <CloudinaryImg
     src={mobile.src}
     alt={alt}
+    svg={mobile.svg}
     width={mobile.width}
     height={mobile.height}
     class="lg:hidden"
@@ -25,6 +26,7 @@ const { src, alt, accessible_version, width, height, mobile } = Astro.props;
     alt={alt}
     width={width}
     height={height}
+    svg={svg}
     class:list={[mobile && "hidden lg:block"]}
   />
   <div set:html={accessible_version} class="sr-only" />

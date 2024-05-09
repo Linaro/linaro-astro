@@ -167,7 +167,6 @@ export const membershipSchema = z.object({
   component: component("membership"),
   form_id: z.string(),
   description: z.string(),
-  text: z.string(),
   style: z.string().optional(),
   styles: z.object({
     card: z.string().optional(),
@@ -204,6 +203,7 @@ export const twoColumnSchema = z.object({
           alt: z.string(),
           width: z.number(),
           height: z.number(),
+          svg: z.boolean().optional().default(false),
         }),
         styles: z.string().optional(),
       }),
@@ -245,11 +245,13 @@ export const graphicSchema = z.object({
       src: z.string(),
       width: z.number(),
       height: z.number(),
+      svg: z.boolean().optional().default(false),
     })
     .optional(),
   src: z.string(),
   alt: z.string(),
   width: z.number(),
+  svg: z.boolean().optional().default(false),
   height: z.number(),
   accessible_version: z.string().optional(),
 });

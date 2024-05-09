@@ -1,8 +1,7 @@
 ---
 import MembershipCards from "./MembershipCards.astro";
 
-const { form_id, description, text, MemberManagementPanel, styles } =
-  Astro.props;
+const { form_id, description, MemberManagementPanel, styles } = Astro.props;
 
 const inputFields = [
   {
@@ -16,16 +15,13 @@ const inputFields = [
 ];
 ---
 
-<div
-  class="max-w-4xl border border-[#6B6B6B] rounded-2xl px-8 py-4 w-full mx-auto"
->
+<div class="max-w-4xl border border-grey rounded-2xl px-8 py-4 w-full mx-auto">
   <form
     class="flex flex-col items-start gap-8"
     id="contact-form"
     data-contact-form={form_id}
   >
     <p class="text-xl font-bold">{description}</p>
-    <p class="text-xl font-bold">{text}</p>
     <MembershipCards
       MemberManagementPanel={MemberManagementPanel}
       styles={styles}

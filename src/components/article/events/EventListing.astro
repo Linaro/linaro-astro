@@ -25,9 +25,7 @@ const content =
     .replace("\\", "") + "...";
 
 let formattedDate;
-console.log(event);
 const eventStart = dayjs(event.event_start);
-console.log(eventStart);
 const eventEnd = dayjs(event.event_end);
 if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   formattedDate = `${eventStart.format("D MMMM, YYYY")}`;

@@ -3,7 +3,6 @@ import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import SocialIcons from "../common/SocialIcons.astro";
 import { Icon } from "astro-icon/components";
-const footer = await getEntry("data", "footer");
 
 const { data: nav } = await getEntry("data", "nav");
 const {
@@ -37,31 +36,33 @@ const path = Astro.url.pathname;
     </div>
     <ul class="gap-8 hidden lg:flex mb-8">
       {
-        nav.map((item: any) =>
-          item.children ? (
-            <li class="max-w-[15ch]">
-              <p class="text-white text-[1rem] mb-4">{item.label}</p>
-              <ul>
-                {item.children.map((item: any) => (
-                  <li class="mb-2">
-                    <a href={item.url} class="hover:text-linaro-yellow">
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ) : (
-            <li>
-              <a
-                href={item.url}
-                class="text-white text-[1rem] mb-4 hover:text-linaro-yellow"
-              >
-                {item.label}
-              </a>
-            </li>
+        nav
+          .filter((item: any) => item.url !== "/contact")
+          .map((item: any) =>
+            item.children ? (
+              <li class="max-w-[15ch]">
+                <p class="text-white text-[1rem] mb-4">{item.label}</p>
+                <ul>
+                  {item.children.map((item: any) => (
+                    <li class="mb-2">
+                      <a href={item.url} class="hover:text-linaro-yellow">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a
+                  href={item.url}
+                  class="text-white text-[1rem] mb-4 hover:text-linaro-yellow"
+                >
+                  {item.label}
+                </a>
+              </li>
+            )
           )
-        )
       }
     </ul>
   </div>

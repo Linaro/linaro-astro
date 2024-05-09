@@ -109,6 +109,7 @@ const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
           <button
             class="py-2 px-2"
             onClick={onClearQuery}
+            type="reset"
             aria-label="Clear search query"
           >
             <FaSolidXmark size={20} />

@@ -41,7 +41,7 @@ flow:
             type: link
             icon: handshake
             button_text: Get in Touch
-            url: https://careers.linaro.org/
+            url: /careers
   - row: container_row
     styles:
       outer: purple-gradient-container
