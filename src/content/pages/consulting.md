@@ -17,7 +17,7 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-right-top
+    background: bg-right-top brightness-50
     background_container: ml-[10%]
 flow:
   - row: container_row
@@ -46,10 +46,12 @@ flow:
     sections:
       - component: graphic
         src: linaro-website/graphics/content/consultancy-lifecycle
+        svg: true
         mobile:
           src: linaro-website/graphics/content/artboard-consulting
           width: 1000
           height: 1000
+          svg: false
         alt: diagram explaining how Linaro what consultancy services Linaro can provide at each stage of the software lifecycle
         width: 2000
         height: 2000
@@ -119,11 +121,13 @@ flow:
             text_content: We deliver and maintain Yocto Project based distros and BSPs
             styles: w-full lg:w-1/2 text-2xl sm:text-3xl lg:px-24 font-bold
           - type: image
+            svg: true
             image:
-              src: linaro-website/graphics/content/consultancy-expertise
+              src: linaro-website/graphics/content/consultancy-expertise-2
               alt: |
                 Your expertise: your application. Our expertise: 3rd Party & System Libraries, Operation System and Toolchain.
               height: 1000
               width: 1000
+              svg: true
             styles: w-full lg:w-1/2
 ---

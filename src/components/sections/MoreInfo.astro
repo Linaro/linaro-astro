@@ -12,11 +12,11 @@ const { more_info, styles } = Astro.props;
       <li class:list={[styles?.card]}>
         <a
           href={url}
-          class="no-underline max-w-full px-2 hover:underline"
+          class="no-underline max-w-full px-2 hover:text-linaro-yellow"
           target={url.startsWith("https") ? "_blank" : "_self"}
         >
           {icon && <Icon name={icon} size={100} class="my-0 mx-auto" />}
-          <h3 class="text-4xl my-5">{title}</h3>
+          <h3 class="text-4xl my-5 text-inherit">{title}</h3>
         </a>
       </li>
     ))

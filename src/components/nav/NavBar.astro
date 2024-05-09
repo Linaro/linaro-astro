@@ -177,12 +177,10 @@ const navData = await getEntry("data", "nav");
     ].some((button) => button.contains(event.target));
     if (!isButtonInsideDropdown) {
       dropdownMenus.forEach((d) => {
-        // console.log("I ran", d);
-        // if (!d.contains(event.target)) {
+
         d.classList.remove("open");
         d.removeAttribute("open");
         d.classList.add("hidden");
-        // }
       });
       dropdownParent.forEach((d) => {
         d.classList.remove("open");
@@ -210,7 +208,6 @@ const navData = await getEntry("data", "nav");
   }
 
   function closeMenu(menu) {
-    // console.log("closing", menu);
     menu.classList.remove("open");
     menu.removeAttribute("open");
     menu.setAttribute("aria-expanded", "false");

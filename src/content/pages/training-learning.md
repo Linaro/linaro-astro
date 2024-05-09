@@ -61,11 +61,11 @@ flow:
   - row: container_row
     sections:
       - component: text
-        text_content: We have trained many engineers across key areas such as OP-TEE, Energy Aware Scheduler, Arm Trusted Firmware, Power Management and Open Source development to name but a few.
+        text_content: We have trained many engineers across key areas such as OP-TEE, Energy Aware Scheduler, Arm Trusted Firmware, Power Management and Open Source development. Be the next.
         style: text-center max-w-4xl mx-auto text-2xl
       - component: buttons
         buttons:
-          - text: Contact Us
+          - text: Ask for training
             url: /contact
             style: linaro-gradient-button
 ---

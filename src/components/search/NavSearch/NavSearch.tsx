@@ -77,7 +77,7 @@ const NavSearch = () => {
               class="py-2 px-2"
               onClick={onClearSearch}
               aria-label="Clear search query"
-              type="button"
+              type="reset"
             >
               <FaSolidXmark size={20} />
             </button>

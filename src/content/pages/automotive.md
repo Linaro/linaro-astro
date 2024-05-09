@@ -17,17 +17,17 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-right-top
+    background: bg-right-top brightness-75
     background_container: p-[5%] ml-[5%] xl:ml-0
 flow:
   - row: container_row
-    title: Placeholder Text
+    title: "Transforming Transportation: Software Defined Vehicles in Action"
     styles:
       outer: purple-gradient-container
     sections:
       - component: cards
         styles:
-          card: max-w-[60ch]
+          card: max-w-[60ch] text-justify
           container: justify-center gap-x-16
         cards:
           - text: |
@@ -38,14 +38,15 @@ flow:
   - row: container_row
     title: SOAFEE Lab
     sections:
+      - component: text
+        text_content: The SOAFEE Lab is dedicated to establishing a standardized open architecture for embedded edge computing in the automotive domain.
+        style: text-center text-3xl max-w-5xl mx-auto font-bold
       - component: cards
         styles:
           card: max-w-[60ch]
           container: justify-center gap-x-16
         cards:
           - text: |
-              The SOAFEE Lab is dedicated to establishing a standardized open architecture for embedded edge computing in the automotive domain.
-
               By defining common interfaces, APIs, and frameworks, we enable interoperability between hardware and software components, facilitating seamless integration and compatibility across different automotive platforms.
 
               This standardization promotes modularity, scalability, and reusability, allowing automotive manufacturers to build flexible and future-proof systems.
@@ -67,8 +68,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=automotive
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/themes/50057078-8f3b-4615-8f44-67c194e43b69
 ---
