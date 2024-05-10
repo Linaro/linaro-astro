@@ -7,8 +7,9 @@ description: |
 hero:
   title: >
     Discover the Future of Computing
-  background_image: linaro-website/graphics/ai-ml-bg-logo
+  background_image: linaro-website/graphics/ai-ml-2
   description: Our expertise in the Arm ecosystem enables us to deliver high-performance, efficient, and scalable solutions for your AI-driven applications. From optimized frameworks to hardware acceleration, we provide a comprehensive suite of tools and technologies designed to empower developers, data scientists, and businesses to unlock the true potential of artificial intelligence.
+
   button:
     text: Contact Us
     url: /contact
