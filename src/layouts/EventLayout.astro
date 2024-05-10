@@ -76,7 +76,10 @@ if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
 const upcomingEvents = (
   await getCollection(
     "events",
-    ({ data }) => new Date(data.event_start).getTime() > Date.now()
+    ({ data }) =>
+      (String(import.meta.env.IS_PREVIEW) === "true" ||
+        Date.now() > new Date(data.date_published).getTime()) &&
+      new Date(data.event_start).getTime() > Date.now()
   )
 )
   .sort((a, b) => dayjs(b.data.event_start).diff(a.data.event_start))

@@ -4,9 +4,8 @@ import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import SocialIcons from "../common/SocialIcons.astro";
 import { Icon } from "astro-icon/components";
 
-const { data: nav } = await getEntry("data", "nav");
 const {
-  data: { company_links },
+  data: { nav_links, company_links },
 } = await getEntry("data", "footer");
 
 const path = Astro.url.pathname;
@@ -36,33 +35,42 @@ const path = Astro.url.pathname;
     </div>
     <ul class="gap-8 hidden lg:flex mb-8">
       {
-        nav
-          .filter((item: any) => item.url !== "/contact")
-          .map((item: any) =>
-            item.children ? (
-              <li class="max-w-[15ch]">
-                <p class="text-white text-[1rem] mb-4">{item.label}</p>
-                <ul>
-                  {item.children.map((item: any) => (
-                    <li class="mb-2">
-                      <a href={item.url} class="hover:text-linaro-yellow">
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ) : (
-              <li>
-                <a
-                  href={item.url}
-                  class="text-white text-[1rem] mb-4 hover:text-linaro-yellow"
-                >
-                  {item.label}
-                </a>
-              </li>
-            )
+        nav_links.map((item: any) =>
+          item.children ? (
+            <li class="max-w-[15ch]">
+              <p class="text-white text-[1rem] mb-4">{item.label}</p>
+              <ul>
+                {item.children.map((item: any) => (
+                  <li class="mb-2">
+                    <a href={item.url} class="hover:text-linaro-yellow">
+                      {item.label}
+                    </a>
+                    {item.children && (
+                      <ul class="mt-2">
+                        {item.children.map((item: any) => (
+                          <li class="ml-4 mb-2">
+                            <a href={item.url} class="hover:text-linaro-yellow">
+                              {item.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.url}
+                class="text-white text-[1rem] mb-4 hover:text-linaro-yellow"
+              >
+                {item.label}
+              </a>
+            </li>
           )
+        )
       }
     </ul>
   </div>

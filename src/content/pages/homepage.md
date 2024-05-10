@@ -17,7 +17,7 @@ hero:
     background: bg-right-top 2xl:bg-[length:1500px]
     description: text-md sm:text-lg
     background_container: mr-[20%] xl:mr-[10%] mt-[-5%]
-    image_size: h-[calc(100vh)] min-h-[1100px] max-h-[1200px]
+    main_container: h-[calc(100vh)] min-h-[1100px] max-h-[1200px]
 flow:
   - row: container_row
     title: Trusted by Leading Companies
