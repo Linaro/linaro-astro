@@ -38,7 +38,12 @@
 
   }
 
-  .linaro-gradient-button::before {
+  .linaro-gradient-button-small {
+    @apply  px-4 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
+
+  }
+
+  .linaro-gradient-button::before, .linaro-gradient-button-small::before {
     content: '';
     position: absolute;
     width: 150px;
@@ -54,7 +59,7 @@
     transition: none
     
   }
-  .linaro-gradient-button:hover::before {
+  .linaro-gradient-button:hover::before, .linaro-gradient-button-small:hover::before {
     left: 100%;
     transition: all 0.65s ease-out
 

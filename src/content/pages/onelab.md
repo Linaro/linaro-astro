@@ -33,6 +33,7 @@ flow:
         alt: diagram explaining how onelab innovation is done at each stage of the lifecycle
         width: 2000
         height: 2000
+        svg: false
         accessible_version: |
           <ul>
             <li>Board Providers</li>
