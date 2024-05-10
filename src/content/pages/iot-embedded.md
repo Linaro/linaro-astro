@@ -7,7 +7,7 @@ description: |
 hero:
   title: >
     Where Innovation Meets Efficiency
-  background_image: linaro-website/graphics/iStock_chwihb
+  background_image: linaro-website/graphics/iot-embedded
   description: Your journey for better, faster and more efficient embedded systems development starts here.
   button:
     text: Contact Us
@@ -16,7 +16,7 @@ hero:
     text_container: max-w-4xl
     title: max-w-md
     description: max-w-80 text-xl
-    background: bg-right-top
+    background: bg-right-top lg:bg-right
 flow:
   - row: container_row
     title: IoT & Embedded Applications

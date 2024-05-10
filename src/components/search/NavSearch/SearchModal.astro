@@ -23,10 +23,8 @@ const { id } = Astro.props;
   }
 </style>
 
-<button
-  id="search-modal-open-button"
-  class="ml-auto mr-4 float-right p-2"
-  onclick={`window.${id}.showModal()`}><Icon name="search" size={20} /></button
+<button id="search-modal-open-button" class="ml-auto mr-4 float-right p-2"
+  ><Icon name="search" size={20} /></button
 >
 <div class="relative w-full">
   <dialog
@@ -40,28 +38,34 @@ const { id } = Astro.props;
 </div>
 
 <script>
-  const dialog = document.getElementById(
-    "search-modal-dialog"
-  ) as HTMLDialogElement;
-  const openButton = document.getElementById("search-modal-open-button");
-  const closeButton = document.getElementById("search-modal-close-button");
-
-  openButton?.addEventListener("click", () => {
-    dialog?.showModal();
-  });
-  closeButton?.addEventListener("click", () => {
-    dialog?.close();
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
   });
 
-  dialog.addEventListener("click", function (event) {
-    const rect = dialog.getBoundingClientRect();
-    const isInDialog =
-      rect.top <= event.clientY &&
-      event.clientY <= rect.top + rect.height &&
-      rect.left <= event.clientX &&
-      event.clientX <= rect.left + rect.width;
-    if (!isInDialog) {
-      dialog.close();
-    }
-  });
+  function addListeners() {
+    const dialog = document.getElementById(
+      "search-modal-dialog"
+    ) as HTMLDialogElement;
+    const openButton = document.getElementById("search-modal-open-button");
+    const closeButton = document.getElementById("search-modal-close-button");
+
+    openButton?.addEventListener("click", () => {
+      dialog?.showModal();
+    });
+    closeButton?.addEventListener("click", () => {
+      dialog?.close();
+    });
+
+    dialog.addEventListener("click", function (event) {
+      const rect = dialog.getBoundingClientRect();
+      const isInDialog =
+        rect.top <= event.clientY &&
+        event.clientY <= rect.top + rect.height &&
+        rect.left <= event.clientX &&
+        event.clientX <= rect.left + rect.width;
+      if (!isInDialog) {
+        dialog.close();
+      }
+    });
+  }
 </script>

@@ -12,7 +12,7 @@ const { more_info, styles } = Astro.props;
       <li class:list={[styles?.card]}>
         <a
           href={url}
-          class="no-underline max-w-full px-2 hover:text-linaro-yellow"
+          class="no-underline max-w-full px-2 hover:text-linaro-yellow cursor-pointer"
           target={url.startsWith("https") ? "_blank" : "_self"}
         >
           {icon && <Icon name={icon} size={100} class="my-0 mx-auto" />}

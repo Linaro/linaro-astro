@@ -1,3 +1,64 @@
+nav_links:
+- label: Products & Solutions
+  key: solutions
+  children:
+    - label: HPC
+      url: https://www.linaroforge.com
+    - label: IoT & Embedded Systems
+      url: /solutions/iot-embedded
+      children: 
+        - label: CodeLinaro
+          url: /solutions/codelinaro
+        - label: ONELab
+          url: /solutions/onelab
+    - label: AI & Machine Learning
+      url: /solutions/ai-ml
+    - label: Automotive
+      url: /solutions/automotive
+    - label: Long Term Support
+      url: /solutions/lts
+- label: Services & Support
+  key: Services
+  children:
+    - label: Consulting
+      url: /services/consulting
+    - label: Training & Learning
+      url: /services/training
+- label: Collaborative Projects
+  key: collaborative
+  children:
+    - label: Windows on Arm
+      url: /projects/windows-on-arm
+    - label: Automative, IoT & Edge
+      url: /projects/automotive-iot-edge
+    - label: Cloud Computing & Servers
+      url: /projects/cloud-computing
+    - label: Qualcomm Platform Services
+      url: /projects/qualcomm-platform
+- label: Resource Center
+  key: resources
+  children: 
+    - label: Downloads
+      url: /downloads
+    - label: Blog
+      url: /blog
+    - label: White Papers
+      url: /whitepapers
+    - label: Newsroom
+      url: /news
+    - label: Videos & Webinars
+      url: https://resources.linaro.org/
+    - label: Events
+      url: /events
+- label: Company
+  key: company
+  children:
+    - label: About
+      url: /about
+    - label: Careers
+      url: /careers
+
+
 company_links:
   - label: Contact
     url: /contact
