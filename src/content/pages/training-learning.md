@@ -46,6 +46,10 @@ flow:
               - Tracing with ftrace
               - Debugging with eBPF
               - Using perf on Arm platforms
+          - title: Trusted Firmware A for Armv8 systems
+            text: |
+              - ARMv8 exception model and boot
+              - Secure monitor and power management
           - title: Building Custom Systems with OpenEmbedded/Yocto
             text: |
               - Introduction to OpenEmbedded and the Yocto Project
@@ -54,18 +58,15 @@ flow:
               - OpenEmbedded advanced concepts
               - Debug the build
               - Toolchain
-          - title: Trusted Firmware A for Armv8 systems
-            text: |
-              - ARMv8 exception model and boot
-              - Secure monitor and power management
+
   - row: container_row
     sections:
       - component: text
-        text_content: We have trained many engineers across key areas such as OP-TEE, Energy Aware Scheduler, Arm Trusted Firmware, Power Management and Open Source development to name but a few.
+        text_content: We have trained many engineers across key areas such as OP-TEE, Energy Aware Scheduler, Arm Trusted Firmware, Power Management and Open Source development. Be the next.
         style: text-center max-w-4xl mx-auto text-2xl
       - component: buttons
         buttons:
-          - text: Contact Us
+          - text: Ask for training
             url: /contact
             style: linaro-gradient-button
 ---

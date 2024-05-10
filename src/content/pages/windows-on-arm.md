@@ -27,9 +27,9 @@ flow:
       - component: image_cards
         styles:
           container: gap-12 justify-center flex flex-wrap
-          card: flex flex-col justify-between items-center bg-white linaro-gradient-border aspect-square px-8
+          card: flex flex-col justify-center items-center bg-white linaro-gradient-border aspect-square w-[20ch] rounded-full
           card_title: text-xl m-0 text-black font-normal
-          image: w-[10ch] my-auto
+          image: w-[10ch] m-0
         cards:
           - title: Bazel
             image:
@@ -98,7 +98,7 @@ flow:
   - row: container_row
     no_border: true
     styles:
-      outer: purple-gradient-container
+      outer: purple-gradient-container mt-[-5rem]
     sections:
       - component: cards
         styles:
@@ -122,23 +122,23 @@ flow:
             button:
               text: Learn More
               url: https://linaro.atlassian.net/wiki/spaces/WPERF
-  - row: container_row
-    title: Watch the Windows on Arm Testimonials
-    sections:
-      - component: videos
-        styles:
-          container: border-[0.5px] border-grey
-          card: max-w-[40ch]
-        videos:
-          - src: https://static.linaro.org/videos/woa_microsoft.mp4
-            title: Marcus Perryman  |  Principle Engineer Microsoft
-            thumbnail: /videos/woa_microsoft.png
-          - src: https://static.linaro.org/videos/woa_arm.mp4
-            title: David Whaley  |  Director Ecosystem Partnerships, Arm
-            thumbnail: /videos/woa_arm.png
-          - src: https://static.linaro.org/videos/woa_cix.mp4
-            title: Fang Liu  |  CTO CIX Technology
-            thumbnail: /videos/woa_cix.png
+  # - row: container_row
+  #   title: Watch the Windows on Arm Testimonials
+  #   sections:
+  #     - component: videos
+  #       styles:
+  #         container: border-[0.5px] border-grey
+  #         card: max-w-[40ch]
+  #       videos:
+  #         - src: https://static.linaro.org/videos/woa_microsoft.mp4
+  #           title: Marcus Perryman  |  Principle Engineer Microsoft
+  #           thumbnail: /videos/woa_microsoft.png
+  #         - src: https://static.linaro.org/videos/woa_arm.mp4
+  #           title: David Whaley  |  Director Ecosystem Partnerships, Arm
+  #           thumbnail: /videos/woa_arm.png
+  #         - src: https://static.linaro.org/videos/woa_cix.mp4
+  #           title: Fang Liu  |  CTO CIX Technology
+  #           thumbnail: /videos/woa_cix.png
   - row: container_row
     sections:
       - component: membership
@@ -173,10 +173,10 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=windows-on-arm
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/tags/0e965752-e803-4fd8-9a71-f01c5c1a113f
 #   - row: container_row
 #     title: Explore Related Resources
 #     styles: purple-gradient-container

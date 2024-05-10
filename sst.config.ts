@@ -1,6 +1,6 @@
 import type { SSTConfig } from "sst";
 import { AstroSite, StaticSite } from "sst/constructs";
-
+console.log(process.env.IS_PREVIEW);
 export default {
   config(_input) {
     return {
@@ -27,10 +27,13 @@ export default {
             CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
           },
         });
+        stack.addOutputs({
+          url: site.url,
+        });
       } else {
         const site = new AstroSite(stack, "LinaroOrgProtectedSite", {
           runtime: "nodejs20.x",
-          customDomain:  process.env.CUSTOM_DOMAIN!,
+          customDomain: process.env.CUSTOM_DOMAIN!,
           nodejs: {
             install: ["@biscuit-auth/biscuit-wasm"],
           },
@@ -49,6 +52,7 @@ export default {
             CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
             CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
             CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
+            IS_PREVIEW: process.env.IS_PREVIEW!,
           },
         });
         stack.addOutputs({

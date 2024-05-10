@@ -37,7 +37,7 @@
     - label: Blog
       url: /blog
     - label: White Papers
-      url: /white-papers
+      url: /whitepapers
     - label: Newsroom
       url: /news
     - label: Videos & Webinars
@@ -51,7 +51,4 @@
       url: /about
     - label: Careers
       url: /careers
-- label: Contact Us
-  key: contact
-  url: /contact
 

@@ -38,7 +38,10 @@ if (background_image) {
           <>
             {!no_border && <div class="fade-border" />}
             <h2
-              class="text-white relative whitespace-prewrap md:min-w-[20ch] my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center"
+              class:list={[
+                "text-white relative whitespace-prewrap md:min-w-[25ch] my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                styles?.title,
+              ]}
               set:html={titleMarkdown}
             />
             {!no_border && <div class="fade-border" />}
@@ -51,7 +54,7 @@ if (background_image) {
     <div
       class:list={[
         "animate-delay-100",
-        styles?.inner ?? "py-36",
+        styles?.inner ?? "py-24",
         animation !== "none" && "invisible",
       ]}
       data-animate={animation === "none"

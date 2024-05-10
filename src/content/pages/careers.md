@@ -17,44 +17,41 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-center
+    background: bg-right-top brightness-75
     background_container: ml-[10%]
 flow:
   - row: container_row
     styles:
       outer: purple-gradient-container
-    title: Linaro's Core Values
+    title: The Linaro Way
     sections:
-      - component: image_cards
+      - component: cards
         styles:
           container: mx-auto flex justify-around gap-8 flex-wrap
-          card: w-[40ch] bg-background px-8 rounded-[1.5rem] border-[1px] border-grey
+          card: w-[40ch] px-8 rounded-[1.5rem]
           card_title: text-4xl m-0
         cards:
           - title: Collaboration
+            icon: diversity
             text: |
               **Stronger as a collective**
 
               Linaro was created as a collaborative engineering forum. We believe that collaboration is key to driving innovation which benefits the greater good.
-            image:
-              src: linaro-website/graphics/collaboration
-              alt: ""
+
           - title: Innovation
+            icon: bulb
             text: |
               **Technology for the future**
 
               We develop technology for the future. We are proud of the role we play in enabling new markets on Arm architecture, technology which benefits the lives of so many.
-            image:
-              src: linaro-website/graphics/innovation
-              alt: ""
+
           - title: Enthusiasm
+            icon: enthusiasm
             text: |
               **Love what you do**
 
               The people are what make Linaro special. It is really important to us that our employees feel motivated in their roles and enjoy a good work/life balance.
-            image:
-              src: linaro-website/graphics/enthusiasm
-              alt: ""
+
   - row: container_row
     no_border: true
     sections:
