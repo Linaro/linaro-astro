@@ -93,9 +93,16 @@ export default defineConfig({
     '/cloud-computing-and-servers': '/projects/cloud-computing',
     '/windows-on-arm': '/projects/windows-on-arm',
     '/onelab': '/solutions/onelab',
-    '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
     '/services/qualcomm-platforms-services': '/projects/qualcomm-platform',
-    '/services/hands-on-training': '/services/training'
-    
+    '/services/hands-on-training': '/services/training',
+    '/working-groups':  "/",
+    '/projects': '/',
+    '/core-technologies/[...slug]': "/",
+    '/core-technologies/virtualization': "/projects/automotive-iot-edge",
+    '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
+    '/support': '/contact',
+    '/about/team': '/about',
+    '/about/tsc': '/about',
+    '/learning-hub/[...slug]': '/about'
   }
 });
