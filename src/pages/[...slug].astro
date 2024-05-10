@@ -5,20 +5,18 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
-  return (
-    pages
-      // .filter((page) => page.id !== "404.md")
-      .map((page) => {
-        return {
-          params: {
-            slug: page.slug || undefined,
-          },
-          props: {
-            page,
-          },
-        };
-      })
-  );
+  return pages
+    .filter((page) => page.id !== "404.md")
+    .map((page) => {
+      return {
+        params: {
+          slug: page.slug || undefined,
+        },
+        props: {
+          page,
+        },
+      };
+    });
 }
 type Props = { page: CollectionEntry<"pages"> };
 const { slug } = Astro.params;
@@ -33,7 +31,7 @@ if (import.meta.env.SSR) {
   page = Astro.props.page;
 }
 
-const { Content } = page ? await page.render() : { Content: "<></>" };
+const { Content } = page ? await page.render() : { Content: "Page not found" };
 ---
 
 <Content />

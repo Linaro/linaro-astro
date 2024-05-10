@@ -17,10 +17,23 @@ type GetEntriesType<T extends "blogs" | "events" | "news"> = {
 };
 
 const posts = await getEntries(Astro.props.posts.map((post) => post.post));
+
+// remove unpublished posts
+const filteredPosts = posts.filter((post) => {
+  if (String(import.meta.env.IS_PREVIEW) === "true") return true;
+
+  if (post.collection === "events") {
+    return Date.now() > new Date(post.data.date_published).getTime();
+  }
+
+  return Date.now() > new Date(post.data.date).getTime();
+});
+
+console.log(import.meta.env.IS_PREVIEW, posts, filteredPosts);
 ---
 
 <div
-  class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24 not-prose"
+  class="container mx-auto max-w-4xl 2xl:max-w-full px-8 xl:px-0 mb-24 not-prose"
   data-pagefind-ignore
 >
   {
@@ -30,7 +43,7 @@ const posts = await getEntries(Astro.props.posts.map((post) => post.post));
   }
   <ul class="flex flex-wrap gap-8 justify-center">
     {
-      posts?.map((post) => {
+      filteredPosts?.map((post) => {
         if (post.collection === "events") {
           return <EventListing {...post} />;
         } else {

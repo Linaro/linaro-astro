@@ -2,17 +2,23 @@
 import EventLayout from "@/layouts/EventLayout.astro";
 import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
-  const blogs = await getCollection("events");
-  return blogs.map((post) => {
-    return {
-      params: {
-        post: post.slug,
-      },
-      props: {
-        post,
-      },
-    };
-  });
+  const events = await getCollection("events");
+  return events
+    .filter(
+      (post) =>
+        String(import.meta.env.IS_PREVIEW === "true") ||
+        Date.now() > new Date(post.data.date_published).getTime()
+    )
+    .map((post) => {
+      return {
+        params: {
+          post: post.slug,
+        },
+        props: {
+          post,
+        },
+      };
+    });
 }
 type Props = { post: CollectionEntry<"events"> };
 const { post } = Astro.params;
