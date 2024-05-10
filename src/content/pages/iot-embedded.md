@@ -55,8 +55,8 @@ flow:
           - title: CodeLinaro
             text: Revolutionize Your Embedded Software Development with CodeLinaro
             button:
-              text: Request a demo
-              url: https://www.codelinaro.org/
+              text: Find out more
+              url: /solutions/codelinaro
   - row: container_row
     title: Explore Related Resources
     styles:

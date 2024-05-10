@@ -14,9 +14,10 @@ hero:
     url: /contact
   styles:
     text_container: max-w-80
-    background: bg-right-top
+    background: bg-right-top 2xl:bg-[length:1500px]
     description: text-md sm:text-lg
-    background_container: mr-[20%] xl:pr-[20%] mt-[-10%] lg:mt-0
+    background_container: mr-[20%] xl:mr-[10%] mt-[-5%]
+    image_size: h-[calc(100vh)] min-h-[1100px] max-h-[1200px]
 flow:
   - row: container_row
     title: Trusted by Leading Companies
@@ -57,10 +58,10 @@ flow:
     sections:
       - component: image_cards
         styles:
-          container: max-w-full mx-auto justify-around gap-x-8 gap-y-8 flex flex-wrap
-          card: w-[15rem] relative h-[15rem]
-          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-2xl py-0 m-0
-          image: absolute w-full  h-full aspect-square top-0 left-0 right-0 bottom-0 mx-auto my-auto
+          container: max-w-full mx-auto justify-around gap-2 xl:gap-8 flex flex-wrap
+          card: relative xl:h-[15rem] xl:w-[15rem] w-[10rem] h-[10rem]
+          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-xl xl:text-2xl py-0 m-0
+          image: absolute w-full h-full aspect-square top-0 left-0 right-0 bottom-0 mx-auto my-auto
         cards:
           - title: Automotive
             image:
@@ -112,7 +113,7 @@ flow:
         styles:
           card: w-[35ch]
           container: justify-around gap-x-28 gap-y-20
-          card_title: lg:min-h-[4ch]
+          card_title: lg:min-h-[4ch] max-w-[10ch]
         cards:
           - title: Products & Solutions
             text: From optimized software platforms to cutting-edge development tools
@@ -148,6 +149,12 @@ flow:
     sections:
       - component: articles
         posts:
-          - collection: blogs
-            post: linaro-fosdem-2024
+          - collection: news
+            post: linaro-to-join-forces-with-renesas-on-soafee-integration-lab-project
+          - collection: news
+            post: linaro-undergoes-transformation-introducing-the-new-brand
+          - collection: news
+            post: linaro-unveils-onelab-at-connect-revolutionizing-edge-compute-interoperability-testing
+          - collection: news
+            post: linaro-announces-qualcomm-as-the-new-member-of-the-linaro-edge-group-ledge
 ---

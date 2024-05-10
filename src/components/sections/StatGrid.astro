@@ -15,13 +15,15 @@ const { stats } = Astro.props;
     stats.map(({ value, label }) => (
       <li class="flex flex-col mx-0">
         <span
-          class="linaro-gradient-text text-7xl font-bold not-sr-only"
+          class="linaro-gradient-text text-7xl text-center font-bold not-sr-only"
           data-stat-count={value}
         >
           +0
         </span>
         <span class="sr-only">{value}</span>
-        <span class="text-lg inline-block max-w-[30ch]">{label}</span>
+        <span class="text-lg inline-block max-w-[30ch] text-center">
+          {label}
+        </span>
       </li>
     ))
   }
@@ -57,7 +59,7 @@ const { stats } = Astro.props;
           entry.target,
           0,
           Number(entry.target.dataset.statCount),
-          5000
+          2000
         );
         observer.unobserve(entry.target);
       }

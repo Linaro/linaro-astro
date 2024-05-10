@@ -27,9 +27,9 @@ flow:
       - component: image_cards
         styles:
           container: gap-12 justify-center flex flex-wrap
-          card: flex flex-col justify-between items-center bg-white linaro-gradient-border aspect-square px-8
+          card: flex flex-col justify-center items-center bg-white linaro-gradient-border aspect-square w-[20ch] rounded-full
           card_title: text-xl m-0 text-black font-normal
-          image: w-[10ch] my-auto
+          image: w-[10ch] m-0
         cards:
           - title: Bazel
             image:
@@ -98,11 +98,11 @@ flow:
   - row: container_row
     no_border: true
     styles:
-      outer: purple-gradient-container
+      outer: purple-gradient-container mt-[-5rem]
     sections:
       - component: cards
         styles:
-          card: max-w-[50ch] text-center flex flex-col items-start gap-8 text-left prose-invert prose-p:text-left prose-p:text-xl prose-h4:text-3xl prose-headings:text-left prose-h4:my-4 prose-h4:mt-0 border border-grey rounded-2xl p-8
+          card: max-w-[50ch] text-center flex flex-col items-start gap-8 text-left prose-invert prose-p:text-left prose-p:text-xl prose-h4:text-3xl prose-headings:text-left prose-h4:my-4 prose-h4:mt-0
           container: justify-center gap-36
           card_title: text-linaro-yellow text-5xl text-left w-full
         cards:

@@ -9,24 +9,30 @@ const { cards, styles } = Astro.props;
 
 <ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
   {
-    cards.map(async ({ icon, title, text, button }, index) => {
+    cards.map(async ({ icon, title, text, button, style }, index) => {
       const content = text ? await marked.parse(text) : null;
       return (
-        <li class:list={[styles?.card]}>
+        <li class:list={[styles?.card, style]}>
           {icon && <Icon name={icon} size={100} class="my-0" />}
-          <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
+          <h3 class:list={["text-4xl my-5 z-50", styles?.card_title]}>
+            {title}
+          </h3>
 
-          <div class={`text-xl prose-a:text-blue-300`} set:html={content} />
+          <div
+            class={`text-xl prose-a:text-blue-300 text-inherit`}
+            set:html={content}
+          />
 
           {button && (
             <a
               href={button.url}
               target={button.url.startsWith("https") ? "_blank" : "_self"}
-              class="no-underline inline-block"
+              class="no-underline inline-block mt-auto"
             >
               <div
                 class:list={[
-                  `linaro-gradient-button ${index !== 0 ? styles?.button_style : ""}`,
+                  `linaro-gradient-button mt-auto`,
+                  styles?.button_style,
                 ]}
               >
                 {button.text}
