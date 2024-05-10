@@ -7,7 +7,7 @@ description: |
 hero:
   title: >
     Driving Innovation in the Future of Mobility with Software-Defined Vehicles
-  background_image: linaro-website/graphics/automotive
+  background_image: linaro-website/graphics/automotive-2
   description: |
     The future of transportation lies in connected and autonomous vehicles. We actively work on technologies that enable seamless connectivity, such as V2X (Vehicle-to-Everything) communication, 5G integration, and edge computing.
   button:
@@ -17,8 +17,8 @@ hero:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
-    background: bg-right-top brightness-75
-    background_container: p-[5%] ml-[5%] xl:ml-0
+    background: bg-right-top xl:bg-right
+    background_container: p-[5%] md:ml-[5%]
 flow:
   - row: container_row
     title: Transforming Transportation

@@ -81,7 +81,6 @@ const BlogSearch = ({
   };
 
   const onClearSearch = () => {
-    console.log("clearing");
     setSearch({
       query: null,
       filters: {

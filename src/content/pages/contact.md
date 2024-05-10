@@ -14,7 +14,7 @@ hero:
     title: w-full text-center
     background: bg-right-top md:bg-top opacity-50
     description: text-md sm:text-lg
-    image_size: max-h-[30rem] min-h-[30ch] h-[30vh]
+    main_container: max-h-[30rem] min-h-[30ch] h-[30vh]
 flow:
   - row: container_row
     sections:
@@ -22,7 +22,7 @@ flow:
         styles:
           card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center
           container: justify-around gap-x-5 gap-y-20
-          button_style: mt-8
+          button: mt-8
           card_title: text-[2rem] text-center
         buttons:
           - title: Sales Enquiries
