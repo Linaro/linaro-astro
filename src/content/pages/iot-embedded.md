@@ -7,7 +7,7 @@ description: |
 hero:
   title: >
     Where Innovation Meets Efficiency
-  background_image: linaro-website/graphics/iStock_chwihb
+  background_image: linaro-website/graphics/iot-embedded
   description: Your journey for better, faster and more efficient embedded systems development starts here.
   button:
     text: Contact Us
@@ -16,7 +16,7 @@ hero:
     text_container: max-w-4xl
     title: max-w-md
     description: max-w-80 text-xl
-    background: bg-right-top
+    background: bg-right-top lg:bg-right
 flow:
   - row: container_row
     title: IoT & Embedded Applications
@@ -35,7 +35,6 @@ flow:
             style: text-4xl font-bold w-[11ch] leading-tight
           - text: Linaro's solutions are designed to be highly scalable and flexible, allowing organizations to easily adapt and scale their IoT and Embedded Systems deployments as their needs evolve. Whether you're deploying a single device or managing a large-scale IoT network, our solutions can scale to meet your requirements.
             style: text-2xl
-
   - row: container_row
     sections:
       - component: text
@@ -48,11 +47,13 @@ flow:
           card_title: text-linaro-yellow text-5xl
         cards:
           - title: ONELab
+            icon: onelab
             text: ONELab revolutionizes edge and IoT device interoperability testing.
             button:
               text: Find out more
               url: /solutions/onelab
           - title: CodeLinaro
+            icon: codelinaro
             text: Revolutionize Your Embedded Software Development with CodeLinaro
             button:
               text: Find out more

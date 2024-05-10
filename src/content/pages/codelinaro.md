@@ -16,7 +16,7 @@ hero:
     title: text-center max-w-5xl
     button: mx-auto
     background: bg-right-top
-    image_size: h-[calc(40vh)] min-h-[600px] max-h-[1200px] lg:mb-[-5rem]
+    main_container: h-[calc(40vh)] min-h-[600px] max-h-[1200px] lg:mb-[-5rem]
 flow:
   - row: container_row
     no_border: true

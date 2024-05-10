@@ -27,7 +27,7 @@ const borderColor = color ? `border-${color}` : `border-white`;
             outline ? `p-3 border-2 rounded-full` : "border-none",
           ]}
         >
-          <a href={url} target="_blank">
+          <a href={url} target="_blank" aria-label={label}>
             <Icon
               name={icon}
               size={size || 20}
