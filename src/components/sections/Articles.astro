@@ -28,8 +28,6 @@ const filteredPosts = posts.filter((post) => {
 
   return Date.now() > new Date(post.data.date).getTime();
 });
-
-console.log(import.meta.env.IS_PREVIEW, posts, filteredPosts);
 ---
 
 <div

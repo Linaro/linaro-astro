@@ -13,7 +13,7 @@ hero:
     title: w-full text-center
     background: bg-right-top md:bg-top opacity-50
     description: text-md sm:text-lg
-    image_size: max-h-[30rem] min-h-[30ch] h-[30vh]
+    main_container: max-h-[30rem] min-h-[30ch] h-[30vh]
 flow:
   - row: container_row
     animation: "none"

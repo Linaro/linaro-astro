@@ -32,7 +32,7 @@ export const cardsSchema = z.object({
       card: z.string().optional(),
       container: z.string().optional(),
       card_title: z.string().optional(),
-      button_style: z.string().optional(),
+      button: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -56,7 +56,7 @@ export const imageCardsSchema = z.object({
   styles: z
     .object({
       card: z.string().optional(),
-      button_style: z.string().optional(),
+      button: z.string().optional(),
       container: z.string().optional(),
       card_title: z.string().optional(),
       image: z.string().optional(),

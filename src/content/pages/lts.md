@@ -26,7 +26,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: w-full mx-auto justify-around gap-28
+          container: w-full mx-auto justify-center xl:justify-between max-w-7xl gap-28
           card: w-[35ch]
         cards:
           - title: Extensive Expertise
@@ -44,6 +44,8 @@ flow:
           - title: Collaboration
             text: Join a collaborative ecosystem where economies of scale and shared testing resources drive efficiency and cost-effectiveness.
             icon: zoom_out_map
+          - title: ""
+            style: not-sr-only lg:block hidden
   - row: container_row
     sections:
       - component: text

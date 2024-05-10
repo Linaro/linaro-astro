@@ -12,10 +12,12 @@
     "build": "astro build",
     "postbuild": "pagefind --site ./dist_prebuild/dist/client --output-path ./dist/client/pagefind",
     "build:public": "IS_PUBLIC=true astro build --ignore-scripts",
+    "preview:public": "IS_PUBLIC=true astro preview",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.6.0",
     "@astrojs/mdx": "^2.2.4",
     "@astrojs/sitemap": "^3.1.2",
     "@astrojs/solid-js": "^4.0.1",
@@ -34,7 +36,6 @@
     "astro-seo": "^0.8.3",
     "astro-sst": "^2.41.4",
     "auth-astro": "^4.1.1",
-    "cloudinary-video-player": "^2.0.0",
     "dayjs": "^1.11.10",
     "marked": "^12.0.1",
     "pagefind": "^1.1.0",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "postcss": "^8.4.38",
     "sass": "^1.72.0",
-    "tailwindcss-animated": "^1.0.1"
+    "tailwindcss-animated": "^1.0.1",
+    "typescript": "^5.4.5"
   }
 }
