@@ -13,6 +13,7 @@ export const containerRowSchema = z.object({
     .object({
       outer: z.string().optional(),
       inner: z.string().optional(),
+      title: z.string().optional(),
     })
     .optional(),
   animation: z.string().optional(),

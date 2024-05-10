@@ -21,13 +21,13 @@ hero:
     background_container: p-[5%] ml-[5%] xl:ml-0
 flow:
   - row: container_row
-    title: "Transforming Transportation: Software Defined Vehicles in Action"
+    title: Transforming Transportation
     styles:
       outer: purple-gradient-container
     sections:
       - component: cards
         styles:
-          card: max-w-[60ch] text-justify
+          card: max-w-[60ch]
           container: justify-center gap-x-16
         cards:
           - text: |

@@ -3,16 +3,22 @@ import NewsLayout from "@/layouts/NewsLayout.astro";
 import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
   const news = await getCollection("news");
-  return news.map((post) => {
-    return {
-      params: {
-        post: post.slug,
-      },
-      props: {
-        post,
-      },
-    };
-  });
+  return news
+    .filter(
+      (post) =>
+        String(import.meta.env.IS_PREVIEW) === "true" ||
+        Date.now() > new Date(post.data.date).getTime()
+    )
+    .map((post) => {
+      return {
+        params: {
+          post: post.slug,
+        },
+        props: {
+          post,
+        },
+      };
+    });
 }
 
 type Props = { post: CollectionEntry<"news"> };

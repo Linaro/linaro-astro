@@ -113,6 +113,8 @@ flow:
           </ol>
   - row: container_row
     title: Focus on What is Important to You
+    styles:
+      title: md:min-w-[15ch]
     sections:
       - component: two_column
         container_styles: items-center border-grey border-[0.25px] rounded-xl px-2 sm:px-8

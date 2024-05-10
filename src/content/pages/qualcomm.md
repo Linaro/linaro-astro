@@ -39,15 +39,12 @@ flow:
           - title: Land
             text: Introduce support for Qualcomm SoCs and technologies in open source (kernel,      toolchain, bootloader, QEMU, etc). Track open source projects, adapt and maintain
             icon: handshake
-
           - title: Package
             text: Integrate, test and package publicly available fully upstream Qualcomm Linux OS images (Yocto Project, Debian, etc)
             icon: low_density
-
           - title: Certify
             text: Achieve and maintain compliance with industry standards (YP Compatibility, Arm System Ready, etc)
             icon: shield_person
-
           - title: Deploy
             text: Support Qualcomm’s customers and device makers with customizations, compliance artifacts, OS production-grade releases, support and maintenance
             icon: rocket_launch
@@ -81,7 +78,7 @@ flow:
               Display, GPU (freedreno), DSPs, WLAN, audio, BT, CPU freq scaling, Hot Plug, Storage, PCIe, FastRPC, USB, Security Crypto, Thermal, Bus scaling, I2C/SPI/UART, Watchdog
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6
+          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6 gap-16
           card: w-[50ch] text-left
           card_title: text-2xl
         cards:
@@ -98,12 +95,6 @@ flow:
                 https://git.yoctoproject.org/meta-qcom/
               * Linaro Images based on latest stable kernel
               * Mainline Snapshot Images
-      - component: cards
-        styles:
-          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-grey rounded-3xl p-6
-          card: w-[50ch] prose-a:break-all
-          card_title: text-2xl
-        cards:
           - title: Unified Boot for RBx platforms
             text: |
               * U-Boot powered
