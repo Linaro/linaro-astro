@@ -48,10 +48,10 @@ flow:
         src: linaro-website/graphics/content/consultancy-lifecycle
         svg: true
         mobile:
-          src: linaro-website/graphics/content/artboard-consulting
+          src: linaro-website/graphics/content/consultancy-lifecycle-mobile
           width: 1000
           height: 1000
-          svg: false
+          svg: true
         alt: diagram explaining how Linaro what consultancy services Linaro can provide at each stage of the software lifecycle
         width: 2000
         height: 2000
@@ -125,7 +125,7 @@ flow:
           - type: image
             svg: true
             image:
-              src: linaro-website/graphics/content/consultancy-expertise-2
+              src: linaro-website/graphics/content/consultancy-expertise
               alt: |
                 Your expertise: your application. Our expertise: 3rd Party & System Libraries, Operation System and Toolchain.
               height: 1000

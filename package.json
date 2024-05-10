@@ -12,6 +12,7 @@
     "build": "astro build",
     "postbuild": "pagefind --site ./dist_prebuild/dist/client --output-path ./dist/client/pagefind",
     "build:public": "IS_PUBLIC=true astro build --ignore-scripts",
+    "preview:public": "IS_PUBLIC=true astro preview",
     "preview": "astro preview",
     "astro": "astro"
   },
