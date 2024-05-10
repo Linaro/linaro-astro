@@ -1,6 +1,5 @@
 import type { SSTConfig } from "sst";
 import { AstroSite, StaticSite } from "sst/constructs";
-console.log(process.env.IS_PREVIEW);
 export default {
   config(_input) {
     return {
