@@ -4,6 +4,10 @@ module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     ...defaultTheme,
+    screens: {
+      ...defaultTheme.screens,
+        '2xl': '1576px',
+    },
     content: ["./node_modules/tw-elements/dist/js/**/*.js"],
     extend: {
       colors: {
@@ -16,7 +20,7 @@ module.exports = {
       },
       backgroundImage: {
         'linaro-gradient': 'linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%)',
-        'purple-gradient': 'linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #6715E8 44%, #6715E8 55%, rgba(58, 12, 130, 0.00) 100%)',
+        'purple-gradient': 'linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #420D90 44%, #420D90 55%, rgba(58, 12, 130, 0.00) 100%)',
         'border-gradient': 'linear-gradient(90deg, rgba(0,0,0,0) 0%, #545454 49%, rgba(0,0,0,0) 100%);'
 
       },

@@ -33,32 +33,26 @@ flow:
         style: text-center text-4xl mx-auto font-bold mb-24 text-yellow-500
       - component: cards
         styles:
-          container: w-full mx-auto justify-around
+          container: w-full mx-auto justify-around gap-16
           card: md:w-[50ch]
         cards:
           - title: Land
             text: Introduce support for Qualcomm SoCs and technologies in open source (kernel,      toolchain, bootloader, QEMU, etc). Track open source projects, adapt and maintain
             icon: handshake
-
           - title: Package
             text: Integrate, test and package publicly available fully upstream Qualcomm Linux OS images (Yocto Project, Debian, etc)
             icon: low_density
-
           - title: Certify
             text: Achieve and maintain compliance with industry standards (YP Compatibility, Arm System Ready, etc)
             icon: shield_person
-
           - title: Deploy
             text: Support Qualcomm’s customers and device makers with customizations, compliance artifacts, OS production-grade releases, support and maintenance
             icon: rocket_launch
   - row: container_row
     sections:
       - component: text
-        text_content: Qualcomm’s Robotic Platforms
+        text_content: Qualcomm’s Robotic Platforms Upstream Support Status
         style: text-center text-4xl font-bold
-      - component: text
-        text_content: Upstream support status
-        style: text-center text-3xl font-bold
       - component: image_cards
         styles:
           container: mx-auto flex justify-around
@@ -75,13 +69,19 @@ flow:
               alt: ""
       - component: cards
         styles:
-          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6
-          card: w-[50ch] text-left
-          card_title: text-2xl font-thin
+          container: mx-auto flex justify-around prose-a:break-all
+          card: max-w-5xl text-center
+          card_title: text-2xl
         cards:
           - title: Supported board peripherals
             text: |
               Display, GPU (freedreno), DSPs, WLAN, audio, BT, CPU freq scaling, Hot Plug, Storage, PCIe, FastRPC, USB, Security Crypto, Thermal, Bus scaling, I2C/SPI/UART, Watchdog
+      - component: cards
+        styles:
+          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6 gap-16
+          card: w-[50ch] text-left
+          card_title: text-2xl
+        cards:
           - title: Upstream reference builds
             text: |
               [https://releases.linaro.org/96boards/rb5/linaro/](https://releases.linaro.org/96boards/rb5/linaro/)
@@ -89,15 +89,6 @@ flow:
               [https://releases.linaro.org/96boards/dragonboard845c/linaro/](https://releases.linaro.org/96boards/dragonboard845c/linaro/)
 
               [https://releases.linaro.org/96boards/rb2/linaro/](https://releases.linaro.org/96boards/rb2/linaro/)
-      - component: text
-        text_content: OS images and releases
-        style: text-center text-3xl font-bold
-      - component: cards
-        styles:
-          container: mx-auto flex justify-around my-24 marker:text-white border-2 border-grey rounded-3xl p-6
-          card: w-[50ch] prose-a:break-all
-          card_title: text-[31px]
-        cards:
           - title: Upstream Releases
             text: |
               * Yocto Project Compatible meta-qcomBSPs layer
@@ -110,9 +101,10 @@ flow:
               * Single Kernel image for all platforms
               * Single disk image for all platforms
 
-              ## Arm SystemReady-IR Compliance
-               * Work via Linaro Ledge (PR coming!)
-               * RB3, RB5, RB2, RB1
+          - title: Arm SystemReady-IR Compliance
+            text: |
+              * Work via Linaro Ledge (PR coming!)
+              * RB3, RB5, RB2, RB1
       - component: membership
         form_id: "4"
         description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
@@ -145,10 +137,10 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=qualcomm
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/search?q=qualcomm
 #   - row: container_row
 #     title: Explore Related Resources
 #     styles: purple-gradient-container

@@ -55,8 +55,8 @@ flow:
           - title: CodeLinaro
             text: Revolutionize Your Embedded Software Development with CodeLinaro
             button:
-              text: Request a demo
-              url: https://www.codelinaro.org/
+              text: Find out more
+              url: /solutions/codelinaro
   - row: container_row
     title: Explore Related Resources
     styles:
@@ -69,8 +69,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog
+            url: /blog?tags=iot-embedded
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/
+            url: https://resources.linaro.org/en/themes/50057078-8f3b-4615-8f44-67c194e43b69
 ---

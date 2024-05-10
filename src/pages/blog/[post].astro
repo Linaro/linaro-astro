@@ -3,16 +3,22 @@ import BlogLayout from "@/layouts/BlogLayout.astro";
 import { getCollection, type CollectionEntry, getEntry } from "astro:content";
 export async function getStaticPaths() {
   const blogs = await getCollection("blogs");
-  return blogs.map((post) => {
-    return {
-      params: {
-        post: post.slug,
-      },
-      props: {
-        post,
-      },
-    };
-  });
+  return blogs
+    .filter(
+      (post) =>
+        String(import.meta.env.IS_PREVIEW === "true") ||
+        Date.now() > new Date(post.data.date).getTime()
+    )
+    .map((post) => {
+      return {
+        params: {
+          post: post.slug,
+        },
+        props: {
+          post,
+        },
+      };
+    });
 }
 type Props = { post: CollectionEntry<"blogs"> };
 const { post } = Astro.params;

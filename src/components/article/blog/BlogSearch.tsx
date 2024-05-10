@@ -81,6 +81,7 @@ const BlogSearch = ({
   };
 
   const onClearSearch = () => {
+    console.log("clearing");
     setSearch({
       query: null,
       filters: {
@@ -141,9 +142,7 @@ const BlogSearch = ({
 
   const [results] = createResource(search, fetchResults);
 
-  const [isExpanded, setIsExpanded] = createSignal(
-    pathParams()?.tags?.length <= 0
-  );
+  const [isExpanded, setIsExpanded] = createSignal(true);
 
   return (
     <div class={`w-full flex flex-col mt-12`}>
@@ -157,6 +156,7 @@ const BlogSearch = ({
           <input
             placeholder={`Search for ${type}`}
             name="blog-search"
+            type="text"
             value={search().query ?? ""}
             onInput={(e) => {
               const value = e.target.value === "" ? null : e.target.value;
@@ -170,6 +170,7 @@ const BlogSearch = ({
           <button
             class="py-2 px-2"
             onClick={onClearQuery}
+            type="reset"
             aria-label="Clear search query"
           >
             <FaSolidXmark size={20} />
