@@ -2,5 +2,9 @@
   "hosted-zone:account=691071635361:domainName=new-staging.linaro.org:region=us-east-1": {
     "Id": "/hostedzone/Z00830313HBPANMOER471",
     "Name": "new-staging.linaro.org."
+  },
+  "hosted-zone:account=691071635361:domainName=rebel3-hypocrite2.linaro.org:region=us-east-1": {
+    "Id": "/hostedzone/Z0553118PE6MXJ8I1HFM",
+    "Name": "rebel3-hypocrite2.linaro.org."
   }
 }

@@ -10,10 +10,8 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      if (process.env.IS_PUBLIC) {
+      if (process.env.IS_PUBLIC === "true") {
         const site = new AstroSite(stack, "LinaroOrgStaticSite", {
-          buildCommand: "yarn build:public",
-          // path: "dist/",
           customDomain: {
             // domainAlias: process.env.CUSTOM_DOMAIN!.replace("www.", ""),
             domainName: process.env.CUSTOM_DOMAIN!,
@@ -33,6 +31,7 @@ export default {
         const site = new AstroSite(stack, "LinaroOrgProtectedSite", {
           runtime: "nodejs20.x",
           customDomain: process.env.CUSTOM_DOMAIN!,
+          buildCommand: `yarn build:auth`,
           nodejs: {
             install: ["@biscuit-auth/biscuit-wasm"],
           },
