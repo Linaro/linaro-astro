@@ -11,13 +11,13 @@ export default {
   stacks(app) {
     app.stack(function Site({ stack }) {
       if (process.env.IS_PUBLIC) {
-        const site = new StaticSite(stack, "LinaroOrgStaticSite", {
+        const site = new AstroSite(stack, "LinaroOrgStaticSite", {
           buildCommand: "yarn build:public",
-          path: "dist/",
-          // customDomain: {
-          //   domainAlias: process.env.CUSTOM_DOMAIN!.replace("www.", ""),
-          //   domainName: process.env.CUSTOM_DOMAIN!,
-          // },
+          // path: "dist/",
+          customDomain: {
+            // domainAlias: process.env.CUSTOM_DOMAIN!.replace("www.", ""),
+            domainName: process.env.CUSTOM_DOMAIN!,
+          },
           environment: {
             IS_PUBLIC: "true",
             CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
