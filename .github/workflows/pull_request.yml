@@ -1,0 +1,32 @@
+name: PullRequestAction
+
+on:
+  pull_request_target:
+    branches: [ main ]
+
+# Cancel in-progress jobs or runs for the current pull request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  process-pull-request:
+    runs-on: self-hosted
+    steps:
+      - name: Fetch git repository
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: "0"
+
+      - name: Initialise status
+        run: /srv/github-action-scripts/init-deploy-preview.sh
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge test branch
+        uses: linaro-its/merge-test-branch@v2.7
+
+      - name: Build site
+        run: /srv/github-action-scripts/build-astro-site.sh
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
