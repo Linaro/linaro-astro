@@ -27,6 +27,8 @@ jobs:
         uses: linaro-its/merge-test-branch@v2.7
 
       - name: Build site
-        run: /srv/github-action-scripts/build-astro-site.sh
+        run: |
+          export IS_PUBLIC=true
+          /srv/github-action-scripts/build-astro-site.sh
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
