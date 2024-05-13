@@ -54,7 +54,7 @@ flow:
       - component: buttons
         buttons:
           - text: Go to the SOAFEE Lab
-            url: /
+            url: https://www.soafee.io/community/integration-lab
             style: linaro-gradient-button mt-12
   - row: container_row
     title: Explore Related Resources
