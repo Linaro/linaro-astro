@@ -6,5 +6,9 @@
   "hosted-zone:account=691071635361:domainName=rebel3-hypocrite2.linaro.org:region=us-east-1": {
     "Id": "/hostedzone/Z0553118PE6MXJ8I1HFM",
     "Name": "rebel3-hypocrite2.linaro.org."
+  },
+  "hosted-zone:account=691071635361:domainName=fife-6sycamore-bun4.linaro.org:region=us-east-1": {
+    "Id": "/hostedzone/Z0566768Q894C0KHF2LJ",
+    "Name": "fife-6sycamore-bun4.linaro.org."
   }
 }
