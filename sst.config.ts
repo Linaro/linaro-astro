@@ -14,10 +14,10 @@ export default {
         const site = new StaticSite(stack, "LinaroOrgStaticSite", {
           buildCommand: "yarn build:public",
           path: "dist/",
-          customDomain: {
-            domainAlias: process.env.CUSTOM_DOMAIN!.replace("www.", ""),
-            domainName: process.env.CUSTOM_DOMAIN!,
-          },
+          // customDomain: {
+          //   domainAlias: process.env.CUSTOM_DOMAIN!.replace("www.", ""),
+          //   domainName: process.env.CUSTOM_DOMAIN!,
+          // },
           environment: {
             IS_PUBLIC: "true",
             CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
