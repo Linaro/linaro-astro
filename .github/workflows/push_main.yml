@@ -52,6 +52,6 @@ jobs:
           # Set up yarn
           yarn install
           pipenv install
-          $(pipenv run python ./get_aws_creds.py -i ${{ secrets.VAULT_ROLE_ID }} -s ${{ secrets.VAULT_SECRET_ID }} -r ${{ secrets[env.VAULT_ROLE_NAME] }} 2>&1 | tee /dev/stderr)
+          $(pipenv run python ./get_aws_creds.py -i ${{ secrets.VAULT_ROLE_ID }} -s ${{ secrets.VAULT_SECRET_ID }} -r ${{ secrets.VAULT_ROLE }} 2>&1 | tee /dev/stderr)
           # Build & deploy
           yarn sst deploy --stage prod
