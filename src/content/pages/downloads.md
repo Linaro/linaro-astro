@@ -75,7 +75,7 @@ flow:
               [Administering LAVA using Docker — LAVA documentation](https://lava.readthedocs.io/en/latest/admin/basic-tutorials/instance/install/#docker)
 
               [Click here to find out more about LAVA.](https://validation.linaro.org/?_gl=1*145svnc*_ga*NzMzMTExNTgyLjE3MTIxMzg2MTM.*_ga_E12E6FXFVK*MTcxMjc1NDc3Ny44LjEuMTcxMjc1NTY4OS4wLjAuMA..)
-          - title: Squad - Linaro’s Reporting Tool
+          - title: SQUAD - Linaro’s Reporting Tool
             text: |
               SQUAD is a web based reporting tool. It was created by Linaro to cover basic test result reporting for Linaro teams. It can collect pass/fail results and benchmarks from direct submissions or from testing tools like LAVA.
 
