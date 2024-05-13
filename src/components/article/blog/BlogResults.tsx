@@ -11,7 +11,6 @@ import {
   type Resource,
 } from "solid-js";
 
-const isDev = false;
 const PAGE_SIZE = 12;
 
 const getArticle = async (result: any) => {
@@ -36,7 +35,7 @@ const BlogResult = ({
         class="w-full px-4 pt-8 pb-12 inline-block basis-full"
       >
         <img
-          src={isDev || isSsr ? "/placeholder.jpg" : article()?.meta.image}
+          src={isSsr ? "/placeholder.jpg" : article()?.meta.image}
           alt=""
           width={800}
           height={800}
@@ -45,9 +44,7 @@ const BlogResult = ({
         <h2 class="text-2xl my-6">{article()?.meta.title}</h2>
         <Show when={article()?.meta.author_image}>
           <img
-            src={
-              isDev || isSsr ? "/placeholder.jpg" : article()?.meta.author_image
-            }
+            src={isSsr ? "/placeholder.jpg" : article()?.meta.author_image}
             alt={article()?.meta.author}
             width={75}
             height={75}

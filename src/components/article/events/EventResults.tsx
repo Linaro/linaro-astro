@@ -10,8 +10,6 @@ import {
   type Resource,
 } from "solid-js";
 
-const isDev = import.meta.env.DEV;
-
 const PAGE_SIZE = 12;
 
 const getEvents = async (results: any[]) => {
@@ -26,7 +24,7 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
         class="w-full px-4 pt-8 pb-12 inline-block basis-full"
       >
         <img
-          src={isDev || isSsr ? "/placeholder.jpg" : event.meta.image}
+          src={isSsr ? "/placeholder.jpg" : event.meta.image}
           alt=""
           width={800}
           height={800}
@@ -35,7 +33,7 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
         <h2 class="text-2xl my-6">{event.meta.title}</h2>
         <Show when={event.meta.author_image}>
           <img
-            src={isDev ? "/placeholder.jpg" : event.meta.author_image}
+            src={isSsr ? "/placeholder.jpg" : event.meta.author_image}
             alt={event.meta.author}
             width={75}
             height={75}
