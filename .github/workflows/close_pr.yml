@@ -1,0 +1,22 @@
+name: ClosePullRequestAction
+
+on: 
+  pull_request_target:
+    types: [closed]
+    branches: [ main ]
+
+jobs:
+  close:
+    runs-on: self-hosted
+    steps:
+      - name: close pull request
+        run: |
+          PR_NUMBER=$(jq -r ".pull_request.number" $GITHUB_EVENT_PATH)
+          echo "Cleaning up after $PR_NUMBER has closed"
+          BUILDDIR="/srv/websitepreview/$AWS_STATIC_SITE_URL-$PR_NUMBER"
+          if [ -d "$BUILDDIR" ]; then
+              echo "Removing website review directory"
+              rm -rf "$BUILDDIR"
+          else
+              echo "No website review directory ($BUILDDIR) to remove"
+          fi
