@@ -4,17 +4,19 @@
   "type": "module",
   "version": "0.0.4",
   "scripts": {
-    "dev": "sst bind astro dev",
+    "astro": "astro",
+    "dev": "astro dev",
     "start": "astro dev",
-    "start:public": "IS_PUBLIC=true astro dev",
-    "start:build": "IS_PUBLIC=true astro build --ignore-scripts && IS_PUBLIC=true astro dev",
-    "prebuild": "PRE_BUILD=true astro build --ignore-scripts --outDir ./dist_prebuild/",
-    "build": "astro build",
-    "postbuild": "pagefind --site ./dist_prebuild/dist/client --output-path ./dist/client/pagefind",
-    "build:public": "IS_PUBLIC=true astro build --ignore-scripts",
-    "preview:public": "IS_PUBLIC=true astro preview",
     "preview": "astro preview",
-    "astro": "astro"
+    "build": "astro build",
+    "start:public": "IS_PUBLIC=true astro dev",
+    "dev:public": "IS_PUBLIC=true astro dev",
+    "preview:public": "IS_PUBLIC=true astro preview",
+    "build:public": "IS_PUBLIC=true astro build",
+    "start:build": "IS_PUBLIC=true astro build && IS_PUBLIC=true astro dev",
+    "dev:auth": "IS_PUBLIC=false sst bind astro dev",
+    "prebuild:auth": "PRE_BUILD=true astro build --outDir ./dist_prebuild/",
+    "build:auth": "yarn prebuild:auth && astro build"
   },
   "dependencies": {
     "@astrojs/check": "^0.6.0",
