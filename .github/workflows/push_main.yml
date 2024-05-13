@@ -54,4 +54,7 @@ jobs:
           pipenv install
           $(pipenv run python ./get_aws_creds.py -i ${{ secrets.VAULT_ROLE_ID }} -s ${{ secrets.VAULT_SECRET_ID }} -r ${{ secrets.VAULT_ROLE }} 2>&1 | tee /dev/stderr)
           # Build & deploy
+          if [ -d "dist" ]; then
+            rm -rf dist
+          fi
           yarn sst deploy --stage prod
