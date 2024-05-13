@@ -97,12 +97,12 @@ export default defineConfig({
     '/services/hands-on-training': '/services/training',
     '/working-groups':  "/",
     '/projects': '/',
-    '/core-technologies/[...slug]': "/",
+    // '/core-technologies/[...slug]': "/",
     '/core-technologies/virtualization': "/projects/automotive-iot-edge",
     '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
     '/support': '/contact',
     '/about/team': '/about',
     '/about/tsc': '/about',
-    '/learning-hub/[...slug]': '/about'
+    // '/learning-hub/[...slug]': '/about'
   }
 });
