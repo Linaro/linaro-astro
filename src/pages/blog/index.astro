@@ -16,6 +16,8 @@ const optimizedBackground = await getImage({
   format: "webp",
   inferSize: true,
 });
+
+const isSsr = import.meta.env.DEV || !import.meta.env.IS_PUBLIC;
 ---
 
 <BaseLayout title="Blog" description="A list of blogs">
@@ -27,7 +29,7 @@ const optimizedBackground = await getImage({
     class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
   >
     <h1 class="text-5xl my-12 font-bold">Blog</h1>
-    <BlogSearch client:only="solid-js" tags={tags} type="blogs" isSsr={import.meta.env.SSR} />
+    <BlogSearch client:only="solid-js" tags={tags} type="blogs" isSsr={isSsr} />
   </main>
 </BaseLayout>
 <style
