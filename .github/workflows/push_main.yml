@@ -1,0 +1,57 @@
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# Cancel in-progress jobs or runs for the current workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20.x"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: "0"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: security.txt
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          /srv/github-action-scripts/sign-security.sh
+          if [ -f "security.txt.asc" ]; then
+            mkdir "public/.well-known"
+            mv security.txt.asc "public/.well-known/security.txt"
+          else
+            echo "No security.txt.asc produced"
+          fi
+
+      - name: Build and deploy
+        run: |
+          # Set up the environment variables
+          export NODE_OPTIONS=--experimental-wasm-modules
+          export IS_PUBLIC=true
+          export CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+          export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+          export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
+          # Set up yarn
+          yarn install
+          pipenv install
+          $(pipenv run python ./get_aws_creds.py -i ${{ secrets.VAULT_ROLE_ID }} -s ${{ secrets.VAULT_SECRET_ID }} -r ${{ secrets[env.VAULT_ROLE_NAME] }} 2>&1 | tee /dev/stderr)
+          # Build & deploy
+          yarn sst deploy --stage prod
