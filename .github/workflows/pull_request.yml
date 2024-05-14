@@ -26,14 +26,14 @@ jobs:
 
       - name: Restore main cache first
         uses: actions/cache/restore@v3
-        id: cache
+        id: main-cache
         with:
           path: cache
           key: cache-main
 
       - name: Restore PR cache second
         uses: actions/cache/restore@v3
-        id: cache
+        id: pr-cache
         with:
           path: cache
           key: cache-${{ github.sha }}
