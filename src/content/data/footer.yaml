@@ -24,8 +24,8 @@ nav_links:
       url: /services/consulting
     - label: Training & Learning
       url: /services/training
-- label: Collaborative Projects
-  key: collaborative
+- label: Ecosystem Projects
+  key: ecosystem
   children:
     - label: Windows on Arm
       url: /projects/windows-on-arm
