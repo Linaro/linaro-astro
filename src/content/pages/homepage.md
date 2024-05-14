@@ -150,6 +150,8 @@ flow:
       - component: articles
         posts:
           - collection: news
+            post: linaro-to-join-forces-with-renesas-on-soafee-integration-lab-project
+          - collection: news
             post: linaro-undergoes-transformation-introducing-the-new-brand
           - collection: news
             post: linaro-unveils-onelab-at-connect-revolutionizing-edge-compute-interoperability-testing
