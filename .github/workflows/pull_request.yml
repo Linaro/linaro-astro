@@ -9,6 +9,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: "20.x"
+
+permissions:
+  contents: read
+
 jobs:
   process-pull-request:
     runs-on: self-hosted
@@ -18,6 +24,12 @@ jobs:
         with:
           fetch-depth: "0"
 
+      - uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: cache
+          key: cache-${{ github.sha }}
+
       - name: Initialise status
         run: /srv/github-action-scripts/init-deploy-preview.sh
         env:
@@ -25,6 +37,12 @@ jobs:
 
       - name: Merge test branch
         uses: linaro-its/merge-test-branch@v2.7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
       - name: Build site
         run: |
@@ -37,6 +55,13 @@ jobs:
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
+          export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
+          # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/cache@v3
+        with:
+          path: cache
+          key: cache-${{ github.sha }}

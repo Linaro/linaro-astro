@@ -1,3 +1,5 @@
+name: PushToMainAction
+
 on:
   push:
     branches: ["main"]
@@ -18,9 +20,16 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4.1.1
+      - name: Fetch git repository
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: "0"
+
+      - uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: cache
+          key: cache-main
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -58,3 +67,9 @@ jobs:
             rm -rf dist
           fi
           yarn sst deploy --stage prod
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            cache
+          key: cache-main
