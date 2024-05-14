@@ -73,7 +73,14 @@ if (related.length > 0) {
   relatedPosts = await getEntries(related);
 } else {
   relatedPosts = (
-    await getCollection("news", ({ slug: thisSlug }) => thisSlug !== slug)
+    await getCollection("news", ({ data, slug: thisSlug }) => {
+      return (
+        (String(import.meta.env.IS_PREVIEW) === "true" ||
+          Date.now() > new Date(data.date).getTime()) &&
+        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug)) &&
+        thisSlug !== slug
+      );
+    })
   )
     .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
     .slice(0, 3);
