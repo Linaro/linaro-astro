@@ -24,7 +24,15 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - uses: actions/cache/restore@v3
+      - name: Restore main cache first
+        uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: cache
+          key: cache-main
+
+      - name: Restore PR cache second
+        uses: actions/cache/restore@v3
         id: cache
         with:
           path: cache
