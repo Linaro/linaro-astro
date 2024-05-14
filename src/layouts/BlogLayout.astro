@@ -77,8 +77,8 @@ if (related.length > 0) {
       return (
         (String(import.meta.env.IS_PREVIEW) === "true" ||
           Date.now() > new Date(data.date).getTime()) &&
-        thisSlug !== slug &&
-        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug))
+        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug)) &&
+        thisSlug !== slug
       );
     })
   )
