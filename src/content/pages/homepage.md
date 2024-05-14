@@ -121,7 +121,7 @@ flow:
           - title: Services & Support
             text: Tailor-made solutions to meet your needs
             icon: settings
-          - title: Collaborative Projects
+          - title: Ecosystem Projects
             text: Where industry leaders and open source ecosystems come together to innovate, develop and optimize.
             icon: diversity
   - row: container_row
