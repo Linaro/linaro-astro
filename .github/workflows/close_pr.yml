@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: close pull request
         run: |
+          export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
           PR_NUMBER=$(jq -r ".pull_request.number" $GITHUB_EVENT_PATH)
           echo "Cleaning up after $PR_NUMBER has closed"
           BUILDDIR="/srv/websitepreview/$AWS_STATIC_SITE_URL-$PR_NUMBER"
