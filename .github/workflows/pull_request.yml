@@ -69,7 +69,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache/save@v4
         with:
           path: cache
           key: cache-${{ github.sha }}
