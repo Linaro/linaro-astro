@@ -28,7 +28,14 @@ jobs:
 
       - name: Build site
         run: |
+          # Set up the environment variables
+          export NODE_OPTIONS=--experimental-wasm-modules
           export IS_PUBLIC=true
+          export CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+          export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+          export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           /srv/github-action-scripts/build-astro-site.sh
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
