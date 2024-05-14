@@ -103,7 +103,7 @@ flow:
 
           - title: Arm SystemReady-IR Compliance
             text: |
-              * Work via Linaro Ledge (PR coming!)
+              * Work via Linaro Edge Group (PR coming!)
               * RB3, RB5, RB2, RB1
       - component: membership
         form_id: "4"
