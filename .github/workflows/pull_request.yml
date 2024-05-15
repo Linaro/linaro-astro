@@ -62,7 +62,8 @@ jobs:
           export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
-          export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
+          # For pull requests, we set custom domain to the preview URL
+          export CUSTOM_DOMAIN=${{ vars.AWS_STATIC_SITE_URL }}
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
           # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
