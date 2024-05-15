@@ -83,7 +83,7 @@ export default defineConfig({
     rollupOptions: {
       external: ["/pagefind/pagefind.js"],
     },
-    redirects: false,
+    redirects: true,
   },
   vite: {
     optimizeDeps: { exclude: ["auth:config"] },
@@ -104,6 +104,6 @@ export default defineConfig({
     '/support': '/contact',
     '/about/team': '/about',
     '/about/tsc': '/about',
-    // '/learning-hub/[...slug]': '/about'
+    // '/learning-hub/[...slug]': '/about',
   }
 });
