@@ -12,9 +12,6 @@ concurrency:
 env:
   NODE_VERSION: "20.x"
 
-permissions:
-  contents: read
-
 jobs:
   process-pull-request:
     runs-on: self-hosted
@@ -63,7 +60,7 @@ jobs:
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
           # For pull requests, we set custom domain to the preview URL
-          export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}"
+          export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
           # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
