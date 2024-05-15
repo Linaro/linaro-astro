@@ -105,8 +105,5 @@ export default defineConfig({
     '/about/team': '/about',
     '/about/tsc': '/about',
     // '/learning-hub/[...slug]': '/about',
-    '/legal#connect-cancellation-policy6': '/legal#connect-cancellation',
-    '/legal#articles-of-association7': '/legal#articles-of-association',
-    '/legal/#gdpr8': '/legal#gdpr',
   }
 });
