@@ -105,6 +105,5 @@ export default defineConfig({
     '/about/team': '/about',
     '/about/tsc': '/about',
     // '/learning-hub/[...slug]': '/about',
-    '/onelab': '/solutions/onelab',
   }
 });
