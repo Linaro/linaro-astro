@@ -36,7 +36,7 @@ For example:
 
 [Fuse multiply and accumulate (saxpy](https://developer.arm.com/docs/ddi0596/e/simd-and-floating-point-instructions-alphabetic-order/fmlal-fmlal2-vector-floating-point-fused-multiply-add-long-to-accumulator-vector)) y = a*x + y;*
 
-*Dot products a*{ij} = x\*{ik}y\_{kj} (in tensor notation) as required in [gemm (matrix-matrix) operations](https://developer.arm.com/architectures/instruction-sets/simd-isas/neon/neon-programmers-guide-for-armv8-a/optimizing-c-code-with-neon-intrinsics/optimizing-matrix-multiplication).
+*Dot products `a*{ij} = x\*{ik}y\_{kj}` (in tensor notation) as required in [gemm (matrix-matrix) operations](https://developer.arm.com/architectures/instruction-sets/simd-isas/neon/neon-programmers-guide-for-armv8-a/optimizing-c-code-with-neon-intrinsics/optimizing-matrix-multiplication).
 
 *“Typically, whole SIMD operations form the inner-most of loops and the registers are assigned to light weight threads, say Open MP, on the next outer layer. A further coarse grained parallelism is then supplied by the outer ‘administrative’ loop layers such as Open MPI which typically allocate heavier blocks, e.g. domain or logical decomposition of work to packages.” (quote: Roger Philp, Linaro HPC Senior Engineer)*
 

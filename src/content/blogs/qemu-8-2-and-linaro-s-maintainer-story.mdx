@@ -28,12 +28,12 @@ The year before I joined Linaro we were well represented in the contribution sta
 
 ### Top changeset contributors by employer (Dec 2013 to Dec 2014)
 
-<br>
+<br />
 
 <table style="width: 100%; border-collapse: collapse; border: 1px solid rgb(0, 0, 0);">
     <tbody>
         <tr>
-            <td style="width: 50%; border: 1px solid rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);font-size: 10.5pt;">&nbsp; &nbsp;Red Hat</span><br></td>
+            <td style="width: 50%; border: 1px solid rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);font-size: 10.5pt;">&nbsp; &nbsp;Red Hat</span><br /></td>
             <td style="width: 50%; border: 1px solid rgb(0, 0, 0); vertical-align: middle;">
                 <p style="text-align: start;color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);font-size: 10.5pt;">&nbsp; &nbsp;2283 (39.3%)</span></p>
             </td>
@@ -80,7 +80,7 @@ The year before I joined Linaro we were well represented in the contribution sta
         </tr>
     </tbody>
 </table>
-<p style="text-align: start;color: rgb(0, 0, 0);"><br></p>
+<p style="text-align: start;color: rgb(0, 0, 0);"><br /></p>
 
 In the years since I joined we have continued to invest in the project as it has become a key part of delivering for Linaro and its members. About a fifth of the [MAINTAINERS](https://gitlab.com/qemu-project/qemu/-/blob/master/MAINTAINERS?ref_type=heads) entries on the project are now Linaro email addresses covering areas such as the core TCG translator, testing frameworks, debug and introspection code as well as of course the Arm emulation support and a slew of the modelled devices.
 
@@ -88,7 +88,7 @@ In the years since I joined we have continued to invest in the project as it has
 
 ### Top changeset contributors by employer (Nov 2022 to Nov 2023)
 
-<br>
+<br />
 
 <div align="left">
     <table style="border: 1px solid; border-collapse: collapse; margin-right: calc(30%); width: 100%; margin-left: calc(0%);">
@@ -144,7 +144,7 @@ In the years since I joined we have continued to invest in the project as it has
         </tbody>
     </table>
 </div>
-<p style="text-align: start;color: rgb(0, 0, 0);"><br></p>
+<p style="text-align: start;color: rgb(0, 0, 0);"><br /></p>
 
 # What’s new in 8.2
 
@@ -176,13 +176,13 @@ Support for QEMU and RMM are still being staged into upstream Trusted Firmware, 
 
 A [set of binaries](https://fileserver.linaro.org/s/Grjs6kSkBYd8DkX) has been created using the above instructions as a demonstration.  Unpack the tar file and execute “rmm-example/run-host.sh”:
 
-![Picture of QEMU running with tabs for the host and realm consoles as well as the secure and non-secure serial ports.](/linaro-website/images/blog/rmm-example-run-host.sh)
+![Picture of QEMU running with tabs for the host and realm consoles as well as the secure and non-secure serial ports.](/linaro-website/images/blog/rmm-example-run-host-sh)
 
 The firmware and the kernel’s earlycon will log to serial0, the secure monitor will log to serial1, and the host and realm guests consoles will be on HostConsole and RealmConsole respectively.
 
 Log into the host as “root” with no password, then execute “/mnt/run-guest.sh”.  The debugging that is enabled within the firmware will immediately begin logging about the realm creation:
 
-![Picture of QEMU continuing to run, this time with the serial port outputting diagnostics from the Realm Machine Manager (RMM)](/linaro-website/images/blog/mnt-run-guest.sh)
+![Picture of QEMU continuing to run, this time with the serial port outputting diagnostics from the Realm Machine Manager (RMM)](/linaro-website/images/blog/mnt-run-guest-sh)
 
 Within a few minutes, the guest will boot:
 
