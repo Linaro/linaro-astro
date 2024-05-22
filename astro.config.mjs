@@ -103,6 +103,6 @@ export default defineConfig({
     '/support': '/contact',
     '/about/team': '/about',
     '/about/tsc': '/about',
-    // '/learning-hub/[...slug]': '/about'
+    // '/learning-hub/[...slug]': '/about',
   }
 });
