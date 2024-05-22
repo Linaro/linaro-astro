@@ -83,7 +83,6 @@ export default defineConfig({
     rollupOptions: {
       external: ["/pagefind/pagefind.js"],
     },
-    redirects: false,
   },
   vite: {
     optimizeDeps: { exclude: ["auth:config"] },
