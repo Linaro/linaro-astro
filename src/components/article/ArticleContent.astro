@@ -1,7 +1,7 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
-type Props = { Content: AstroComponentFactory; image: string };
+type Props = { Content: AstroComponentFactory; image?: string };
 const { Content, image } = Astro.props;
 ---
 
@@ -9,15 +9,19 @@ const { Content, image } = Astro.props;
   <div
     class="container rounded-[24px] linaro-gradient-border bg-dark mb-24 max-w-5xl mx-auto"
   >
-    <CloudinaryImg
-      src={image}
-      alt=""
-      width={1000}
-      height={1000}
-      class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
-      data-pagefind-meta="image[src], image_alt[alt]"
-      effects={["grayscale"]}
-    />
+    {
+      image && (
+        <CloudinaryImg
+          src={image}
+          alt=""
+          width={1000}
+          height={1000}
+          class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
+          data-pagefind-meta="image[src], image_alt[alt]"
+          effects={["grayscale"]}
+        />
+      )
+    }
     <article
       class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24 marker:text-white prose-code:before:hidden prose-code:after:hidden prose-code:bg-[#24292e] prose-code:p-3
        prose-code:text-base prose-code:font-normal prose-code:rounded-sm"

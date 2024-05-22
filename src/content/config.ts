@@ -64,7 +64,7 @@ const blogs = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.date(),
-    image: z.string(),
+    image: z.string().optional().default("linaro-website/graphics/bg-logo-2"),
     tags: z.array(reference("tags")),
     author: reference("authors"),
     related: z.array(reference("blogs")),
