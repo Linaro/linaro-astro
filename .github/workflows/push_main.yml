@@ -28,7 +28,9 @@ jobs:
       - uses: actions/cache/restore@v3
         id: cache
         with:
-          path: cache
+          path: |
+            cache
+            .sst
           key: cache-main
 
       - name: Set up Node.js
@@ -68,8 +70,9 @@ jobs:
           fi
           yarn sst deploy --stage prod
 
-      - uses: actions/cache@v3
+      - uses: actions/cache/save@v4
         with:
           path: |
             cache
+            .sst
           key: cache-main
