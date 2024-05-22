@@ -1,0 +1,32 @@
+name: ResetMainCacheAction
+
+on:
+  workflow_dispatch:
+
+# Cancel in-progress jobs or runs for the current workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: |
+            cache
+            .sst
+          key: cache-main
+
+      - name: Wipe contents of cache directory
+        run: |
+          rm -rf cache/*
+
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            cache
+            .sst
+          key: cache-main

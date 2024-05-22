@@ -133,7 +133,7 @@ flow:
           - value: 41969
             label: contributions to linux kernel releases
           - value: 68
-            label: open source software maintaners
+            label: open source software maintainers
           - value: 47000
             label: patches submitted to upstream projects in the past 2 years
       - component: buttons
