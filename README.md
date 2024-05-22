@@ -46,7 +46,7 @@ The high-level folder structure of the project is as follows:
 
 **_pages_** contains [Astro page files](https://docs.astro.build/en/basics/astro-pages/) that describe the individual pages within the website. This folder uses file based routing to determine urls in the built site.
 
-**_styles_** contains css files. Due to the use tailwind, there is only one global css file to extend tailwind where necessary (alongside `./tailwind.config.cjs`). Further stylesheets might be added where necessary for specific dependencies.
+**_styles_** contains css files. Due to the use tailwind, there is only one global css file to extend tailwind where necessary (alongside the [tailwind configuration file](https://tailwindcss.com/docs/configuration)). Further stylesheets might be added where necessary if required for specific dependencies.
 
 ## Content
 
@@ -94,15 +94,7 @@ New layouts can be built by adding rows and sections to the `flow` property of a
 
 If a new row or section component is required, please contact [it-support@linaro.org](mailto:it-support@linaro.org).
 
-To render the `.md` content of the page file, please use the `md_content` component as follows.
-
-```yaml
-- row: container_row
-    sections:
-      - component: md_content
-```
-
-**Developer note:** Pages are built from the pages collection in the `./src/pages/[...slug].astro` file.
+**Developer note:** Pages are built from the pages collection by the `src/pages/[...slug].astro` file.
 
 ### News, Blogs, Events
 
@@ -117,7 +109,7 @@ author: linaro
 title: This is a news post by Linaro
 ```
 
-`trusted-firmware` here references `src/content/authors/linaro.md`
+`linaro` here references `src/content/authors/linaro.md`
 
 ### Data
 
@@ -145,19 +137,44 @@ Documents and videos should be uploaded to `https://static.linaro.org` and refer
 
 ## Developer Info
 
+### Environment Variables
+
+Some features of the website can be controlled using environment variables, both in deployment and local development.
+
+- **IS_PUBLIC** - setting this to `true` ensures that the website is publicly available and not protected behind a login. All other values will lead to the website being built in SSR mode, implementing a middleware that protects pages from unauthenticated users.
+
+  If not set to `true` additional configuration is needed to facilitate the login mechanism, which is outside the scope of these docs. Please contact IT support for more information.
+
+- **IS_PREVIEW** - setting this to `true` builds the website in preview mode, where unpublished blogs, news and events are visible in the site. All other values will lead to these posts being hidden.
+
+These can be set by adding entries to a `.env.local` file located in the root directory. e.g.
+
+```
+IS_PUBLIC=true
+IS_PREVIEW=true
+```
+
+### Local Development
+
 Running the site locally will require `Node.js` (>=18) and the `yarn` package manager.
 
 First, install dependencies with `yarn install`.
 
-The following commands can then be used to build and run the site locally:
+The following commands can then be used to build and run the site locally.
 
-| Command               | Description                                                                                                                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `yarn build:public`   | Builds the site in the `dist` folder of the root directory.                                                                                                                             |
-| `yarn start:public`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved.                                                            |
-| `yarn preview:public` | Runs the most recent build files in a development server. Unlike `yarn dev` this won't have live updates, but will be a closer representation of the site as it would be in deployment. |
+| Command        | Description                                                                                                                                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `yarn build`   | Builds the site in the `dist` folder of the root directory.                                                                                                                             |
+| `yarn start`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved.                                                            |
+| `yarn preview` | Runs the most recent build files in a development server. Unlike `yarn dev` this won't have live updates, but will be a closer representation of the site as it would be in deployment. |
 
-These commmands use the `:public` suffix to avoid running the site with login protection.
+For local development, the `IS_PUBLIC` environment variable should be set to `true` in a `.env.local` file to avoid needing additional login configuration for the protected site.
+
+Environment variables can also be overriden oravoided by using the `:public` vs `:auth` suffixes on any of the above commands to use either the public or login protected site respectively.
+
+### Deployment
+
+The site is deployed using the [SST AstroSite construct](https://docs.sst.dev/constructs/AstroSite). The configuration is located in `./sst.config.ts`.
 
 ## Questions?
 
