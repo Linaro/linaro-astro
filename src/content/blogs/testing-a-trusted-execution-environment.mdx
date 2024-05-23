@@ -58,7 +58,7 @@ The host application, which by the way is the one we call “xtest”, has been 
 
 * [xtest\_10000.c ](https://github.com/OP-TEE/optee_test/tree/master/host/xtest)has test code containing **extensions** going beyond the GlobalPlatform specifications. For example, this is where we are testing key derivation functionality like PBKDF2, HKDF and Concat KDF.
 
-* [xtest\_20000.c ](https://github.com/OP-TEE/optee_test/tree/master/host/xtest)this file also has tests related to storage, but this time those are more aimed at the **secure storage** implementation as such and they verify that files are actually being written to the file system, checking that they haven’t been corrupted and that they are being deleted etc. As an example, when initiating a store operation from secure world there should be file(s) created in Linux and accessible at ***/data/tee/{directory}/{filename}/block.xxx***.
+* [xtest\_20000.c ](https://github.com/OP-TEE/optee_test/tree/master/host/xtest)this file also has tests related to storage, but this time those are more aimed at the **secure storage** implementation as such and they verify that files are actually being written to the file system, checking that they haven’t been corrupted and that they are being deleted etc. As an example, when initiating a store operation from secure world there should be file(s) created in Linux and accessible at ***`/data/tee/{directory}/{filename}/block.xxx`***.
 
 * [xtest\_benchmark\_1000.c](https://github.com/OP-TEE/optee_test/blob/master/host/xtest/benchmark_1000.c): This is so far the only file related to **benchmarking** and it contains a couple of benchmark tests for the **secure storage** implementation.
 
