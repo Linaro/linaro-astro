@@ -1,5 +1,5 @@
 import type { SSTConfig } from "sst";
-import { AstroSite, StaticSite } from "sst/constructs";
+import { AstroSite } from "sst/constructs";
 export default {
   config(_input) {
     return {

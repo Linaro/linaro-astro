@@ -15,6 +15,7 @@
     "build:public": "IS_PUBLIC=true astro build",
     "start:build": "IS_PUBLIC=true astro build && IS_PUBLIC=true astro dev",
     "dev:auth": "IS_PUBLIC=false sst bind astro dev",
+    "start:auth": "IS_PUBLIC=false sst bind astro dev",
     "prebuild:auth": "PRE_BUILD=true astro build --outDir ./dist_prebuild/",
     "build:auth": "yarn prebuild:auth && astro build"
   },
