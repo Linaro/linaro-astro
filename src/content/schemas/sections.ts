@@ -317,6 +317,10 @@ export const tabsSchema = z.object({
   ),
 });
 
+export const teamTailorSchema = z.object({
+  component: component("team_tailor"),
+})
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -337,4 +341,5 @@ export default z.discriminatedUnion("component", [
   videoHeroSchema,
   articlesSchema,
   tabsSchema,
+  teamTailorSchema,
 ]);
