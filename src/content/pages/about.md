@@ -56,7 +56,23 @@ flow:
   - row: container_row
     sections:
       - component: team
-        collection: executive
+        id: bod
+        title: Board of Directors
+        members:
+          - li_gong
+          - rob_booth
+          - mark_hambleton
+          - jonathan_cameron
+          - sandeep_singhai
+          - todd_kjos
+      - component: team
+        id: exec
+        title: The Executive Team
+        members:
+          - li_gong
+          - rob_booth
+          - grant_likely
+          - tim_benton
   - row: container_row
     sections:
       - component: cards

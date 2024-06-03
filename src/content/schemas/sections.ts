@@ -25,18 +25,9 @@ export const fileCarouselSchema = z.object({
 
 export const teamSchema = z.object({
   component: component("team"),
-  members: z.array(
-    z.discriminatedUnion("collection", [
-      z.object({
-        collection: z.literal("directors"),
-        members: reference("directors"),
-      }),
-      z.object({
-        collection: z.literal("executive"),
-        members: reference("executive"),
-      }),
-    ])
-  ),
+  id: z.string(),
+  title: z.string(),
+  members: z.array(reference('team_members')),
 })
 
 export const cardsSchema = z.object({
