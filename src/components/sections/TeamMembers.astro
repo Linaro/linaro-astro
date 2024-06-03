@@ -1,0 +1,16 @@
+---
+import type { z } from "astro/zod";
+import type { teamSchema } from "@/content/schemas/sections";
+import { getEntries } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+type Props = z.infer<typeof teamSchema>;
+
+type GetEntriesType<T extends "directors" | "executive"> = {
+  collection: T;
+  slug: CollectionEntry<T>["slug"];
+};
+
+const people = await getEntries(Astro.props.members.map((member) => member.members));
+
+---
