@@ -115,6 +115,26 @@ const authors = defineCollection({
   }),
 });
 
+const directors = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: z.string(),
+    title: z.string(),
+    image: z.string(),
+    index: z.number(),
+  }),
+});
+
+const executive = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: z.string(),
+    title: z.string(),
+    image: z.string(),
+    index: z.number(),
+  }),
+});
+
 const tags = defineCollection({
   type: "content",
   schema: z.object({ name: z.string() }),

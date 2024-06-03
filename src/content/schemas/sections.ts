@@ -1,9 +1,7 @@
 import { z } from "astro/zod";
-import { defineCollection } from "astro:content";
 import {
   reference,
   type CollectionEntry,
-  type CollectionKey,
 } from "astro:content";
 
 const component = (filename: CollectionEntry<"sections">["slug"]) =>
@@ -24,6 +22,22 @@ export const fileCarouselSchema = z.object({
   component: component("file_carousel"),
   filename: reference("data"),
 });
+
+export const teamSchema = z.object({
+  component: component("team"),
+  members: z.array(
+    z.discriminatedUnion("collection", [
+      z.object({
+        collection: z.literal("directors"),
+        members: reference("directors"),
+      }),
+      z.object({
+        collection: z.literal("executive"),
+        members: reference("executive"),
+      }),
+    ])
+  ),
+})
 
 export const cardsSchema = z.object({
   component: component("cards"),
@@ -320,6 +334,7 @@ export const tabsSchema = z.object({
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
+  teamSchema,
   cardsSchema,
   imageCardsSchema,
   statGridSchema,
