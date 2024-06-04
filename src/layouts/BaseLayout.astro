@@ -76,7 +76,7 @@ const { title, description, type = "website" } = Astro.props;
         const payload = {} as Record<string, any>;
 
         data.forEach((value, key) => (payload[key] = value));
-        delete payload.agreed
+        delete payload.agreed;
 
         button?.classList.add("hidden");
         loader?.classList.remove("hidden");

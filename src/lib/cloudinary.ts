@@ -60,7 +60,9 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
     },
   });
 
-  const imageSource = src.startsWith("https://")
+  const parsedSource = src.startsWith("/") ? src.slice(1) : src;
+
+  const imageSource = parsedSource.startsWith("https://")
     ? cloudinaryMedia.image(src).setDeliveryType("fetch")
     : cloudinaryMedia.image(src);
 
