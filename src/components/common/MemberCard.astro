@@ -23,6 +23,6 @@ const { id, name, title, image, info } = Astro.props;
         class="w-full h-full max-w-full object-cover rounded-2xl grayscale not-prose member-image"
     />
     <h2 class="text-2xl not-prose margin-top:0">{name}</h2>
-    <p>{title}</p>
+    <p style="min-height: 3.5em;">{title}</p>
     <MemberModal modal_id={id} description={info} />
 </li>
