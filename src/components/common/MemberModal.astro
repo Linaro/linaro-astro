@@ -1,8 +1,5 @@
 ---
 const { modal_id, description } = Astro.props;
-
-console.log(description);
-
 ---
 
 <style lang="scss">
@@ -19,7 +16,7 @@ console.log(description);
 </style>
 
 <button
-  style="margin-bottom: 1em"
+  style="margin-bottom: 1em;"
   class="linaro-gradient-button"
   onclick={`window.${modal_id}.showModal()`}>About</button>
 <div class="relative w-full">
