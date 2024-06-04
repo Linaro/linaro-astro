@@ -10,9 +10,6 @@ hero:
   background_image: linaro-website/graphics/developer
   description: |
     You will work alongside some of the world’s leading Arm software experts, working on new technologies across the entire industry. We bring industry leading companies and open source communities together to develop software on Arm-based technology. Our work advances the Arm ecosystem as a whole, enabling new markets on Arm Architecture. Ready to develop technology for the future? Check out our positions below:
-  button:
-    text: See Open Vacancies
-    url: https://careers.linaro.org/#jobs
   styles:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
@@ -20,6 +17,10 @@ hero:
     background: bg-right-top brightness-75
     background_container: ml-[10%]
 flow:
+  - row: container_row
+    title: Open Vacancies
+    sections:
+      - component: team_tailor
   - row: container_row
     styles:
       outer: purple-gradient-container
