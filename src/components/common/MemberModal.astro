@@ -30,13 +30,11 @@ const { modal_id, description } = Astro.props;
       <div
         class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full text-white"
       >
-        <form method="modal">
-          <p>{description}</p>
-          <button
-            class="text-white font-bold"
-            onclick={`window.${modal_id}.close()`}>Close</button
-          >
-        </form>
+        <p>{description}</p>
+        <button
+          class="text-white font-bold"
+          onclick={`window.${modal_id}.close()`}>Close</button
+        >
       </div>
     </div>
   </dialog>
