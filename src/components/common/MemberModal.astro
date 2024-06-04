@@ -18,7 +18,8 @@ const { modal_id, description } = Astro.props;
 <button
   style="margin-bottom: 1em;"
   class="linaro-gradient-button"
-  onclick={`window.${modal_id}.showModal()`}>About</button>
+  onclick={`window.${modal_id}.showModal()`}>About</button
+>
 <div class="relative w-full">
   <dialog
     data-contact-modal={modal_id}
@@ -26,11 +27,15 @@ const { modal_id, description } = Astro.props;
     class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[10%] right-0 left-0"
   >
     <div class="flex flex-col items-center max-w-max">
-      <div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full text-white">
+      <div
+        class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full text-white"
+      >
         <form method="modal">
           <p>{description}</p>
-          <button class="text-white font-bold"
-          onclick={`window.${modal_id}.close()`}>Close</button>
+          <button
+            class="text-white font-bold"
+            onclick={`window.${modal_id}.close()`}>Close</button
+          >
         </form>
       </div>
     </div>
