@@ -1,11 +1,11 @@
 ---
-// import Cookies from "./Cookies.astro";
-// import GoogleAnalytics from "./GoogleAnalytics.astro";
+import Cookies from "./Cookies.astro";
+import GoogleAnalytics from "./GoogleAnalytics.astro";
 import { SEO } from "astro-seo";
 import "@fontsource/lato";
 import "../../styles/global.scss";
 
-// const GA_ID = import.meta.env.GA_ID;
+const GA_ID = import.meta.env.GA_ID;
 
 const { title = "", description = "", type = "website" } = Astro.props;
 
@@ -17,8 +17,12 @@ const social_image = "";
   <meta property="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta charset="utf-8" />
-  <!-- <Cookies />
-  <GoogleAnalytics id={GA_ID} /> -->
+  {typeof GA_ID != 'undefined' && GA_ID != "" ? (
+    <Cookies />
+    <GoogleAnalytics id={GA_ID} />
+  ):(
+    <!-- No GA ID -->
+  )}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
