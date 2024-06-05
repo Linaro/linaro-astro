@@ -41,19 +41,19 @@ flow:
               alt: ""
             button:
               text: Read more
-              url: https://static.linaro.org/assets/Protecting-Investment-in-Code-Optimisation-with-Toolchain-CI-Linaro-White-Paper.pdf
+              url: https://static.linaro.org/assets/TrustedSubstrateWhitePaper_v2.pdf
           - text: Protecting Investment in Code Optimisation with Toolchain CI
             image:
               src: linaro-website/graphics/toolchain_1_zcsqgl
               alt: ""
             button:
               text: Read more
-              url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
+              url: https://static.linaro.org/assets/Protecting-Investment-in-Code-Optimisation-with-Toolchain-CI-Linaro-White-Paper.pdf
           - text: Software Defined Vehicles and the Need for Standardisation
             image:
               src: linaro-website/graphics/AV_white_paper_1_ngtke8
               alt: ""
             button:
               text: Read more
-              url: https://static.linaro.org/assets/TrustedSubstrateWhitePaper_v2.pdf
+              url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
 ---
