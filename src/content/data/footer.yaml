@@ -29,7 +29,7 @@ nav_links:
   children:
     - label: Windows on Arm
       url: /projects/windows-on-arm
-    - label: Automative, IoT & Edge
+    - label: Automotive, IoT & Edge
       url: /projects/automotive-iot-edge
     - label: Cloud Computing & Servers
       url: /projects/cloud-computing
