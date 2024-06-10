@@ -106,5 +106,6 @@ export default defineConfig({
     '/about/tsc': '/about',
     // '/learning-hub/[...slug]': '/about',
     '/whitepapers/protecting-investment-in-code-optimisation-with-toolchain-ci-linaro-white-paper/': '/whitepapers',
+    '/sig': '/',
   }
 });
