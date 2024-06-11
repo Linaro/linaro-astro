@@ -115,6 +115,15 @@ const authors = defineCollection({
   }),
 });
 
+const team_members = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: z.string(),
+    title: z.string(),
+    image: z.string(),
+  }),
+});
+
 const tags = defineCollection({
   type: "content",
   schema: z.object({ name: z.string() }),
@@ -130,4 +139,5 @@ export const collections = {
   authors,
   tags,
   news,
+  team_members,
 };
