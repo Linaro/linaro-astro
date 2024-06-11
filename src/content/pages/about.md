@@ -55,13 +55,33 @@ flow:
           height: 1000
   - row: container_row
     sections:
+      - component: team
+        id: bod
+        title: Board of Directors
+        members:
+          - li_gong
+          - rob_booth
+          - mark_hambleton
+          - jonathan_cameron
+          - sandeep_singhai
+          - todd_kjos
+      - component: team
+        id: exec
+        title: The Executive Team
+        members:
+          - li_gong
+          - rob_booth
+          - grant_likely
+          - tim_benton
+  - row: container_row
+    sections:
       - component: cards
         styles:
           container: flex justify-center
           card_title: text-linaro-yellow
           card: text-center
         cards:
-          - title: Ready to embark on a journey of innovation and  collaboration with Linaro?
+          - title: Ready to embark on a journey of innovation and collaboration with Linaro?
             text: Contact us today to learn more about our services, solutions, and how we can help you achieve your technology goals. Together, let's shape the future of technology and drive positive change in the Arm ecosystem.
       - component: contact
         form_id: "7"

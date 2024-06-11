@@ -1,0 +1,32 @@
+---
+import type { z } from "astro/zod";
+import type { teamSchema } from "@/content/schemas/sections";
+import { getEntries } from "astro:content";
+import MemberCard from "../common/MemberCard.astro";
+
+type Props = z.infer<typeof teamSchema>;
+
+const { members, title } = Astro.props;
+const people = await getEntries(members);
+
+---
+{
+  title && (
+    <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>
+  )
+}
+<ul class="gap-2 justify-center flex flex-wrap" style="align-items: stretch; display: flex; justify-content: stretch">
+  {
+    people.map((x) => {
+      return (
+        <MemberCard
+          id={x.slug+Astro.props.id}
+          name={x.data.name}
+          title={x.data.title}
+          image={x.data.image}
+          info={x.body}
+        />
+      );
+    })
+  }
+</ul>
