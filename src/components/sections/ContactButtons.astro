@@ -3,6 +3,7 @@ import type { contactButtonsSchema } from "@/content/schemas/sections";
 import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
 import ContactModal from "../forms/ContactModal.astro";
+import InsightModal from "../forms/InsightModal.astro";
 
 type Props = z.infer<typeof contactButtonsSchema>;
 
@@ -15,7 +16,7 @@ const { buttons, styles } = Astro.props;
       return (
         <li class:list={[styles?.card]}>
           {icon && <Icon name={icon} size={100} class="my-0" />}
-          <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
+          {title && <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>}
 
           {() => {
             if (props.type === "link") {
@@ -39,6 +40,12 @@ const { buttons, styles } = Astro.props;
                   button_text={button_text}
                   description={title}
                 />
+              );
+            }
+
+            if (props.type === "insight") {
+              return (
+                <InsightModal button_text={button_text} />
               );
             }
           }}
