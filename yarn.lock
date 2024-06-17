@@ -3740,10 +3740,10 @@ astro-icon@^1.1.0:
     "@iconify/types" "^2.0.0"
     "@iconify/utils" "^2.1.5"
 
-astro-navbar@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/astro-navbar/-/astro-navbar-2.3.1.tgz#c035d6c1ada1b3f2079f1b3868e5ca5e3135102b"
-  integrity sha512-lLvhWS03Qc3heMU23adFwEnBUJFlL6gxYi0xPvIyX1atb2oCov4kOS/MaWOPGnvj2nK63szebUzlG+NdIoUZzQ==
+astro-navbar@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/astro-navbar/-/astro-navbar-2.3.3.tgz#86fdb9741f9e4a9658da2a35b730f3e763403aab"
+  integrity sha512-WAiQUVh3fS+bUw1oDcWpddFj30z3VgmMDmSjpU78idCXiV5t4KtlBvKV0mE/+hpcGLK0ji1evvCbk2wQ7wphyQ==
 
 astro-pagefind@^1.4.0:
   version "1.5.0"
