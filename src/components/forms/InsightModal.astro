@@ -1,0 +1,36 @@
+---
+import InsightForm from "./InsightForm.astro";
+
+const { button_text } = Astro.props;
+---
+
+<style lang="scss">
+  dialog {
+    &::backdrop {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+</style>
+
+<button
+  class="linaro-gradient-button"
+  onclick={`window.insight.showModal()`}>{button_text}</button
+>
+<div class="relative w-full">
+  <dialog
+    data-contact-modal="insight"
+    id="insight"
+    class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[10%] right-0 left-0"
+  >
+    <div class="flex flex-col items-center max-w-max">
+      <InsightForm
+        modal_id="insight"
+      />
+    </div>
+  </dialog>
+</div>
