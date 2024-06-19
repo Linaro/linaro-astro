@@ -157,8 +157,6 @@ flow:
             post: linaro-unveils-onelab-at-connect-revolutionizing-edge-compute-interoperability-testing
           - collection: news
             post: linaro-announces-qualcomm-as-the-new-member-of-the-linaro-edge-group-ledge
-  - row: container_row
-    sections:
       - component: contact_buttons
         styles:
           card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center
