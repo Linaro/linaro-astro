@@ -8570,10 +8570,10 @@ solid-icons@^1.1.0:
   resolved "https://registry.yarnpkg.com/solid-icons/-/solid-icons-1.1.0.tgz#6e914bce4f9a34a654230b68c68a7d04359ff2b6"
   integrity sha512-IesTfr/F1ElVwH2E1110s2RPXH4pujKfSs+koT8rwuTAdleO5s26lNSpqJV7D1+QHooJj18mcOiz2PIKs0ic+A==
 
-solid-js@^1.8.16:
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.8.16.tgz#33ce9bff617154d5f4b889e1b2fb89d682b7a422"
-  integrity sha512-rja94MNU9flF3qQRLNsu60QHKBDKBkVE1DldJZPIfn2ypIn3NV2WpSbGTQIvsyGPBo+9E2IMjwqnqpbgfWuzeg==
+solid-js@^1.8.18:
+  version "1.8.18"
+  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.8.18.tgz#ef1b28c8d0eea4a3f5242aa142a36d7a7a456da9"
+  integrity sha512-cpkxDPvO/AuKBugVv6xKFd1C9VC0XZMu4VtF56IlHoux8HgyW44uqNSWbozMnVcpIzHIhS3vVXPAVZYM26jpWw==
   dependencies:
     csstype "^3.1.0"
     seroval "^1.0.4"
