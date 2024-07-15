@@ -1,0 +1,185 @@
+---
+title: Blender now enabled on Windows on Arm
+description: |
+  Blender now enabled on Windows on Arm. Here is the story of how we got there.
+date: 2024-07-14T10:00:00.000Z
+image: linaro-website/images/blog/blender-image3_ohobsy.png
+tags:
+  - windows-on-arm
+author: linaro
+related: []
+
+---
+In March 2024, the pull request to enable native [Windows on Arm](https://www.linaro.org/projects/windows-on-arm/) (WoA) builds of Blender was finally merged, and [daily builds](https://builder.blender.org/download/daily/) became available from May. The enablement effort has been a long road - starting in September 2022, and coming to a close in March 2024 - with a number of bumps, twists, and turns. This blog article discusses the process of enablement that was undertaken, and a few of the things that came up along the way. It also explains the scope of the work required to enable a large community-driven project such as Blender - historically targeted at x64 Windows - on the Windows on ARM platform.
+
+# What is Blender?
+Blender is a FLOSS (GPLv2) 3D graphics program, used to create a wide range of things, such as animations, visual effects, 3D models, motion graphics and much more. It competes with proprietary pieces of software such as Autodesk’s Maya, and has steadily been increasing in market share, with companies such as Ubisoft, Netflix, and Warner Bros starting to use it as part of their productions.
+
+Initially released in 1998 as Shareware for the IRIX operating system, it was later ported to Linux/FreeBSD in 1998, Windows in 1999, and then MacOS in 2001. In October 2002, via crowdfunding (to purchase Blender from the rights-holding shareware company, “NaN”), Blender became open-source, and has been developed and maintained ever since.
+
+Blender is popularly used in animation, and to showcase Blender, the Blender foundation creates and releases short films under Creative Commons licences - one of the most well-known is “Big Buck Bunny”, a film very commonly used to test video playback, due to its open nature.
+
+![A still from the short film “Big Buck Bunny” - © Blender Foundation | peach.blender.org](/linaro-website/images/blog/blender-image5_uybsk8.png)
+Image 1: A still from the short film “Big Buck Bunny” - © Blender Foundation | peach.blender.org
+
+For further reading on the history of Blender, this page is extremely informative: https://docs.blender.org/manual/en/latest/getting_started/about/history.html
+
+# Part 1: Getting Blender to run natively on WoA (Windows on Arm) devices, via “Lite” builds
+Blender is considered a very large software project, with many dependencies. As of writing, a full “release” WoA (Windows on Arm) build of all dependencies from source, and Blender itself, comes to roughly 630 minutes (10.5 hours) on a Qualcomm SnapdragonTM 8cx Gen3 device. This includes all features and functionality (bar OpenPGL), and is pretty much equivalent to what you would download from the Blender website as an official build.
+
+However, to speed up development, Blender also includes a “Lite” configuration in their build system, which is essentially a reduced version of Blender, containing only the essentials required to load up the window, and display+render a cube on the screen of the device. This ‘Lite’ version was initially used to start WoA work.
+
+# ARM64EC attempts
+In the WoA world, there exists a technology named “ARM64EC” - in short, it is a distinct ABI from plain ARM64, and allows the mixing of ARM64 and emulated x64 code within the same application. It is targeted at developers that may wish to incrementally transition their software from x64 to native ARM64, one library at a time.
+
+On the surface, this would appear to be the ideal solution for rapid enablement of Blender alongside all of its dependencies - Blender ships with a full set of pre-compiled x64 libraries, and we could slowly replace them with native ARM64 ones!
+
+Sadly, this did not work out, for several reasons:
+
+1. When the enablement work began in September 2022, ARM64EC was in its infancy. Unfortunately, this meant that there were numerous internal compiler errors when compiling various parts of the codebase, and would require a lot of work to resolve. On its own, this may not have been a showstopper, however:
+2. Blender, as part of its dependency build, builds its own copy of LLVM, which is in turn used by “Open Shading Language” - this compiles shaders that can be specified by the user. This didn’t play nicely with ARM64EC, and its mixed architectures.
+
+Due to the combination of those reasons, it was decided that ARM64EC builds of Blender would be impractical. Therefore, it was decided to pursue a native build.
+
+# VCPKG and “Lite” builds
+As ARM64EC with the prebuilt libraries was not an option, native ARM64 versions of the dependencies needed to be built.
+
+For the initial “Lite” enablement experiment, it was decided that building the small subset of the dependencies would be better done via VCPKG, due to the complexity (and minimal documentation) of Blender’s own dependency build system (covered more in depth in part 2). VCPKG would give a quick and easy way of building the small list of dependencies required for a “Lite” build of Blender.
+
+*For those readers who are unaware of what VCPKG is - it is a “dependency package manager”, for acquiring and managing libraries, typically aimed at large C/C++ projects that want an easy way of keeping all of their dependencies in the same place. Typically it integrates via Visual Studio, or the project’s build system, however it is possible to build one-off p*ackages via the “vcpkg.exe” CLI tool. It is available from here: https://github.com/microsoft/vcpkg
+
+For the purpose of our initial enablement effort, a small list of libraries was built with VCPKG manually, and then dropped into the Blender build system in the appropriate place for them to be discovered. Twelve libraries needed to be enabled for a lite build of Blender 3.4.
+
+Once these dependencies were built, and a few small patches applied to Blender (as seen in this [commit](https://gitlab.com/Linaro/windowsonarm/packages/blender/-/commit/500bb52975f3909c820c4af91214299bf83dea37), which also indicates which libraries were needed in `build.bat`), it was possible to get a working copy of Blender! This proved that native builds of Blender were possible, and the work doable. However, this initial proof-of-concept build was very far from what would ultimately be required for production builds of Blender.
+
+![A screen capture of our first native ARM64 build of Blender](/linaro-website/images/blog/blender-image2_heb7dh.png)
+Image 2: A screen capture of our first native ARM64 build of Blender
+
+# Part 2: Blender’s dependency build system, getting rid of GCC, and how we checked it worked
+The next stage after getting an initial proof-of-concept build of Blender, was to start building the dependencies natively within Blender’s own build system. This was by far the most time consuming task of all, and the most involved - in fact, Blender itself needed relatively few modifications, as a good portion of the work abstracting away differences in architecture had been done as part of the enablement of Apple Silicon macOS devices.
+
+However, the dependency building was a very different story…
+
+## A small explanation of how Blender’s dependency build system now works
+*(A note to readers - it is possible to skip this section - 2(a) - it just provides a bit of groundwork for the further sections)*
+
+As there appears to be no formal write-up of how the dependency build system works, [and it is recommended that developers read the source to understand it](https://developer.blender.org/docs/handbook/release_process/build/libraries/#make-deps), a small explanation of how the (Windows) Blender dependency build system works is provided here (after the [PR to modify it](https://projects.blender.org/blender/blender/pulls/105502) was merged, allowing for ARM64 builds without GCC - this is covered later).
+
+The main Blender “deps” project is a CMake project, consisting of multiple different CMake subprojects (ie, each “dep”, each in its own CMake file) - some of these are interdependent on each other (a graphviz file with a full diagram is available [here](https://projects.blender.org/blender/blender/src/branch/main/build_files/build_environment/dependencies.dot)). The individual version of each is [defined within the Blender source](https://projects.blender.org/blender/blender/src/branch/main/build_files/build_environment/cmake/versions.cmake), and manually updated when the new version has been tried and tested by the maintainers. Often, old versions are kept until new features (or security fixes) from newer releases are needed, to avoid unnecessarily breaking things.
+
+Deps are simple CMake projects that are added as sub-projects - most use the default generator, however some may have their generator switched from Visual Studio to Ninja (ie, OpenSubdiv). Of these, some rely on their own build systems, with just a CMake wrapper around them, and an msys2 layer (ie, ffmpeg).
+
+A simplified diagram is as follows:
+
+![A diagram depicting how some parts of the dependency build system work](/linaro-website/images/blog/blender-image1_jg1iso.png)
+Image 3: A diagram depicting how some parts of the dependency build system work
+
+Of each of these projects, some of them may additionally have some of their own Blender-specific patches that are applied.
+
+A majority of users will never see, or need, this dependency build system. In most cases, the only people that will ever touch it are platform maintainers, as they update versions of dependencies, etc. There may occasionally be major contributors (eg, Intel) who will also build the deps, if they are adding a new one for additional functionality. Instructions are left deliberately vague to discourage people from building the deps themselves, and then coming into the support channels with the issues that it may have caused.
+
+Most users that choose to build from source will, in fact, just use the prebuilt libraries for their given platform and architecture that the Blender build system downloads for them. These downloaded prebuilts are stored in git-lfs repositories (for example, the Windows ARM64 repository can be seen [here](https://projects.blender.org/blender/lib-windows_arm64)), and manually updated as required by the relevant platform maintainers. There are no automated builds of the dependencies.
+
+## Enabling the dependencies for WoA devices
+Blender has a good many dependencies, which do a wide variety of things. They can range from small, header only, libraries such as [sse2neon](https://github.com/DLTcollab/sse2neon/), all the way through to full compilers/languages, such as LLVM, [DPCPP](https://github.com/intel/llvm), and [OSL](https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/). These all have different build systems, release schedules, and project goals, and many of them lacked native WoA device support, which had to be upstreamed in a lot of cases. Having to enable all of these suddenly scaled up the enablement effort massively, as it was no longer about one project, but about enabling 70 projects.
+
+For a majority of projects, the enablement effort was relatively easy - in most cases it was a simple case of tweaking the build flags (or they just built out of the box!) - however, for some, it was more involved. The following sections detail how some of the deps were enabled.
+
+### Removing GGC, and moving to msys2
+Initially, before the porting work was started, Blender used mingw+GCC for building some of its dependencies, namely ffmpeg, and some of the prerequisites for it. This was all built with version 4.9.4 of GCC, and mostly left alone, as it just worked.
+
+At the time of enablement, GCC was not available for WoA devices, so after some discussion with the relevant people at Blender, it was decided to consolidate the GCC-built dependencies with the rest of the build system, and build them with MSVC (Microsoft’s Compiler that ships with Visual Studio). Previously, this had not been an easy task, however VCPKG made the task a lot easier - it built FFmpeg with MSVC! A lot of patches and upstream fixes were available within VCPKG, which smoothed the transition greatly.
+
+In a lot of cases, it was just a case of adapting the way the build system built these dependencies to either use CMake directly, or to use msys2 (which replaced the previous mingw instance) to call various linux tools or makefiles.
+
+Some were easy to adapt (for example, [aom](https://projects.blender.org/blender/blender/commit/451751380c9d9262b4041565395ceb61962ee96a#diff-878fa186759ed25d76859ac8e96ae0d06ba42d1a), which just needed the generator switching) - others were not as straightforward, and required getting the magic combination of flags and arguments to work, such as [GMP](https://projects.blender.org/blender/blender/commit/451751380c9d9262b4041565395ceb61962ee96a#diff-c21f2586d54c141b6b415b2ad7fc667f361d0e64) and [VPX](https://projects.blender.org/blender/blender/commit/451751380c9d9262b4041565395ceb61962ee96a#diff-c903142e47cfe0ebd6dedcac55cea906b8ab0ce2).
+
+The biggest “problem” dependency, however, was Xvidcore. Xvidcore is the reference implementation of the “Xvid” codec, originally authored in 2002. It did not lend itself well to being compiled for ARM64 devices, and ultimately, it was agreed with the Blender developers that it could be dropped. This was, in part, due to the fact that FFmpeg came with an Xvid codec built in, and it was an easy switch.
+
+Ultimately, [this pull request](https://projects.blender.org/blender/blender/pulls/105502) went in on the 10th of June 2023, timed to go in with the 4.0 release of Blender.
+
+## SIMD
+SIMD (**S**ingle **I**nstruction **M**ultiple **D**ata) is an area of programming that can be difficult to get right. In essence, SIMD is a usually ISA (**I**nstruction **S**et **A**rchitecture) specific way of allowing the same mathematical operation to be done over lots of data at the same time (for example, matrix multiplication). Every ISA has a different implementation of SIMD, that can vary. For example, the x64 ISA has SSE/AVX, whereas ARM64 has NEON/SVE.
+
+However, broadly speaking, many of the operations that SIMD does are similar across the various ISAs - programs, after all, need to do the same thing regardless of processor. Therefore, it is possible to convert code written to use SSE into NEON, using the aptly named library, [sse2neon](https://github.com/DLTcollab/sse2neon/).
+
+Blender itself - and some dependencies (for example, embree) - use sse2neon to allow for SIMD code to be written once, targeting SSE, and it is essentially ported “for free” to NEON, speeding up development time. This also speeds up the porting effort to ARM64 in many cases.
+
+This is because the most common issue that occurred for builds was the assumption of “If it’s Windows, it must be x64”. Historically, major projects on Windows have not needed to target ARM64 - this means headers, such as `<xmmintrin.h>`, which were not compatible with ARM64, were included, and functions such as `__cpuid()` were used.
+
+Often, see2neon can’t be used, as code already has existing “aarch64” targets, however many rely on inline ASM code, which [is not supported in MSVC](https://learn.microsoft.com/en-us/cpp/assembler/inline/inline-assembler), or heavily on GCC/Clang style intrinsics.
+
+In some projects, such as Embree, it was easier to swap out the compiler used entirely to clang-cl, which was conveniently built as a dependency of Blender already, so was deemed always available. This, however, did require falling back to a stable version of the VS build tools (2019), therefore was [split out from the main Embree build](https://projects.blender.org/blender/blender/src/commit/7e3b83b1468cff4d51c541d1bca477b4763b499b/build_files/build_environment/cmake/embree_windows_arm.cmake). [[0]](#footnote0)
+
+As an additional point of interest, Embree also takes sse2neon one step further, and in fact includes a header named [avx2neon](https://github.com/RenderKit/embree/blob/master/common/simd/arm/avx2neon.h), giving further improvements, allowing AVX instructions to be converted to NEON, alongside SSE.
+
+### Other dependencies
+Another dependency of note was TBB (oneAPI Thread Building Blocks). This is currently (at time of writing, May 2024 - this will change for 2025) pinned to an old version, as a requirement of the VFX Reference Platform [[1]](#footnote1). This meant that a [manual port](https://projects.blender.org/blender/blender/commit/7e3b83b1468cff4d51c541d1bca477b4763b499b#diff-2b460624cf69701f86d119c0c080874fd6a529e9) of TBB v2020.3 needed to be done for ARM64 devices (based loosely on ARM32), which included manually mangling exports, amongst other things.
+
+The most visually noticeable dep, which was one of the last to be enabled, was [“OpenImageDenoise”](https://github.com/RenderKit/oidn) (OIDN), a library maintained by Intel. The enablement of this library was tricky, as the CPU implementation relied on a heavily customised version of oneDNN at the time, which needed to be ported over. Ultimately, before this work was done in full (only the slow reference implementation was done), the maintainer eliminated oneDNN completely, and provided a working version of OIDN for Windows ARM64 platforms.
+
+![A “before and after” of a subsection of the Blender demo file “Spring” run through OIDN, showing improvement in visual quality](/linaro-website/images/blog/blender-image4_uycgbo.png)
+Image 4: A “before and after” of a subsection of the Blender demo file “Spring” run through OIDN, showing improvement in visual quality. Original render using Cycles, and an intentionally low value of 10 samples.
+
+Finally, once all the dependencies were ported, the WoA version of Blender was nearly ready to be merged.
+
+## Ongoing CI throughout enablement
+As the work progressed, we found it useful to ensure that our code was up-to-date with upstream, and also that any issues that may arise were dealt with quickly and early (such as the OpenGL 4.3 update mentioned in the next part).
+
+The CI environment was set up through [wenv](https://gitlab.com/Linaro/windowsonarm/wenv/), and Blender itself was built with a [separate build script](https://gitlab.com/Linaro/windowsonarm/packages/blender/-/blob/master/recipe.sh), which built the deps, and then blender itself. If either of them failed to build as part of our nightly CI runs, then a notification would be sent, and the build failure investigated. Main was manually merged to start, but once the bulk of the changes went in, a separate automated job that merged main - and built the result - was created.
+
+As features were enabled within Blender as part of our enablement effort, [pull requests](https://gitlab.com/Linaro/windowsonarm/forks/blender/-/merge_requests/?scope=all&state=merged) were made to our [own fork](https://gitlab.com/Linaro/windowsonarm/forks/blender/-/tree/woa), which were validated by our CI, and then merged. This allowed us to incrementally enable features, and revert if necessary.
+
+# Part 3: OpenGL and drivers
+One of the most surprising things that developers discover about the WoA graphics stack is that the only native graphics driver available on Qualcomm Snapdragon 8cx Gen3 devices is DirectX. Other graphics APIs such as OpenGL and Vulkan are handled via Mesa’s [GLOn12](https://docs.mesa3d.org/drivers/d3d12.html) driver, which converts OpenGL calls to D3D12 [[2]](#footnote2).
+
+This means that in order to run Blender, users must download the [OpenCL, OpenGL, and Vulkan Compatibility Pack](https://apps.microsoft.com/store/detail/9NQPSL29BFFF), which installs the Mesa driver layer, allowing Blender’s OpenGL context to initialise, and the scene to be rendered in the viewport.
+
+During the course of the work, the required OpenGL version was [bumped to OpenGL 4.3](https://projects.blender.org/blender/blender/pulls/109390). This caused a problem, as the implementation of OpenGL that mesa is capable of on 8cx Gen3 devices is only as high as 4.2 - this is due to a lack of the optional D3D12 feature [“Relaxed Format Casting”](https://microsoft.github.io/DirectX-Specs/d3d/RelaxedCasting.html) on these devices (this is, however, implemented on the X Elite devices!).
+
+After discussion with the Blender viewport team, it was agreed that due to Blender’s viewport not using relaxed format casting, [Mesa's GLOn12 driver could be forced to enable the extension](https://gitlab.freedesktop.org/mesa/mesa/-/commit/a61e891c8bc5a73dcc18313e1231257f4a3df458), `GL_ARB_texture_view`, so that the rest of the capabilities covered by it could be used.
+
+There have also been a few other driver bugs, as would be expected with porting such a large application. Sadly, this does mean that support [has had to be removed](https://projects.blender.org/blender/blender/pulls/113674) for some older generations of WoA devices in Blender >=4.0, such as the Qualcomm Snapdragon 8cx Gen2, and anything earlier - this is because they have some driver bugs that will not be fixed, as active support has ended for these devices.
+
+Ultimately though, much of this will only last a couple of years. Blender is intending to switch to using Vulkan for their viewport renderer in the next few years - this is likely to only work on the Qualcomm Snapdragon Elite X and newer SoCs, which have native Vulkan drivers.
+
+# Part 4: Upstreaming the changes, maintenance, and conclusion
+## Upstreaming, review, nightlies, and release
+All of this work finally came to a head in January 2024, when the [pull request was made](https://projects.blender.org/blender/blender/pulls/117036/) to add native support for WoA devices to Blender. Initially, the pull request was in a working state - many tests were failing, and some development options were left in the build files.
+
+There were a few changes that needed to be made in Blender itself, too.
+
+One, which is a common issue in any code that uses MSVC’s intrinsics (and could likely have an entire blog article written on it alone), is that [MSVC does not allow initialisation of union types with anything other than the first member](https://developercommunity.visualstudio.com/t/static-initialization-arm64-neon-datatypes/1238406). This is an issue with lots of ARM64 intrinsic code in MSVC, as many of the common types, such as `uint32x4_t`, are actually just `#typedef`-ed versions of the type `__n128`, which means that they have to be initialised as a single 128-bit value.
+
+This results in having to break what would have been nice one-liners into several, to allow working around the issue: https://projects.blender.org/blender/blender/commit/3d5fa7698f75ea091409bcda0b763fc201c10836#diff-b50468031a9ba73b2c81f314e38db6697f004bca
+
+Another change that needed to be made was around the use of `__cpuid()`. This isn’t something that is available on ARM64 platforms, and much of the existing code that is available online typically assumes that ARM64 is either Linux, or macOS. This means typically reading from `/proc/cpuinfo` (Linux), or `machdep.cpu.brand_string` from `sysctl` (macOS). This meant taking a new approach to getting CPU info on Windows, which ultimately resulted in having to [pull the value from the registry](https://projects.blender.org/blender/blender/commit/445fd42c61c0ce74a40a82d79fa5778528665d31#diff-d8a9d0c47f6b8733498bd19ad9b2da132f8a6a75). Several other approaches were tried, however due to various reasons were unsuccessful (for example, `MIDR_EL1` - a kernel-level register that gives CPU identity info - is unavailable from EL0 - unprivileged user-mode - on WoA platforms).
+
+With the dependencies ready, and review comments resolved, the pull request was merged in March 2024, and we started to release [prebuilt binaries](https://projects.blender.org/blender/lib-windows_arm64/) for the deps via Blender’s repositories, as the Windows ARM64 platform maintainer. After that, work started to release daily builds - once all tests passed, [daily builds](https://builder.blender.org/download/daily/) started to become available.
+
+Today, on a WoA device, it is possible to build your own copy of Blender, simply by following the instructions on the [Blender Wiki](https://developer.blender.org/docs/handbook/building_blender/). The build system takes care of everything, and allows people who may wish to develop for Blender on a WoA device to get up and running in no time. Alternatively, users can just download a daily build.
+
+With some luck, a properly versioned (non-daily) release of Blender should become available by the end of November 2024, for users to install and use!
+
+## Conclusion
+Taking just over 1.5 years from start to finish, the journey to enable Blender on WoA devices has been a long one, marked with persistence, collaboration, and innovation. Despite various challenges - ranging from changing compilers out, to working out graphics stacks, and everything in between, Linaro (and its partners) has demonstrated its dedication and expertise.
+
+With the enablement of Blender on Windows on Arm devices, Linaro has reached a significant milestone, showing that the platform is ready for complex and diverse workloads such as 3D graphics and visual effects. It has been a long road to enablement, but a worthwhile and rewarding one.
+
+## Thanks
+During the development process, many people and organisations have been of great help, and we would like to call out a few of them specifically:
+
+* The developers on “blender.chat” - they have been the single most helpful group in the entire process. Without them answering my various questions, pointing things out, and just being a general oracle of knowledge, I’m not sure we’d have builds today.
+* Jesse Natalie (OpenGL compatibility pack maintainer, Microsoft) - Jesse has been incredibly helpful in assisting with the debugging of various graphics related issues on WoA devices, and has helped identify several GPU driver bugs we passed on to Qualcomm.
+* Mohan Kumar Gubbihalli Lachma Naik and Justin Antony George Philip (both from Qualcomm) - they have been a big help in making sure the right people in Qualcomm are found to help with the various graphics issues found over the course of development.
+
+# Footnotes
+<a name="footnote0">[0]</a> If you are interested, a little more technical detail on how building embree works for Windows ARM64 platforms: One of the dependencies that is built as part of Blender’s “Deps build” is, in fact, a full copy of LLVM. Sadly, embree does not compile at all well with MSVC on WoA, and only really works with LLVM’s clang-cl. As all other deps are built with MSVC, we switched out the compiler to clang-cl to build embree via CMake.
+
+For reasons covered below, this needs to be done via the VS2019 (14.29) tools, which restricts the generator that can be used for the sub-project to only VS tools. Luckily, these can be used with clang-cl via an optional extra installable with VS (“MSBuild support for LLVM toolset”), and specifying the paths in a “directory.build.props” file, alongside the specific VCTools version we want to use, which is also detected. This is generated as part of the CMake script that builds embree using “configure_file()”.
+
+Falling back to the stable tools was required as when VS2022 updates are made, they update the STL headers, which require the latest version of clang-cl at the time of update. This can be worked around with _ALLOW_COMPILER_AND_STL_VERSION_MISMATCH, however that is a flag that hides the problem, rather than solves it, and is not an acceptable long-term solution.
+
+<a name="footnote1">[1]</a> The VFX Reference Platform is a standardised set of versions for the various libraries and tools that the VFX industry uses, to allow for greater interoperability between different VFX pipelines.
+
+<a name="footnote2">[2]</a> For those that want to know more about how the OpenGL -> DirectX12 translation layer works, here is a short description of how it works: Mesa provides several abstraction layers - for OpenGL states, there is “Gallium”, which is an intermediate API that can be implemented by a driver, in this case “D3D12”. Fixed functions that are translated to shaders, and GLSL, are handled via something called “NIR”, which is then compiled to DXIL. WGL calls are ultimately implemented via DXGI swapchains. Articles are available online with more information.
