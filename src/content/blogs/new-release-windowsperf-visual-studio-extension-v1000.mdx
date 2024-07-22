@@ -1,0 +1,48 @@
+---
+title: New Release: WindowsPerf Visual Studio Extension v1.0.0
+description: >
+  We’re excited to announce the release of the WindowsPerf Visual Studio Extension v1.0.0, our first stable release after the beta.
+date: 2024-07-23T09:00:00.000Z
+image: /linaro-website/images/blog/3098222_jmti97.jpg
+tags:
+  - windows-on-arm
+author: nader-zouaoui
+related: []
+
+---
+
+We’re excited to announce the release of the [WindowsPerf Visual Studio Extension v1.0.0](https://gitlab.com/Linaro/WindowsPerf/vs-extension/-/releases/v1.0.0), our first stable release after the beta. This version supports most of the available features related to sampling that are currently available on [WindowsPerf 3.3.0](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/releases) and brings new features, improvements, and bug fixes. The minimum required version of WindowsPerf for the extension to run is version 3.3.0 onwards.
+
+This Linaro [open-source project](https://gitlab.com/Linaro/WindowsPerf/vs-extension) is available for [download](https://gitlab.com/Linaro/WindowsPerf/vs-extension/-/releases/v1.0.0) - to get started with the extension you can follow the guides on our detailed [documentation wiki](https://gitlab.com/Linaro/WindowsPerf/vs-extension/-/wikis/home). The new sampling feature, built on [WindowsPerf’s sampling model](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/tree/main/wperf?ref_type=heads#sampling-model), allows for detailed performance analysis and displays hot spots in a process, helping developers target and rectify performance bottlenecks. Users can easily navigate through this feature in the familiar [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) environment.
+
+# What is WindowsPerf?
+[WindowsPerf](https://gitlab.com/Linaro/WindowsPerf/windowsperf/) is a (Linux perf inspired) lightweight Windows on Arm performance profiling tool. Profiling is based on ARM64 PMU (Performance Monitor Unit) and its hardware counters.
+
+# What’s New
+## Improved Sampling Settings
+
+* Added support for selecting multiple events per run, allowing users to sample all selected events simultaneously.
+* Introduced support for project target payloads. When opening the Sampling Explorer settings, users can now select the current project build target (Debug | Release, arm64, arm64ec, etc.), and the extension will automatically launch the built resource from that configuration.
+* To address the large list of events, we've added an autocomplete component that helps filter down the list of events in the selection input.
+* Realigned the command preview to match [WindowsPerf 3.3.0](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/releases) version.
+
+![Command preview](/linaro-website/images/blog/windowsperf-image1_cyt6rv.gif)
+
+## Disassembly Features
+
+![Disassembly output](/linaro-website/images/blog/windowsperf-image3_exytus.png)
+
+* Added disassembly output from sampling runs to the Sampling Explorer widget, providing users with the opportunity to dive deeper into the most frequently executed instructions.
+* Enhanced the editor by adding line highlighting to better identify hotspots directly in the codebase.
+* Improved the percentage display in the Sampling Explorer table.
+
+![Editor showing hotspots](/linaro-website/images/blog/windowsperf-image2_dookxc.png)
+
+# Fixes
+* Fixed typos, alignment issues, and errors in form validation.
+* Improved the stability of the tool, especially the Sampling Explorer and search features.
+
+# Docs and Community
+* Updated our documentation and added new tutorials and videos. Check out the new docs on our [Wiki page](https://gitlab.com/Linaro/WindowsPerf/vs-extension/-/wikis/home).
+
+We hope you enjoy the new features and improvements! You can find out more by visiting [our repository](https://gitlab.com/Linaro/WindowsPerf/vs-extension). We’re always looking to make things better, so your feedback through issues or merge requests is always welcome.
