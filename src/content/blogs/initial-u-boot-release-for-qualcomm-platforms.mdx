@@ -1,0 +1,258 @@
+---
+title: Initial U-Boot release for Qualcomm platforms
+description: Today we announce the first binary release of U-Boot for Qualcomm boards, following a year long bringup and upstreaming effort.
+date: 2019-04-02T01:53:28.000Z
+image: linaro-website/images/blog/Datacenter
+tags:
+  - qualcomm
+  - u-boot
+author: caleb-connolly
+related: []
+---
+
+Based on 2024.10-rc2, support is provided for core functionality (EFI, booting from internal storage, booting from USB) on all listed platforms, with conditional support for USB gadget modes, sdcard access and ethernet on some boards. In addition, the RB5 board can boot with KVM support with a special U-Boot build replacing the original hypervisor image.
+
+This article will walk you through flashing the binary releases, building from source, and hopefully provide some context to Qualcomm’s boot process and how U-Boot fits into the Qualcomm ecosystem.
+
+Continuing Linaro’s previous efforts to provide a unified boot flow on the Robotics development platforms, and through collaboration with the IoT team at Qualcomm, Linaro engineers have now enabled support for EFI booting with U-Boot across 7 platforms (and growing!).
+
+Assuming that your distro have the right kernel modules enabled, you can now simply boot an image flashed to a USB stick and even install it to internal storage (though beware not to erase the partition table on devices with eMMC, you must use custom partitioning and only touch the rootfs and ESP partitions!).
+
+## Installation methods
+
+There are 3 ways to install U-Boot on a Qualcomm board:
+Flashing it to the boot partition and chainloading from ABL
+Binary patching xbl to replace the EDK2 image with U-Boot
+Flashing it to the hyp partition and booting Linux in EL2 (with KVM)
+
+Which of these is supported on what platform, and which makes sense for you depends on a few different factors (though note that issues mentioned here will hopefully be improved in the future):
+Secureboot is currently only straightforward if you go with option a since a custom_avb_key can be used. However this is liable to change, get in touch if this is something you’re interested in.
+The fastboot implementation in U-Boot is not up to the same standards as Qualcomm’s, it is slower and doesn’t support UFS storage at all. This might make options b and c unappealing, though you may be interested in PXE and HTTP support as alternatives.
+KVM support is experimental, and breaks the DSPs (as well as potentially other things). For now, KVM binaries are only provided for the RB5, since it uses PCIe WiFi and only loses support for audio and NPU.
+
+## Supported platforms
+
+The exact status of support depends on the device. The current integration branch lacks support for UFS on SM8550/SM8650. Other devices can boot from internal storage or USB.
+| Platform | Chainloaded | XBL | Hyp |
+|-----------------------|-------------|-----------------------------|-----------------------------|
+| QRB2210 RB1 | Working | Untested, missing memory map | Untested, missing memory map |
+| QRB4210 RB2 | Working | Working | Untested |
+| SDA845 RB3 | Working | Working | Working |
+| QRB5165 (sm8250) RB5 | Working | Working | Working |
+| QCM6490 RB3 Gen 2 | Unsupported | Working | Unavailable |
+| SM8550 QRD | Working | Working | - |
+| SM8650 QRD | Working | Working | - |
+| OnePlus 6/6T | Working | Unsupported | Unsupported |
+
+## Flashing U-Boot
+
+Releases can be downloaded from https://git.codelinaro.org/linaro/qcomlt/u-boot/-/releases
+
+Installation is almost the same for all methods, for the boot, uefi, or hyp images, just use fastboot or EDL to flash the appropriate partition. For the xbl images on RB1/2/3/5, you will need to obtain a stock xbl partition image and use patchxbl.py and qtestsign.py as described in the build steps below.
+
+IMPORTANT: if you use the XBL or Hyp methods, you must be confident that you can restore your board via EDL mode, otherwise you risk bricking it.
+
+`fastboot flash PART u-boot-BOARD-PART.img`
+
+OR
+
+`edl --loader path/to/prog_firehose_ddr.elf w PART u-boot-BOARD-PART.xyz`
+
+| Type           | Chainloaded           | XBL                                            | Hyp                   |
+| -------------- | --------------------- | ---------------------------------------------- | --------------------- |
+| **Image name** | u-boot-BOARD-boot.img | u-boot-BOARD-xbl.img<br/>u-boot-BOARD-uefi.img | u-boot-BOARD-uefi.img |
+| **Partition**  | boot                  | xbl / uefi                                     | hyp                   |
+
+## Building from source
+
+U-Boot can be retrieved from https://git.codelinaro.org/linaro/qcomlt/u-boot and compiled as follows, please refer to the U-Boot documentation for more general information and dependencies. Additional Qualcomm specific documentation can be found here. You also need android-tools for the mkbootimg command when chainloading.
+
+````git clone https://git.codelinaro.org/linaro/qcomlt/u-boot
+cd u-boot
+git reset --hard QU-0.1.0 # check the latest tag, or use master
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output qcom_defconfig
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output -j$(nproc) DEVICE_TREE=qcom/qrb5165-rb5```
+````
+
+Replace DEVICE_TREE above with your board's DTB name, e.g for RB5 it would be DEVICE_TREE=qcom/qrb5165-rb5.
+Make a boot image
+Now we must take the resulting U-Boot binary and DTB and put them in an Android boot image, just like you would a Linux kernel (see what happens when you run file .output/u-boot.bin).
+
+```
+gzip .output/u-boot-nodtb.bin -c > .output/u-boot-nodtb.bin.gz
+cat .output/u-boot-nodtb.bin.gz .output/dts/upstream/src/arm64/qcom/qrb5165-rb5.dtb > /tmp/uboot-dtb
+mkbootimg --kernel_offset '0x00008000' --pagesize '4096' --kernel /tmp/uboot-dtb -o .output/u-boot.img
+```
+
+The resulting image can now be booted or flashed like any regular Android boot image. Note again to change the DTB to match your device.
+Custom XBL image
+Building U-Boot as XBL is the same, after building we need to then patch it into an existing XBL image, you can pull this directly from your board or for the RBx boards download one of the linaro rescue packages (FIXME: link rescue packages).
+
+You’ll need to install qtestsign and patchxbl from the qtestsign repo. This can only be used to sign images for rb3, rb5, db410c, and db820c, NOT for rb1 and rb2 which use v7 signatures. Access to sectools or an equivalent program is necessary for this for now. For rb3 -v5 should be passed to qtestsign, -v3 for db410c.
+
+```
+git clone https://github.com/msm8916-mainline/qtestsign
+ln -s $PWD/qtestsign.py ~/.local/bin/qtestsign
+ln -s $PWD/qtestsign.py ~/.local/bin/patchxbl
+```
+
+Then build U-Boot as described above, and finally from the U-Boot directory do:
+
+```
+patchxbl -o .output/u-boot-xbl.elf -c .output/u-boot-dtb.bin ~/Documents/work/rb2-bootloader-emmc-linux-47528/xbl.elf
+qtestsign -v6 xbl -o .output/u-boot-xbl.mbn .output/u-boot-xbl.elf
+fastboot flash xbl .output/u-boot-xbl.mbn
+```
+
+Or flash with [EDL](https://github.com/bkerler/edl).
+
+## RB3 Gen 2 UEFI
+
+For this board, EDK2/U-Boot is loaded from a dedicated partition, it can be built and flashed as follows:
+
+```
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output qcm6490_defconfig
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output -j$(nproc)
+
+qtestsign -v6 hyp -o .output/u-boot.mbn .output/u-boot.elf
+fastboot flash uefi_a .output/u-boot.mbn
+```
+
+Or flash with [EDL](https://github.com/bkerler/edl).
+
+## Hyp
+
+For the hypervisor case, we must build U-Boot as an ELF binary with the same load offset as the original hyp.elf. Only a config fragment for rb5 is included, but it works similarly on rb1/2/3.
+
+```
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output qcom_defconfig hyp-sm8250.config
+make CROSS_COMPILE=aarch64-linux-gnu- O=.output -j$(nproc) DEVICE_TREE=qcom/qrb5165-rb5
+
+qtestsign -v6 hyp -o .output/u-boot-hyp.mbn .output/u-boot.elf
+fastboot flash hyp .output/u-boot-hyp.mbn
+```
+
+## A deeper dive into Qualcomm’s boot flow
+
+Qualcomm's Android boot flow & Chainloading
+
+The standard boot flow on Qualcomm devices looks roughly like this (source: [Qualcomm secure boot and image authentication](https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/secure-boot-and-image-authentication-version_final.pdf)).
+
+Number 7 in that diagram is actually where EDK2 starts up, it does its own driver initialization and then runs the ABL EFI app (LinuxLoader.efi) which has already been loaded into memory.
+
+Originally, we implemented U-Boot support by using its ability to “look like” a Linux kernel so we can run it after the existing boot chain (thus chainloading it). ABL believes it’s booting into Linux as normal, but aha! It’s actually just another bootloader :D
+
+This was extremely helpful for bringup and development since we could use the fastboot boot model we’re familiar with on these boards. However this doesn’t offer a particularly seamless user experience; it results in slower boot times, and still requires dealing with how ABL patches the DTB, tries to load overlays from dtbo, and even do other annoying things like populate the kernel cmdline. In short: it’s not really the ideal model.
+U-Boot as the primary bootloader: XBL
+Thankfully, we can do better. Since XBL is actually made up of multiple components: the sbl1 (secondary bootloader in EL1) which is responsible for loading the TrustZone, Hypervisor, and EDK2 binaries (from the tz, hyp, and xbl partitions respectively), it then sets up the HOB List and hands over to EDK2. This makes it extremely easy for us to go one step deeper by replacing the EDK2 binary with U-Boot!
+
+The XBL image is really just an ELF binary, with load addresses specific to the platform, here is the output of readelf with the relevant sections annotated.
+
+```
+$ aarch64-linux-gnu-readelf -Wl rb5-xbl.elf
+
+Elf file type is EXEC (Executable file)
+		v-- As described in the diagram above, the entrypoint is in XBL_SEC
+Entry point 0x148157a8
+There are 15 program headers, starting at offset 64
+
+Program Headers:
+  Type       	Offset   VirtAddr       	PhysAddr       	FileSiz  MemSiz   Flg Align
+				v-- These first two are just signatures
+  NULL       	0x000000 0x0000000000000000 0x0000000000000000 0x000388 0x000000     0
+  NULL       	0x001000 0x000000009fe65000 0x000000009fe65000 0x001c78 0x002000     0x1000
+
+				v-- This is XBL_SEC, it's actually a whole other ELF binary!
+  LOAD       	0x003000 0x0000000014815000 0x0000000014815000 0x05d010 0x05d010 R E 0x1000
+
+  LOAD       	0x060010 0x000000001487e000 0x000000001487e000 0x000000 0x003000 RW  0x1000
+  LOAD       	0x060010 0x0000000014873000 0x0000000014873000 0x00a2b2 0x00a2b2 R   0x1000
+  LOAD       	0x06a2d0 0x0000000014881000 0x0000000014881000 0x01538c 0x01538c RW  0x1000
+  LOAD       	0x07f660 0x0000000014897000 0x0000000014897000 0x000000 0x02c5e8 RW  0x1000
+  LOAD       	0x07f660 0x0000000080704000 0x0000000080704000 0x000000 0x028f38 RW  0x1000
+
+				v-- This is EDK2
+  LOAD       	0x07f660 0x000000009fc00000 0x000000009fc00000 0x265000 0x265000 RWE 0x1000
+
+  LOAD       	0x2e4660 0x0000000014698000 0x0000000014698000 0x016000 0x016000 R E 0x1000
+  LOAD       	0x2fa660 0x000000008072f000 0x000000008072f000 0x04f404 0x04f404 R E 0x1000
+  LOAD       	0x349a70 0x00000000807a0000 0x00000000807a0000 0x007468 0x05c530 RW  0x1000
+  LOAD       	0x350ee0 0x0000000080791000 0x0000000080791000 0x000000 0x001fe0 RW  0x1000
+  LOAD       	0x350ee0 0x00000000146ae000 0x00000000146ae000 0x00208c 0x00208c R E 0x1000
+  LOAD       	0x352f70 0x00000000146b0800 0x00000000146b0800 0x002b48 0x002b48 RW  0x1000
+```
+
+So all we have to do is replace this one section with U-Boot right?
+Actually yes! It’s really that simple… Though, the binary does need to be hashed and signed again, thankfully this can be done with open source tools for most platforms (at least the ones from 2022). The actual signature validation is disabled on development boards since they don’t have a public key programmed in (usually referred to as being “Secureboot off”), but there still needs to be a valid Qualcomm image header with the correct hash.
+The qtestsign tool implements support for this all the way up to v6 of Qualcomm's firmware signature format (the latest is v7, for more info see this technical overview document released by Qualcomm).
+
+The qtestsign tool now also includes a patchxbl.py program, this does exactly the actions we described above, you feed it an XBL image for your board, a compatible U-Boot binary (with embedded DTB), and it replaces the section that contains EDK2 with the U-Boot binary instead.
+
+Finally, you sign the resulting image again with qtestsign and flash it to the xbl partition, then when you boot your board you’ll see something like the following:
+
+```
+B - 1011898 - SBL1, End
+D - 937631 - SBL1, Delta
+S - Flash Throughput, 262000 KB/s (7544028 Bytes, 28714 us)
+S - DDR Frequency, 1555 MHz
+
+<debug_uart>
+
+U-Boot 2024.07-rc4-00682-g73d0e577fe7b (Jun 25 2024 - 16:17:33 +0200)
+
+Model: Qualcomm Technologies, Inc. Robotics RB5
+DRAM: 8 GiB (effective 7.9 GiB)
+```
+
+U-Boot as the primary bootloader: RB3 Gen 2
+Qualcomm’s new RB3 Gen 2 board is the first to be supported by Qualcomm Linux, a close(r) to upstream Yocto build. It boots with systemd-boot stub out of the box, and can run systemd-boot or GRUB. However, the stock bootloader includes a lot of customisations, a custom DTB store and various non-standard DTB changes done by the bootloader.
+
+In the long term, it is anticipated that Qualcomm’s EDK2 will become SystemReady compliant. But interest in U-Boot is still strong (both to offer a standard EFI interface in the short term and to offer more diversity to Qualcomm’s customers).
+
+As part of this new upstream focused approach, there are many changes to the firmware architecture of the RB3 Gen 2, for our case the most interesting is that the EDK2 “xbl_core” phase of the bootloader has been moved to its own partition (named uefi_a (and \_b). It contains a Qualcomm signed ELF image with a single program header which is the EDK2 image.
+
+This single change makes U-Boot support as a first stage bootloader trivial on this board. We simply build U-Boot as an ELF, sign it with qtestsign, and flash it to the uefi partition (as described above).
+
+Note that you will need to use EDL mode to restore the stock firmware.
+
+Initial upstream support for RB3 Gen 2 is [pending upstream here](https://lore.kernel.org/u-boot/20240809-b4-rb3gen2-v1-0-7c73fe05b37a@linaro.org/). For UFS support, the CodeLinaro integration branch is recommended.
+
+## KVM
+
+Booting with KVM is actually even simpler than building a custom XBL image. It is quite similar to the RB3 Gen 2 method.
+There is an additional step which is glossed over in the diagram above. in between sbl1 and edk2 is when the hypervisor starts up, it has already been loaded and authenticated earlier in sbl1. Rather than jumping directly to EDK2, sbl1 actually makes an SMC call (into the trustzone), passing in the start address for EDK2. The trustzone then does some initialization, before jumping into the hypervisor which then finally jumps to the start address. At this point we have “booted” the primary VM.
+
+This makes it incredibly easy to start up U-Boot at EL2 on most platforms, as the hypervisor is just an ELF binary with a single load section, we can just replace it directly with our U-Boot binary, and thus take over the boot chain early and in EL2.
+
+The most significant difference when running in EL2 is that we break the Peripheral Image Loader (PIL) mechanism which is used to load and authenticate firmware images for the DSPs. As a result, the audio, compute, and sensor DSPs are not available.
+
+The Qualcomm Chromebook platforms also run in EL2, they bypass the audio DSP entirely and drive the audio subsystem directly. Not much is known about how we might go about supporting the compute or sensor DSPs when booting this way.
+
+Changes in how the firmware images are validated means that this method is only available on the RB3 and RB5 boards. The RB1, RB2, and RB3 Gen 2 all have additional checks in place which make it impossible to replace the hypervisor. That doesn’t mean KVM is entirely out of the question though…
+
+## Let’s boot some Linux
+
+Support for Qualcomm platforms in Debian’s kernel was recently merged and should be included in 6.10, Fedora recently enabled the necessary drivers in their kernel configuration too. Admittedly, there is a distinct lack of Qualcomm drivers enabled in many distro kernels, despite the relatively good upstream hardware support. Hopefully with an EFI friendly bootloader we can start to shift the tides here and get more distros running nicely on Qualcomm boards.
+
+There are still some unfortunate caveats to note if you plan on installing a distro like Fedora:
+
+Most Qualcomm IoT boards make heavy use of internal storage (be it eMMC or UFS) to store code and data which is vital for “non-HLOS” (High-Level Operating System, a.k.a bootloader, trustzone, and firmware for DSPs and co-processors). On boards like the rb3 and rb5 with UFS storage, the important partitions are on separate disks (Logical Units in SCSI terms), with the first being available for the OS. On these platforms, it’s totally safe to erase the partition table on (usually) the first disk, it’s the largest. You can let the distro installer do its own thing here (note that this might not be the case for a smartphone, you should not attempt this unless you can reflash your device from EDL mode).
+
+There is a known bug on Fedora where their Anaconda installer doesn’t recognise UFS storage devices as disks it can install to.
+
+However, on the RB1/RB2 boards which use eMMC storage, no such distinction is possible. If you allow the installer to erase the disk, your board will NO LONGER BOOT. Please be extremely cautious while using custom partitioning, and more ideally install to a USB drive. Unfortunately, sdcard support is not fully enabled in U-Boot yet for these boards, otherwise this would make for a sensible solution.
+
+## Get involved
+
+IRC: #u-boot-qcom over on libera.chat
+Or via Matrix: #u-boot-qcom:postmarketos.org
+
+Support for Qualcomm platforms in U-Boot has exploded in the last year, from a handful of build targets using non-standard Device Tree and lacking access to internal storage, to now having generic support for ~9 SoCs, fully upstream compliant DT and (almost) no board specific workarounds.
+
+Some significant features like UFS storage support still depend on additional patches, but for the most part the upstreaming efforts have been going strong. U-Boot is pretty familiar to work on for anyone with experience in the Linux kernel, and this carries through to the driver code itself, as porting support for complicated peripherals like the RPMh regulators from Linux is surprisingly straightforward. Having a second user for upstream DT and a second implementation of many important drivers should also help us in the long term to iron out inconsistencies with Device Tree in general.
+
+You don’t need a development board to get involved, many of the dozens of Qualcomm smartphones with Device Trees in Linux should more or less just boot,although you may need to write clock and maybe pinctrl drivers if the SoC is new to U-Boot. The framebuffer output set up by edk2 can be used to display a boot menu, with buttons for navigation and even deeper access with the USB serial gadget mode.
+
+Once your SoC is supported, it is quite likely that any given device with an upstream compatible DTB will “just work”. Just be sure to describe the framebuffer correctly, and enable the serial port if you have one by specifying stdout-path = "serial0:115200n8"; in the /chosen node of your DT.
+
+With U-Boot support, we gain all the numerous advantages of EFI: GRUB and systemd-boot, support for multiple kernels or even multiple distros! The main benefit is of course that it is no longer necessary to create and flash Android boot images in order to update the kernel. One can even [boot over HTTP using the wget utility](https://docs.u-boot.org/en/latest/usage/cmd/wget.html) for a truly seamless development cycle with a USB network adapter.
