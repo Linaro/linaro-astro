@@ -2105,10 +2105,10 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.1.1.tgz#b9da6a878a371829a0502c9b6c1c143ef6663f4d"
   integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
-"@fontsource/lato@^5.0.20":
-  version "5.0.20"
-  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-5.0.20.tgz#27721d42112da4da288447f8904e36c8ceef98ee"
-  integrity sha512-2ej7KDuTFoea6Q2hWjx3Png1+MdNcW4V6l7sw/vNauuxCv9xBIZCmpXnTz9eVdj/5Ui//jiWWiQk57mGwjCNwA==
+"@fontsource/lato@^5.0.22":
+  version "5.0.22"
+  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-5.0.22.tgz#3b3c64eda10de3f94c724dbf13306c33ecff59b2"
+  integrity sha512-Q0ok83IXWY5DG3pp1KLxzpq7ax5ys7/B/huKl2QtACiTFfsqFjy8n4B709NdK/Vd/CO3mYFBwg9cdYQtKGXiGQ==
 
 "@graphql-tools/executor@^0.0.18":
   version "0.0.18"
