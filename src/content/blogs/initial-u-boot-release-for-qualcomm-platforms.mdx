@@ -35,16 +35,7 @@ KVM support is experimental, and breaks the DSPs (as well as potentially other t
 ## Supported platforms
 
 The exact status of support depends on the device. The current integration branch lacks support for UFS on SM8550/SM8650. Other devices can boot from internal storage or USB.
-| Platform | Chainloaded | XBL | Hyp |
-|-----------------------|-------------|-----------------------------|-----------------------------|
-| QRB2210 RB1 | Working | Untested, missing memory map | Untested, missing memory map |
-| QRB4210 RB2 | Working | Working | Untested |
-| SDA845 RB3 | Working | Working | Working |
-| QRB5165 (sm8250) RB5 | Working | Working | Working |
-| QCM6490 RB3 Gen 2 | Unsupported | Working | Unavailable |
-| SM8550 QRD | Working | Working | - |
-| SM8650 QRD | Working | Working | - |
-| OnePlus 6/6T | Working | Unsupported | Unsupported |
+![WindowsPerf counting data](/linaro-website/images/blog/Chainload_diagram_djfdeb.png)
 
 ## Flashing U-Boot
 
@@ -52,18 +43,14 @@ Releases can be downloaded from https://git.codelinaro.org/linaro/qcomlt/u-boot/
 
 Installation is almost the same for all methods, for the boot, uefi, or hyp images, just use fastboot or EDL to flash the appropriate partition. For the xbl images on RB1/2/3/5, you will need to obtain a stock xbl partition image and use patchxbl.py and qtestsign.py as described in the build steps below.
 
-IMPORTANT: if you use the XBL or Hyp methods, you must be confident that you can restore your board via EDL mode, otherwise you risk bricking it.
+#### IMPORTANT: if you use the XBL or Hyp methods, you must be confident that you can restore your board via EDL mode, otherwise you risk bricking it.
 
 `fastboot flash PART u-boot-BOARD-PART.img`
 
 OR
 
 `edl --loader path/to/prog_firehose_ddr.elf w PART u-boot-BOARD-PART.xyz`
-
-| Type           | Chainloaded           | XBL                                            | Hyp                   |
-| -------------- | --------------------- | ---------------------------------------------- | --------------------- |
-| **Image name** | u-boot-BOARD-boot.img | u-boot-BOARD-xbl.img<br/>u-boot-BOARD-uefi.img | u-boot-BOARD-uefi.img |
-| **Partition**  | boot                  | xbl / uefi                                     | hyp                   |
+![WindowsPerf counting data](/linaro-website/images/blog/Chainload_table_g3bqvi.png)
 
 ## Building from source
 
@@ -137,6 +124,7 @@ fastboot flash hyp .output/u-boot-hyp.mbn
 ## A deeper dive into Qualcomm’s boot flow
 
 Qualcomm's Android boot flow & Chainloading
+![WindowsPerf counting data](/linaro-website/images/blog/Qualcomm_s_Android_boot_flow_chainloading_ht0lyy.png)
 
 The standard boot flow on Qualcomm devices looks roughly like this (source: [Qualcomm secure boot and image authentication](https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/secure-boot-and-image-authentication-version_final.pdf)).
 
@@ -206,8 +194,11 @@ Model: Qualcomm Technologies, Inc. Robotics RB5
 DRAM: 8 GiB (effective 7.9 GiB)
 ```
 
-U-Boot as the primary bootloader: RB3 Gen 2
-Qualcomm’s new RB3 Gen 2 board is the first to be supported by Qualcomm Linux, a close(r) to upstream Yocto build. It boots with systemd-boot stub out of the box, and can run systemd-boot or GRUB. However, the stock bootloader includes a lot of customisations, a custom DTB store and various non-standard DTB changes done by the bootloader.
+### U-Boot as the primary bootloader: RB3 Gen 2
+
+Qualcomm’s new RB3 Gen 2 board is the first to be supported by [Qualcomm Linux](https://www.qualcomm.com/developer/software/qualcomm-linux), a close(r) to upstream Yocto build. It boots with systemd-boot stub out of the box, and can run systemd-boot or GRUB. However, the stock bootloader includes a lot of customisations, a custom DTB store and various non-standard DTB changes done by the bootloader.
+
+![WindowsPerf counting data](/linaro-website/images/blog/Qualcomm_RB3_Gen_2_Platform_mf4ftb.png)
 
 In the long term, it is anticipated that Qualcomm’s EDK2 will become SystemReady compliant. But interest in U-Boot is still strong (both to offer a standard EFI interface in the short term and to offer more diversity to Qualcomm’s customers).
 
@@ -215,7 +206,7 @@ As part of this new upstream focused approach, there are many changes to the fir
 
 This single change makes U-Boot support as a first stage bootloader trivial on this board. We simply build U-Boot as an ELF, sign it with qtestsign, and flash it to the uefi partition (as described above).
 
-Note that you will need to use EDL mode to restore the stock firmware.
+#### Note that you will need to use EDL mode to restore the stock firmware.
 
 Initial upstream support for RB3 Gen 2 is [pending upstream here](https://lore.kernel.org/u-boot/20240809-b4-rb3gen2-v1-0-7c73fe05b37a@linaro.org/). For UFS support, the CodeLinaro integration branch is recommended.
 
@@ -246,8 +237,9 @@ However, on the RB1/RB2 boards which use eMMC storage, no such distinction is po
 
 ## Get involved
 
-IRC: #u-boot-qcom over on libera.chat
-Or via Matrix: #u-boot-qcom:postmarketos.org
+#### IRC: #u-boot-qcom over on libera.chat
+
+#### Or via Matrix: #u-boot-qcom:postmarketos.org
 
 Support for Qualcomm platforms in U-Boot has exploded in the last year, from a handful of build targets using non-standard Device Tree and lacking access to internal storage, to now having generic support for ~9 SoCs, fully upstream compliant DT and (almost) no board specific workarounds.
 
