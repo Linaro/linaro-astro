@@ -3,7 +3,7 @@ title: Debugging and Profiling on the NVIDIA GH200 Grace Hopper Superchip
 description: In this blog, Beau Paisley talks about the state of debugging tools
   for HPC. Read more here!
 date: 2024-09-04T09:00:00.000Z
-image: linaro-website/images/blog/Banner_Toolchain
+image: /linaro-website/images/blog/Dots_lines_datacenter_UNDER_2MB_fhabqj.jpg
 tags:
   - hpc
 author: rudy-shand
@@ -22,6 +22,7 @@ The NVIDIA Grace CPU uses 72 Arm Neoverse V2 CPU cores to deliver leading per-th
 When compiling with the NVIDIA nvcc compiler, applications can be debugged with Linaro DDT by compiling with the -g -G flags. The -g flag enables debugging on the Grace CPU and -G enables debugging on the Hopper GPU.
 
 ![Debugging on the Grace Hopper Superchip](/linaro-website/images/blog/Screenshot_2024-05-08_at_14.02.16_vilmmi.png)
+*Debugging on the Grace Hopper Superchip*
 
 The code running on the GPU is debugged simultaneously with the code on the host CPU. The Linaro DDT UI should look and feel similar when debugging code running on the Grace CPU or when debugging code on the Hopper GPU. The major difference is that when a GPU thread stops within a kernel, additional GUI controls are visible within Linaro DDT to help make sense of the GPU thread activity. GPU Threads can be inspected via the GPU Thread Selector widget, Kernel Progress View and Parallel Stack View. Furthermore, information about which GPUs are available to the application is show in the GPU Devices pane.
 
