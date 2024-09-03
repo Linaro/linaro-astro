@@ -10,6 +10,7 @@ author: rudy-shand
 related: []
 
 ---
+import CloudinaryImg from "../../components/cloudinary/CloudinaryImg.astro";
 
 # Introduction
 This blog will guide you through the key functionality of Linaro DDT and Linaro MAP which is part of the Linaro Forge Suite. The Linaro Suite of tools are essential for maximizing performance and reliability when developing on the NVIDIA GH200 Grace Hopper Superchip, making them a valuable addition to any HPC developer’s toolkit.
@@ -21,8 +22,8 @@ The NVIDIA Grace CPU uses 72 Arm Neoverse V2 CPU cores to deliver leading per-th
 # Linaro DDT: Debugging Applications running on Grace Hopper
 When compiling with the NVIDIA nvcc compiler, applications can be debugged with Linaro DDT by compiling with the -g -G flags. The -g flag enables debugging on the Grace CPU and -G enables debugging on the Hopper GPU.
 
-![Debugging on the Grace Hopper Superchip](/linaro-website/images/blog/Screenshot_2024-05-08_at_14.02.16_vilmmi.png)
-*Debugging on the Grace Hopper Superchip*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_14.02.16_vilmmi.png" alt="Debugging on the Grace Hopper Superchip" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Debugging on the Grace Hopper Superchip</em></p>
 
 The code running on the GPU is debugged simultaneously with the code on the host CPU. The Linaro DDT UI should look and feel similar when debugging code running on the Grace CPU or when debugging code on the Hopper GPU. The major difference is that when a GPU thread stops within a kernel, additional GUI controls are visible within Linaro DDT to help make sense of the GPU thread activity. GPU Threads can be inspected via the GPU Thread Selector widget, Kernel Progress View and Parallel Stack View. Furthermore, information about which GPUs are available to the application is show in the GPU Devices pane.
 
@@ -39,8 +40,8 @@ Click the color-highlighted sections of the progress bar to select a thread that
 
 Green GPU threads are threads which are scheduled to run. Multiple scheduled threads display in different shades of green to differentiate them. White areas of the progress bar represent items which are inactive. They could be inactive due to a completed run, or because they have not been scheduled to run yet. 
 
-![Kernel Progress View](/linaro-website/images/blog/Screenshot_2024-05-10_at_23.12.54_tgsntr.png)
-*Kernel Progress View*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-10_at_23.12.54_tgsntr.png" alt="Kernel Progress View" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Kernel Progress View</em></p>
 
 ## Controlling the execution
 To control the GPU threads, use Linaro DDT’s standard play, pause, and breakpoints controls. Although, because GPUs have different execution models to CPUs, there are a few behavioural differences:
@@ -61,8 +62,8 @@ You can utilise the Memory Debugging feature on both host and device code, pleas
 # Linaro MAP: Profiling Applications running on Grace Hopper
 A Linaro MAP profile can be obtained by appending `map --profile` to the execution command. This will run your application and then generate a MAP file at the end of the run to inspect performance.
 
-![Profiling on the Grace Hopper Superchip](/linaro-website/images/blog/Screenshot_2024-05-08_at_16.18.58_avs2iq.png)
-*Profiling on the Grace Hopper Superchip*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_16.18.58_avs2iq.png" alt="Profiling on the Grace Hopper Superchip" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Profiling on the Grace Hopper Superchip</em></p>
 
 The main thread activity describes what the main thread of each process is doing over time. The X axis is time and the Y axis is colour coded to distinguish how many processes were doing a specific operation at a point in time. Purple is the CPU time spent waiting for the accelerator, green is main thread compute operations and orange is I/O operations. In the above profile, the main CPU thread is spending most of its time waiting for the accelerator with intermittent time being spent executing compute operations.
 
@@ -70,8 +71,8 @@ Other metrics can also be shown, such as cycles per instruction and memory usage
 
 GPU specific metrics can be selected in Linaro MAP, such as GPU power usage, GPU utilisation and GPU memory usage.
 
-![GPU Specific Metrics](/linaro-website/images/blog/Screenshot_2024-05-08_at_16.34.47_ztzfx5.png)
-*GPU Specific Metrics*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_16.34.47_ztzfx5.png" alt="GPU Specific Metrics" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>GPU Specific Metrics</em></p>
 
 ## GPU utilization
 Percent of time that the GPU card was in use, that is, one or more kernels are executing on the GPU card. If multiple cards are present in a compute node this value is the mean across all the cards in a compute node.
@@ -85,8 +86,8 @@ The cumulative power consumption of all GPUs on the node, as measured by the NVI
 ## Warp stalls
 When NVIDIA CUDA kernel analysis is enabled and the selected line is executed on the GPU, a breakdown of [warp stall](https://docs.linaroforge.com/latest/html/forge/map/cuda_profiling/kernel_analysis.html) reasons are displayed within Linaro MAP. Querying the tooltips for each warp stall provides a description of the warp stall reason.
 
-![Warp Stalls and GPU Kernels](/linaro-website/images/blog/Screenshot_2024-05-07_at_22.29.34_fueajo.png)
-*Warp Stalls and GPU Kernels*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-07_at_22.29.34_fueajo.png" alt="Warp Stalls and GPU Kernels" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Warp Stalls and GPU Kernels</em></p>
 
 ## GPU Kernels
 The [GPU Kernels](https://docs.linaroforge.com/latest/html/forge/map/rocm_profiling/rocm_kernels_tab.html#gpu-kernels-tab) tab lists the CUDA kernels that were detected in the program alongside graphs indicating when those kernels were active. If multiple kernels are identified in a process within a particular sample, then they are given equal weighting in this graph.
@@ -94,8 +95,8 @@ The [GPU Kernels](https://docs.linaroforge.com/latest/html/forge/map/rocm_profil
 ## GPU memory transfer analysis
 The [Memory Transfer](https://docs.linaroforge.com/latest/html/forge/map/cuda_profiling/gpu_transfers_tab.html) tab provides insight into the memory transfers managed via CUDA, cudaMemcpy and similar calls. This mode can be enabled from the Run dialog or from the command line with `--cuda-transfer-analysis` and requires running Linaro MAP with `--cuda-kernel-analysis`.
 
-![Memory Transfer Analysis](/linaro-website/images/blog/Screenshot_2024-05-08_at_23.14.30_hlphbb.png)
-*Memory Transfer Analysis*
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_23.14.30_hlphbb.png" alt="Memory Transfer Analysis" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Memory Transfer Analysis</em></p>
 
 Three categories of metric are available:
 
