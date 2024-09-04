@@ -1,0 +1,108 @@
+---
+title: Debugging and Profiling on the NVIDIA GH200 Grace Hopper Superchip
+description: In this blog, Beau Paisley talks about the state of debugging tools
+  for HPC. Read more here!
+date: 2024-09-04T09:00:00.000Z
+image: /linaro-website/images/blog/Dots_lines_datacenter_UNDER_2MB_fhabqj.jpg
+tags:
+  - hpc
+author: rudy-shand
+related: []
+
+---
+import CloudinaryImg from "../../components/cloudinary/CloudinaryImg.astro";
+
+# Introduction
+This blog will guide you through the key functionality of Linaro DDT and Linaro MAP which is part of the Linaro Forge Suite. The Linaro Suite of tools are essential for maximizing performance and reliability when developing on the NVIDIA GH200 Grace Hopper Superchip, making them a valuable addition to any HPC developer’s toolkit.
+
+The NVIDIA GH200 [Grace Hopper](https://www.nvidia.com/en-gb/data-center/grace-hopper-superchip/) architecture brings together the groundbreaking performance of the NVIDIA Hopper GPU with the versatility of the NVIDIA Grace CPU, allowing heterogeneous GPU-CPU compute for AI, Data Analytics, and HPC workloads.
+
+The NVIDIA Grace CPU uses 72 Arm Neoverse V2 CPU cores to deliver leading per-thread performance, while providing higher energy efficiency than traditional CPUs. The NVIDIA Hopper GPU is the ninth-generation NVIDIA data center GPU and is designed to deliver order-of-magnitude improvements for large-scale AI and HPC applications.
+
+# Linaro DDT: Debugging Applications running on Grace Hopper
+When compiling with the NVIDIA nvcc compiler, applications can be debugged with Linaro DDT by compiling with the -g -G flags. The -g flag enables debugging on the Grace CPU and -G enables debugging on the Hopper GPU.
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_14.02.16_vilmmi.png" alt="Debugging on the Grace Hopper Superchip" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Debugging on the Grace Hopper Superchip</em></p>
+
+The code running on the GPU is debugged simultaneously with the code on the host CPU. The Linaro DDT UI should look and feel similar when debugging code running on the Grace CPU or when debugging code on the Hopper GPU. The major difference is that when a GPU thread stops within a kernel, additional GUI controls are visible within Linaro DDT to help make sense of the GPU thread activity. GPU Threads can be inspected via the GPU Thread Selector widget, Kernel Progress View and Parallel Stack View. Furthermore, information about which GPUs are available to the application is show in the GPU Devices pane.
+
+## GPU Devices
+Linaro DDT provides Grace Hopper GPU information within the [GPU Devices](https://docs.linaroforge.com/latest/html/forge/ddt/gpu_debugging/gpu_devices_information.html) tab, the information contains the Rank, Device Name and IDs to help you identify the GPU Devices that you are connected to. Be aware that even though the GPUs within the GPU Devices tab are available to the application, it does not necessarily mean that they are being utilised.
+
+## GPU Thread Selector widget
+The [GPU Thread Selector](https://docs.linaroforge.com/latest/html/forge/ddt/gpu_debugging/examine_gpu_threads_and_data.html) enables you to select the exact GPU thread that is of interest. The first entries represent the block index and the subsequent entries represent the 3D thread index inside that block. Once a thread is selected within the GPU thread selector, then that thread is in focus which means that the local variables, evaluations and current line will contain information regarding that particular thread.
+
+## Kernel Progress View
+The [Kernel Progress View](https://docs.linaroforge.com/latest/html/forge/ddt/gpu_debugging/examine_gpu_threads_and_data.html#index-3) is displayed at the bottom of the user interface by default when a kernel is in progress. The progress bar is a projection onto a straight line of the GPU block and thread indexing system.
+
+Click the color-highlighted sections of the progress bar to select a thread that closely matches the click location. Blue represents the GPU thread that you selected. Notice that the GPU thread selector, Parallel Stack View, source code viewer and locals all update.
+
+Green GPU threads are threads which are scheduled to run. Multiple scheduled threads display in different shades of green to differentiate them. White areas of the progress bar represent items which are inactive. They could be inactive due to a completed run, or because they have not been scheduled to run yet. 
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-10_at_23.12.54_tgsntr.png" alt="Kernel Progress View" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Kernel Progress View</em></p>
+
+## Controlling the execution
+To control the GPU threads, use Linaro DDT’s standard play, pause, and breakpoints controls. Although, because GPUs have different execution models to CPUs, there are a few behavioural differences:
+
+* The smallest execution unit is a warp which is 32 threads on the Grace Hopper hardware.
+* All threads in a warp execute in lockstep, which means that you cannot step each thread individually.
+* All active threads in the warp execute a step at the same time.
+
+Click Play/Continue to run all GPU threads.
+
+Click Pause to pause a running kernel.
+
+After the GPU kernel completes, normal debugging in CPU code occurs and the GPU Thread Selector widget and the Kernel Progress View Tab automatically disappears.
+
+## Memory Debugging
+You can utilise the Memory Debugging feature on both host and device code, please see [CUDA memory debugging](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/cuda_memory_debugging.html#cuda-memory-debugging) for more information on how to use this feature.
+
+# Linaro MAP: Profiling Applications running on Grace Hopper
+A Linaro MAP profile can be obtained by appending `map --profile` to the execution command. This will run your application and then generate a MAP file at the end of the run to inspect performance.
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_16.18.58_avs2iq.png" alt="Profiling on the Grace Hopper Superchip" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Profiling on the Grace Hopper Superchip</em></p>
+
+The main thread activity describes what the main thread of each process is doing over time. The X axis is time and the Y axis is colour coded to distinguish how many processes were doing a specific operation at a point in time. Purple is the CPU time spent waiting for the accelerator, green is main thread compute operations and orange is I/O operations. In the above profile, the main CPU thread is spending most of its time waiting for the accelerator with intermittent time being spent executing compute operations.
+
+Other metrics can also be shown, such as cycles per instruction and memory usage. This again is time on the X axis and the GPU memory usage metric value across processors on the Y axis. The time (X axis) is shared across all metrics, enabling comparison between collected metrics at a given sample point.
+
+GPU specific metrics can be selected in Linaro MAP, such as GPU power usage, GPU utilisation and GPU memory usage.
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_16.34.47_ztzfx5.png" alt="GPU Specific Metrics" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>GPU Specific Metrics</em></p>
+
+## GPU utilization
+Percent of time that the GPU card was in use, that is, one or more kernels are executing on the GPU card. If multiple cards are present in a compute node this value is the mean across all the cards in a compute node.
+
+## GPU memory usage
+The memory allocated from the GPU frame buffer memory as a percentage of the total available GPU frame buffer memory.
+
+## GPU power usage
+The cumulative power consumption of all GPUs on the node, as measured by the NVIDIA on-board sensor. 
+
+## Warp stalls
+When NVIDIA CUDA kernel analysis is enabled and the selected line is executed on the GPU, a breakdown of [warp stall](https://docs.linaroforge.com/latest/html/forge/map/cuda_profiling/kernel_analysis.html) reasons are displayed within Linaro MAP. Querying the tooltips for each warp stall provides a description of the warp stall reason.
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-07_at_22.29.34_fueajo.png" alt="Warp Stalls and GPU Kernels" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Warp Stalls and GPU Kernels</em></p>
+
+## GPU Kernels
+The [GPU Kernels](https://docs.linaroforge.com/latest/html/forge/map/rocm_profiling/rocm_kernels_tab.html#gpu-kernels-tab) tab lists the CUDA kernels that were detected in the program alongside graphs indicating when those kernels were active. If multiple kernels are identified in a process within a particular sample, then they are given equal weighting in this graph.
+
+## GPU memory transfer analysis
+The [Memory Transfer](https://docs.linaroforge.com/latest/html/forge/map/cuda_profiling/gpu_transfers_tab.html) tab provides insight into the memory transfers managed via CUDA, cudaMemcpy and similar calls. This mode can be enabled from the Run dialog or from the command line with `--cuda-transfer-analysis` and requires running Linaro MAP with `--cuda-kernel-analysis`.
+
+<CloudinaryImg src="/linaro-website/images/blog/Screenshot_2024-05-08_at_23.14.30_hlphbb.png" alt="Memory Transfer Analysis" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Memory Transfer Analysis</em></p>
+
+Three categories of metric are available:
+
+* Byte Transfer Rate: Bytes transferred per second per process. 
+* Memory Transfer Rate: Transfers per second per process.
+* Time Spent in Memory Transfers: Proportion of time in transfers per process
+
+# Final thoughts
+Linaro Forge has a range of features that enables debugging and profiling on both the Grace CPU and Hopper GPU. If you are familiar with Linaro Forge on a specific CPU or GPU architecture, then the same Linaro Forge user interface and features are extendable when porting codes to Grace Hopper. Please see [Reference table — Linaro Forge 24.0.2 documentation](https://docs.linaroforge.com/24.0.2/html/forge/supported_platforms/reference_table.html) for a full list of supported architectures and technologies.
