@@ -1,0 +1,54 @@
+---
+title: "Linaro Devboards Power Up Android 15 Right on Launch Day"
+description: Android 15 boots on Linaro reference devboards on the day of its release
+date: 2024-09-06T00:00:00.000Z
+image: /linaro-website/images/blog/image1_z6o8ic.png
+tags:
+  - android
+  - qualcomm
+  - hisilicon
+author: amit-pundir
+related: []
+
+---
+
+The source code for the latest Android release - Android 15 - is out! The android15-release branch in the Android Open Source Project (AOSP) boots straight out of the box on the Linaro supported reference Boards - Snapdragon 8 Gen 2 devboard (SM8550-HDK), Qualcomm Robotics Board RB5, Qualcomm Dragonboard 845c (DB845c, aka RB3) and HiSilicon Hikey960.
+
+This day-0 boot of Android 15 release is a result of continued collaboration between Linaro and Google. This collaborative effort between the upstream community, the Linaro Landing Team for Qualcomm, and Linaro’s Android team showcases their mutual dedication to keeping these devboards seamlessly aligned with the Android Open Source Project (AOSP).
+
+Linaro reference devboards for AOSP are meticulously tested and maintained by Linaro’s team of industry-leading experts, who ensure that they are always up to date with the latest software releases, security patches, and bug fixes. This level of support is critical, as it guarantees that developers have access to reliable and stable hardware, enabling them to focus on their projects without the added burden of troubleshooting hardware-software compatibility issues.
+
+![Easter-egg image of Android 15 running on SM8550-HDK](/linaro-website/images/blog/image4_fwjoth.jpg)
+
+![Easter-egg Image of Android 15 running on RB5](/linaro-website/images/blog/image2_ibbgnp.jpg)
+
+![Easter-egg Image of Android 15 running on DB845c](/linaro-website/images/blog/image3_fqvkki.jpg)
+
+![Easter-egg Image of Android 15 running on Hikey960](/linaro-website/images/blog/image5_udmw6f.jpg)
+
+# How to get Android 15 to boot on Linaro reference devboards?
+
+Since Android 13, we have enabled booting the same set of AOSP images (db845c-userdebug) on both DB845c and RB5. Interested developers can download the db845c-userdebug prebuilt images that we used for smoke testing Android 15 from here:
+https://releases.devboardsforandroid.linaro.org/android15-release/db845c-userdebug/
+
+Earlier this year Linaro added the sm8x50-userdebug build target in AOSP. This is a generic build target to support Qualcomm Snapdragon 8 Gen (ARMv9) devboards. Follow the build and flash instructions [here](https://devboardsforandroid.linaro.org/en/latest/devices/sm8550-hdk.html) to keep in sync with upstream development. Local builds with latest android-mainline Android Common Kernel and AOSP/main branch will unlock a lot more features like GPU rendering, WiFi-BT, Audio, USB-C host mode et al. Prebuilt sm8x50-userdebug Android 15 build images (smoke tested on SM8550-HDK) are hosted here for reference: https://releases.devboardsforandroid.linaro.org/android15-release/sm8x50-userdebug/.
+
+For Hikey960, users can download the hikey960-userdebug prebuilt images for Android 15 from here: https://releases.devboardsforandroid.linaro.org/android15-release/hikey960-userdebug/
+
+For advanced users who want to build the AOSP images from source, please follow the build instructions from here https://source.android.com/docs/setup/build/devices.
+
+# Benefits of Linaro Reference Devboards
+
+Linaro plays a crucial role in supporting Android Open Source Project (AOSP) on a wide array of development boards across various Android release versions and hardware platforms. This effort is vital because AOSP serves as the foundation for countless Android-based devices, and maintaining compatibility across a range of devboards ensures broader adoption and seamless integration for developers and manufacturers alike.
+ 
+Additionally, Linaro’s commitment to upstream development efforts ensures that the devboards remain in sync with the official AOSP, fostering a more unified development environment. This alignment reduces fragmentation, one of the major challenges in Android development, by ensuring that key features, optimizations, and fixes are consistently validated across devices.
+ 
+For companies and developers, using Linaro-supported devboards can significantly reduce both development time and costs. Since these boards are continuously maintained and updated, developers can work with confidence that their software will run smoothly on chosen hardware, reducing the risk of late-stage issues or incompatibilities. This level of assurance not only accelerates the development process but also enhances product quality, as any potential issues are identified and addressed early on.
+ 
+In this scenario, Linaro’s work is foundational to the Android ecosystem. By providing high-quality reference boards and expert support, Linaro empowers developers to build robust, efficient, and future-proof Android solutions, driving innovation and ensuring long-term sustainability for the platform.
+
+# Want to learn more and collaborate?
+
+To learn more about the work we do around devboards and AOSP, connect with us on IRC at #aosp-developers and/or #linaro-android on OFTC.
+
+Our team will be at OSS and Linux Plumbers 2024 in Wien from Sept, 16th till Sept, 20th! Our Engineers will be running several mini conferences and BoFs, covering topics such as Android, Devicetree, IoT & Embedded to name a few. We hope to see you there! 
