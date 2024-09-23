@@ -38,6 +38,15 @@ const borderColor = color ? `border-${color}` : `border-white`;
       )
     )
   }
-  <li><a href="/rss.xml" target="_blank" aria-label="RSS-feed"><Icon name="rss" size={size || 20}
-    class:list={[iconColor, "hover:text-linaro-yellow"]}></a></li>
+  <ul class:list={["not-prose flex flex-wrap", styles]}><li class="display: flex basis-3/7 items-center gap-1">
+    <a href="rss/news.xml" target="_blank" aria-label="RSS-feed">
+      <Icon name="rss" size={size || 20}
+    class:list={[iconColor, "hover:text-linaro-yellow", 'align-bottom']}
+    >
+  </a>
+  <p>News</p>
+</li>
+    <li class="display: flex basis-3/7 items-center gap-1"><a href="rss/blog.xml" target="_blank" aria-label="RSS-feed"><Icon name="rss" size={size || 20}
+      class:list={[iconColor, "hover:text-linaro-yellow"]}></a><p>Blog</p></li></ul>
+  
 </ul>
