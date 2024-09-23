@@ -17,36 +17,59 @@ const iconColor = color ? `text-${color}` : "text-white";
 const borderColor = color ? `border-${color}` : `border-white`;
 ---
 
-<ul class:list={["not-prose flex flex-wrap", styles]}>
-  {
-    icons.map(
-      ({ label, url, icon }: { url: string; icon: string; label: string }) => (
-        <li
-          class:list={[
-            borderColor,
-            outline ? `p-3 border-2 rounded-full` : "border-none",
-          ]}
-        >
-          <a href={url} target="_blank" aria-label={label}>
-            <Icon
-              name={icon}
-              size={size || 20}
-              class:list={[iconColor, "hover:text-linaro-yellow"]}
-            />
-          </a>
-        </li>
+<>
+  <ul class:list={["not-prose flex flex-wrap", styles]}>
+    {
+      icons.map(
+        ({
+          label,
+          url,
+          icon,
+        }: {
+          url: string;
+          icon: string;
+          label: string;
+        }) => (
+          <li
+            class:list={[
+              borderColor,
+              outline ? `p-3 border-2 rounded-full` : "border-none",
+            ]}
+          >
+            <a href={url} target="_blank" aria-label={label}>
+              <Icon
+                name={icon}
+                size={size || 20}
+                class:list={[iconColor, "hover:text-linaro-yellow"]}
+              />
+            </a>
+          </li>
+        ),
       )
-    )
-  }
-  <ul class:list={["not-prose flex flex-wrap", styles]}><li class="display: flex basis-3/7 items-center gap-1">
-    <a href="rss/news.xml" target="_blank" aria-label="RSS-feed">
-      <Icon name="rss" size={size || 20}
-    class:list={[iconColor, "hover:text-linaro-yellow", 'align-bottom']}
-    >
-  </a>
-  <p>News</p>
-</li>
-    <li class="display: flex basis-3/7 items-center gap-1"><a href="rss/blog.xml" target="_blank" aria-label="RSS-feed"><Icon name="rss" size={size || 20}
-      class:list={[iconColor, "hover:text-linaro-yellow"]}></a><p>Blog</p></li></ul>
-  
-</ul>
+    }
+  </ul>
+  <ul class:list={["not-prose flex flex-wrap mt-2", styles]}>
+    <li class="flex basis-3/7 items-center gap-1">
+      <a
+        href="rss/news.xml"
+        target="_blank"
+        aria-label="RSS-feed"
+        class="flex items-center hover:text-linaro-yellow"
+      >
+        <Icon name="rss" size={size || 20} class="text-current" />
+        News
+      </a>
+    </li>
+    <li class="flex basis-3/7 items-center gap-1">
+      <a
+        href="rss/blog.xml"
+        target="_blank"
+        aria-label="RSS-feed"
+        class="flex items-center hover:text-linaro-yellow"
+      >
+        <Icon name="rss" size={size || 20} class="text-current" />
+        Blog
+      </a>
+    </li>
+  </ul>
+</>
