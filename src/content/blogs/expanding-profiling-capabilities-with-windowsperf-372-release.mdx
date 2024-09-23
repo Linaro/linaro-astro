@@ -1,0 +1,124 @@
+---
+title: Expanding profiling capabilities with WindowsPerf 3.7.2 release
+description: Everything you need to know about the latest Windows Perf 3.7.2 release and its profiling capabilities
+date: 2024-09-10T09:00:00.000Z
+image: /linaro-website/images/blog/circuit_gyxicz.jpg
+tags:
+  - windows-on-arm
+author: przemyslaw-wirkus
+related: []
+
+---
+
+We are happy to announce the latest [WindowsPerf bug-fix release ver. 3.7.2](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/releases/3.7.2). This release based on [ver. 3.5.0-beta](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/releases/3.5.0-beta) is a continuation of WindowsPerf development effort. Current release focuses on extending profiling capabilities and user-space functionality. For previous releases check our [GitLab release page](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/releases).
+
+These updates aim to improve the performance and stability of the Kernel Driver. **Please update to the latest version** to benefit from these improvements!
+
+# Highlights from 3.7.2 Release
+
+This release includes several important updates
+
+* New `wperf man <name>` command which allows users to print manual style help about Telemetry Solution data (events, metrics and group of metrics).
+* Update Telemetry Solution data with Neoverse-V2.
+  * See [Neoverse V2 telemetry JSON](https://gitlab.arm.com/telemetry-solution/telemetry-solution/-/blob/main/data/pmu/cpu/neoverse/neoverse-v2.json?ref_type=heads) for more details.
+* We've enabled Event Tracing for Windows [(ETW)](https://learn.microsoft.com/en-us/windows-hardware/drivers/devtest/event-tracing-for-windows--etw-) output on the `wperf` application and `wperf-driver` by default for `Release` project configuration.
+  * Use [WindowsPerf WPA ETL Plugin](https://gitlab.com/Linaro/WindowsPerf/wpa-plugin-etl/-/releases) to interpret WindowsPerf ETW event injection with WPA. Read [plugin installation instructions](https://gitlab.com/Linaro/WindowsPerf/wpa-plugin-etl#installation) for more details.
+* Various command line options updates:
+  * Improvements to how we define core(s), for compatibility with Linux perf CLI.
+    * CPU ranges for `-c` are now available. Now you can use notation like `-c 1-3` which corresponds to `-c 1,2,3`. Use wherever applicable.
+    * New `--cpu` alias for `-c`.
+  * Add time units to `--timeout/sleep` and `-i` command line options. Now you can use suffixes:
+    * `ms` for milliseconds, `s` for seconds, `m` for minutes, `h` for hours, `d` for days. For example `--timeout 10s` for 10 seconds timeout.
+    * Note: However, `--timeout 2h30m` is not allowed.
+* Other minor improvements include:
+  * New FeatureString is added to `wperf --version` command to show users which `ENABLE_*` macros were enabled during driver and application build.
+  * We now correctly escape `\n` and `\t` when we output JSON with `wperf ... --json` commands.
+* Preview support for Arm Statistical Profiling Extension.
+
+# Arm Statistical Profiling Extension (SPE) support in WindowsPerf
+
+In addition to our roadmap improvements, we’ve also started working on support for Arm [Statistical Profiling Extension (SPE)](https://developer.arm.com/documentation/100616/0301/debug-descriptions/statistical-profiling-extension). WindowsPerf added in `sample` and `record` command support for the SPE. SPE is an optional feature in ARMv8.2 hardware that allows CPU instructions to be sampled and associated with the source code location where that instruction occurred.
+
+Note: Currently SPE is available on Windows On Arm in Test Mode only, due to OS SPE support limitations. WindowsPerf SPE implementation was tested on Windows 11 Pro 24H2 (OS build 26100.1150).
+
+Users can use the same `--annotate` and `--disassemble` interface of WindowsPerf with one exception. To reach out to SPE resources please use -e command with `arm_spe_0//` options. For example:
+
+```
+> wperf record -e arm_spe_0//` -c 0 --timeout 10 -- workload.exe
+```
+
+## SPE detection
+
+Note: SPE support in WindowsPerf is in development! You can enable beta code of SPE support with the `ENABLE_SPE` macro or just rebuild the project with `Debug+SPE` configuration.
+
+You can check if your hardware supports SPE or if WindowsPerf can detect it with `wperf test` command. See below an example of `spe_device.version_name` property value on a system with feature SPE. `FEAT_SPE` indicates your hardware has the necessary SPE extension baked in.
+
+```
+>wperf test
+        Test Name                                           Result
+        =========                                           ======
+...
+        spe_device.version_name                             FEAT_SPE
+```
+
+### How do I know if WindowsPerf binaries support optional SPE?
+
+You can check the feature string (`FeatureString`) of both `wperf` and `wperf-driver` with the `wperf --version` command. If `FeatureString` for both components (`wperf` and `wperf-driver`) contains `+spe` (and `spe_device.version_name` contains `FEAT_SPE`) you are good to go!
+
+```
+> wperf --version
+        Component     Version  GitVer          FeatureString
+        =========     =======  ======          =============
+        wperf         3.7.2    4338371a        +etw-app+spe
+        wperf-driver  3.7.2    4338371a        +trace+spe
+```
+
+## How to use SPE from command line
+
+Users can specify SPE filters with `arm_spe_0//`. We added CLI parser function for `-e arm_spe_0/*/` notation for `record` command. Where `*` is a comma separated list of supported filters. Currently we support filters. Users can define filters such as `store_filter=`, `load_filter=`, `branch_filter=` or short equivalents like `st=`, `ld=` and `b=`. Use `0` or `1` to disable or enable a given filter. For example:
+
+```
+> wperf record -e arm_spe_0/branch_filter=1/
+> wperf record -e arm_spe_0/load_filter=1,branch_filter=0/
+> wperf record -e arm_spe_0/st=0,ld=0,b=1/
+```
+
+SPE register `PMSFCR_EL1.FT` enables filtering by operation type. When enabled `PMSFCR_EL1.{ST, LD, B}` define the collected types:
+
+* `ST` enables collection of store sampled operations, including all atomic operations.
+* `LD` enables collection of load sampled operations, including atomic operations that return a value to a register.
+* `B` enables collection of branch sampled operations, including direct and indirect branches and exception returns.
+
+Filters `store_filter=`, `load_filter=`, `branch_filter=` enable these filters.
+
+## Example
+
+```
+> wperf record -e arm_spe_0/ld=1/ -c 8 -- cpython\PCbuild\arm64\python_d.exe -c 10**10**100
+base address of 'cpython\PCbuild\arm64\python_d.exe': 0x7ff69e251288, runtime delta: 0x7ff55e250000
+sampling ...e..........e... done!
+======================== sample source: LOAD_STORE_ATOMIC-LOAD-GP/retired+level1-data-cache-access+tlb_access, top 50 hot functions ========================
+        overhead  count  symbol
+        ========  =====  ======
+           93.75     15  x_mul:python312_d.dll
+            6.25      1  _Py_ThreadCanHandleSignals:python312_d.dll
+100.00%        16  top 2 in total
+```
+
+Annotate example with `ld=1` filter enabled: enables collection of load sampled operations, including atomic operations that return a value to a register.
+
+# WindowsPerf: what’s next 
+
+The WindowsPerf ecosystem has recently expanded its capabilities and now supports a [Visual Studio extension](https://www.linaro.org/blog/launching--windowsperf-visual-studio-extension-v210/) that is readily available in the [Microsoft Marketplace](https://marketplace.visualstudio.com/items?itemName=Arm.WindowsPerfGUI). This integration allows developers to leverage the robust performance analysis of WindowsPerf ver. 3.7.2 directly within the familiar environment of Visual Studio, enhancing productivity and efficiency. Read the extension [Wiki](https://gitlab.com/Linaro/WindowsPerf/vs-extension/-/wikis/home) pages for more details.
+
+Furthermore, we are excited to announce that our team is actively working on extending this support to Visual Studio Code. This upcoming feature will broaden the accessibility of WindowsPerf, enabling even more developers to optimize their applications with ease. Stay tuned for more updates on this front!
+
+# What to expect in the next release?
+
+* Stable support for Statistical Profiling Extension, please note that we may release a version with stable SPE-beta support before release 4.0.0 planned at the end of September.
+* Improved documentation on Event Tracing for Windows (ETW) support. We plan to write a comprehensive tutorial on how to use WindowsPerf and its `WPA-plugin-etl`. 
+
+# Where to find us?
+For source code and binary releases please visit our [WindowsPerf webpage at GitLab](https://gitlab.com/Linaro/WindowsPerf/windowsperf). Additional project resources include [WindowsPerf Wiki](https://linaro.atlassian.net/wiki/spaces/WPERF/overview) and [WindowsPerf JIRA](https://linaro.atlassian.net/jira/software/c/projects/WPERF/boards/169) project board.
+
+If you have any questions, issues you would like to raise please visit our [WindowsPerf GitLab issue page](https://gitlab.com/Linaro/WindowsPerf/windowsperf/-/issues) and create a new issue with a clear description of the problem you’re facing or issue you want help with.
