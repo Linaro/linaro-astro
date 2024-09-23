@@ -33,6 +33,9 @@ const links = [
     name: "Mastodon",
     baseUrl: "test",
   },
+  { name: 'Threads',
+    baseUrl: `https://www.threads.net/intent/post?url=${encodedUrl}`
+  }
 ];
 
 const iconMap = icons.reduce(
@@ -122,32 +125,6 @@ const borderColor = color ? `border-${color}` : `border-white`;
                         submit.setAttribute('href', `https://${instance}/share?text=${encodeURIComponent(description)}%20${encodeURIComponent(url)}`);
                     };
                 });
-            {/* const button = document.querySelector(".mastodon-share-");
-            if (button) {
-            button.addEventListener("click", (e) => {
-            // if (
-            // localStorage.getItem("mastodon-instance") &&
-            // localStorage.getItem("mastodon-instance") !== null
-            // ) {
-            // button.setAttribute(
-            //     "href",
-            //     `https://${localStorage.getItem("mastodon-instance")}/share?text=${encodeURIComponent(description)}%20${encodeURIComponent(url)}`
-            // );
-            // localStorage.removeItem("mastodon-instance");
-            // } else {
-            e.preventDefault();
-            const dialog = document.getElementById("mastodon-modal");
-            console.log(dialog);
-            dialog.showModal();
-            
-            // let instance = window.prompt("Please enter your Mastodon instance");
-            // if (!instance) {
-            //     instance = "mastodon.social";
-            // }
-            // localStorage.setItem("mastodon-instance", instance);
-            // } */}
-            {/* });
-             } */}
             </script>
             
             
