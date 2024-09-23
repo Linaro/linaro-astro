@@ -13,6 +13,7 @@ const { title, description, type = "website" } = Astro.props;
 ---
 
 <html lang="en">
+  <link rel="icon" href="/favicon.ico" sizes="any" />
   <BaseHead title={title + " | Linaro"} description={description} type={type} />
   <body class="min-h-screen flex flex-col text-white">
     <NavBar />
@@ -37,7 +38,7 @@ const { title, description, type = "website" } = Astro.props;
         },
         {
           rootMargin: "-300px 0px -300px 0px",
-        }
+        },
       );
 
       animatedElements.forEach((el) => {
@@ -51,7 +52,7 @@ const { title, description, type = "website" } = Astro.props;
 
       function addListeners() {
         const forms = document.querySelectorAll(
-          "[data-contact-form]"
+          "[data-contact-form]",
         ) as NodeListOf<HTMLFormElement>;
 
         forms.forEach((form) => {
@@ -64,7 +65,7 @@ const { title, description, type = "website" } = Astro.props;
 
         const feedback = form.parentElement!.querySelector("#contact-feedback");
         const feedbackText = form.parentElement!.querySelector(
-          "#contact-feedback-text"
+          "#contact-feedback-text",
         ) as HTMLParagraphElement;
 
         const button = form.querySelector("#contact-submit");
@@ -76,7 +77,7 @@ const { title, description, type = "website" } = Astro.props;
         const payload = {} as Record<string, any>;
 
         data.forEach((value, key) => (payload[key] = value));
-        delete payload.agreed
+        delete payload.agreed;
 
         button?.classList.add("hidden");
         loader?.classList.remove("hidden");
@@ -89,7 +90,7 @@ const { title, description, type = "website" } = Astro.props;
             headers: {
               "X-Api-Key": "ox9fSkYfRK16mxy5Gv6pM121H7iAubAQ6uzsDmoW",
             },
-          }
+          },
         )
           .then((response) => response.json())
           .then((result) => {
