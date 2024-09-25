@@ -1,0 +1,150 @@
+---
+import { Icon } from "astro-icon/components";
+import { getEntry } from "astro:content";
+
+type Props = {
+  size?: number;
+  color?: string;
+  outline?: boolean;
+  styles?: string;
+  description: string;
+};
+
+const { data: icons } = await getEntry("data", "socialsSharing");
+
+const url = Astro.request.url;
+
+const encodedUrl = encodeURIComponent(url);
+
+const links = [
+  {
+    name: "Facebook",
+    baseUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&amp;src=sdkpreparse`,
+  },
+  {
+    name: "X",
+    baseUrl: `https://twitter.com/intent/tweet?url=${url}`,
+  },
+  {
+    name: "LinkedIn",
+    baseUrl: `http://www.linkedin.com/shareArticle?mini=true&url=${url}`,
+  },
+  {
+    name: "Mastodon",
+    baseUrl: "test",
+  },
+  { name: 'Threads',
+    baseUrl: `https://www.threads.net/intent/post?url=${encodedUrl}`
+  }
+];
+
+const iconMap = icons.reduce(
+  (acc: { [x: string]: any }, item: { label: string; icon: any }) => {
+    acc[item.label] = item.icon;
+    return acc;
+  },
+  {}
+);
+
+const mergedLists = links.map((item) => ({
+  ...item,
+  icon: iconMap[item.name],
+}));
+
+const { size, color, outline, styles, description } = Astro.props;
+const iconColor = color ? `text-${color}` : "text-white";
+const borderColor = color ? `border-${color}` : `border-white`;
+---
+
+<div class="mt-2">
+    <dialog id="mastodon-modal" class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[10%] right-0 left-0">
+        <div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full">
+        <form method="dialog" class="flex flex-col items-start gap-8">
+            <label for="instance-input" class="text-3xl text-white my-2 font-bold">Please enter Mastodon Instance:</label>
+            <input type="text" id="instance-input" name="instance-input" class="text-black pl-2 h-12 w-full" value="mastodon.social"></input>
+            <div class="flex gap-8">
+                <a href='#' target="_blank" id="submit" class="linaro-gradient-button">Submit</a>
+                <button type="button" id="cancelButton" class="text-white font-bold">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+    </dialog>
+  
+  <ul class:list={["not-prose flex flex-wrap", styles]}>
+    {
+      mergedLists.map(
+        ({
+          name,
+          baseUrl,
+          icon,
+        }: {
+          baseUrl: string;
+          icon: string;
+          name: string;
+        }) =>
+          name === "Mastodon" ? (
+            <li
+              class:list={[
+                borderColor,
+                outline ? `p-3 border-2 rounded-full` : "border-none",
+              ]}>
+              <button
+                aria-label={name}
+                class="mastodon-share"
+                id="mastodon-share-button">
+                <Icon
+                  name={icon}
+                  size={size || 20}
+                  class:list={[iconColor, "hover:text-linaro-yellow"]}
+                />
+              </button>
+            </li>
+            <script define:vars={{ description, url }}>
+                const dialog = document.getElementById('mastodon-modal');
+                const openDialogButton = document.getElementById('mastodon-share-button');
+                const cancelButton = document.getElementById('cancelButton');
+                const userInput = document.getElementById('instance-input');
+                const submit = document.getElementById('submit');
+                let input = '';
+
+                openDialogButton.addEventListener('click', () => {
+                    dialog.showModal();
+                });
+                cancelButton.addEventListener('click', () => {
+                    dialog.close();
+                });
+                dialog.addEventListener('close', () => {
+                    if (dialog.returnValue !== 'cancel') {
+                        input = userInput.ariaValueMax;
+                    }
+                });
+                submit.addEventListener('click', () => {
+                    const instance = userInput.value;
+                    if (instance) {
+                        submit.setAttribute('href', `https://${instance}/share?text=${encodeURIComponent(description)}%20${encodeURIComponent(url)}`);
+                    };
+                });
+            </script>
+            
+            
+          ) : (
+            <li
+              class:list={[
+                borderColor,
+                outline ? `p-3 border-2 rounded-full` : "border-none",
+              ]}>
+              <a href={baseUrl} target="_blank" aria-label={name}>
+                <Icon
+                  name={icon}
+                  size={size || 20}
+                  class:list={[iconColor, "hover:text-linaro-yellow"]}
+                />
+              </a>
+            </li>
+          )
+      )
+    }
+  </ul>
+</div>
+
