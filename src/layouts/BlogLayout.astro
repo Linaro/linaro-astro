@@ -12,6 +12,7 @@ import stripMarkdown from "strip-markdown";
 import ArticleContent from "@/components/article/ArticleContent.astro";
 import { getCollection } from "astro:content";
 import BlogListing from "@/components/article/blog/BlogListing.astro";
+import SocialsSharing from "@/components/sections/SocialsSharing.astro";
 
 type Props = {
   post: CollectionEntry<"blogs">;
@@ -91,13 +92,11 @@ if (related.length > 0) {
   <main
     data-pagefind-body
     data-pagefind-filter={`type:${collection}`}
-    class="z-0"
-  >
+    class="z-0">
     <section
       class:list={[
         "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
-      ]}
-    >
+      ]}>
       <h1 class="text-5xl font-bold mb-16 max-w-4xl">
         {title}
       </h1>
@@ -127,6 +126,13 @@ if (related.length > 0) {
           class="block sm:inline-block sm:before:content-['|'] sm:before:mx-4"
           >{readTime}</span
         >
+        <SocialsSharing
+          size={20}
+          outline={false}
+          color="white"
+          styles="gap-6 justify-left"
+          description={description}
+        />
       </p>
       <ul class="flex flex-wrap gap-4 my-8">
         {
@@ -147,8 +153,7 @@ if (related.length > 0) {
   </main>
   <aside
     class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24"
-    data-pagefind-ignore
-  >
+    data-pagefind-ignore>
     <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Related Posts</h2>
     <ul class="flex flex-wrap gap-8 justify-center">
       {relatedPosts?.map((post) => <BlogListing {...post} />)}
