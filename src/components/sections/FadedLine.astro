@@ -1,0 +1,23 @@
+---
+import type { fadedLineSchema, textSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import * as marked from "marked";
+
+type Props = z.infer<typeof fadedLineSchema>;
+---
+
+<style lang="scss">
+  div {
+    height: 1px;
+    width: 20em;
+    margin: 0 auto;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+</style>
+
+<div></div>
