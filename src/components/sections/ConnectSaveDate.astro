@@ -1,0 +1,19 @@
+---
+import type { connectSaveDateSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+
+type Props = z.infer<typeof connectSaveDateSchema>;
+
+const { style } = Astro.props;
+---
+
+<div class:list={[style]}>
+  <h1 class="text-linaro-yellow text-center text-2xl">
+    Let's connect, learn and innovate together
+  </h1>
+  <a href="/" class="linaro-gradient-button self-center mt-4 no-underline"
+    >Save the date</a
+  >
+</div>
+
+<script></script>

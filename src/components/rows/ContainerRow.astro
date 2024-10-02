@@ -59,7 +59,7 @@ if (background_image) {
       ]}
       data-animate={animation === "none"
         ? null
-        : animation ?? "animate-fade-down"}
+        : (animation ?? "animate-fade-down")}
     >
       <slot />
     </div>

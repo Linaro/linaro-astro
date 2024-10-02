@@ -25,6 +25,24 @@ const pages = defineCollection({
             .optional(),
         })
         .optional(),
+      connectHero: z
+        .object({
+          background: z.string().optional(),
+          inner_image: z.string().optional(),
+          description: z.string().optional(),
+          dates: z.string(),
+          styles: z
+            .object({
+              text_container: z.string().optional(),
+              background: z.string().optional(),
+              background_container: z.string().optional(),
+              main_container: z.string().optional(),
+              title: z.string().optional(),
+              description: z.string().optional(),
+            })
+            .optional(),
+        })
+        .optional(),
       flow: z
         .array(
           rowSchemas.transform((val) => ({

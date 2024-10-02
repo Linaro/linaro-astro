@@ -1,0 +1,61 @@
+---
+import type { dateCountdownSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+
+type Props = z.infer<typeof dateCountdownSchema>;
+
+const { countdownDate } = Astro.props;
+---
+
+<div class="flex align-middle justify-center">
+  <div class="text-2xl tracking-wide">
+    <span class="text-linaro-yellow" id="days">0</span>
+    <span id="days-text">day</span>
+    <span class="mx-2">|</span>
+    <span class="text-linaro-yellow" id="hours">0</span>
+    <span id="hours-text">hour</span>
+    <span class="mx-2">|</span>
+    <span class="text-linaro-yellow" id="mins">0</span>
+    <span id="mins-text">min</span>
+    <span class="mx-2">|</span>
+    <span class="text-linaro-yellow" id="secs">0</span>
+    <span id="secs-text">sec</span>
+  </div>
+</div>
+
+<script define:vars={{ countdownDate }}>
+  const daysElem = document.getElementById("days"),
+    hoursElem = document.getElementById("hours"),
+    minutesElem = document.getElementById("mins"),
+    secondsElem = document.getElementById("secs"),
+    daysText = document.getElementById("days-text"),
+    hoursText = document.getElementById("hours-text"),
+    minutesText = document.getElementById("mins-text"),
+    secondsText = document.getElementById("secs-text");
+  const formatTime = (time, string) => {
+    return time == 1 ? `${string}` : `${string}s`;
+  };
+  const startCountdown = () => {
+    const now = new Date().getTime();
+    const countdown = new Date(countdownDate).getTime();
+    const difference = (countdown - now) / 1000;
+    let days = Math.floor(difference / (60 * 60 * 24));
+    let hours = Math.floor((difference % (60 * 60 * 24)) / (60 * 60));
+    let minutes = Math.floor((difference % (60 * 60)) / 60);
+    let seconds = Math.floor(difference % 60);
+
+    daysText.innerHTML = formatTime(days, "day");
+    hoursText.innerHTML = formatTime(hours, "hour");
+    minutesText.innerHTML = formatTime(minutes, "min");
+    secondsText.innerHTML = formatTime(seconds, "sec");
+    daysElem.innerHTML = days;
+    hoursElem.innerHTML = hours;
+    minutesElem.innerHTML = minutes;
+    secondsElem.innerHTML = seconds;
+  };
+  let timerInterval;
+  window.addEventListener("load", () => {
+    startCountdown();
+    timerInterval = setInterval(startCountdown, 1000);
+  });
+</script>

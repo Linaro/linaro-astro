@@ -331,7 +331,26 @@ export const tabsSchema = z.object({
 
 export const teamTailorSchema = z.object({
   component: component("team_tailor"),
-})
+});
+
+export const dateCountdownSchema = z.object({
+  component: component('date_countdown'),
+  countdownDate: z.string() 
+});
+
+export const fadedLineSchema = z.object({
+  component: component('faded_line')
+});
+
+export const connectSloganSchema = z.object({
+  component: component("connect_slogan"),
+  style: z.string().optional(),
+});
+
+export const connectSaveDateSchema = z.object({
+  component: component("connect_save"),
+  style: z.string().optional(),
+});
 
 export default z.discriminatedUnion("component", [
   buttonsSchema,
@@ -355,4 +374,8 @@ export default z.discriminatedUnion("component", [
   articlesSchema,
   tabsSchema,
   teamTailorSchema,
+  dateCountdownSchema,
+  fadedLineSchema,
+  connectSloganSchema,
+  connectSaveDateSchema
 ]);

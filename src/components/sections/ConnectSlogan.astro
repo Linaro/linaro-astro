@@ -1,0 +1,21 @@
+---
+import type { connectSloganSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import * as marked from "marked";
+
+type Props = z.infer<typeof connectSloganSchema>;
+
+const { style } = Astro.props;
+---
+
+<div class:list={[style]}>
+  <p class="text-center">
+    Join us at Linaro Connect, <br />where <span class="text-linaro-yellow"
+      >innovation</span
+    > meets <span class="bg-linaro-gradient text-transparent bg-clip-text"
+      >collaboration!</span
+    >
+  </p>
+</div>
+
+<script></script>
