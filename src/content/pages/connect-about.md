@@ -18,7 +18,7 @@ flow:
         styles:
           title: bg-linaro-gradient h-20 text-transparent bg-clip-text m-0
           description: m-8
-          content: items-center columns-2 gap-12 w-2/3
+          content: items-center columns-2 gap-12 w-2/3 text-pretty break-words
         text_content: |
           Register for Linaro Connect and join hundreds of the world’s leading Arm Open Source engineers. If you order your ticket today you will receive it at a discounted rate of XXX. These discounted tickets will be available until the end of March 2025. Tickets after that will be sold at the full price of XXXX.
 
@@ -51,7 +51,7 @@ flow:
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-2/3 gap-12
+          content: items-center columns-2 w-2/3 gap-12 text-pretty break-words
         text_content: |
           Attendees can book a room at the Melia Avenida America by contacting the booking team directly marta.rodriguez.morcillo@melia.com and belen.martinez@melia.com and mention you are attending Linaro Connect to get a preferred rate.
 
@@ -74,7 +74,7 @@ flow:
         title: Code of Conduct
         styles:
           title: md:min-w-[15ch] bg-linaro-gradient text-transparent bg-clip-text
-          content: items-center columns-2 gap-12 w-2/3 mt-6
+          content: items-center columns-2 gap-12 w-2/3 mt-6 text-pretty break-words
         text_content: |
           Linaro Ltd, as host for Linaro Connect, is dedicated to providing a harassment-free experience for participants at all of our events. Linaro events are working conferences intended for professional networking and collaboration in the Linux community. They exist to encourage the open exchange of ideas and expression and require an environment that recognizes the inherent worth of every person and group. While at Linaro events or related ancillary or social events, any participants, including speakers, attendees, volunteers, sponsors, exhibitors, booth staff and anyone else, should not engage in harassment in any form of communication or media including email, texting and social media.
 
