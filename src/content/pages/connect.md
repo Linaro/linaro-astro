@@ -42,7 +42,7 @@ flow:
         alt: ""
         style: h-[115vh]
       - component: text
-        style: absolute w-1/4 text-[white] text-4xl text-center left-[38%] bottom-[0%]
+        style: absolute w-1/4 text-[white] text-xl text-center left-[38%] bottom-[0%] 2xl:text-4xl
         text_content: Linaro Connect is where Arm excellence gathers and gets together every year for a full immersion about how to best implement, leverage, and foster the Arm solutions. Don't miss our keynotes, sessions, live demos and don't miss to talk to our experts!
   - row: container_row
     no_border: true
@@ -71,7 +71,7 @@ flow:
       - component: image_cards
         styles:
           card: max-w-[22em] p-8 flex flex-col bg-dark border-white border rounded-3xl border-solid
-          container: flex justify-center gap-x-8
+          container: flex justify-center gap-x-8 flex-wrap
           card_title: text-2xl
           image: m-0
           text: text-grey text-md leading-10

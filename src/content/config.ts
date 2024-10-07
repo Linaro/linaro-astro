@@ -27,7 +27,7 @@ const pages = defineCollection({
         .optional(),
       connectHero: z
         .object({
-          background: z.string().optional(),
+          background: z.string(),
           inner_image: z.string().optional(),
           description: z.string().optional(),
           child_page: z.boolean().optional(),
