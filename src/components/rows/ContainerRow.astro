@@ -3,7 +3,8 @@ import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
 import * as marked from "marked";
 
-const { styles, title, background_image, animation, no_border } = Astro.props;
+const { styles, title, background_image, animation, no_border, full_width } =
+  Astro.props;
 let titleMarkdown;
 if (title) {
   titleMarkdown = await marked.parseInline(title);
@@ -31,7 +32,9 @@ if (background_image) {
     styles?.outer,
   ]}
 >
-  <div class:list={[" container mx-auto px-4 md:px-8"]}>
+  <div
+    class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
+  >
     <div class="flex items-center">
       {
         title ? (

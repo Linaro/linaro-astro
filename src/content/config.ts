@@ -30,7 +30,8 @@ const pages = defineCollection({
           background: z.string().optional(),
           inner_image: z.string().optional(),
           description: z.string().optional(),
-          dates: z.string(),
+          child_page: z.boolean().optional(),
+          dates: z.string().optional(),
           styles: z
             .object({
               text_container: z.string().optional(),

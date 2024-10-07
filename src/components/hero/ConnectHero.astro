@@ -5,33 +5,57 @@ import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
 
 type Props = CollectionEntry<"pages">["data"]["connectHero"];
-const { background, inner_image, description, dates } = Astro.props;
+const { background, inner_image, description, dates, child_page } = Astro.props;
 ---
 
-<div class="video-container border-b-[10px] border-b-[#ffce00] border-solid">
-  <video autoplay muted loop class="background-video">
-    <source src="/videos/connect-bg-video.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  <div class="overlay">
-    <div class="overlay-content">
+{
+  child_page ? (
+    <div class="relative w-full h-auto overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
       <CloudinaryImg
-        src={inner_image}
-        alt="Linaro Connect Logo"
-        width={200}
-        height={200}
+        src={background}
+        alt="Linaro Connect background"
+        width={2800}
+        height={400}
+        class="m-0"
       />
-      <h1 class="text-3xl">{description}</h1>
-      <h1 class="text-linaro-yellow text-3xl">{dates}</h1>
+      <div class="overlay">
+        <div class="overlay-content">
+          <CloudinaryImg
+            src={inner_image}
+            alt="Linaro Connect Logo"
+            width={400}
+            height={400}
+          />
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  ) : (
+    <div class="video-container border-b-[10px] border-b-[#ffce00] border-solid">
+      <video autoplay muted loop class="background-video">
+        <source src={background} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="overlay bg-[rgba(0,_0,_0,_0.6)]">
+        <div class="overlay-content">
+          <CloudinaryImg
+            src={inner_image}
+            alt="Linaro Connect Logo"
+            width={200}
+            height={200}
+          />
+          <h1 class="text-3xl">{description}</h1>
+          <h1 class="text-linaro-yellow text-3xl">{dates}</h1>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 <style lang="scss">
   .video-container {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 500px;
     overflow: hidden;
   }
 
@@ -51,7 +75,6 @@ const { background, inner_image, description, dates } = Astro.props;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;

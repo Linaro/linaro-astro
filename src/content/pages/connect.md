@@ -4,7 +4,7 @@ slug: connect
 title: Connect
 description: Linaro Connect is a series of events that brings together the Arm Ecosystem. This is the ONLY place where developers, maintainers of both hardware and software can collaborate and discuss common problems
 connectHero:
-  background: linaro-website/images/events/connect-bg-video_exgfka.mp4
+  background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
   description: The next Linaro Connect will be in Lisbon, Portugal
   dates: Tuesday 13 May - Friday 16 May 2025
@@ -33,19 +33,27 @@ flow:
         style: text-4xl flex justify-center pt-0
   - row: container_row
     no_border: true
+    full_width: true
+    styles:
+      inner: flex flex-col items-center overflow-hidden h-auto
     sections:
-      - component: graphic
-        src: /linaro-website/images/events/connect-bubble_tv0jqa.png
-        alt: test
-        width: 2500
-        height: 4000
+      - component: large_image
+        src: /linaro-website/images/events/connect-bubbles_td2quo.png
+        alt: ""
+        style: h-[115vh]
+      - component: text
+        style: absolute w-1/4 text-[white] text-4xl text-center left-[38%] bottom-[0%]
+        text_content: Linaro Connect is <span style="font-size:1.2em;">**THE**</strong> place where industry leading experts in the Arm ecosystem - software and hardware alike - come together to work face to face.
   - row: container_row
     no_border: true
+    styles:
+      outer: purple-gradient-container
+      inner: pt-0
     sections:
       - component: cards
         styles:
-          card: w-[35ch]
-          container: justify-around gap-x-28 gap-y-20
+          card: w-[35ch] flex items-center flex-col text-center gap-2
+          container: justify-around gap-x-28 mb-40
         cards:
           - text: Gain valuable insight from industry-leaders through keynotes and technical sessions.
             icon: bulb
@@ -53,34 +61,49 @@ flow:
             icon: handshake
           - text: Network with hundreds of other like-minded professionals who are all working to move the Arm ecosystem forward
             icon: diversity
-  - row: container_row
-    no_border: true
-    sections:
       - component: connect_save
         style: mb-16 flex flex-col
       - component: faded_line
         styles: mt-8
-  # - row: container_row
-  #   sections:
-  #     - component: image_cards
-  #       styles:
-  #         card: w-[35ch]
-  #         container: justify-around gap-x-28 gap-y-20
-  #         card_title: lg:min-h-[4ch] max-w-[10ch]
-  #       cards:
-  #         - title: About
-  #           text: Registration
-  #           text: Accommodation & travel
-  #           text: Code of Conduct
-  #           image: linaro-website/images/events/connect-about-img_mwdtyg.png
-  #         - title: Program
-  #           text: COMING SOON!
-  #           image: linaro-website/images/events/connect-program-img_wpot8h.png
-  #         - title: Sponsorship
-  #           text: COMING SOON!
-  #           image: linaro-website/images/events/connect-sponsership-img_wwsncn.png
-  # - row: container_row
-  #   sections:
-  #     - component: image
-  # src: /linaro-website/images/events/connect-audience_bnhnll.png
+  - row: container_row
+    no_border: true
+    sections:
+      - component: image_cards
+        styles:
+          card: max-w-[22em] p-8 flex flex-col bg-dark border-white border rounded-3xl border-solid
+          container: flex justify-center gap-x-8
+          card_title: text-2xl
+          image: m-0
+          text: text-grey text-md leading-10
+        button_cards: true
+        cards:
+          - title: About
+            text: Registration<br>Accomadation<br>Code of Conduct
+            # text: Accommodation & travel
+            # text: Code of Conduct
+            image:
+              src: linaro-website/images/events/connect-about-img_mwdtyg.png
+              alt: "about-thumbnail-image"
+            url: "/connect/about"
+          - title: Program
+            text: COMING SOON!
+            image:
+              src: linaro-website/images/events/connect-program-img_wpot8h.png
+              alt: "program-thumbnail-image"
+
+          - title: Sponsorship
+            text: COMING SOON!
+            image:
+              src: linaro-website/images/events/connect-sponsership-img_wwsncn.png
+              alt: "sponsorship-thumbnail-image"
+  - row: container_row
+    no_border: true
+    full_width: true
+    styles:
+      inner: py-8 h-auto overflow-hidden
+    sections:
+      - component: large_image
+        src: /linaro-website/images/events/connect-audience_bnhnll.png
+        alt: Connect audience footer
+        style: w-full h-[500px] overflow-hidden
 ---
