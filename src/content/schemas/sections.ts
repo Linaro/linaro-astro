@@ -65,6 +65,7 @@ export const imageCardsSchema = z.object({
       container: z.string().optional(),
       card_title: z.string().optional(),
       image: z.string().optional(),
+      text: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -85,8 +86,9 @@ export const imageCardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
-    })
+      url: z.string().optional(),    })
   ),
+  button_cards: z.boolean().optional()
 });
 
 export const threeColumnSchema = z.object({
@@ -352,6 +354,24 @@ export const connectSaveDateSchema = z.object({
   style: z.string().optional(),
 });
 
+export const largeImageSchema = z.object({
+  component: component("large_image"),
+  src: z.string(),
+  alt: z.string(),
+  style: z.string().optional()
+})
+
+export const connectContentSchema = z.object({
+  component: component('connect_content'),
+  title: z.string(),
+  description: z.string().optional(),
+  styles: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    content: z.string().optional()
+  }).optional(),
+  text_content: z.string()
+})
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -377,5 +397,7 @@ export default z.discriminatedUnion("component", [
   dateCountdownSchema,
   fadedLineSchema,
   connectSloganSchema,
-  connectSaveDateSchema
+  connectSaveDateSchema,
+  largeImageSchema,
+  connectContentSchema,
 ]);
