@@ -43,7 +43,7 @@ flow:
         style: h-[115vh]
       - component: text
         style: absolute w-1/4 text-[white] text-4xl text-center left-[38%] bottom-[0%]
-        text_content: Linaro Connect is <span style="font-size:1.2em;">**THE**</strong> place where industry leading experts in the Arm ecosystem - software and hardware alike - come together to work face to face.
+        text_content: Linaro Connect is where Arm excellence gathers and gets together every year for a full immersion about how to best implement, leverage, and foster the Arm solutions. Don't miss our keynotes, sessions, live demos and don't miss to talk to our experts!
   - row: container_row
     no_border: true
     styles:
@@ -56,9 +56,9 @@ flow:
           container: justify-around gap-x-28 mb-40
         cards:
           - text: Gain valuable insight from industry-leaders through keynotes and technical sessions.
-            icon: bulb
-          - text: Get hands on experience at our training or hacking sessions, working alongside the world's leading Arm software experts.
             icon: handshake
+          - text: Get hands on experience at our training or hacking sessions, working alongside the world's leading Arm software experts.
+            icon: bulb
           - text: Network with hundreds of other like-minded professionals who are all working to move the Arm ecosystem forward
             icon: diversity
       - component: connect_save
@@ -86,13 +86,13 @@ flow:
               alt: "about-thumbnail-image"
             url: "/connect/about"
           - title: Program
-            text: COMING SOON!
+            text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
 
           - title: Sponsorship
-            text: COMING SOON!
+            text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:
               src: linaro-website/images/events/connect-sponsership-img_wwsncn.png
               alt: "sponsorship-thumbnail-image"
