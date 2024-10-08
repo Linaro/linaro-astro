@@ -2,12 +2,15 @@
 import type { CollectionEntry } from "astro:content";
 
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import * as marked from "marked";
 import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
 
 type Props = CollectionEntry<"pages">["data"]["connectHero"];
 
 const { background, inner_image, description, dates, child_page } =
   Astro.props!;
+
+const markdown = description && (await marked.parse(description));
 ---
 
 {
@@ -49,7 +52,7 @@ const { background, inner_image, description, dates, child_page } =
               height={200}
             />
           )}
-          <h1 class="text-3xl">{description}</h1>
+          <h1 class="text-3xl" set:html={markdown} />
           <h1 class="text-linaro-yellow text-3xl">{dates}</h1>
         </div>
       </div>

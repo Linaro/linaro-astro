@@ -23,7 +23,15 @@ const { countdownDate } = Astro.props;
   </div>
 </div>
 
+<script is:inline src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"
+></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"
+></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"
+></script>
 <script define:vars={{ countdownDate }}>
+  dayjs.extend(dayjs_plugin_utc);
+  dayjs.extend(dayjs_plugin_timezone);
   const daysElem = document.getElementById("days"),
     hoursElem = document.getElementById("hours"),
     minutesElem = document.getElementById("mins"),
@@ -33,17 +41,17 @@ const { countdownDate } = Astro.props;
     minutesText = document.getElementById("mins-text"),
     secondsText = document.getElementById("secs-text");
   const formatTime = (time, string) => {
-    return time == 1 ? `${string}` : `${string}s`;
+    return time === 1 ? `${string}` : `${string}s`;
   };
+  const targetTime = dayjs.tz("2025-05-13 14:00:00", "Europe/Lisbon");
+
   const startCountdown = () => {
-    const now = new Date().getTime();
-    const countdown = new Date(countdownDate).getTime();
-    const difference = (countdown - now) / 1000;
+    const now = dayjs();
+    const difference = targetTime.diff(now, "second");
     let days = Math.floor(difference / (60 * 60 * 24));
     let hours = Math.floor((difference % (60 * 60 * 24)) / (60 * 60));
     let minutes = Math.floor((difference % (60 * 60)) / 60);
     let seconds = Math.floor(difference % 60);
-
     daysText.innerHTML = formatTime(days, "day");
     hoursText.innerHTML = formatTime(hours, "hour");
     minutesText.innerHTML = formatTime(minutes, "min");
@@ -52,7 +60,11 @@ const { countdownDate } = Astro.props;
     hoursElem.innerHTML = hours;
     minutesElem.innerHTML = minutes;
     secondsElem.innerHTML = seconds;
+    if (difference <= 0) {
+      clearInterval(timerInterval);
+    }
   };
+
   let timerInterval;
   window.addEventListener("load", () => {
     startCountdown();

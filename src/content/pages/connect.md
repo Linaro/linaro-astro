@@ -6,8 +6,7 @@ description: Linaro Connect is a series of events that brings together the Arm E
 connectHero:
   background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
-  description: The next Linaro Connect will be in Lisbon, Portugal
-  dates: Tuesday 13 May - Friday 16 May 2025
+  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Tuesday 13 May - Friday 16 May 2025</span><br>Lisbon, Portugal
 flow:
   - row: container_row
     styles:
@@ -16,21 +15,35 @@ flow:
     no_border: true
     sections:
       - component: date_countdown
-        countdownDate: 05/13/2025 09:00 AM
+        countdownDate: 05/13/2025 02:00 PM
+  
   - row: container_row
     styles:
-      inner: py-6
-    no_border: true
-    sections:
-      - component: faded_line
-  - row: container_row
-    styles:
-      inner: flex justify-center
+      inner: flex flex-col items-center justify-center
       outer: flex justify-center
     no_border: true
     sections:
-      - component: connect_slogan
-        style: text-4xl flex justify-center pt-0
+      - component: text
+        text_content: Register for Linaro Connect 2025
+        style: text-xl
+      - component: connect_save
+      
+  - row: container_row
+    styles:
+      inner: mt-12 py-12
+    no_border: true
+    sections:
+      - component: faded_line
+      
+  - row: container_row
+    no_border: true
+    styles:
+      inner: flex flex-col items-center justify-center
+      outer: flex justify-center
+    sections: 
+      - component: text
+        text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
+        style: text-4xl
   - row: container_row
     no_border: true
     full_width: true
@@ -40,10 +53,12 @@ flow:
       - component: large_image
         src: /linaro-website/images/events/connect-bubbles_td2quo.png
         alt: ""
-        style: h-[115vh]
+        style: h-auto
       - component: text
-        style: absolute w-1/4 text-[white] text-xl text-center left-[38%] bottom-[0%] 2xl:text-4xl
-        text_content: Linaro Connect is where Arm excellence gathers and gets together every year for a full immersion about how to best implement, leverage, and foster the Arm solutions. Don't miss our keynotes, sessions, live demos and don't miss to talk to our experts!
+        style: absolute w-1/4 text-[white] text-md text-center left-[38%] bottom-[0%] 2xl:text-xl
+        text_content: "Get the opportunity for a full immersion on how to best implement, leverage and foster the Arm solutions. 
+        
+        Don’t miss our keynotes, sessions, live demos and don’t miss to talk to our experts!"
   - row: container_row
     no_border: true
     styles:
@@ -55,12 +70,15 @@ flow:
           card: w-[35ch] flex items-center flex-col text-center gap-2
           container: justify-around gap-x-28 mb-40
         cards:
-          - text: Gain valuable insight from industry-leaders through keynotes and technical sessions.
+          - text: Meet the Arm Excellence and it's Industry Leaders 
             icon: handshake
-          - text: Get hands on experience at our training or hacking sessions, working alongside the world's leading Arm software experts.
+          - text: Keep Up-To-Speed with Our Training Sessions
             icon: bulb
-          - text: Network with hundreds of other like-minded professionals who are all working to move the Arm ecosystem forward
+          - text: Collaborate with your Peers and Get in Touch with the Arm Network
             icon: diversity
+      - component: text
+        text_content: Mark Your Agenda for Lisbon May 13th-17th
+        style: text-linaro-yellow text-center text-2xl
       - component: connect_save
         style: mb-16 flex flex-col
       - component: faded_line
@@ -78,7 +96,7 @@ flow:
         button_cards: true
         cards:
           - title: About
-            text: Registration<br>Accomadation<br>Code of Conduct
+            text: Registration<br>Accommodation<br>Code of Conduct
             # text: Accommodation & travel
             # text: Code of Conduct
             image:
