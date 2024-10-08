@@ -18,6 +18,8 @@
       url: /services/consulting
     - label: Training & Learning
       url: /services/training
+    - label: NXP Platform Services
+      url: /services/nxp-platform-services
 - label: Ecosystem Projects
   key: ecosystem
   children:
@@ -33,7 +35,7 @@
       url: https://ecosystemdashboard.linaro.org
 - label: Resource Center
   key: resources
-  children: 
+  children:
     - label: Downloads
       url: /downloads
     - label: Blog
@@ -53,4 +55,3 @@
       url: /about
     - label: Careers
       url: /careers
-
