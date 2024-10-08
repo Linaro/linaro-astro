@@ -10,12 +10,23 @@ let width = 4000;
 let height = 1000;
 ---
 
-<div class:list={[style, "relative w-[110vw] overflow-x-hidden"]}>
+<div
+  class:list={[style, "relative w-[110vw] overflow-x-hidden"]}
+  id="img-container"
+>
   <CloudinaryImg
     src={src}
     alt={alt}
     width={width}
     height={height}
     class="absolute inset-0 left-1/2 transform -translate-x-1/2 w-[110vw] object-cover"
+    id="large-img"
   />
 </div>
+
+<script>
+  const container = document.getElementById("img-container")!;
+  const image = document.getElementById("large-img")!;
+  const childHeight = image.offsetHeight;
+  container.style.height = `${childHeight + 50}px`;
+</script>
