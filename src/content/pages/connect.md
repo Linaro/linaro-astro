@@ -30,32 +30,26 @@ flow:
       
   - row: container_row
     styles:
-      inner: mt-12 py-12
+      inner: mt-8 py-8
     no_border: true
     sections:
       - component: faded_line
-      
-  - row: container_row
-    no_border: true
-    styles:
-      inner: flex flex-col items-center justify-center
-      outer: flex justify-center
-    sections: 
-      - component: text
-        text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
-        style: text-4xl
   - row: container_row
     no_border: true
     full_width: true
     styles:
-      inner: flex flex-col items-center overflow-hidden h-auto
+      inner: flex flex-col items-center h-auto w-[110vw] relative overflow-x-hidden inset-0 -left-[5%]
+      outer: h-auto px-auto overflow-x-hidden
     sections:
+      - component: text
+        text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
+        style: text-xl lg:text-4xl text-center
       - component: large_image
         src: /linaro-website/images/events/connect-bubbles_td2quo.png
         alt: ""
         style: h-auto
       - component: text
-        style: absolute w-1/4 text-[white] text-md text-center left-[38%] bottom-[0%] 2xl:text-xl
+        style: absolute w-1/2 text-[white] text-xs text-center bottom-[20px] lg:text-2xl lg:w-1/4 -translate-x-2/4 left-2/4
         text_content: "Get the opportunity for a full immersion on how to best implement, leverage and foster the Arm solutions. 
         
         Don’t miss our keynotes, sessions, live demos and don’t miss to talk to our experts!"
@@ -97,8 +91,6 @@ flow:
         cards:
           - title: About
             text: Registration<br>Accommodation<br>Code of Conduct
-            # text: Accommodation & travel
-            # text: Code of Conduct
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"

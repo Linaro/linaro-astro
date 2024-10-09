@@ -43,7 +43,7 @@ const { countdownDate } = Astro.props;
   const formatTime = (time, string) => {
     return time === 1 ? `${string}` : `${string}s`;
   };
-  const targetTime = dayjs.tz("2025-05-13 14:00:00", "Europe/Lisbon");
+  const targetTime = dayjs.tz(countdownDate, "Europe/Lisbon");
 
   const startCountdown = () => {
     const now = dayjs();
