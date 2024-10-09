@@ -9,8 +9,8 @@ connectHero:
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
 flow:
   - row: container_row
+    animation: none
     no_border: true
-    # styles:
     sections:
       - component: connect_content
         title: Registration
@@ -36,14 +36,15 @@ flow:
 
           Note: Speakers that get their talks accepted will access the event with a complimentary speaker pass.
   - row: container_row
+    animation: none
     styles:
       inner: m-0
     no_border: true
     sections:
       - component: faded_line
   - row: container_row
+    animation: none
     no_border: true
-    # styles:
     sections:
       - component: connect_content
         title: Accommodation & Travel
@@ -61,14 +62,15 @@ flow:
 
           Visa & Business Letter - If you require a visa and need a business invitation letter and/or visa support letter, please register for Linaro Connect and then email connect@linaro.org
   - row: container_row
+    animation: none
     styles:
       inner: m-0
     no_border: true
     sections:
       - component: faded_line
   - row: container_row
+    animation: none
     no_border: true
-    # styles: mx-auto
     sections:
       - component: connect_content
         title: Code of Conduct
@@ -92,6 +94,7 @@ flow:
 
           We value your attendance.
   - row: container_row
+    animation: none
     no_border: true
     full_width: true
     styles:
