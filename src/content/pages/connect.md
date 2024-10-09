@@ -9,6 +9,7 @@ connectHero:
   description: Linaro Connect 2025<br><span class="text-linaro-yellow">Tuesday 13 May - Friday 16 May 2025</span><br>Lisbon, Portugal
 flow:
   - row: container_row
+    animation: none
     styles:
       outer: mt-8 mb-4
       inner: py-8
@@ -16,8 +17,8 @@ flow:
     sections:
       - component: date_countdown
         countdownDate: 05/13/2025 02:00 PM
-  
   - row: container_row
+    animation: none
     styles:
       inner: flex flex-col items-center justify-center
       outer: flex justify-center
@@ -27,14 +28,16 @@ flow:
         text_content: Register for Linaro Connect 2025
         style: text-xl
       - component: connect_save
-      
+        btnId: top-btn-save-date
   - row: container_row
+    animation: none
     styles:
       inner: mt-8 py-8
     no_border: true
     sections:
       - component: faded_line
   - row: container_row
+    animation: none
     no_border: true
     full_width: true
     styles:
@@ -50,10 +53,9 @@ flow:
         style: h-auto
       - component: text
         style: absolute w-1/2 text-[white] text-xs text-center bottom-[20px] lg:text-2xl lg:w-1/4 -translate-x-2/4 left-2/4
-        text_content: "Get the opportunity for a full immersion on how to best implement, leverage and foster the Arm solutions. 
-        
-        Don’t miss our keynotes, sessions, live demos and don’t miss to talk to our experts!"
+        text_content: Fully immerse yourself on how to best implement, leverage and foster Arm solutions. Don’t miss our keynotes, sessions, live demos and the opportunity to talk to our Arm software experts!
   - row: container_row
+    animation: none
     no_border: true
     styles:
       outer: purple-gradient-container
@@ -64,20 +66,22 @@ flow:
           card: w-[35ch] flex items-center flex-col text-center gap-2
           container: justify-around gap-x-28 mb-40
         cards:
-          - text: Meet the Arm Excellence and it's Industry Leaders 
+          - text: Meet Arm Excellence and it’s Industry Leaders
             icon: handshake
           - text: Keep Up-To-Speed with Our Training Sessions
             icon: bulb
-          - text: Collaborate with your Peers and Get in Touch with the Arm Network
+          - text: Collaborate with your Peers and connect with the Arm Network
             icon: diversity
       - component: text
         text_content: Mark Your Agenda for Lisbon May 13th-17th
         style: text-linaro-yellow text-center text-2xl
       - component: connect_save
         style: mb-16 flex flex-col
+        btnId: bottom-btn-save-date
       - component: faded_line
         styles: mt-8
   - row: container_row
+    animation: none
     no_border: true
     sections:
       - component: image_cards
@@ -107,6 +111,7 @@ flow:
               src: linaro-website/images/events/connect-sponsership-img_wwsncn.png
               alt: "sponsorship-thumbnail-image"
   - row: container_row
+    animation: none
     no_border: true
     full_width: true
     styles:

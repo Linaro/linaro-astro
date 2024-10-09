@@ -5,35 +5,33 @@ import { details } from "../../assets/connect-2025-invite";
 
 type Props = z.infer<typeof connectSaveDateSchema>;
 
-const { style } = Astro.props;
+const { style, btnId } = Astro.props;
 ---
 
 <div class:list={[style]}>
   <button
-    id="saveTheDateBtn"
+    id={btnId}
     class="linaro-gradient-button self-center mt-4 no-underline"
     >Save the Date</button
   >
 </div>
 
-<script define:vars={{ details }}>
-  if (document.getElementById("saveTheDateBtn") === null) {
+<script define:vars={{ details, btnId }}>
+  if (document.getElementById(btnId) === null) {
     return;
   } else {
-    document
-      .getElementById("saveTheDateBtn")
-      .addEventListener("click", function () {
-        let icsContent = details;
+    document.getElementById(btnId).addEventListener("click", function () {
+      let icsContent = details;
 
-        let blob = new Blob([icsContent], { type: "text/calendar" });
-        let url = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "linaro-connect.ics";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      });
+      let blob = new Blob([icsContent], { type: "text/calendar" });
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = "linaro-connect.ics";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
 
     function formatDate(date) {
       return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";

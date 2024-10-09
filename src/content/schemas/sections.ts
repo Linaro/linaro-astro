@@ -352,6 +352,7 @@ export const connectSloganSchema = z.object({
 export const connectSaveDateSchema = z.object({
   component: component("connect_save"),
   style: z.string().optional(),
+  btnId: z.string()
 });
 
 export const largeImageSchema = z.object({
