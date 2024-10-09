@@ -4,6 +4,7 @@ import {  getEntries } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Hero from "@/components/hero/Hero.astro";
+import ConnectHero from "@/components/hero/ConnectHero.astro";
 import { getEntryBySlug } from "astro:content";
 
 type Props = { frontmatter: CollectionEntry<"pages">};
@@ -14,7 +15,7 @@ const {
 } = Astro.props!;
 const page = await getEntryBySlug("pages", slug)
 
-const { title, description, flow, hero } = page.data
+const { title, description, flow, hero, connectHero } = page.data
 const allComponents = import.meta.glob("../components/{sections,rows}/*.astro") as Record<string, () => Promise<{default: AstroComponentFactory}>>
 const rowComponents = {} as Record<string, {default: AstroComponentFactory} >;
 const sectionComponents = {} as Record<
@@ -43,6 +44,7 @@ for (const sectionData of await getEntries(flow.map((row: any) => row.sections!.
     >
       <span  data-pagefind-meta="title" class="hidden">{title}</span>
       {hero && <Hero {...hero} />}
+      {connectHero && <ConnectHero {...connectHero} />}
       {
         flow?.map((row: any) => {
           const { row: component, sections, ...rowProps } = row
