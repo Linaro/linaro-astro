@@ -38,6 +38,8 @@ export const cardsSchema = z.object({
       container: z.string().optional(),
       card_title: z.string().optional(),
       button: z.string().optional(),
+      icon: z.string().optional(),
+      card_text: z.string().optional()
     })
     .optional(),
   cards: z.array(
@@ -333,6 +335,35 @@ export const teamTailorSchema = z.object({
   component: component("team_tailor"),
 })
 
+export const largeCardSchema = z.object({
+  component: component("large_card"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+      card_title: z.string().optional(),
+      button: z.string().optional(),
+      icon: z.string().optional(),
+      card_text: z.string().optional()
+    })
+    .optional(),
+  cards: z.array(
+    z.object({
+      title: z.string().optional(),
+      text: z.string().optional(),
+      icon: z.string().optional(),
+      secondIcon: z.string().optional(),
+      style: z.string().optional(),
+      button: z
+        .object({
+          text: z.string(),
+          url: z.string(),
+        })
+        .optional(),
+    })
+  ),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -355,4 +386,5 @@ export default z.discriminatedUnion("component", [
   articlesSchema,
   tabsSchema,
   teamTailorSchema,
+  largeCardSchema
 ]);
