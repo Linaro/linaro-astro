@@ -19,8 +19,6 @@ hero:
 flow:
   - row: container_row
     title: Why Choose Linaro for NXP Development?
-    styles:
-      outer: purple-gradient-container
     sections:
       - component: text
         text_content: "Linaro combines industry-leading expertise in Arm ecosystem OSS stacks development and integration with focus on security, performance, and reliability, scalability helping your business to:"
@@ -52,6 +50,8 @@ flow:
             style: linaro-gradient-button
   - row: container_row
     title: Linaro’s Expertise Across the NXP i.MX Series
+    styles:
+      outer: purple-gradient-container-no-padding
     sections:
       - component: text
         text_content: Linaro’s engineers are experts in working with NXP’s i.MX series, offering comprehensive support across the lifecycle of your products.
@@ -84,7 +84,7 @@ flow:
               ### Multimedia Frameworks
 
               Optimizing Linux multimedia pipelines such as GStreamer, enabling smooth playback and decoding of high-resolution video, such as H.265 4K at 60fps to delivery optimum user experience..
-            icon: key
+            icon: low_density
           - title: BSP development and Long-term Support (LTS)
             text: |
               ### Yocto & Android BSP Development and Integration
@@ -98,7 +98,7 @@ flow:
               ### Your OSS  Long-Term Support partner
 
               Maintain and security update of your OSS firmware and OS/BSP such as CVE scanning, vulnerability management and kernel security patching, upstreaming.
-            icon: key
+            icon: where_to_vote
           - title: Compliance and Certification Assistance and GAP analysis
             text: |
               ### Industry standard or regulation (eg. Automotive and Aviation, Medical device) Compliance
@@ -108,7 +108,7 @@ flow:
               ### Cybersecurity Resilience
 
               Secure by design practices in alignment with the Cybersecurity Resilience Act and other global or regional cybersecurity regulatory frameworks.
-            icon: key
+            icon: shield_person
   - row: container_row
     title: Supported by Linaro
     sections:
