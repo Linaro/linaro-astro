@@ -99,7 +99,7 @@ flow:
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            url: "/connect/about"
+            # url: "/connect/about"
           - title: Program
             text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:
