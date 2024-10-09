@@ -56,10 +56,12 @@ flow:
       - component: text
         text_content: Linaro’s engineers are experts in working with NXP’s i.MX series, offering comprehensive support across the lifecycle of your products.
         style: text-center text-3xl max-w-5xl mx-auto font-bold
-      - component: cards
+      - component: large_card
         styles:
           card: max-w-[60ch]
           container: justify-center gap-x-16
+          card_text: text-lg
+          card_title: text-2xl w-full
         cards:
           - title: Security Solutions for NXP Architectures
             text: |
@@ -75,6 +77,7 @@ flow:
 
               Designing update mechanisms that comply with stringent industry standards(eg. UN ECE R156).
             icon: key
+            secondIcon: linaro-website/graphics/circle-gradient-border
           - title: Multimedia content protection and DRM Enablement
             text: |
               ### DRM (Digital Right Management) Solutions
@@ -85,6 +88,7 @@ flow:
 
               Optimizing Linux multimedia pipelines such as GStreamer, enabling smooth playback and decoding of high-resolution video, such as H.265 4K at 60fps to delivery optimum user experience..
             icon: low_density
+            secondIcon: linaro-website/graphics/circle-gradient-border
           - title: BSP development and Long-term Support (LTS)
             text: |
               ### Yocto & Android BSP Development and Integration
@@ -99,6 +103,7 @@ flow:
 
               Maintain and security update of your OSS firmware and OS/BSP such as CVE scanning, vulnerability management and kernel security patching, upstreaming.
             icon: where_to_vote
+            secondIcon: linaro-website/graphics/circle-gradient-border
           - title: Compliance and Certification Assistance and GAP analysis
             text: |
               ### Industry standard or regulation (eg. Automotive and Aviation, Medical device) Compliance
@@ -109,6 +114,7 @@ flow:
 
               Secure by design practices in alignment with the Cybersecurity Resilience Act and other global or regional cybersecurity regulatory frameworks.
             icon: shield_person
+            secondIcon: linaro-website/graphics/circle-gradient-border
   - row: container_row
     title: Supported by Linaro
     sections:
