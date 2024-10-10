@@ -21,6 +21,7 @@ flow:
     title: Why Choose Linaro for NXP Development?
     styles:
       inner: py24 px-24
+      outer: mb-20
     sections:
       - component: text
         text_content: "Linaro combines industry-leading expertise in Arm ecosystem OSS stacks development and integration with focus on security, performance, and reliability, scalability helping your business to:"
