@@ -1,0 +1,113 @@
+---
+title: Linaro at Open Source Summit Europe & Linux Plumbers 2024
+description: Open Source Summit (OSS) Europe is one of the leading events for open source developers to come together and collaborate. The latest OSS took place in Vienna 16-18 September. Linaro had a strong presence with a booth as well as multiple technical sessions.
+date: 2024-10-08T09:00:00.000Z
+image: linaro-website/images/blog/OSS_Booth_2024_wvdkxc.jpg
+tags:
+  - arm
+  - open-source
+  - linux-kernel
+author: linaro
+related: []
+
+---
+
+Open Source Summit (OSS) Europe is one of the leading events for open source developers to come together and collaborate. The latest OSS took place in Vienna 16-18 September. Linaro had a strong presence with a booth as well as multiple technical sessions. 
+
+Linux Plumbers - the premier event for developers working on core Linux technology - was co-located with OSS and took place 18-20 September. Linaro has long had an active presence at this event with this year being no exception.
+
+In this blog, we share some of the highlights from both events. 
+
+# ONELab continues to attract attention
+
+![](/linaro-website/images/blog/image4_dtsrnk.jpg)
+
+Back in May we [announced ONELab](https://www.linaro.org/news/linaro-unveils-onelab-at-connect-revolutionizing-edge-compute-interoperability-testing/) - a product which enables Silicon Vendors and Device Makers to conduct continuous interoperability tests among different Operating Systems and Cloud Services. The ONELab demo we featured on the booth attracted a lot of attention, further proof that there is a gap in the market for tools which enable seamless interoperability edge device testing.  Head to our [ONELab page](https://www.linaro.org/solutions/onelab) to learn more! 
+
+# LTS sparks interest
+
+In 2017 Linaro created Linux Kernel Quality Program in partnership with Google and Greg KH. This program has provided a 6 year LTS (long term support) solution which allows companies to enhance the longevity of their Linux software. Test artifacts and reports, full Linux kernel source, binaries and configurations used for validation are all part of the Linaro LTS offering which is available for the Linux kernel, Tuested Firmware-A, OP-TEE and U-Boot on Arm. 
+
+LTS uses LKFT (Linux Kernel Functional Test) to run millions of tests and identify regressions. At the booth we showcased the LKFT dashboard to demonstrate how tests are run in real time. To learn more about Linaro LTS, [click here](https://www.linaro.org/solutions/lts). 
+
+# Training made a splash
+
+![](/linaro-website/images/blog/image3_kjzvpj.jpg)
+
+Daniel Thompson who heads up Linaro’s training services was on hand to talk about all the training we have on offer. We are looking to do a series of webinars in the coming months on training, with a particular focus on topics such as OP-TEE, Rust, Open-Embedded and Yocto.To register interest for our upcoming training, fill out the form here:
+
+[Linaro training - learn from the best](https://docs.google.com/forms/d/e/1FAIpQLSfBRyDU7QArVYIQQAT54c3cvwJRqJC-FM2_7cokV57f-OSX4g/viewform)
+
+# Technical sessions presented by Linaro at Open Source Summit Europe 
+
+In addition to our sponsor booth, we also had some noteworthy sessions presented by our technical experts. 
+
+## Devboards for Android Community 
+
+![](/linaro-website/images/blog/image5_lsb9dm.jpg)
+
+Linaro engineers frequently get asked the question which device prototype or development board they recommend for Android development. This planted the idea of creating a community around development boards which provides AOSP support. Introducing [The Devboards for Android community initiative](https://devboardsforandroid.linaro.org/en/latest/). 
+
+At OSS, Amit Pundir - Senior Engineer at Linaro - talked about the project and the aims of the project. Check out the complete [session here](https://www.youtube.com/watch?v=Dgy6jJC4irA&list=PLbzoR-pLrL6rC7SpO7MJCZm22Qp5ns3p-&index=181). 
+
+## Give me back my GPIO Persistance! (Introducing libgpiod GPIO-Manager)
+
+![](/linaro-website/images/blog/image1_ekzt0w.jpg)
+
+Ever since the GPIO character device was introduced as a proposed uAPI replacement for the deprecated sysfs interface, users have pointed to the lack of persistence of GPIO state. This new approach causes issues when trying to port code from sysfs to libgpiod. 
+
+In this talk, Bartosz Golaszewski - Linux Kernel Developer at Linaro - discussed two possible solutions to this problem. Check out the complete [session here](https://www.youtube.com/watch?v=tUFcWVwyzQg&list=PLbzoR-pLrL6rC7SpO7MJCZm22Qp5ns3p-&index=116). 
+
+## UCSI, TCPM, PD, AltModes: Demystifying USB-C and its support in Linux 
+
+Implementing Type-C support in Linux is no easy task as platform implementers need to understand different pieces of the Type-C stack (and various USB standards). 
+
+![](/linaro-website/images/blog/image2_rletmx.jpg)
+
+In this talk, Dmitry Baryshkov - Engineer at Linaro - provided an overview of the Linux USB-C subsystem and its different parts. 
+
+# Technical Sessions presented at Linux Plumbers
+
+Several of our Engineers also participated in mini conferences and BOFs at Linux Plumbers. 
+
+## PCI Endpoint Open Items Discussion
+
+![](/linaro-website/images/blog/image6_spiq60.jpg)
+
+At Linux Plumbers 2023, Manivannan Sadhasivam hosted a discussion on PCI Endpoints. At this years conference he did a follow up session, covering topics such as the state of Virtio support in PCI Endpoint Subsystem, using QEMU for testing PCI Endpoint Subsystem and so on. 
+
+## Making MIPI DSI power states fit Linux kernel
+
+As part of the Graphics & DRM Micro Conference, Dmitry Baryshkov presented a session on the challenges of fitting the MIPI DSI devices into standard DRM pre-enable/enable/disable/post-disable model. In his session he talked about possible solutions for the MIPI DSI drivers model. 
+
+## The wakeup path is not enough anymore for EAS
+
+As part of the Sched Micro Conference, Vincent Guittot presented a session on the Energy Aware Scheduler and the challenge of ensuring tasks wake up regularly and often enough to keep their placement energy efficient and responsive. In his talk, he talked about new mechanisms outside the wakeup path to help address these issues.
+
+At the Power Management and Thermal Control MC covered all things related to saving energy and managing heat. Daniel Lezcano presented several sessions:
+
+## Userspace trip points
+
+In this session, Daniel discussed userspace trip points and what can be done to tackle inconsistencies so that the userspace deals with thermal notifications in a more effective and consistent way. 
+
+## PID governor
+
+The step wise governor is used by most mobile platforms which are becoming increasingly more performant, causing them to overheat. As the temperature transitions rapidly shift, the step wise governor does not have enough time to apply the right cooling effect. In this session, Daniel presented a simplified PID governor to handle the mitigation. 
+
+## Power / Thermal / Performance interfaces
+
+The userspace is often platform specific when it comes to managing the thermal envelope of the platform, making it not suitable for supporting mainline kernels. In this session, Daniel discussed interfaces that could be used to create a generic mechanism in userspace which would work regardless of the hardware.
+
+## Supporting suspend-to-idle for legacy platforms
+
+Ulf Hansson also presented a session at the Power Management and Thermal Confrol Mini Conference. His session looked at what can be done to enable support for suspend-to-idle on legacy platforms. 
+
+## Linux-wpan: SubGHz, UWB and userspace needs
+
+As part of the IoT and Embedded Microconference, Stefan Schmidt presented a session on current problems faced by the linux-wpan/ieee802154 subsystem. 
+
+# It’s a wrap!
+
+In this blog we shared some of the highlights from Open Source Summit Europe 2024 and Linux Plumbers. We have left the event with lots of follow up actions from productive conversations and look forward to seeing everyone again at future OSS and Linux Plumber events! 
+
+To keep up to date on upcoming tradeshows Linaro will be present at or webinars we will host, make sure to subscribe to our newsletter by scrolling to the footer on our [homepage](https://www.linaro.org/).

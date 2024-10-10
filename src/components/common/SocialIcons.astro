@@ -51,6 +51,17 @@ const borderColor = color ? `border-${color}` : `border-white`;
   <ul class:list={["not-prose flex flex-wrap mt-2", styles]}>
     <li class="flex basis-3/7 items-center gap-1">
       <a
+        href="feed.xml"
+        target="_blank"
+        aria-label="RSS-feed"
+        class="flex items-center hover:text-linaro-yellow"
+      >
+        <Icon name="rss" size={size || 20} class="text-current" />
+        Feed
+      </a>
+    </li>
+    <li class="flex basis-3/7 items-center gap-1">
+      <a
         href="rss/news.xml"
         target="_blank"
         aria-label="RSS-feed"

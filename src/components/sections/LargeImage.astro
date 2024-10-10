@@ -1,0 +1,19 @@
+---
+import type { largeImageSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+
+type Props = z.infer<typeof largeImageSchema>;
+const { src, alt, style } = Astro.props;
+
+let width = 4000;
+let height = 4000;
+---
+
+<CloudinaryImg
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  id="large-img"
+/>

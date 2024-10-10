@@ -8,6 +8,7 @@ const rowReference = (filename: CollectionEntry<"rows">["slug"]) =>
 export const containerRowSchema = z.object({
   row: rowReference("container_row"),
   no_border: z.boolean().optional(),
+  full_width: z.boolean().optional(),
   title: z.string().optional(),
   styles: z
     .object({

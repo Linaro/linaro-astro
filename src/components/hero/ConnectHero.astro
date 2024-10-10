@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import * as marked from "marked";
+import CloudinaryVideo from "../cloudinary/CloudinaryVideo.astro";
+
+type Props = CollectionEntry<"pages">["data"]["connectHero"];
+
+const { background, inner_image, description, dates, child_page } =
+  Astro.props!;
+
+const markdown = description && (await marked.parse(description));
+---
+
+{
+  child_page ? (
+    <div class="relative w-full h-auto overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
+      <CloudinaryImg
+        src={background}
+        alt="Linaro Connect background"
+        width={2800}
+        height={400}
+        class="m-0"
+      />
+      {inner_image && (
+        <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-center">
+          <div class="flex flex-col items-center">
+            <CloudinaryImg
+              src={inner_image}
+              alt="Linaro Connect Logo"
+              width={400}
+              height={400}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  ) : (
+    <div class="relative w-full h-[500px] overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
+      <video
+        autoplay
+        muted
+        loop
+        class="absolute top-1/2 left-1/2 w-[100vw] h-auto -translate-x-1/2 -translate-y-1/2 min-h-full"
+      >
+        <source src={background} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-center bg-[rgba(0,_0,_0,_0.6)]">
+        <div class="flex flex-col items-center">
+          {inner_image && (
+            <CloudinaryImg
+              src={inner_image}
+              alt="Linaro Connect Logo"
+              width={200}
+              height={200}
+            />
+          )}
+          <h1 class="text-3xl m-0" set:html={markdown} />
+          <h1 class="text-linaro-yellow text-3xl m-0">{dates}</h1>
+        </div>
+      </div>
+    </div>
+  )
+}
