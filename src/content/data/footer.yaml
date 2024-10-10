@@ -37,7 +37,6 @@ nav_links:
         url: /projects/automotive-iot-edge
       - label: Cloud Computing & Servers
         url: /projects/cloud-computing
-
       - label: Ecosystem Dashboard
         url: https://ecosystemdashboard.linaro.org
   - label: Resource Center
@@ -55,6 +54,8 @@ nav_links:
         url: https://resources.linaro.org/
       - label: Events
         url: /events
+      - label: Connect 2025
+        url: /connect
   - label: Company
     key: company
     children:
