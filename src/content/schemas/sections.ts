@@ -354,6 +354,7 @@ export const largeCardSchema = z.object({
       icon: z.string().optional(),
       secondIcon: z.string().optional(),
       style: z.string().optional(),
+      flip_image: z.boolean().optional(),
       button: z
         .object({
           text: z.string(),
