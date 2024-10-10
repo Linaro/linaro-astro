@@ -126,7 +126,7 @@ flow:
       - component: image_cards
         styles:
           container: mx-auto flex justify-around
-          card: w-[50ch] text-center
+          card: w-[50ch] text-center flex flex-col justify-end
         cards:
           - text: "NXP i.MX9, i.MX8 and i.MX6 Series:"
             image:
