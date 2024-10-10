@@ -38,6 +38,8 @@ export const cardsSchema = z.object({
       container: z.string().optional(),
       card_title: z.string().optional(),
       button: z.string().optional(),
+      icon: z.string().optional(),
+      card_text: z.string().optional()
     })
     .optional(),
   cards: z.array(
@@ -362,6 +364,36 @@ export const largeImageSchema = z.object({
   style: z.string().optional()
 })
 
+export const largeCardSchema = z.object({
+  component: component("large_card"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+      card_title: z.string().optional(),
+      button: z.string().optional(),
+      icon: z.string().optional(),
+      card_text: z.string().optional()
+    })
+    .optional(),
+  cards: z.array(
+    z.object({
+      title: z.string().optional(),
+      text: z.string().optional(),
+      icon: z.string().optional(),
+      secondIcon: z.string().optional(),
+      style: z.string().optional(),
+      flip_image: z.boolean().optional(),
+      button: z
+        .object({
+          text: z.string(),
+          url: z.string(),
+        })
+        .optional(),
+    })
+  ),
+});
+
 export const connectContentSchema = z.object({
   component: component('connect_content'),
   title: z.string(),
@@ -372,7 +404,8 @@ export const connectContentSchema = z.object({
     content: z.string().optional()
   }).optional(),
   text_content: z.string()
-})
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -395,6 +428,7 @@ export default z.discriminatedUnion("component", [
   articlesSchema,
   tabsSchema,
   teamTailorSchema,
+  largeCardSchema,
   dateCountdownSchema,
   fadedLineSchema,
   connectSloganSchema,
