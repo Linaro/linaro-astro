@@ -3,13 +3,14 @@ import type { largeCardSchema } from "@/content/schemas/sections";
 import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
 import { marked } from "marked";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 type Props = z.infer<typeof largeCardSchema>;
 const { cards, styles } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+<ul class:list={["list-none flex flex-col flex-wrap p-0 ", styles?.container]}>
   {
-    cards.map(async ({ icon, title, text, button, style }, index) => {
+    cards.map(async ({ icon, title, text, button, style, flip_image, secondIcon }, index) => {
       const content = text ? await marked.parse(text) : null;
       return (
 
@@ -17,12 +18,13 @@ const { cards, styles } = Astro.props;
             <h3 class:list={["text-4xl my-5 z-50", styles?.card_title]}>
             {title}
           </h3>
-          <div>
-          {icon && <Icon name={icon} size={100} class:list={["my-0", styles?.icon]} />}
+          <div class:list={["flex", flip_image ? "flex-row" : "flex-row-reverse", "items-center"]}>
+            {secondIcon ? <div><CloudinaryImg src="linaro-website/graphics/circle-gradient-border" alt="circle" height={200} width={200}/><Icon name={icon} size={100} class:list={["my-0", styles?.icon]} /></div> : icon && <Icon name={icon} size={100} class:list={["my-0", styles?.icon]} />}
+          
           
 
           <div
-            class:list={[styles?.card_text, `text-xl prose-a:text-blue-300 text-inherit`]}
+            class:list={[styles?.card_text, `text-xl prose-a:text-blue-300 text-inherit grow-[2]`]}
             set:html={content}
           />
           </div>

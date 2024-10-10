@@ -58,7 +58,6 @@ flow:
         style: text-center text-3xl max-w-5xl mx-auto font-bold
       - component: large_card
         styles:
-          card: max-w-[60ch]
           container: justify-center gap-x-16
           card_text: text-lg
           card_title: text-2xl w-full
@@ -89,6 +88,7 @@ flow:
               Optimizing Linux multimedia pipelines such as GStreamer, enabling smooth playback and decoding of high-resolution video, such as H.265 4K at 60fps to delivery optimum user experience..
             icon: low_density
             secondIcon: linaro-website/graphics/circle-gradient-border
+            flip_image: true
           - title: BSP development and Long-term Support (LTS)
             text: |
               ### Yocto & Android BSP Development and Integration
@@ -115,6 +115,7 @@ flow:
               Secure by design practices in alignment with the Cybersecurity Resilience Act and other global or regional cybersecurity regulatory frameworks.
             icon: shield_person
             secondIcon: linaro-website/graphics/circle-gradient-border
+            flip_image: true
   - row: container_row
     title: Supported by Linaro
     sections:
