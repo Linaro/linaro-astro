@@ -29,9 +29,11 @@
       url: /projects/cloud-computing
     - label: Qualcomm Platform Services
       url: /projects/qualcomm-platform
+    - label: Ecosystem Dashboard
+      url: https://ecosystemdashboard.linaro.org
 - label: Resource Center
   key: resources
-  children: 
+  children:
     - label: Downloads
       url: /downloads
     - label: Blog
@@ -44,6 +46,8 @@
       url: https://resources.linaro.org/
     - label: Events
       url: /events
+    - label: Connect 2025
+      url: /connect
 - label: Company
   key: company
   children:
@@ -51,4 +55,3 @@
       url: /about
     - label: Careers
       url: /careers
-

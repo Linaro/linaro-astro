@@ -1,0 +1,12 @@
+---
+import type { fadedLineSchema, textSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import * as marked from "marked";
+
+type Props = z.infer<typeof fadedLineSchema>;
+---
+
+<div
+  class="h-px w-[20em] mx-auto bg-gradient-to-r from-transparent to-transparent via-white"
+>
+</div>
