@@ -7,13 +7,19 @@ interface Props {
   title: string;
   description: string;
   type?: string;
+  social_image?: string;
 }
 
-const { title, description, type = "website" } = Astro.props;
+const { title, description, type = "website", social_image } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title + " | Linaro"} description={description} type={type} />
+  <BaseHead
+    title={title + " | Linaro"}
+    description={description}
+    type={type}
+    social_image={social_image}
+  />
   <body class="min-h-screen flex flex-col text-white">
     <NavBar />
     <slot />
