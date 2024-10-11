@@ -79,7 +79,7 @@ const social_image = "";
       meta: [
         {
           name: "twitter:image",
-          content: social_image,
+          content: `${new URL(social_image, Astro.url)}`,
         },
         {
           property: "og:image",
