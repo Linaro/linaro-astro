@@ -96,13 +96,11 @@ if (related.length > 0) {
   <main
     data-pagefind-body
     data-pagefind-filter={`type:${collection}`}
-    class="z-0"
-  >
+    class="z-0">
     <section
       class:list={[
         "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
-      ]}
-    >
+      ]}>
       <h1 class="text-5xl font-bold mb-16 max-w-4xl">
         {title}
       </h1>
@@ -159,8 +157,7 @@ if (related.length > 0) {
   </main>
   <aside
     class="container mx-auto max-w-5xl px-8 xl:px-0 mb-24"
-    data-pagefind-ignore
-  >
+    data-pagefind-ignore>
     <h2 class="text-5xl text-linaro-yellow font-bold mb-16">Related Posts</h2>
     <ul class="flex flex-wrap gap-8 justify-center">
       {relatedPosts?.map((post) => <BlogListing {...post} />)}
