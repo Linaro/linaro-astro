@@ -15,6 +15,18 @@ const logoPublicId = 'linaro-website/graphics/infinito-cropped.svg';
 
 const social_image = getCldOgImageUrl({
   src: image,
+  effects: [
+    {
+      background: 'rgb:010A44'
+    },
+    {
+      color: 'rgb:2A005F',
+      colorize: '100'
+    },
+    {
+      gradientFade: 'symmetric'
+    }
+  ],
   overlays: [
     {
       publicId: image,
@@ -25,6 +37,7 @@ const social_image = getCldOgImageUrl({
         { opacity: 20 }
       ]
     },
+    
     {
       publicId: image,
       width: 1000,
