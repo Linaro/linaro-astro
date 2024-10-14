@@ -1,0 +1,96 @@
+---
+import type { largeCardSchema } from "@/content/schemas/sections";
+import { Icon } from "astro-icon/components";
+import type { z } from "astro/zod";
+import { marked } from "marked";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+type Props = z.infer<typeof largeCardSchema>;
+const { cards, styles } = Astro.props;
+---
+
+<ul
+  class:list={["list-none flex flex-col flex-wrap gap-16", styles?.container]}
+>
+  {
+    cards.map(
+      async (
+        { icon, title, text, button, style, flip_image, secondIcon },
+        index,
+      ) => {
+        const content = text ? await marked.parse(text) : null;
+        return (
+          <li class:list={[styles?.card, style]}>
+            <h3
+              class:list={[
+                "text-3xl my-5 z-50 text-linaro-yellow",
+                styles?.card_title,
+              ]}
+            >
+              {title}
+            </h3>
+            <div
+              class:list={[
+                "flex gap-8",
+                flip_image ? "flex-row" : "flex-row-reverse",
+              ]}
+            >
+              {secondIcon ? (
+                <div class="basis-2/5 grow-[1] relative">
+                  <CloudinaryImg
+                    src="linaro-website/graphics/circle-gradient-border"
+                    alt="circle"
+                    height={200}
+                    width={200}
+                    class="absolute not-prose top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                  />
+
+                  <Icon
+                    name={icon}
+                    size={100}
+                    class:list={[
+                      "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+                      styles?.icon,
+                    ]}
+                  />
+                </div>
+              ) : (
+                icon && (
+                  <Icon
+                    name={icon}
+                    size={100}
+                    class:list={["my-0", styles?.icon]}
+                  />
+                )
+              )}
+
+              <div
+                class:list={[
+                  styles?.card_text,
+                  `basis-3/5 text-lg text-inherit grow-[2]`,
+                ]}
+                set:html={content}
+              />
+            </div>
+
+            {button && (
+              <a
+                href={button.url}
+                target={button.url.startsWith("https") ? "_blank" : "_self"}
+                class="no-underline inline-block mt-auto"
+              >
+                <div
+                  class:list={[
+                    `linaro-gradient-button mt-auto`,
+                    styles?.button,
+                  ]}
+                >
+                  {button.text}
+                </div>
+              </a>
+            )}
+          </li>
+        );
+      },
+    )
+  }
+</ul>
