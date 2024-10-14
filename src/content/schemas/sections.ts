@@ -373,6 +373,7 @@ export const connectContentSchema = z.object({
   }).optional(),
   text_content: z.string()
 })
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
