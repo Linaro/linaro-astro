@@ -50,7 +50,7 @@ flow:
       - component: buttons
         buttons:
           - text: Read the Aviation use case
-            url: /assets/downloads/Linaro Security Expertise Case Study- secure video streaming system for the aviation industry.pdf
+            url: https://static.linaro.org/assets/Linaro_Security_Expertise_Case_Study-secure_video_streaming_system_for_the_aviation_industry.pdf
             style: linaro-gradient-button
   - row: container_row
     title: Linaro’s Expertise Across the NXP i.MX Series
