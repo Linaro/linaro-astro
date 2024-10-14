@@ -22,6 +22,7 @@ export default {
             CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
             CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
             CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
+            PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME!,
           },
         });
         stack.addOutputs({
@@ -50,6 +51,7 @@ export default {
             CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
             CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
             CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
+            PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME!,
             IS_PREVIEW: process.env.IS_PREVIEW!,
           },
         });
