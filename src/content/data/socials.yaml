@@ -10,3 +10,6 @@
 - label: YouTube
   icon: youtube
   url: https://www.youtube.com/linaroorg
+- label: Mastodon
+  icon: mastodon
+  url: https://mastodon.social/@LinaroLtd
