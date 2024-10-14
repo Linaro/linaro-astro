@@ -7,7 +7,7 @@ type Props = z.infer<typeof cardsSchema>;
 const { cards, styles } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+<ul class:list={["list-none flex flex-wrap", styles?.container]}>
   {
     cards.map(async ({ icon, title, text, button, style }, index) => {
       const content = text ? await marked.parse(text) : null;

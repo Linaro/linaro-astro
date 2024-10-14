@@ -18,6 +18,10 @@
       url: /services/consulting
     - label: Training & Learning
       url: /services/training
+    - label: NXP Platform Services
+      url: /services/nxp-platform-services
+    - label: Qualcomm Platform Services
+      url: /projects/qualcomm-platform
 - label: Ecosystem Projects
   key: ecosystem
   children:
@@ -27,8 +31,6 @@
       url: /projects/automotive-iot-edge
     - label: Cloud Computing & Servers
       url: /projects/cloud-computing
-    - label: Qualcomm Platform Services
-      url: /projects/qualcomm-platform
     - label: Ecosystem Dashboard
       url: https://ecosystemdashboard.linaro.org
 - label: Resource Center

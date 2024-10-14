@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: Security Expertise Case Study
+            image:
+              src: linaro-website/graphics/airplane-seat-back-with-blank-screen_yaqoa2.jpg
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Linaro_Security_Expertise_Case_Study-secure_video_streaming_system_for_the_aviation_industry.pdf
           - text: Linaro Automotive Strategy
             image:
               src: linaro-website/graphics/Automotive_strategy1_rgrqe8
