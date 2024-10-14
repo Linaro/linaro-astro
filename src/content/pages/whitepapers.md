@@ -30,7 +30,7 @@ flow:
         cards:
           - text: Security Expertise Case Study
             image:
-              src: linaro-website/graphics/Automotive_strategy1_rgrqe8
+              src: linaro-website/graphics/airplane-seat-back-with-blank-screen_yaqoa2.jpg
               alt: ""
             button:
               text: Read more
