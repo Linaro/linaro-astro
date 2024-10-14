@@ -36,7 +36,7 @@ const {
 } = Astro.props;
 
 const { data: author } = (await getEntry(
-  authorRef
+  authorRef,
 )) as CollectionEntry<"authors">;
 
 const tags = await getEntries(tagList);
@@ -61,7 +61,7 @@ const summary =
       .use(stripMarkdown, {
         remove: ["heading"],
       })
-      .process(body)
+      .process(body),
   )
     .split(" ")
     .slice(0, 30)
@@ -87,7 +87,11 @@ if (related.length > 0) {
 }
 ---
 
-<BaseLayout title={title + " | Newsroom"} description={description}>
+<BaseLayout
+  title={title + " | Newsroom"}
+  description={description}
+  image={image}
+>
   <main
     data-pagefind-body
     data-pagefind-filter={`type:${collection}`}

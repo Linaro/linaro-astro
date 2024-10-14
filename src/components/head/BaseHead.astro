@@ -4,27 +4,14 @@ import GoogleAnalytics from "./GoogleAnalytics.astro";
 import { SEO } from "astro-seo";
 import "@fontsource/lato";
 import "../../styles/global.scss";
-
-import defaultImageFile from 'public/assets/images/Linaro-logo-white.png'
+import { getCldOgImageUrl } from 'astro-cloudinary/helpers';
 
 const GA_ID = import.meta.env.GA_ID;
 
-const { title = "", description = "", type = "website" } = Astro.props;
+const { title = "", description = "", type = "website", image = "" } = Astro.props;
 
-const siteBaseURL = new URL(Astro.url);
-const defaultImage = new URL(defaultImageFile.src, siteBaseURL);
+const social_image = getCldOgImageUrl({ src: image });
 
-let { image: _image } = Astro.props;
-_image = _image || defaultImage;
-
-let image = null;
-if (typeof _image === 'string') {
-    image = new URL(_image, siteBaseURL);
-} else if (_image && typeof _image['href'] !== 'undefined') {
-    image = new URL(_image['href'], siteBaseURL);
-} else {
-	image = defaultImage;
-}
 ---
 
 <head>
@@ -73,23 +60,15 @@ if (typeof _image === 'string') {
       basic: {
         title: title,
         type: type,
-        image: _image?.src ? _image.src : defaultImage.toString(),
+        image: social_image,
       },
-      image: {
-			url: image.toString(),
-			secureUrl: image.toString(),
-			alt: 'Linaro Blog',
-			height: _image?.height,
-			width: _image?.width,
-			type: _image?.format && `image/${_image.format}`,
-		},
     }}
     ,
     twitter={{
       title: title,
       description: description.slice(0, 196) + "...",
-      card: image ? 'summary_large_image' : 'summary',
-      image: image ? image.toString() : undefined,
+      card: "summary_large_image",
+      image: social_image,
       creator: "@LinaroOrg",
     }}
     extend={{
@@ -100,14 +79,14 @@ if (typeof _image === 'string') {
         },
       ],
       meta: [
-        // {
-        //   name: "twitter:image",
-        //   content: ogImageUrl,
-        // },
-        // {
-        //   property: "og:image",
-        //   content: ogImageUrl,
-        // },
+        {
+          name: "twitter:image",
+          content: social_image,
+        },
+        {
+          property: "og:image",
+          content: social_image,
+        },
         {
           property: "og:description",
           content: description,
