@@ -6,14 +6,20 @@ import Footer from "@/components/footer/Footer.astro";
 interface Props {
   title: string;
   description: string;
+  image?: string;
   type?: string;
 }
 
-const { title, description, type = "website" } = Astro.props;
+const { title, description, type = "website", image } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title + " | Linaro"} description={description} type={type} />
+  <BaseHead
+    title={title + " | Linaro"}
+    description={description}
+    image={image}
+    type={type}
+  />
   <body class="min-h-screen flex flex-col text-white">
     <NavBar />
     <slot />

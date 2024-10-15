@@ -57,7 +57,7 @@ const summary =
       .use(stripMarkdown, {
         remove: ["heading"],
       })
-      .process(body)
+      .process(body),
   )
     .split(" ")
     .slice(0, 30)
@@ -79,14 +79,14 @@ const upcomingEvents = (
     ({ data }) =>
       (String(import.meta.env.IS_PREVIEW) === "true" ||
         Date.now() > new Date(data.date_published).getTime()) &&
-      new Date(data.event_start).getTime() > Date.now()
+      new Date(data.event_start).getTime() > Date.now(),
   )
 )
   .sort((a, b) => dayjs(b.data.event_start).diff(a.data.event_start))
   .slice(0, 3);
 ---
 
-<BaseLayout title={title + " | Events"} description={description}>
+<BaseLayout title={title + " | Events"} description={description} image={image}>
   <main data-pagefind-body data-pagefind-filter="type:events" class="z-0">
     <section
       class:list={[
