@@ -10,7 +10,6 @@ const GA_ID = import.meta.env.GA_ID;
 
 const { title = "", description = "", type = "website", image = "" } = Astro.props;
 
-//const social_image = getCldOgImageUrl({ src: image });
 const logoPublicId = 'linaro-website/graphics/infinito-cropped.svg';
 
 const social_image = getCldOgImageUrl({
@@ -20,7 +19,7 @@ const social_image = getCldOgImageUrl({
       background: 'rgb:010A44'
     },
     {
-      color: 'rgb:2A005F',
+      color: 'rgb:6715E8',
       colorize: '100'
     },
     {
@@ -28,6 +27,24 @@ const social_image = getCldOgImageUrl({
     }
   ],
   overlays: [
+    {
+      width: 1000,
+      crop: 'fit',
+      text: {
+        color: 'white',
+        fontFamily: 'sofia-pro',
+        fontSize: 36,
+        fontWeight: 'normal',
+        lineSpacing: 10,
+        lineSpacing: 10,
+        text: title
+      },
+      position: {
+        x: 100,
+        y: 100,
+        gravity: 'north_west'
+      },
+    },
     {
       publicId: image,
       width: 1200,
