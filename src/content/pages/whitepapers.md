@@ -23,8 +23,8 @@ flow:
       - component: image_cards
         styles:
           container: gap-2 justify-center flex flex-wrap
-          button: my-4
-          card: flex  px-4 flex-col justify-between items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch]
+          button: my-4 max-w-[129px]
+          card: flex px-4 flex-col justify-between rounded-2xl text-white bg-black w-full max-w-[30ch] min-h-[450px]
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
