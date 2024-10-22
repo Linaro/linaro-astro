@@ -38,12 +38,7 @@ const { cards, styles, button_cards } = Astro.props;
                   class="no-underline"
                   target={button.url.startsWith("https") ? "_blank" : "_self"}
                 >
-                  <div
-                    class:list={[
-                      `linaro-gradient-button justify-self-start items-start `,
-                      styles?.button,
-                    ]}
-                  >
+                  <div class:list={[`linaro-gradient-button`, styles?.button]}>
                     {button.text}
                   </div>
                 </a>
