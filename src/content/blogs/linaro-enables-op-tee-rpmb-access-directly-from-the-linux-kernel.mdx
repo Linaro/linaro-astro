@@ -1,0 +1,51 @@
+---
+title: "Linaro enables OP-TEE RPMB access directly from the Linux Kernel"
+description: Tee-supplicant, the user space application in the OP-TEE solution has been responsible for the communication with the RPMB (Replay Protected Memory Block) device. This however, also meant that access to secure storage hasn't been available until the system has been fully up and running. Nowadays functionality depends on the secure storage being up and running early – e.g implementing a firmware TPM to enhance the system security. To address this issue, Linaro have worked on and upstreamed support enabling RPMB access directly from Linux kernel before user space has been started.
+date: 2024-10-22T00:00:00.000Z
+image: linaro-website/images/blog/Virtualization_image_x3vb2d.png
+tags:
+  - system-ready
+author: ilias-apalodimas
+related: []
+---
+
+OP-TEE is a secure world OS implementation that is maintained by Linaro. In this blog, we talk about the work we have done to ensure access to secure storage before user space has been started. This has been achieved by upstreaming support enabling RPMB access directly from the Linux kernel.
+
+## How OP-TEE accesses an RPMB
+
+There are use cases where users want to store data that are sensitive. We need to guarantee the confidentiality and integrity of the data stored as well as the atomicity of the operations that modify the storage.
+
+OP-TEE can store data in either
+
+- A non-secure world filesystem, i.e., the normal filesystem.
+- An RPMB
+
+We are interested in the latter and the documentation describes in [detail](https://optee.readthedocs.io/en/latest/architecture/secure_storage.html#rpmb-secure-storage) the accesses and the components involved to achieve that.
+
+Since the eMMC (embedded Multi-Media Card) is not under the control of the Secure World and OP-TEE does not have any RPMB drivers, we need help from Linux userspace to complete the transactions and mediate the messages to the Linux kernel. The OP-TEE supplicant is a userspace application that mediates accesses for us and it looks like this:
+
+![tpm-access-diagram-one](/linaro-website/images/blog/flow-diagram_fo1czc.png)
+
+## Early storage access
+
+Using Secure Storage from a Trusted application works as long as you can wait for userspace and the OP-TEE supplicant to come up.
+
+But nowadays we use OP-TEE for more than just running user-specific TAs (Trusted Applications). For example, we use it to run a fTPM TA if a discrete one is not available, enhancing the overall security of the device. We also use it to store sensitive UEFI [variables](https://old.linaro.org/blog/protected-uefi-variables-with-u-boot/) that control UEFI Secure Boot.
+
+With users starting to deploy systemd UKIs for UEFI secure and measured boot, the current implementation expects the OP-TEE supplicant in userspace to be up and running before fTPM TA is available, in order to retrieve the encryption secrets and mount your root filesystem. This is when it gets tricky for users. Since there is a dependency between the fTPM and the supplicant, we have to compile fTPM as a module. But even if you do so you need a complex initramfs which tracks the dependencies and makes sure the launch order is always correct. On top of that, shutting down the supplicant once the initramfs has completed the decryption process and restarting later when our userspace is launching comes with its own set of problems. All these challenges may lead to a non usable TPM (trusted platform module).
+
+But even if this would work, having the Linux kernel depend on a userspace application for its core functionality is something we should avoid at all costs. The kernel should be able to control all the hardware resources without having to rely on userspace applications.
+
+## Introducing Linux kernel TEE supplicant
+
+At Linaro, we have recognized this issue with the supplicant functionality and decided that the best approach is to add some of the supplicant functionality directly to the Linux kernel.
+
+With this [patchset](https://lore.kernel.org/lkml/20240916145352.388340-1-ulf.hansson@linaro.org/), the core functionality is moved in the Linux kernel. The requirement for a userspace supplicant is no longer needed as the kernel now immediately forwards all TPM requests to access the RPMB directly into the eMMC subsystem. With this enabled, access for the RPMB storage is available as soon as the kernel driver has been initialized and as a result, the fTPM now works whether it’s compiled into the kernel, or loaded as a module, and thereby the userspace dependencies have been removed.
+
+The TPM access to the RPMB now looks like this
+
+![tpm-access-diagram-two](/linaro-website/images/blog/flow-diagram-2_gzcyij.png)
+
+## Contact us
+
+For more information on Linaro’s contributions to OP-TEE, check out [our project page](https://linaro.atlassian.net/wiki/spaces/LOC/overview). Alternatively, if you need technical support, contact us at support@linaro.org.
