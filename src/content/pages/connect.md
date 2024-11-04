@@ -46,7 +46,7 @@ flow:
     sections:
       - component: text
         text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
-        style: text-xl lg:text-4xl text-center
+        style: text-xl lg:text-4xl text-center w-screen
       - component: large_image
         src: /linaro-website/images/events/connect-bubbles_td2quo.png
         alt: ""
