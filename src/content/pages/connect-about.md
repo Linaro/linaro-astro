@@ -12,29 +12,59 @@ flow:
     animation: none
     no_border: true
     sections:
-      - component: connect_content
-        title: Registration
-        description: Registration to Linaro Connect 2025 will open on <br><span class="text-linaro-yellow">XXXXXXXXX 2024.</span>
+      - component: title
+        title_content:
+          text: Registration
+          size: h1
+      - component: text
+        text_content: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
+      - component: cards
+        title: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
         styles:
-          title: bg-linaro-gradient h-20 text-transparent bg-clip-text m-0
+          description: m-8
+          content: items-center columns-2 gap-12 w-2/3 text-pretty break-words divide-y
+        cards:
+          - title: Early Bird
+            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br>£750
+          - title: Standard
+            text: <span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br>£1,120
+          - title: Virtual
+            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br>£30
+      - component: buttons
+        buttons:
+          - text: REGISTER NOW
+            url: /
+            style: linaro-gradient-button mt-12
+      - component: text
+        text_content: Note -  Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/">click here</a>.
+        style: justify-center
+      - component: connect_content
+        styles:
+          title: m-8
           description: m-8
           content: items-center columns-2 gap-12 w-2/3 text-pretty break-words
+        title: Early Bird and Standard - What is included?
         text_content: |
-          Register for Linaro Connect and join hundreds of the world’s leading Arm Open Source engineers. If you order your ticket today you will receive it at a discounted rate of XXX. These discounted tickets will be available until the end of March 2025. Tickets after that will be sold at the full price of XXXX.
-
-          <span class="text-linaro-yellow">What is included?</span>
-            - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2024, including keynotes, sessions, BoFs, private meetings, and more.
-            - <span class="text-linaro-yellow">Networking Opportunities:</span> Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
-            - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
-            - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
-            - <span class="text-linaro-yellow">Daily Refreshments:</span> Enjoy continental breakfasts, coffee, and snacks from Wednesday to Friday to stay energized.
-            - <span class="text-linaro-yellow">Conference T-Shirt:</span> Receive an exclusive Linaro Connect 2024 conference t-shirt as a token of participation.
-            - <span class="text-linaro-yellow">Social Evening:</span> Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
-            - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
-            - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
-            - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
-
-          Note: Speakers that get their talks accepted will access the event with a complimentary speaker pass.
+          - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
+          - <span class="text-linaro-yellow">Networking Opportunities:</span> Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
+          - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
+          - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
+          - <span class="text-linaro-yellow">Daily Refreshments:</span> Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
+          - <span class="text-linaro-yellow">Conference T-Shirt:</span> Receive an exclusive Linaro Connect 2025 conference t-shirt as a token of participation.
+          - <span class="text-linaro-yellow">Social Evening:</span> Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
+          - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
+          - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
+          - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
+      - component: connect_content
+        styles:
+          title: m-8
+          description: m-8
+          content: items-center columns-2 gap-12 w-3/4 text-pretty break-words
+        title: Virtual - What is included?
+        text_content: |
+          - <span class="text-linaro-yellow">Access to all keynotes and technical sessions:</span> Live-stream keynotes, sessions, BoFs, and more.
+          - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
+          - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
   - row: container_row
     animation: none
     styles:
@@ -48,19 +78,47 @@ flow:
     sections:
       - component: connect_content
         title: Accommodation & Travel
-        description: The next Linaro Connect will be held in Lisbon, Portugal <br>Tuesday 13 - Friday 16 May 2025 at the Corinthia Lisbon
+        description: The next Linaro Connect will be held in Lisbon, Portugal, Tuesday 13 - Friday 16 May 2025 at the Corinthia Lisbon.
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-2/3 gap-12 text-pretty break-words
+          content: items-center columns-2 w-3/4 gap-12 text-pretty break-words
         text_content: |
-          Attendees can book a room at the Melia Avenida America by contacting the booking team directly marta.rodriguez.morcillo@melia.com and belen.martinez@melia.com and mention you are attending Linaro Connect to get a preferred rate.
-
-          The preferred rate is available for the dates 10-18 May for a limited time upon availability - we recommend you book your room as soon as possible.
+          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="/">link</a>.
+          The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
-          Visa & Business Letter - If you require a visa and need a business invitation letter and/or visa support letter, please register for Linaro Connect and then email connect@linaro.org
+          <span class="text-linaro-yellow">Visa & Business Letter - </span> If you require a visa and need a business invitation letter and/or visa support letter, please register for Linaro Connect and follow the instructions on Kite.events.
+  - row: container_row
+    no_border: true
+    styles:
+      inner: justify-around border-2 border-[#6B6B6B] rounded-3xl px-8 w-3/4 mx-auto mb-16
+    sections:
+      - component: title
+        title_content:
+          text: How to get from Lisbon Airport to the Corinthia Lisbon Hotel
+          size: h2
+        style: text-center mx-auto
+      - component: text
+        text_content: |
+          1. <span class="text-linaro-yellow">Metro</span>
+            - Route: Take the Red Line (Linha Vermelha) from the airport station to Saldanha station.
+            - Transfer: At Saldanha, switch to the Yellow Line (Linha Amarela) heading towards Rato and get off at Sete Rios station, which is a short walk from the Corinthia Lisbon. 
+            - Time: Approximately 25-30 minutes.
+            - Cost: Around €1.50 per person, plus €0.50 for the Viva Viagem card (if you don't already have one).
+          2. <span class="text-linaro-yellow">Taxi or Rideshare (Uber, Bolt)</span>
+            - Route: Direct from the airport to the Corinthia Lisbon Hotel. 
+            - Time: Approximately 15–20 minutes, depending on traffic. 
+            - Cost: Around €10–€15.
+          3. <span class="text-linaro-yellow">Aerobus</span>
+            - Route: Take the Aerobus Line 2 (financial center route) from the airport and get off at the Sete Rios stop, close to the Corinthia Hotel. 
+            - Time: About 25–30 minutes. 
+            - Cost: Around €4 per person. 
+          4. <span class="text-linaro-yellow">Private Airport Transfer</span>
+            - Book a private transfer for a direct and comfortable ride, especially if you have a lot of luggage. 
+            - Cost: Typically €20–€30 depending on the provider.
+        style: columns-2
   - row: container_row
     animation: none
     styles:
@@ -82,7 +140,7 @@ flow:
 
           All event participants are expected to behave in accordance with professional standards, with both the Linaro Connect Code of Conduct as well as their respective employer’s policies governing appropriate workplace behavior, and applicable laws.
 
-          Harassment will not be tolerated in any form, including but not limited to harassment based on gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age, religion or any other status protected by laws in which the conference or program is being held. Harassment includes the use of abusive, offensive or degrading language, intimidation, stalking, harassing photography or recording, inappropriate physical contact, sexual imagery and unwelcome sexual advances or requests for sexual favors.. Any report of harassment at one of our events will be addressed immediately. Participants asked to stop any harassing behavior are expected to comply immediately. Anyone who witnesses or is subjected to unacceptable behavior should notify a conference organizer at once. 
+          Harassment will not be tolerated in any form, including but not limited to harassment based on gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age, religion or any other status protected by laws in which the conference or program is being held. Harassment includes the use of abusive, offensive or degrading language, intimidation, stalking, harassing photography or recording, inappropriate physical contact, sexual imagery and unwelcome sexual advances or requests for sexual favors.. Any report of harassment at one of our events will be addressed immediately. Participants asked to stop any harassing behavior are expected to comply immediately. Anyone who witnesses or is subjected to unacceptable behavior should notify a conference organizer at once.
 
           Exhibitors should not use sexualized images, activities, or other material in their booths and must refrain from the use of sexualized clothing/uniforms/costumes, or otherwise creating a sexualized environment. Speakers should not use sexual language, images, or any language or images that would constitute harassment as defined above in their talks.
 
@@ -91,8 +149,8 @@ flow:
           If you are being harassed, notice that someone else is being harassed, or have any other concerns relating to harassment, please contact a member of conference staff immediately. Conference staff can be identified by t-shirts/staff badges onsite; and an organizer can be found at the event registration counter at any time. You are also encouraged to contact Diane Cheshire, Group HR Director at diane.cheshire@linaro.org
 
           Conference staff will be happy to provide support to participants, including contacting hotel/venue security or local law enforcement, when appropriate, providing escorts, or otherwise assisting those experiencing harassment to ensure that they feel safe for the duration of the conference.
-
           We value your attendance.
+
   - row: container_row
     animation: none
     no_border: true

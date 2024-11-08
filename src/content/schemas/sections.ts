@@ -130,6 +130,15 @@ export const textSchema = z.object({
   style: z.string().optional(),
 });
 
+export const titleSchema = z.object({
+  component: component('title'),
+  title_content: z.object({
+    text: z.string(),
+    size: z.string().optional(),
+  }),
+  style: z.string().optional()
+})
+
 export const contactSchema = z.object({
   component: component("contact"),
   form_id: z.string(),
@@ -435,4 +444,5 @@ export default z.discriminatedUnion("component", [
   connectSaveDateSchema,
   largeImageSchema,
   connectContentSchema,
+  titleSchema
 ]);
