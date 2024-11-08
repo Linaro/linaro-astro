@@ -1,31 +1,43 @@
 ---
 import type { connectContentSchema } from "@/content/schemas/sections";
+import AccordionDrawer from "../common/Accordion";
 import type { z } from "astro/zod";
 import * as marked from "marked";
 
 type Props = z.infer<typeof connectContentSchema>;
 
-const { text_content, styles, title, description } = Astro.props;
+const { text_content, styles, title, description, type } = Astro.props;
 const d = description && (await marked.parse(description));
 const t = text_content && (await marked.parse(text_content));
 ---
 
-<div class:list={[styles?.container, "flex items-center flex-col"]}>
-  <h1 class:list={[styles?.title, "text-4xl text-center"]}>{title}</h1>
-  {
-    d ? (
+{
+  type !== "accordion" ? (
+    <div class:list={[styles?.container, "flex items-center flex-col"]}>
+      <h1 class:list={[styles?.title, "text-4xl text-center"]}>{title}</h1>
+      {d ? (
+        <div
+          class:list={[styles?.description, "text-center text-3xl"]}
+          set:html={d}
+        />
+      ) : null}
       <div
-        class:list={[styles?.description, "text-center text-3xl"]}
-        set:html={d}
+        class:list={[
+          styles?.content,
+          "prose-p:mt-0",
+          "prose-li:marker:text-linaro-yellow break-inside-avoid",
+        ]}
+        set:html={t}
       />
-    ) : null
-  }
-  <div
-    class:list={[
-      styles?.content,
-      "prose-p:mt-0",
-      "prose-li:marker:text-linaro-yellow break-inside-avoid",
-    ]}
-    set:html={t}
-  />
-</div>
+    </div>
+  ) : (
+    <div class:list={[styles?.container, "flex items-center flex-col"]}>
+      <h1 class:list={[styles?.title, "text-4xl text-center"]}>{title}</h1>
+      <AccordionDrawer
+        client:load
+        id="code-of-conduct-text"
+        content={text_content}
+      />
+    </div>
+  )
+}

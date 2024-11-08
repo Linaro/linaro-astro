@@ -408,6 +408,7 @@ export const connectContentSchema = z.object({
   component: component('connect_content'),
   title: z.string(),
   description: z.string().optional(),
+  type: z.string().optional(),
   styles: z.object({
     container: z.string().optional(),
     title: z.string().optional(),
