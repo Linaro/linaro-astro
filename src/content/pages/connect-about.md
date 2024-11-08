@@ -11,25 +11,31 @@ flow:
   - row: container_row
     animation: none
     no_border: true
+    styles:
+      inner: py-0
     sections:
       - component: title
         title_content:
-          text: Registration
+          text: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Registration</span>
           size: h1
+        style: text-center
       - component: text
         text_content: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
+        style: text-center text-2xl mx-56
       - component: cards
-        title: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
         styles:
           description: m-8
-          content: items-center columns-2 gap-12 w-2/3 text-pretty break-words divide-y
+          content: not-prose leading-loose
+          container: mx-auto justify-center gap-16 pl-0
+          card: text-center
+          card_title: text-xl mb-2
         cards:
           - title: Early Bird
-            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br>£750
+            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
           - title: Standard
-            text: <span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br>£1,120
+            text: <span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
           - title: Virtual
-            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br>£30
+            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: REGISTER NOW
@@ -37,12 +43,19 @@ flow:
             style: linaro-gradient-button mt-12
       - component: text
         text_content: Note -  Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/">click here</a>.
-        style: justify-center
+        style: text-center mx-56 leading-loose mb-24 mt-12
+  - row: container_row
+    animation: none
+    styles:
+      inner: m-0
+    no_border: true
+    sections:
+      - component: faded_line
       - component: connect_content
         styles:
-          title: m-8
+          title: my-16 text-2xl
           description: m-8
-          content: items-center columns-2 gap-12 w-2/3 text-pretty break-words
+          content: items-center columns-2 gap-12 w-2/3
         title: Early Bird and Standard - What is included?
         text_content: |
           - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
@@ -55,11 +68,31 @@ flow:
           - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
           - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
           - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
+      - component: two_column
+        container_styles: w-3/4 mx-auto
+        columns:
+          - type: text
+            styles: w-2/5
+            text_content: |
+              - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
+              - <span class="text-linaro-yellow">Networking Opportunities:</span> Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
+              - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
+              - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
+              - <span class="text-linaro-yellow">Daily Refreshments:</span> Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
+          - type: text
+            styles: w-2/5
+            text_content: |
+              - <span class="text-linaro-yellow">Conference T-Shirt:</span> Receive an exclusive Linaro Connect 2025 conference t-shirt as a token of participation.
+              - <span class="text-linaro-yellow">Social Evening:</span> Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
+              - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
+              - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
+              - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
       - component: connect_content
         styles:
+          container: my-12
           title: m-8
           description: m-8
-          content: items-center columns-2 gap-12 w-3/4 text-pretty break-words
+          content: items-center columns-2 gap-12 w-3/4
         title: Virtual - What is included?
         text_content: |
           - <span class="text-linaro-yellow">Access to all keynotes and technical sessions:</span> Live-stream keynotes, sessions, BoFs, and more.

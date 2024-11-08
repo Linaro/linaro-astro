@@ -39,7 +39,8 @@ export const cardsSchema = z.object({
       card_title: z.string().optional(),
       button: z.string().optional(),
       icon: z.string().optional(),
-      card_text: z.string().optional()
+      card_text: z.string().optional(),
+      content: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -408,6 +409,7 @@ export const connectContentSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   styles: z.object({
+    container: z.string().optional(),
     title: z.string().optional(),
     description: z.string().optional(),
     content: z.string().optional()

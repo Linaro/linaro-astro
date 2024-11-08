@@ -19,7 +19,10 @@ const { cards, styles } = Astro.props;
           </h3>
 
           <div
-            class={`text-xl prose-a:text-blue-300 text-inherit`}
+            class:list={[
+              `text-xl prose-a:text-blue-300 text-inherit`,
+              styles?.content,
+            ]}
             set:html={content}
           />
 
