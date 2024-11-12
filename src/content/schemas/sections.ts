@@ -55,8 +55,10 @@ export const cardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
+      
     })
   ),
+  divider: z.boolean().optional(),
 });
 
 export const imageCardsSchema = z.object({

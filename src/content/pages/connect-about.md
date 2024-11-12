@@ -13,6 +13,7 @@ flow:
     no_border: true
     styles:
       inner: py-0
+      outer: mb-0
     sections:
       - component: title
         title_content:
@@ -21,83 +22,95 @@ flow:
         style: text-center
       - component: text
         text_content: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
-        style: text-center text-2xl mx-56
+        style: text-center text-3xl mx-56
       - component: cards
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-16 pl-0
+          container: mx-auto justify-center gap-16 flex-stretch mt-24 not-prose
           card: text-center
-          card_title: text-xl mb-2
+        divider: true
         cards:
-          - title: Early Bird
-            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
-          - title: Standard
-            text: <span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
-          - title: Virtual
-            text: <span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£30</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
+          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: REGISTER NOW
             url: /
             style: linaro-gradient-button mt-12
       - component: text
-        text_content: Note -  Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/">click here</a>.
-        style: text-center mx-56 leading-loose mb-24 mt-12
+        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/">click here</a>.'
+        style: text-center mx-56 leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
-    styles:
-      inner: m-0
     no_border: true
     sections:
       - component: faded_line
-      - component: connect_content
+      - component: text
+        text_content: Early Bird and Standard - What is included?
+        style: text-center text-4xl mx-56 mt-24 mb-16
+      - component: cards
         styles:
-          title: my-16 text-2xl
-          description: m-8
-          content: items-center columns-2 gap-12 w-2/3
-        title: Early Bird and Standard - What is included?
-        text_content: |
-          - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
-          - <span class="text-linaro-yellow">Networking Opportunities:</span> Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
-          - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
-          - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
-          - <span class="text-linaro-yellow">Daily Refreshments:</span> Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
-          - <span class="text-linaro-yellow">Conference T-Shirt:</span> Receive an exclusive Linaro Connect 2025 conference t-shirt as a token of participation.
-          - <span class="text-linaro-yellow">Social Evening:</span> Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
-          - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
-          - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
-          - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
-      - component: two_column
-        container_styles: w-3/4 mx-auto
-        columns:
-          - type: text
-            styles: w-2/5
-            text_content: |
-              - <span class="text-linaro-yellow">Full Event Access:</span> Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
-              - <span class="text-linaro-yellow">Networking Opportunities:</span> Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
-              - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
-              - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
-              - <span class="text-linaro-yellow">Daily Refreshments:</span> Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
-          - type: text
-            styles: w-2/5
-            text_content: |
-              - <span class="text-linaro-yellow">Conference T-Shirt:</span> Receive an exclusive Linaro Connect 2025 conference t-shirt as a token of participation.
-              - <span class="text-linaro-yellow">Social Evening:</span> Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
-              - <span class="text-linaro-yellow">Hacking Room Access:</span> Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
-              - <span class="text-linaro-yellow">Live Demos:</span> Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
-              - <span class="text-linaro-yellow">Private Meeting Room Booking:</span> Book secure meeting rooms for exclusive discussions, collaboration, or networking.
-      - component: connect_content
+          title: my-8 text-xl
+          description: m-4
+          content: text-center
+          container: flex mx-auto p-0 justify-center gap-x-16 mb-16
+          card: flex flex-col items-center w-2/5
+          card_title: text-linaro-yellow text-center
+        cards:
+          - title: Full Event Access
+            text: Get complete access to Linaro Connect 2025, including keynotes, sessions, BoFs, private meetings, and more.
+            icon: full-event-access-1
+          - title: Conference T-Shirt
+            icon: conference-t-shirt-1
+            text: Receive an exclusive Linaro Connect 2025 conference t-shirt as a token of participation.
+          - title: Networking Opportunities
+            icon: networking-opportunities-1
+            text: Connect with industry professionals through Birds of a Feather (BoFs) sessions, discussions, and collaboration activities.
+          - title: Social Evening
+            icon: social-evening-1
+            text: Unwind, connect, and enjoy a relaxed atmosphere with casual conversations and activities.
+          - title: Customizable Schedule
+            icon: customizable-schedule-1
+            text: Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
+          - title: Hacking Room Access
+            icon: hacking-room-access-1
+            text: Collaborate, code, and engage in hands-on sessions in a dedicated hacking room.
+          - title: Participant Resources
+            icon: participant-resources-1
+            text: Access event materials, documentation, and shared resources to enhance understanding.
+          - title: Live Demos
+            icon: live-demos-1
+            text: Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
+          - title: Daily Refreshments
+            icon: daily-refreshments-1
+            text: Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
+          - title: Private Meeting Room Booking
+            icon: private-meeting-room-bookings-1
+            text: Book secure meeting rooms for exclusive discussions, collaboration, or networking.
+      - component: faded_line
+      - component: text
+        text_content: Virtual - What is included?
+        style: text-center text-4xl mx-56 my-16
+      - component: cards
         styles:
-          container: my-12
-          title: m-8
-          description: m-8
-          content: items-center columns-2 gap-12 w-3/4
-        title: Virtual - What is included?
-        text_content: |
-          - <span class="text-linaro-yellow">Access to all keynotes and technical sessions:</span> Live-stream keynotes, sessions, BoFs, and more.
-          - <span class="text-linaro-yellow">Customizable Schedule:</span> Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
-          - <span class="text-linaro-yellow">Participant Resources:</span> Access event materials, documentation, and shared resources to enhance understanding.
+          title: my-8 text-xl
+          description: m-4
+          content: text-center
+          container: flex mx-auto p-0 justify-center gap-x-16
+          card: flex flex-col items-center w-2/5
+          card_title: text-linaro-yellow text-center
+        cards:
+          - title: Access to all keynotes and technical sessions
+            text: Live-stream keynotes, sessions, BoFs, and more.
+            icon: virtual-access-1
+          - title: Participant Resources
+            icon: participant-resources-1
+            text: Access event materials, documentation, and shared resources to enhance understanding.
+          - title: Customizable Schedule
+            icon: customizable-schedule-1
+            text: Tailor your experience by creating a personalized agenda, prioritizing sessions aligned with your interests.
   - row: container_row
     animation: none
     styles:
@@ -115,9 +128,10 @@ flow:
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-3/4 gap-12 text-pretty break-words
+          content: items-center columns-2 w-1/2 gap-12
         text_content: |
-          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="/">link</a>.
+          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="/">link</a>
+
           The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
@@ -126,32 +140,34 @@ flow:
   - row: container_row
     no_border: true
     styles:
-      inner: justify-around border-2 border-[#6B6B6B] rounded-3xl px-8 w-3/4 mx-auto mb-16
+      inner: justify-around border-2 border-[#6B6B6B] rounded-3xl w-3/5 mx-auto mb-16 px-8 py-8
     sections:
-      - component: title
-        title_content:
-          text: How to get from Lisbon Airport to the Corinthia Lisbon Hotel
-          size: h2
-        style: text-center mx-auto
-      - component: text
+      - component: connect_content
+        title: |
+          How to get from Lisbon Airport to the
+
+          Corinthia Lisbon Hotel
         text_content: |
           1. <span class="text-linaro-yellow">Metro</span>
-            - Route: Take the Red Line (Linha Vermelha) from the airport station to Saldanha station.
-            - Transfer: At Saldanha, switch to the Yellow Line (Linha Amarela) heading towards Rato and get off at Sete Rios station, which is a short walk from the Corinthia Lisbon. 
-            - Time: Approximately 25-30 minutes.
-            - Cost: Around €1.50 per person, plus €0.50 for the Viva Viagem card (if you don't already have one).
+              - Route: Take the Red Line (Linha Vermelha) from the airport station to Saldanha station.
+              - Transfer: At Saldanha, switch to the Yellow Line (Linha Amarela) heading towards Rato and get off at Sete Rios station, which is a short walk from the Corinthia Lisbon. 
+              - Time: Approximately 25-30 minutes.
+              - Cost: Around €1.50 per person, plus €0.50 for the Viva Viagem card (if you don't already have one).
           2. <span class="text-linaro-yellow">Taxi or Rideshare (Uber, Bolt)</span>
-            - Route: Direct from the airport to the Corinthia Lisbon Hotel. 
-            - Time: Approximately 15–20 minutes, depending on traffic. 
-            - Cost: Around €10–€15.
+              - Route: Direct from the airport to the Corinthia Lisbon Hotel. 
+              - Time: Approximately 15–20 minutes, depending on traffic. 
+              - Cost: Around €10–€15.
           3. <span class="text-linaro-yellow">Aerobus</span>
-            - Route: Take the Aerobus Line 2 (financial center route) from the airport and get off at the Sete Rios stop, close to the Corinthia Hotel. 
-            - Time: About 25–30 minutes. 
-            - Cost: Around €4 per person. 
+              - Route: Take the Aerobus Line 2 (financial center route) from the airport and get off at the Sete Rios stop, close to the Corinthia Hotel. 
+              - Time: About 25–30 minutes. 
+              - Cost: Around €4 per person. 
           4. <span class="text-linaro-yellow">Private Airport Transfer</span>
-            - Book a private transfer for a direct and comfortable ride, especially if you have a lot of luggage. 
-            - Cost: Typically €20–€30 depending on the provider.
-        style: columns-2
+              - Book a private transfer for a direct and comfortable ride, especially if you have a lot of luggage. 
+              - Cost: Typically €20–€30 depending on the provider.
+        styles:
+          title: text-center mx-32 text-3xl font-light
+          description: m-8
+          content: items-center columns-2 gap-12 mx-8
   - row: container_row
     animation: none
     styles:

@@ -14,7 +14,7 @@ const t = text_content && (await marked.parse(text_content));
 {
   type !== "accordion" ? (
     <div class:list={[styles?.container, "flex items-center flex-col"]}>
-      <h1 class:list={[styles?.title, "text-4xl text-center"]}>{title}</h1>
+      <h1 class:list={[styles?.title, "text-center"]}>{title}</h1>
       {d ? (
         <div
           class:list={[styles?.description, "text-center text-3xl"]}
@@ -25,7 +25,10 @@ const t = text_content && (await marked.parse(text_content));
         class:list={[
           styles?.content,
           "prose-p:mt-0",
-          "prose-li:marker:text-linaro-yellow break-inside-avoid",
+          "prose-li:mt-0",
+          "prose-ol:mt-0",
+          "prose-li:break-inside-avoid",
+          "prose-li:marker:text-linaro-yellow",
         ]}
         set:html={t}
       />

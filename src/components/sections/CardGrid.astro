@@ -4,42 +4,54 @@ import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
 import { marked } from "marked";
 type Props = z.infer<typeof cardsSchema>;
-const { cards, styles } = Astro.props;
+const { cards, styles, divider } = Astro.props;
 ---
 
 <ul class:list={["list-none flex flex-wrap", styles?.container]}>
   {
     cards.map(async ({ icon, title, text, button, style }, index) => {
       const content = text ? await marked.parse(text) : null;
+      const isLast = index === cards.length - 1;
+
       return (
-        <li class:list={[styles?.card, style]}>
-          {icon && <Icon name={icon} size={100} class="my-0" />}
-          <h3 class:list={["text-4xl my-5 z-50", styles?.card_title]}>
-            {title}
-          </h3>
+        <>
+          <li class:list={[styles?.card, style]}>
+            {icon && <Icon name={icon} size={100} class="my-0" />}
+            {title && (
+              <h3 class:list={["text-4xl my-5 z-50", styles?.card_title]}>
+                {title}
+              </h3>
+            )}
 
-          <div
-            class:list={[
-              `text-xl prose-a:text-blue-300 text-inherit`,
-              styles?.content,
-            ]}
-            set:html={content}
-          />
+            <div
+              class:list={[
+                `text-xl prose-a:text-blue-300 text-inherit`,
+                styles?.content,
+              ]}
+              set:html={content}
+            />
 
-          {button && (
-            <a
-              href={button.url}
-              target={button.url.startsWith("https") ? "_blank" : "_self"}
-              class="no-underline inline-block mt-auto"
-            >
-              <div
-                class:list={[`linaro-gradient-button mt-auto`, styles?.button]}
+            {button && (
+              <a
+                href={button.url}
+                target={button.url.startsWith("https") ? "_blank" : "_self"}
+                class="no-underline inline-block mt-auto"
               >
-                {button.text}
-              </div>
-            </a>
+                <div
+                  class:list={[
+                    `linaro-gradient-button mt-auto`,
+                    styles?.button,
+                  ]}
+                >
+                  {button.text}
+                </div>
+              </a>
+            )}
+          </li>
+          {divider && !isLast && (
+            <li class="not-prose w-[2px] bg-gradient-to-b from-transparent via-white to-transparent opacity-50 mx-4" />
           )}
-        </li>
+        </>
       );
     })
   }
