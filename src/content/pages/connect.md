@@ -104,7 +104,7 @@ flow:
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
-
+            url: "/connect/call-for-proposals"
           - title: Sponsorship
             text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:

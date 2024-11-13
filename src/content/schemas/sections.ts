@@ -408,7 +408,7 @@ export const largeCardSchema = z.object({
 
 export const connectContentSchema = z.object({
   component: component('connect_content'),
-  title: z.string(),
+  title: z.string().optional(),
   description: z.string().optional(),
   type: z.string().optional(),
   styles: z.object({
