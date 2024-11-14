@@ -16,12 +16,16 @@ const AccordionDrawer = ({ id, content }: { id: string; content: string }) => {
         <Show
           when={isOpen()}
           fallback={
-            <div class="w-3/4 mx-auto gap-16">
-              {content.slice(0, 128) + "..."}
-            </div>
+            <div
+              class="w-3/4 mx-auto gap-16"
+              innerHTML={content.slice(0, 128) + "..."}
+            ></div>
           }
         >
-          <div class="w-3/4 columns-2 mx-auto gap-16">{content}</div>
+          <div
+            class="w-3/4 columns-2 mx-auto gap-16 prose-p:mt-0"
+            innerHTML={content}
+          ></div>
         </Show>
       </div>
       <button

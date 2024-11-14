@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: connect/about
+slug: connect/registration
 title: Connect
 description: Linaro Connect is a series of events that brings together the Arm Ecosystem. This is the ONLY place where developers, maintainers of both hardware and software can collaborate and discuss common problems
 connectHero:
@@ -33,14 +33,14 @@ flow:
         cards:
           - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
           - text: Standard<br><span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£30</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: REGISTER NOW
-            url: /
+            url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-12
       - component: text
-        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/">click here</a>.'
+        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
         style: text-center mx-56 leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
@@ -130,7 +130,7 @@ flow:
           description: m-8
           content: items-center columns-2 w-1/2 gap-12
         text_content: |
-          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="/">link</a>
+          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">link</a>
 
           The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
 
@@ -140,7 +140,7 @@ flow:
   - row: container_row
     no_border: true
     styles:
-      inner: justify-around border-2 border-[#6B6B6B] rounded-3xl w-3/5 mx-auto mb-16 px-8 py-8
+      inner: justify-around border-2 border-[#6B6B6B] rounded-3xl w-4/5 mx-auto mb-16 px-8 py-8
     sections:
       - component: connect_content
         title: |

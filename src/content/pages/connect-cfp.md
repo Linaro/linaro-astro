@@ -26,29 +26,29 @@ flow:
       - component: buttons
         buttons:
           - text: Submit your proposal
-            url: /
-            style: linaro-gradient-button mt-12
+            url: https://www.kitefor.events/events/linaro-connect-2025/call_for_papers/17
+            style: linaro-gradient-button my-12
       - component: connect_content
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-1/2 gap-12
+          content: items-center columns-2 w-3/5 gap-12
         text_content: |
           The Linaro Connect 2025 event is calling for your proposals! Share your insights, innovations, and experiences with a global audience of tech enthusiasts, developers, and industry leaders.
 
           <span class="text-linaro-yellow">Why present at Linaro Connect?</span>
-              - Engage with a diverse community of Arm experts.
-              - Showcase your work to a global audience.
-              - Foster collaboration and exchange ideas.
+            - Engage with a diverse community of Arm experts.
+            - Showcase your work to a global audience.
+            - Foster collaboration and exchange ideas.
 
           <span class="text-linaro-yellow">When submitting your proposal, you have the following options to choose from:</span>
-              - Technical presentation - 30 minutes (including Q&A)
-              - Panel Discussion - 40 minutes 
-              - Tutorial - 60 minutes
-              - Training - 60 minutes 
-              - Demo presentation at Demo Friday*
+            - Technical presentation - 30 minutes (including Q&A)
+            - Panel Discussion - 40 minutes 
+            - Tutorial - 60 minutes
+            - Training - 60 minutes 
+            - Demo presentation at Demo Friday*
       - component: text
-        style: text-sm
+        style: text-sm mx-auto w-2/5 mt-16 text-center
         text_content: |
           *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event.
 
@@ -62,13 +62,93 @@ flow:
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-16 flex-stretch mt-24 not-prose
-          card: text-center
+          container: mx-auto justify-center gap-16 m-24 not-prose w-full
+          card: text-center w-1/8
         divider: true
         cards:
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£30</span>
+          - text: CFP closes<br><span class="text-linaro-yellow">Tuesday<br>13 February 2025</span>
+          - text: CFP notifications<br><span class="text-linaro-yellow">Wednesday<br>5 March 2025</span>
+          - text: Schedule<br>Announcement<br><span class="text-linaro-yellow">Tuesday<br>12 March 2025</span>
+          - text: Slides and demo<br>posters submission<br><span class="text-linaro-yellow">Tuesday<br>29 April 2025</span>
+      - component: faded_line
+  - row: container_row
+    title: Topics & Catagories
+    styles:
+      outer: bg-transparent z-0 mt-16
+      title: mx-auto
+    no_border: true
+    sections:
+      - component: image_cards
+        styles:
+          container: max-w-full mx-auto justify-around gap-2 xl:gap-8 flex flex-wrap
+          card: relative xl:h-[10rem] xl:w-[10rem] w-[8rem] h-[8rem]
+          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-md xl:text-lg py-0 m-0
+          image: absolute w-full h-full aspect-square top-0 left-0 right-0 bottom-0 mx-auto my-auto
+        cards:
+          - title: AI & Machine Learning
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Arm Client PC and Windows
+            image:
+              alt: ""
+              src: linaro-website/graphics/circle-gradient-border
+          - title: Android
+            image:
+              alt: ""
+              src: linaro-website/graphics/circle-gradient-border
+          - title: Automation & Validation
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Automotive
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Big Data
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Confidential Compute
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Data Center & Cloud
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Edge, IoT & Embedded
+            image:
+              alt: ""
+              src: linaro-website/graphics/circle-gradient-border
+          - title: High Performance Computing
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Linux Kernel
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Open Source
+            image:
+              alt: ""
+              src: linaro-website/graphics/circle-gradient-border
+          - title: Regulatory, Licensing & Compliance
+            image:
+              alt: ""
+              src: linaro-website/graphics/circle-gradient-border
+          - title: Security
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Toolchain Development
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
+          - title: Virtualization
+            image:
+              src: linaro-website/graphics/circle-gradient-border
+              alt: ""
   - row: container_row
     animation: none
     no_border: true

@@ -98,9 +98,9 @@ flow:
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            url: "/connect/about"
+            url: "/connect/registration"
           - title: Program
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Call for Proposals<br>Topics & Categories
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
