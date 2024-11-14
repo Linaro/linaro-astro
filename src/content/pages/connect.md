@@ -15,6 +15,9 @@ flow:
       inner: py-8
     no_border: true
     sections:
+      - component: text
+        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
         countdownDate: 05/13/2025 02:00 PM
   - row: container_row
@@ -25,10 +28,15 @@ flow:
     no_border: true
     sections:
       - component: text
-        text_content: Register for Linaro Connect 2025
+        text_content: Calling all Speakers!
         style: text-xl
-      - component: connect_save
-        btnId: top-btn-save-date
+      # - component: connect_save
+      #   btnId: top-btn-save-date
+      - component: buttons
+        buttons:
+          - text: Submit your Proposal
+            url: /connect/call-for-proposals
+            style: linaro-gradient-button
   - row: container_row
     animation: none
     styles:
@@ -44,9 +52,6 @@ flow:
       inner: flex flex-col items-center h-auto w-[110vw] relative overflow-x-hidden inset-0 -left-[5%]
       outer: h-auto px-auto overflow-x-hidden
     sections:
-      - component: text
-        text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
-        style: text-xl lg:text-4xl text-center w-screen
       - component: large_image
         src: /linaro-website/images/events/connect-bubbles_td2quo.png
         alt: ""
@@ -94,13 +99,14 @@ flow:
         button_cards: true
         cards:
           - title: About
-            text: Registration<br>Accommodation<br>Code of Conduct
+            # text: Registration<br>Accommodation<br>Code of Conduct
+            text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            url: "/connect/registration"
+            # url: "/connect/registration"
           - title: Program
-            text: Call for Proposals<br>Topics & Categories
+            text: Call for Proposals<br>Topics of Interest
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"

@@ -48,11 +48,9 @@ flow:
             - Training - 60 minutes 
             - Demo presentation at Demo Friday*
       - component: text
-        style: text-sm mx-auto w-2/5 mt-16 text-center
+        style: text-sm mx-auto w-2/5 mt-16
         text_content: |
-          *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event.
-
-          To submit your demo, select “Demo” in the “Session Type” section. Demos are allocated a table of size 1.8m wide by 0.5m deep. Please fill in this form to request equipment such as monitors.
+          *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event. To submit your demo, select “Demo” in the “Session Type” section. Demos are allocated a table of size 1.8m wide by 0.5m deep. Please fill in this form to request equipment such as monitors.
   - row: container_row
     animation: none
     no_border: true
@@ -72,7 +70,7 @@ flow:
           - text: Slides and demo<br>posters submission<br><span class="text-linaro-yellow">Tuesday<br>29 April 2025</span>
       - component: faded_line
   - row: container_row
-    title: Topics & Catagories
+    title: Topics of Interest
     styles:
       outer: bg-transparent z-0 mt-16
       title: mx-auto

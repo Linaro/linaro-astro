@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: connect/registration
+# slug: connect/registration
 title: Connect
 description: Linaro Connect is a series of events that brings together the Arm Ecosystem. This is the ONLY place where developers, maintainers of both hardware and software can collaborate and discuss common problems
 connectHero:
@@ -27,18 +27,19 @@ flow:
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-16 flex-stretch mt-24 not-prose
-          card: text-center
+          container: mx-auto justify-center gap-4 m-24 not-prose w-full
+          card: text-center w-1/8
         divider: true
         cards:
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£450</span>
           - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2024 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
+          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
           - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: REGISTER NOW
             url: https://www.kitefor.events/events/linaro-connect-2025/register
-            style: linaro-gradient-button mt-12
+            style: linaro-gradient-button mt-4
       - component: text
         text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
         style: text-center mx-56 leading-loose mt-12 text-xl font-light
@@ -48,7 +49,7 @@ flow:
     sections:
       - component: faded_line
       - component: text
-        text_content: Early Bird and Standard - What is included?
+        text_content: One Day, Early Bird and Standard - What is included?
         style: text-center text-4xl mx-56 mt-24 mb-16
       - component: cards
         styles:
