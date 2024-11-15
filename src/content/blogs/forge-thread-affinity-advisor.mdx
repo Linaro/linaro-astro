@@ -1,0 +1,87 @@
+---
+title: Discover Optimal Performance with Linaro Forge's Thread Affinity Advisor
+description: >
+  Thread Affinity Advisor: Empowering users with insight into their underlying hardware's CPU memory hierarchy
+date: 2024-11-20T00:00:00.000Z
+image: linaro-website/images/blog/empowered_developer_dxh30d.jpg
+tags:
+  - hpc
+author: rudy-shand
+related: []
+
+---
+
+# Are you ready to maximize performance on complex, multi-threaded applications?
+
+Linaro Forge is excited to announce **Thread Affinity Advisor (TAA)**, a graphical tool, designed to address a critical gap in the performance workflow by making application developers aware of hardware utilisation inefficiencies. The Thread Affinity Advisor tool provides an innovative graphical interface to visualise and understand the thread affinity bindings concerning the application's interaction with the hardware's CPU memory hierarchy.  This removes the need to rely on trial and error to decipher how threads may interact with the hardware; as the interplay of threads with the CPU’s memory hierarchy is visualised to pinpoint thread binding issues.
+
+TAA is part of [Linaro MAP](https://docs.linaroforge.com/latest/html/forge/map/index.html), which makes use of the cross-platform and scalability aspects of the Linaro Forge toolsuite. This enables TAA to work across CPU architectures and provides a holistic view of threads, NUMA regions, CPU processes and caches as part of a typical Linaro MAP profile.
+
+# Why Thread Affinity Advisor?
+
+* **In-Depth Visualization**: TAA displays the layout of threads across CPUs, providing insights into optimal vs. suboptimal arrangements.
+
+* **Performance Tuning**: Resolve thread oversubscription and memory locality issues with targeted insights that boost performance across MPI and OpenMP workloads.
+
+* **Proactive Error Detection**: TAA alerts you to any issues, making performance tuning more efficient and effective than ever.
+
+Let’s take a closer look.
+
+# Visualizing Thread Affinity bindings
+
+Understanding the interaction between threads and hardware resources is a crucial step when ensuring optimal application performance, particularly in applications using MPI and OpenMP programming models. In increasingly sophisticated workloads and hardware architectures, TAA displays the hardware topology and provides insight on how effectively the application is utilizing the hardware resources across the available nodes.
+
+<CloudinaryImg src="/linaro-website/images/blog/95770da9-ffa0-4bd7-8727-5013dedcaa1b.png" alt="Visualize Thread affinity bindings across nodes" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Visualize Thread affinity bindings across nodes</em></p>
+
+The Thread Affinity Advisor dialog condenses the amount of information displayed when conveying the affinity binding information of the sampled program. Therefore, affinity bindings that are similar across different nodes are incorporated into a single exemplar node, where the lowest ranked MPI process was run. Nodes that are similar to the exemplar have:
+
+* similar hardware
+
+* same number of MPI processes
+
+* same number and type of threads in those processes
+
+* same affinity bindings of those threads
+
+Processes that are run on the selected exemplar node are displayed on the right, along with their corresponding MPI rank. Selecting a specific process will display its threads.
+
+# Identifying Suboptimal Arrangements
+
+A key feature of Thread Affinity Advisor is its ability to identify and highlight suboptimal thread arrangements. Application developers can pinpoint a range of potential issues such as hardware resource imbalances, thread oversubscription, memory locality and inappropriate process bindings. Addressing these issues can significantly enhance performance, as inefficient thread and memory management can significantly degrade the performance of an application run.
+
+<CloudinaryImg src="/linaro-website/images/blog/49a7a092-4324-494b-9ebe-dcf8050ceefe.png" alt="Suboptimal thread arrangement" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Suboptimal thread arrangement</em></p>
+
+Poorly configured threads caused by an incorrect job script configuration could easily lead to a range of suboptimal thread arrangements. TAA spots these suboptimal arrangements, which can then be used to take corrective action. An example of this is an incorrectly configured job script that leads to thread oversubscription. It is not immediately obvious within the job script that an underlying performance issue is due to too many threads competing for the same CPU resources. This becomes obvious in TAA, as the image above shows red numbers in each processing unit to indicate that there are oversubscribed threads. 
+
+<CloudinaryImg src="/linaro-website/images/blog/91604a2a-877b-496f-be83-027c1bc7784c.png" alt="" class="not-prose" />
+
+TAA also provides commentary to alert on suboptimal arrangements. This can be useful for cases where it is not immediately obvious that there are thread affinity issues purely by looking at the TAA visualisation. The commentary provides a list of issues to work through to obtain an optimal affinity arrangement. The commentary also provides hyperlinks to focus and zoom into the correct areas of the TAA visualisation to expose each affinity issue. An issue identified by the above TAA commentary is that MPI ranks 0-1 spans across multiple NUMA nodes which could degrade performance in applications that are memory bound.
+
+# Refining Configurations for Optimal Performance
+
+In essence, Thread Affinity Advisor provides clarity by graphically displaying suboptimal thread arrangements, enabling application developers to fine-tune their resource allocations for optimal performance. This iterative approach facilitates ongoing optimization that addresses specific issues identified during profiling.
+
+By iterating on feedback provided by the TAA tool, optimal performance can be achieved, ultimately making applications more efficient and scalable.
+
+# Linaro Performance Reports
+
+[Linaro Performance Reports](https://docs.linaroforge.com/latest/html/forge/performance_reports/index.html) is a standalone tool that now includes a breakdown of how threads are pinned to logical cores alongside informative thread affinity commentary. Linaro Performance Reports is a good tool to use for obtaining a high level overview of performance and to deduce if performance issues are related to affinity bindings. If affinity binding issues are identified in Linaro Performance Reports, then the TAA graphical tool can be used to dig deeper into each thread affinity issue.
+
+<CloudinaryImg src="/linaro-website/images/blog/913b5ecd-9523-4622-a965-f90ed9251eab.png" alt="Thread Affinity Overview" class="not-prose" />
+<p class="not-prose" style="text-align:center"><em>Thread Affinity Overview</em></p>
+
+# Let’s talk performance
+
+Linaro MAP and Linaro Performance Reports remain simple, easy to use tools, although TAA expands the tools to enable more sophisticated functionality that finds subtle, and challenging Performance Engineering issues.
+
+The cohesive integration into MAP ensures that the performance tuning process is an intuitive component of ongoing performance efforts. TAA can be used alongside all the other great features that are part of Linaro Forge, which provides a comprehensive HPC toolsuite that saves time and effort during each stage of an application optimization workflow.
+
+Ready to take your application performance to the next level? [Contact us](/contact) to learn more about how Thread Affinity Advisor can enhance your development process, or don’t miss to catch up with our Linaro Forge team at SC24 in Atlanta from Nov, 17th till 21st! We are at the AWS booth (#2501).
+
+For further reading on TAA please see:
+
+[Thread Affinity user guide](https://docs.linaroforge.com/latest/html/forge/map/thread_affinity_advisor/index.html)
+
+[Thread Affinity worked example](https://docs.linaroforge.com/latest/html/forge/worked_examples_appendix/thread_affinity/index.html)
