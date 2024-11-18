@@ -1,8 +1,8 @@
 export interface CloudinaryProps {
 
-    width: number;
+    width?: number;
 
-    height: number;
+    height?: number;
 
     resize?:
     | "crop"

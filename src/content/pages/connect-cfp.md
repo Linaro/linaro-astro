@@ -22,7 +22,7 @@ flow:
         style: text-center
       - component: text
         text_content: Ready to showcase your expertise at the forefront of Arm technology?
-        style: text-center text-3xl mx-56
+        style: text-center text-3xl mx-auto
       - component: buttons
         buttons:
           - text: Submit your proposal
@@ -32,7 +32,7 @@ flow:
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-3/5 gap-12
+          content: items-center columns-1 md:columns-2 w-3/5 gap-12
         text_content: |
           The Linaro Connect 2025 event is calling for your proposals! Share your insights, innovations, and experiences with a global audience of tech enthusiasts, developers, and industry leaders.
 
@@ -48,10 +48,12 @@ flow:
             - Training - 60 minutes 
             - Demo presentation at Demo Friday*
       - component: text
-        style: text-sm mx-auto w-2/5 mt-16
+        style: text-sm mx-auto w-4/5 md:w-2/5 mt-16
         text_content: |
           *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event. To submit your demo, select “Demo” in the “Session Type” section. Demos are allocated a table of size 1.8m wide by 0.5m deep. Please fill in [this form](https://forms.gle/Q8L1Wd9McpoSM1mN9) to request equipment such as monitors.
   - row: container_row
+    styles:
+      inner: pt-16 pb-4
     animation: none
     no_border: true
     sections:
@@ -60,7 +62,7 @@ flow:
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-16 m-24 not-prose w-full
+          container: flex-col md:flex-row mx-auto items-center justify-center gap-16 m-24 not-prose w-full
           card: text-center w-1/8
         divider: true
         cards:
@@ -73,14 +75,16 @@ flow:
     title: Topics of Interest
     styles:
       outer: bg-transparent z-0 mt-16
+      inner: py-8 md:py-16
       title: mx-auto
     no_border: true
+    animation: none
     sections:
       - component: image_cards
         styles:
-          container: max-w-full mx-auto justify-around gap-2 xl:gap-8 flex flex-wrap
-          card: relative xl:h-[10rem] xl:w-[10rem] w-[8rem] h-[8rem]
-          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-md xl:text-lg py-0 m-0
+          container: max-w-full mx-auto justify-around gap-8 xl:gap-8 flex flex-wrap
+          card: not-prose relative xl:h-[10rem] xl:w-[10rem] w-[8rem] h-[8rem]
+          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-sm xl:text-lg py-0 m-0
           image: absolute w-full h-full aspect-square top-0 left-0 right-0 bottom-0 mx-auto my-auto
         cards:
           - title: AI & Machine Learning
