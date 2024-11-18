@@ -50,7 +50,7 @@ flow:
       - component: text
         style: text-sm mx-auto w-2/5 mt-16
         text_content: |
-          *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event. To submit your demo, select “Demo” in the “Session Type” section. Demos are allocated a table of size 1.8m wide by 0.5m deep. Please fill in this form to request equipment such as monitors.
+          *Demo Friday is a Linaro Connect staple where attendees get to see a wide range of innovative Arm-based demos over lunch on the last day of the event. To submit your demo, select “Demo” in the “Session Type” section. Demos are allocated a table of size 1.8m wide by 0.5m deep. Please fill in [this form](https://forms.gle/Q8L1Wd9McpoSM1mN9) to request equipment such as monitors.
   - row: container_row
     animation: none
     no_border: true
