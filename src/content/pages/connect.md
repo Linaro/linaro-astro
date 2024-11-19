@@ -15,6 +15,9 @@ flow:
       inner: py-8
     no_border: true
     sections:
+      - component: text
+        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
         countdownDate: 05/13/2025 02:00 PM
   - row: container_row
@@ -25,10 +28,15 @@ flow:
     no_border: true
     sections:
       - component: text
-        text_content: Register for Linaro Connect 2025
+        text_content: Calling all Speakers!
         style: text-xl
-      - component: connect_save
-        btnId: top-btn-save-date
+      # - component: connect_save
+      #   btnId: top-btn-save-date
+      - component: buttons
+        buttons:
+          - text: Submit your Proposal
+            url: /connect/call-for-proposals
+            style: linaro-gradient-button
   - row: container_row
     animation: none
     styles:
@@ -44,9 +52,6 @@ flow:
       inner: flex flex-col items-center h-auto w-[110vw] relative overflow-x-hidden inset-0 -left-[5%]
       outer: h-auto px-auto overflow-x-hidden
     sections:
-      - component: text
-        text_content: <strong>Linaro Connect is where Arm excellence gathers and gets together
-        style: text-xl lg:text-4xl text-center w-screen
       - component: large_image
         src: /linaro-website/images/events/connect-bubbles_td2quo.png
         alt: ""
@@ -64,7 +69,7 @@ flow:
       - component: cards
         styles:
           card: w-[35ch] flex items-center flex-col text-center gap-2
-          container: justify-around gap-x-28 mb-40
+          container: justify-around gap-x-28 mb-40 not-prose gap-y-8
         cards:
           - text: Meet Arm Excellence and it’s Industry Leaders
             icon: handshake
@@ -73,11 +78,17 @@ flow:
           - text: Collaborate with your Peers and connect with the Arm Network
             icon: diversity
       - component: text
-        text_content: Mark Your Agenda for Lisbon May 13th-17th
+        # text_content: Mark Your Agenda for Lisbon May 13th-17th
+        text_content: Call for Proposals now open
         style: text-linaro-yellow text-center text-2xl
-      - component: connect_save
-        style: mb-16 flex flex-col
-        btnId: bottom-btn-save-date
+      # - component: connect_save
+      #   style: mb-16 flex flex-col
+      #   btnId: bottom-btn-save-date
+      - component: buttons
+        buttons:
+          - text: Submit proposal here
+            url: /connect/call-for-proposals
+            style: linaro-gradient-button mb-16
       - component: faded_line
         styles: mt-8
   - row: container_row
@@ -99,13 +110,13 @@ flow:
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            # url: "/connect/about"
+            # url: "/connect/registration"
           - title: Program
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Call for Proposals<br>Topics of Interest
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
-
+            url: "/connect/call-for-proposals"
           - title: Sponsorship
             text: <span class="text-linaro-yellow">COMING SOON!</span>
             image:

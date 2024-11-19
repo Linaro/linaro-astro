@@ -12,7 +12,7 @@ import mdx from "@astrojs/mdx";
 const { IS_PUBLIC, PRE_BUILD, CUSTOM_DOMAIN } = loadEnv(
   process.env.NODE_ENV,
   process.cwd(),
-  ""
+  "",
 );
 const is_public = IS_PUBLIC === "true";
 const is_pre_build = PRE_BUILD === "true";
@@ -89,24 +89,26 @@ export default defineConfig({
     optimizeDeps: { exclude: ["auth:config"] },
   },
   redirects: {
-    '/lts': '/solutions/lts',
-    '/automotive-iot-and-edge-devices': '/projects/automotive-iot-edge',
-    '/cloud-computing-and-servers': '/projects/cloud-computing',
-    '/windows-on-arm': '/projects/windows-on-arm',
-    '/onelab': '/solutions/onelab',
-    '/services/qualcomm-platforms-services': '/projects/qualcomm-platform',
-    '/services/hands-on-training': '/services/training',
-    '/working-groups':  "/",
-    '/projects': '/',
+    "/lts": "/solutions/lts",
+    "/automotive-iot-and-edge-devices": "/projects/automotive-iot-edge",
+    "/cloud-computing-and-servers": "/projects/cloud-computing",
+    "/windows-on-arm": "/projects/windows-on-arm",
+    "/onelab": "/solutions/onelab",
+    "/services/qualcomm-platforms-services": "/projects/qualcomm-platform",
+    "/services/hands-on-training": "/services/training",
+    "/working-groups": "/",
+    "/projects": "/",
     // '/core-technologies/[...slug]': "/",
-    '/core-technologies/virtualization': "/projects/automotive-iot-edge",
-    '/core-technologies/artificial-intelligence': '/solutions/ai-ml',
-    '/support': '/contact',
-    '/about/team': '/about',
-    '/about/tsc': '/about',
+    "/core-technologies/virtualization": "/projects/automotive-iot-edge",
+    "/core-technologies/artificial-intelligence": "/solutions/ai-ml",
+    "/support": "/contact",
+    "/about/team": "/about",
+    "/about/tsc": "/about",
     // '/learning-hub/[...slug]': '/about',
-    '/whitepapers/protecting-investment-in-code-optimisation-with-toolchain-ci-linaro-white-paper/': '/whitepapers',
-    '/sig': '/',
-    '/latest/downloads': '/downloads',
-  }
+    "/whitepapers/protecting-investment-in-code-optimisation-with-toolchain-ci-linaro-white-paper/":
+      "/whitepapers",
+    "/sig": "/",
+    "/latest/downloads": "/downloads",
+    "/connect/registration": "/404",
+  },
 });

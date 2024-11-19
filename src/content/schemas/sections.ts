@@ -39,7 +39,8 @@ export const cardsSchema = z.object({
       card_title: z.string().optional(),
       button: z.string().optional(),
       icon: z.string().optional(),
-      card_text: z.string().optional()
+      card_text: z.string().optional(),
+      content: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -54,8 +55,10 @@ export const cardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
+      
     })
   ),
+  divider: z.boolean().optional(),
 });
 
 export const imageCardsSchema = z.object({
@@ -129,6 +132,15 @@ export const textSchema = z.object({
   text_content: z.string(),
   style: z.string().optional(),
 });
+
+export const titleSchema = z.object({
+  component: component('title'),
+  title_content: z.object({
+    text: z.string(),
+    size: z.string().optional(),
+  }),
+  style: z.string().optional()
+})
 
 export const contactSchema = z.object({
   component: component("contact"),
@@ -396,9 +408,11 @@ export const largeCardSchema = z.object({
 
 export const connectContentSchema = z.object({
   component: component('connect_content'),
-  title: z.string(),
+  title: z.string().optional(),
   description: z.string().optional(),
+  type: z.string().optional(),
   styles: z.object({
+    container: z.string().optional(),
     title: z.string().optional(),
     description: z.string().optional(),
     content: z.string().optional()
@@ -435,4 +449,5 @@ export default z.discriminatedUnion("component", [
   connectSaveDateSchema,
   largeImageSchema,
   connectContentSchema,
+  titleSchema
 ]);
