@@ -15,23 +15,18 @@ const markdown = description && (await marked.parse(description));
 
 {
   child_page ? (
-    <div class="relative w-full h-auto overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
+    <div class="relative min-h-[400px] overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
       <CloudinaryImg
         src={background}
         alt="Linaro Connect background"
         width={2800}
         height={400}
-        class="m-0"
+        class="absolute inset-0 w-full h-full object-cover my-0"
       />
       {inner_image && (
         <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-center">
           <div class="flex flex-col items-center">
-            <CloudinaryImg
-              src={inner_image}
-              alt="Linaro Connect Logo"
-              width={400}
-              height={400}
-            />
+            <CloudinaryImg src={inner_image} alt="Linaro Connect Logo" />
           </div>
         </div>
       )}
