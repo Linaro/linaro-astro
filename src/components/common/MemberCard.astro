@@ -5,24 +5,23 @@ const { id, name, title, image, info } = Astro.props;
 ---
 
 <style>
-    .member-image {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
+  .member-image {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
 </style>
 
 <li
-    class="flex px-4 flex-col items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch]"
-    style="height: 100%"
+  class="flex px-4 flex-col items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch] h-auto"
 >
-    <CloudinaryImg
-        src={image}
-        alt={name}
-        width={800}
-        height={800}
-        class="w-full h-full max-w-full object-cover rounded-2xl grayscale not-prose member-image"
-    />
-    <h2 class="text-2xl not-prose margin-top:0">{name}</h2>
-    <p style="min-height: 3.5em;">{title}</p>
-    <MemberModal modal_id={id} description={info} />
+  <CloudinaryImg
+    src={image}
+    alt={name}
+    width={800}
+    height={800}
+    class="w-full h-full max-w-full object-cover rounded-2xl grayscale not-prose member-image"
+  />
+  <h2 class="text-2xl not-prose margin-top:0">{name}</h2>
+  <p style="min-height: 3.5em;">{title}</p>
+  <MemberModal modal_id={id} description={info} />
 </li>
