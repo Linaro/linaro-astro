@@ -53,9 +53,9 @@ flow:
         cards:
           - title: Technical Support
             text: |
-              Linaro Technical Support - If you have a technical support query relating to Linaro, please go to our [support page](https://support.linaro.org/).
+              If you have a technical support query relating to Linaro, please go to our [support page](https://support.linaro.org/).
           - title: Legal Information
-            text: The Linaro legal pages/documents can be found here - [/legal/](/legal)
+            text: Linaro's legal information can be found on the [Legal page](/legal).
 
           - title: Getting Involved with the Community
             text: For discussion around Linux and Open Source on Arm, subscribe to the lists on [Linaro Lists Site](https://lists.linaro.org/mailman3/lists/).
