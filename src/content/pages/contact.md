@@ -51,6 +51,9 @@ flow:
           card: max-w-[40ch]  flex flex-col items-start
           container: justify-center gap-24
         cards:
+          - title: Technical Support
+            text: |
+              Linaro Technical Support - If you have a technical support query relating to Linaro, please go to our [support page](https://support.linaro.org/).
           - title: Legal Information
             text: The Linaro legal pages/documents can be found here - [/legal/](/legal)
 
