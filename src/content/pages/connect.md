@@ -19,7 +19,7 @@ flow:
         text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
         style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
-        countdownDate: 05/13/2025 02:00 PM
+        countdownDate: 05/14/2025 09:00 AM
   - row: container_row
     animation: none
     styles:
