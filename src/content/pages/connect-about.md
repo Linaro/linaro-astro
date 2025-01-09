@@ -125,7 +125,7 @@ flow:
     sections:
       - component: connect_content
         title: Accommodation & Travel
-        description: The next Linaro Connect will be held in Lisbon, Portugal, <br>Tuesday 13 - Friday 16 May 2025 at the Corinthia Lisbon.
+        description: The next Linaro Connect will be held in Lisbon, Portugal, <br>Wednesday 14 - Friday 16 May 2025 at the Corinthia Lisbon.
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
