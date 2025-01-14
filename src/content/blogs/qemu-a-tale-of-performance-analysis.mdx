@@ -1,0 +1,140 @@
+---
+title: "QEMU: A Tale of Performance analysis"
+description: >
+  In this post, we will present the performance issues we identified when booting Android using QEMU, and how we solved these upstream. We will also answer the question “How fast can you boot Android using QEMU?”
+date: 2025-01-14T00:00:00.000Z
+image: linaro-website/images/blog/Virtualization_image_x3vb2d.png
+tags:
+  - virtualization
+author: pierrick-bouvier
+related: []
+
+---
+
+Recently we were asked the question“How fast can you boot Android using QEMU?”.
+
+In this scenario, we are interested in QEMU as an emulator, where we can run an aarch64 virtual machine using software acceleration (with TCG, the Tiny Code Generator) on a x86-64 host. When using TCG, QEMU dynamically translates all guest instructions to host ones.
+
+This is opposed to QEMU used as a virtualizer, where host hardware acceleration is used (like KVM on Linux) and where guest runs natively on the host.
+
+In this post, we will present the performance issues we identified when booting Android using QEMU, and how we solved these upstream. We will also answer the question “How fast can you boot Android using QEMU?”
+
+# One does not simply boot Android
+
+Android is not your average Linux distribution, and things are not as easy as “download an image and run it”. The first step of our work was thus to identify which options exist, and which one has the best potential.
+
+Currently, there are two ways to do it: Android Emulator and Cuttlefish.
+
+The first one is the official Android emulator. It is targeted to ease Android app development. It is integrated into Android Studio and is a downstream fork of QEMU (recently merged on top of 8.2, while we released 9.2 recently). It has its proper command line options and machine model which makes it incompatible with upstream QEMU. Android images usable with Android emulator integrate a custom kernel, devices and some modifications to Android itself, to make app development easy.
+
+To provide better fidelity (at OS level) with the Android framework, the platform Cuttlefish was created. The goal is to have a platform that behaves exactly the same as an Android real device, without any specific tweaks. It is using upstream versions of QEMU, Linux kernel and VirtIO devices. It uses various daemons connected to the VM and used for log reporting. Google provides convenient tooling to launch images this way and they are easily accessible from CI Android website. With a simple command line parameter, it’s possible to replace the QEMU binary used.
+
+In our tests, using Android Emulator, we couldn’t boot an aarch64 guest on a x86-64 host with recent Android versions. It does not seem to be a supported use case anymore (relying on host hardware acceleration with an x86-64 image instead). 
+
+In addition, as we can use our own QEMU version with Cuttlefish, this is the solution we chose to perform our investigation.
+
+You can find details and a complete tutorial on our wiki page, and information on which QEMU parameters are used can be found here.
+
+# Profiling the Android boot sequence
+
+We have been using the standard tool Linux perf, associated with flamegraphs. Hotspot is a convenient GUI to read perf reports and generate flamegraphs.
+
+For people not familiar with flamegraphs, what you see is a statistical representation of the call stacks captured during profiling, ending up creating those flame shaped graphs. In other  words, each flame is a call stack, and the wider it gets, the more frequent it happens during execution. It helps to visualize in which contexts we spend time, and not only in which functions.
+
+As mentioned in the introduction, remember that we boot Android using QEMU software acceleration (TCG), and not hardware acceleration.
+
+## Pointer authentication
+
+The first thing we identified is that booting an aarch64 image was two times slower than x86-64. After checking with the QEMU basic blocks plugin that we were executing a similar number of guest instructions, we had to find the root cause somewhere else.
+
+Booting an x86-64 Android with 1 virtual cpu:
+
+`qemu-system-x86_64 -accel tcg -smp 1 -cpu max`
+
+![Booting an x86-64 Android with 1 virtual cpu](/linaro-website/images/blog/image6_znohkp.png "Booting an x86-64 Android with 1 virtual cpu")
+
+Booting an aarch64 Android with 1 virtual cpu:
+
+`qemu-system-aarch64 –accel tcg -smp 1 -cpu max`
+
+![Booting an aarch64 Android with 1 virtual cpu](/linaro-website/images/blog/image1_bj7q8a.png "Booting an aarch64 Android with 1 virtual cpu")
+
+The QEMU developer will see:
+
+![Perf report](/linaro-website/images/blog/image9_dhp1et.png "Perf report")
+
+Looking at flamegraph (or more simply the perf report), we quickly identified that pointer authentication emulation is expensive. By default, QEMU uses an expensive standard cryptographic algorithm (QARMA5). Switching to the fast implementation defined version solves the problem.
+
+`qemu-system-aarch64 -accel tcg -cpu max,pauth-impdef=on`
+
+As a side note, we ran into this again when doing experiments with windows-arm64 and adding new tests in QEMU. This sparked a conversation, and we’ll change pointer authentication to use the fast algorithm by default (see this series) in the next QEMU version.
+
+## More cores is better, right?
+
+The next step was to make good use of QEMU multithread capabilities built in TCG. By default, the Cuttlefish platform uses 2 cpus. In this mode, which is the default nowadays, QEMU uses one thread per cpu emulated.
+
+We observed, with the x86-64 image, that Android boot sequence does not benefit from adding more than 4 cpus (CPU usage max out at 500% on average). It makes sense given the typical hardware on which Android will run in the end.
+
+However, with the aarch64 image, we noticed that execution time was always increased when adding more cores. By looking at the flamegraphs, we identified specific flames that were getting wider and wider when adding more cpus. There is something hot there for sure!
+
+1 cpu:
+
+![1 CPU](/linaro-website/images/blog/image3_iheqk1.png "1 CPU")
+
+2 cpus:
+
+![2 CPUs](/linaro-website/images/blog/image2_tklv0y.png "2 CPUs")
+
+4 cpus:
+
+![4 CPUs](/linaro-website/images/blog/image5_go9npa.png "4 CPUs")
+
+8 cpus, and the (newcomer) QEMU developer that I am will see:
+
+![8 CPUs](/linaro-website/images/blog/image10_mejpa1.png "8 CPUs")
+
+After invoking help from the (experienced) QEMU developers, and being introduced to the [QEMU tracing framework](https://qemu-project.gitlab.io/qemu/devel/tracing.html), we realised that the contention is located around emulation of guest atomic instructions.
+
+“It’s weird, we are taking the slow path using a lock instead of using host atomic instructions. It was working well before”.
+
+One bisect later, and we are looking at [c2bf2](https://gitlab.com/qemu-project/qemu/-/commit/c2bf2ccb266dc9ae4a6da75b845f54535417e109).
+
+While moving compilation flags from QEMU configure script to meson build system, a regression was introduced. Indeed, we test various code snippets to enable features in meson, but compilation flags we define are not applied during those tests (it’s a meson feature, not a bug). So it silently deactivated the usage of CMPXCHG128 (compare and swap 16 bytes) instruction.
+
+We came for bug hunting, and ended up publishing a [series](https://lore.kernel.org/qemu-devel/20241004220123.978938-1-pierrick.bouvier@linaro.org/) fixing the build system. The Maintainer has finally preferred [his own version](https://lore.kernel.org/qemu-devel/20241007084342.1264048-1-pbonzini@redhat.com/#t). Never mind the series, as long as you get the right flag. The fix was [merged](https://gitlab.com/qemu-project/qemu/-/commit/8db4e0f92e83fd80b6609439440b303ddded7ad8) and is available in the QEMU 9.2 release.
+
+## Above and Beyond
+
+Now that we fixed the most obvious issues, we can really start to observe the difference between emulation of x86-64 and aarch64 architectures.
+
+![The difference between emulation of x86-64 and aarch64 architectures](/linaro-website/images/blog/image8_ikel15.png "The difference between emulation of x86-64 and aarch64 architectures")
+
+The flamegraphs mostly look similar, but we can see that more time is spent in “helpers” on aarch64 side. Looking more closely, we can see it’s related to float and vectorized instructions. This is where our investigation ends for now.
+
+You can find more details about our investigation, including original flamegraphs, on our [wiki page](https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29465968650/Android+QEMU+boot+time+analysis).
+
+# Results
+
+Now let’s get to the numbers! We present here the results to boot an Android VM on a x86-64 host.
+
+The reference time was established using hardware assisted virtualization and 4 cpus, which is the fastest setup we observed. All other runs are using TCG software acceleration. All aarch64 runs are using the pointer authentication fast algorithm.
+
+![Android boot time using QEMU](/linaro-website/images/blog/image7_kizndw.png "Android boot time using QEMU")
+
+Beyond absolute time, representing this as a slowdown factor is more interesting.
+
+![Android boot time slowdown using QEMU](/linaro-website/images/blog/image4_gwwshp.png "Android boot time slowdown using QEMU")
+
+In the end, running with TCG software acceleration is 8 times slower for x86-64 guest architecture and 12 times slower for aarch64 guest architecture, compared to using hardware acceleration. We can see that adding more than 4 guest cpus does not speed up the boot time.
+
+# Conclusion
+
+In this blog post, we presented how we solved two performance issues observed with QEMU when booting Android, and potential source of performance improvements in the future.
+
+Observing that emulation is slower by a factor of 10 compared to native execution could be seen as a disappointing result, but thinking about all the parts QEMU has to emulate (instructions, memory, devices), it’s a brilliant result, and proves it deserves its name of **Q**uick **EMU**lator - you’ll recognize the acronym.
+
+To answer the initial question that led to this investigation, it’s possible to boot an Android guest in less than 5 minutes on modern hardware.
+
+As often happens, the most interesting part was not the destination, but the journey to get there. We had the opportunity to explore various parts of the QEMU and Android projects, and we hope you enjoyed it as well.
+
+All those changes are part of the recent [QEMU release 9.2](https://www.qemu.org/2024/12/11/qemu-9-2-0/) that you can download from [QEMU official repository](https://gitlab.com/qemu-project/qemu).
