@@ -25,19 +25,19 @@ Android is not your average Linux distribution, and things are not as easy as �
 
 Currently, there are two ways to do it: Android Emulator and Cuttlefish.
 
-The first one is the official Android emulator. It is targeted to ease Android app development. It is integrated into Android Studio and is a downstream fork of QEMU (recently merged on top of 8.2, while we released 9.2 recently). It has its proper command line options and machine model which makes it incompatible with upstream QEMU. Android images usable with Android emulator integrate a custom kernel, devices and some modifications to Android itself, to make app development easy.
+The first one is the official Android emulator. It is targeted to ease Android app development. It is integrated into [Android Studio](https://developer.android.com/studio) and is a downstream fork of QEMU (recently merged on top of 8.2, while we released 9.2 recently). It has its proper command line options and machine model which makes it incompatible with upstream QEMU. Android images usable with Android emulator integrate a custom kernel, devices and some modifications to Android itself, to make app development easy.
 
-To provide better fidelity (at OS level) with the Android framework, the platform Cuttlefish was created. The goal is to have a platform that behaves exactly the same as an Android real device, without any specific tweaks. It is using upstream versions of QEMU, Linux kernel and VirtIO devices. It uses various daemons connected to the VM and used for log reporting. Google provides convenient tooling to launch images this way and they are easily accessible from CI Android website. With a simple command line parameter, it’s possible to replace the QEMU binary used.
+To provide better fidelity (at OS level) with the Android framework, the platform [Cuttlefish](https://source.android.com/docs/devices/cuttlefish) was created. The goal is to have a platform that behaves exactly the same as an Android real device, without any specific tweaks. It is using upstream versions of QEMU, Linux kernel and VirtIO devices. It uses various daemons connected to the VM and used for log reporting. Google provides convenient tooling to launch images this way and they are easily accessible from [CI Android](https://ci.android.com/) website. With a simple command line parameter, it’s possible to replace the QEMU binary used.
 
 In our tests, using Android Emulator, we couldn’t boot an aarch64 guest on a x86-64 host with recent Android versions. It does not seem to be a supported use case anymore (relying on host hardware acceleration with an x86-64 image instead). 
 
 In addition, as we can use our own QEMU version with Cuttlefish, this is the solution we chose to perform our investigation.
 
-You can find details and a complete tutorial on our wiki page, and information on which QEMU parameters are used can be found here.
+You can find details and a complete tutorial on our [wiki page](https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29464068097/Run+Android+using+QEMU), and information on which QEMU parameters are used can be found [here](https://linaro.atlassian.net/wiki/spaces/ORKO/pages/29093823191/Booting+a+Android+Cuttlefish+guest+directly+with+QEMU).
 
 # Profiling the Android boot sequence
 
-We have been using the standard tool Linux perf, associated with flamegraphs. Hotspot is a convenient GUI to read perf reports and generate flamegraphs.
+We have been using the standard tool Linux perf, associated with [flamegraphs](https://www.brendangregg.com/flamegraphs.html). [Hotspot](https://github.com/KDAB/hotspot) is a convenient GUI to read perf reports and generate flamegraphs.
 
 For people not familiar with flamegraphs, what you see is a statistical representation of the call stacks captured during profiling, ending up creating those flame shaped graphs. In other  words, each flame is a call stack, and the wider it gets, the more frequent it happens during execution. It helps to visualize in which contexts we spend time, and not only in which functions.
 
@@ -45,7 +45,7 @@ As mentioned in the introduction, remember that we boot Android using QEMU softw
 
 ## Pointer authentication
 
-The first thing we identified is that booting an aarch64 image was two times slower than x86-64. After checking with the QEMU basic blocks plugin that we were executing a similar number of guest instructions, we had to find the root cause somewhere else.
+The first thing we identified is that booting an aarch64 image was two times slower than x86-64. After checking with the QEMU [basic blocks plugin](https://www.qemu.org/docs/master/about/emulation.html#basic-blocks) that we were executing a similar number of guest instructions, we had to find the root cause somewhere else.
 
 Booting an x86-64 Android with 1 virtual cpu:
 
@@ -67,7 +67,7 @@ Looking at flamegraph (or more simply the perf report), we quickly identified th
 
 `qemu-system-aarch64 -accel tcg -cpu max,pauth-impdef=on`
 
-As a side note, we ran into this again when doing experiments with windows-arm64 and adding new tests in QEMU. This sparked a conversation, and we’ll change pointer authentication to use the fast algorithm by default (see this series) in the next QEMU version.
+As a side note, we ran into this again when doing experiments with windows-arm64 and adding new tests in QEMU. This sparked a conversation, and we’ll change pointer authentication to use the fast algorithm by default (see this [series](https://lore.kernel.org/qemu-devel/20241204211234.3077434-1-pierrick.bouvier@linaro.org/)) in the next QEMU version.
 
 ## More cores is better, right?
 
