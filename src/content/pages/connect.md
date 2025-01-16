@@ -118,10 +118,11 @@ flow:
               alt: "program-thumbnail-image"
             url: "/connect/call-for-proposals"
           - title: Sponsorship
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Sponsorship Packages
             image:
               src: linaro-website/images/events/connect-sponsership-img_wwsncn.png
               alt: "sponsorship-thumbnail-image"
+            url: "/connect/sponsorship"
   - row: container_row
     animation: none
     no_border: true
