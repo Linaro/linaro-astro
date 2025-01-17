@@ -58,7 +58,7 @@ flow:
           image: w-full mx-auto
         cards:
           - image:
-              src: linaro-website/images/events/connect-agenda_our0tu.png
+              src: linaro-website/images/events/Connect_25_Draft_agenda_graphic_pclvpy.png
               alt: test
               height: 1600
               width: 1600
