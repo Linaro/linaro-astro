@@ -223,11 +223,12 @@ export const twoColumnSchema = z.object({
       }),
       z.object({
         type: z.literal("image"),
+        imgContainer: z.boolean().optional(),
         image: z.object({
           src: z.string(),
           alt: z.string(),
-          width: z.number(),
-          height: z.number(),
+          width: z.number().optional(),
+          height: z.number().optional(),
           svg: z.boolean().optional().default(false),
         }),
         styles: z.string().optional(),
