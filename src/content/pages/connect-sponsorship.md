@@ -21,7 +21,7 @@ flow:
           size: h1
         style: text-center
       - component: text
-        text_content: Linaro <span class="text-linaro-yellow">Connect</span> 2025 is where Arm excellence gathers and gets together for 3 full days of how best to implement, leverage and foster the Arm solutions.
+        text_content: Linaro <span class="text-linaro-yellow">Connect</span> 2025 is where Arm excellence comes together to discuss how best to implement, leverage and foster Arm solutions.
         style: text-center text-3xl mx-56
       - component: two_column
         container_styles: flex align-center mb-24
@@ -121,7 +121,7 @@ flow:
             text_content: |
               <span class="text-linaro-yellow text-3xl">Training</span>
 
-              <span class="text-xl">Take your expertise to the net level with specialized training sessions at Linaro Connect 2025!</span>
+              <span class="text-xl">Take your expertise to the next level with specialized training sessions at Linaro Connect 2025!</span>
                 - <span class="text-linaro-yellow">Single-Day Training:</span> Attend a high-impact training session during Linaro Connect (The course will require a minimum number of 8 participants to take place)
                 - <span class="text-linaro-yellow">Exclusive Corporate Training:</span> Companies can leverage dedicated training sessions in private meeting rooms, tailored to their teams
                 - Enjoy discounted single tickets and bulk purchase options tailored to your needs.
@@ -142,7 +142,7 @@ flow:
 
               Your Focus Track Package includes:
                 - Full-day access to a meeting room, set up with a screen, projector, and stationary.
-                - Two coffee breaks o keep your attendees energized and engaged.
+                - Two coffee breaks to keep your attendees energized and engaged.
                 - Promotion across Linaro's social media channels and on the official Linaro Connect website.
                 - End-to-end registration management for a seamless experience.
 

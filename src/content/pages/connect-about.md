@@ -31,10 +31,10 @@ flow:
           card: text-center w-1/8
         divider: true
         cards:
-          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€450</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">€750</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,120</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€30</span>
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€540</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">€900</span>
+          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€36</span>
       - component: buttons
         buttons:
           - text: Buy a ticket
@@ -44,7 +44,7 @@ flow:
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
       - component: text
-        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
+        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
         style: text-center mx-56 leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
@@ -140,7 +140,7 @@ flow:
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
-          <span class="text-linaro-yellow">Visa & Business Letter - </span> If you require a visa support letter and/or need a business invitation letter, you can request these on KITE, Linaro’s event platform. Once you have registered, log in to KITE and follow the instructions to request these documents.
+          <span class="text-linaro-yellow">Visa & Business Invitation Letter - </span> If you require a visa support letter and/or need a business invitation letter, you can request these on KITE, Linaro’s event platform. Once you have registered, log in to KITE and follow the instructions to request these documents.
   - row: container_row
     no_border: true
     styles:
