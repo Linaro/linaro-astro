@@ -31,13 +31,16 @@ flow:
           card: text-center w-1/8
         divider: true
         cards:
-          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£450</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€450</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">€750</span>
+          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,120</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€30</span>
       - component: buttons
         buttons:
-          - text: REGISTER NOW
+          - text: Buy a ticket
+            url: http://linaroconnect.bymeoblueticket.pt/
+            style: linaro-gradient-button mt-4
+          - text: Register with a code
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
       - component: text
@@ -86,7 +89,7 @@ flow:
             text: Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
           - title: Daily Refreshments
             icon: daily-refreshments-1
-            text: Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
+            text: Enjoy lunch, coffee, and snacks from Wednesday to Friday to stay energized.
           - title: Private Meeting Room Booking
             icon: private-meeting-room-bookings-1
             text: Book secure meeting rooms for exclusive discussions, collaboration, or networking.
@@ -131,13 +134,13 @@ flow:
           description: m-8
           content: items-center columns-2 w-1/2 gap-12
         text_content: |
-          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">link</a>
+          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://reservations.corinthia.com/?adult=1&arrive=2025-05-12&chain=10210&child=0&currency=EUR&depart=2025-05-15&group=LINARO25CL&hotel=28705&level=hotel&locale=en-US&productcurrency=EUR&rooms=1">link</a>
 
           The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
-          <span class="text-linaro-yellow">Visa & Business Letter - </span> If you require a visa and need a business invitation letter and/or visa support letter, please register for Linaro Connect and follow the instructions on Kite.events.
+          <span class="text-linaro-yellow">Visa & Business Letter - </span> If you require a visa support letter and/or need a business invitation letter, you can request these on KITE, Linaro’s event platform. Once you have registered, log in to KITE and follow the instructions to request these documents.
   - row: container_row
     no_border: true
     styles:

@@ -105,12 +105,11 @@ flow:
         button_cards: true
         cards:
           - title: About
-            # text: Registration<br>Accommodation<br>Code of Conduct
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Registration<br>Accommodation<br>Code of Conduct
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            # url: "/connect/registration"
+            url: "/connect/registration"
           - title: Program
             text: Call for Proposals<br>Topics of Interest
             image:
