@@ -51,6 +51,17 @@ flow:
     no_border: true
     sections:
       - component: faded_line
+      - component: image_cards
+        styles:
+          container: flex mx-auto justify-center flex
+          card: flex items-center
+          image: w-full mx-auto
+        cards:
+          - image:
+              src: linaro-website/images/events/connect-agenda_our0tu.png
+              alt: test
+              height: 1600
+              width: 1600
       - component: text
         text_content: One Day, Early Bird and Standard - What is included?
         style: text-center text-4xl mx-56 mt-24 mb-16
