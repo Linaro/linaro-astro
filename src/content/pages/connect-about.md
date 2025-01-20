@@ -22,12 +22,12 @@ flow:
         style: text-center
       - component: text
         text_content: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
-        style: text-center text-3xl mx-56
+        style: text-center text-3xl mx-auto
       - component: cards
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-4 m-24 not-prose w-full
+          container: flex-col md:flex-row mx-auto justify-center gap-4 m-24 not-prose w-full items-center
           card: text-center w-1/8
         divider: true
         cards:
@@ -45,7 +45,7 @@ flow:
             style: linaro-gradient-button mt-4
       - component: text
         text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
-        style: text-center mx-56 leading-loose mt-12 text-xl font-light
+        style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
     no_border: true
@@ -64,7 +64,7 @@ flow:
               width: 1600
       - component: text
         text_content: One Day, Early Bird and Standard - What is included?
-        style: text-center text-4xl mx-56 mt-24 mb-16
+        style: text-center text-4xl mx-auto mt-24 mb-16
       - component: cards
         styles:
           title: my-8 text-xl
@@ -107,7 +107,7 @@ flow:
       - component: faded_line
       - component: text
         text_content: Virtual - What is included?
-        style: text-center text-4xl mx-56 my-16
+        style: text-center text-4xl mx-auto my-16
       - component: cards
         styles:
           title: my-8 text-xl
@@ -143,7 +143,7 @@ flow:
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-1/2 gap-12
+          content: items-center md:columns-2 w-1/2 gap-12
         text_content: |
           Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://reservations.corinthia.com/?adult=1&arrive=2025-05-12&chain=10210&child=0&currency=EUR&depart=2025-05-15&group=LINARO25CL&hotel=28705&level=hotel&locale=en-US&productcurrency=EUR&rooms=1">link</a>
 
@@ -182,7 +182,7 @@ flow:
         styles:
           title: text-center mx-32 text-3xl font-light
           description: m-8
-          content: items-center columns-2 gap-12 mx-8
+          content: items-center md:columns-2 gap-12 mx-8
   - row: container_row
     animation: none
     styles:
@@ -199,7 +199,7 @@ flow:
         type: accordion
         styles:
           title: md:min-w-[15ch] bg-linaro-gradient text-transparent bg-clip-text
-          content: items-center columns-2 gap-12 w-2/3 mt-6 text-pretty break-words
+          content: items-center columns-1 md:columns-2 gap-12 w-2/3 mt-6 text-pretty break-words
         text_content: |
           Linaro Ltd, as host for Linaro Connect, is dedicated to providing a harassment-free experience for participants at all of our events. Linaro events are working conferences intended for professional networking and collaboration in the Linux community. They exist to encourage the open exchange of ideas and expression and require an environment that recognizes the inherent worth of every person and group. While at Linaro events or related ancillary or social events, any participants, including speakers, attendees, volunteers, sponsors, exhibitors, booth staff and anyone else, should not engage in harassment in any form of communication or media including email, texting and social media.
 

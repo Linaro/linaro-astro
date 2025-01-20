@@ -22,7 +22,7 @@ flow:
         style: text-center
       - component: text
         text_content: Linaro <span class="text-linaro-yellow">Connect</span> 2025 is where Arm excellence comes together to discuss how best to implement, leverage and foster Arm solutions.
-        style: text-center text-3xl mx-56
+        style: text-center text-3xl mx-auto
       - component: two_column
         container_styles: flex align-center mb-24
         columns:
@@ -63,7 +63,7 @@ flow:
         divider: true
         styles:
           content: text-center text-linaro-yellow !text-2xl
-          container: flex mx-auto p-0 justify-center mb-16 w-full grow-0
+          container: flex flex-col md:flex-row mx-auto p-0 justify-center mb-16 w-full grow-0 items-center
           card: flex flex-1 flex-col items-center w-1/7 gap-0
           card_title: text-center text-wrap !text-2xl
         cards:
