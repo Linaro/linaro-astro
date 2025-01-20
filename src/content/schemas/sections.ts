@@ -13,6 +13,7 @@ export const buttonsSchema = z.object({
       style: z.string(),
     }),
   ),
+  style: z.string().optional(),
 });
 
 export const fileCarouselSchema = z.object({

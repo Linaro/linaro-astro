@@ -27,16 +27,15 @@ flow:
       outer: flex justify-center
     no_border: true
     sections:
-      - component: text
-        text_content: Calling all Speakers!
-        style: text-xl
-      # - component: connect_save
-      #   btnId: top-btn-save-date
       - component: buttons
         buttons:
+          - text: Register Now
+            url: /connect/registration
+            style: linaro-gradient-button
           - text: Submit your Proposal
             url: /connect/call-for-proposals
             style: linaro-gradient-button
+        style: gap-16
   - row: container_row
     animation: none
     styles:
