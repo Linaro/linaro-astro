@@ -22,35 +22,49 @@ flow:
         style: text-center
       - component: text
         text_content: Register for Linaro Connect and join <span class="text-linaro-yellow">hundreds</span> of the world’s leading Arm Open Source technical experts.
-        style: text-center text-3xl mx-56
+        style: text-center text-3xl mx-auto
       - component: cards
         styles:
           description: m-8
           content: not-prose leading-loose
-          container: mx-auto justify-center gap-4 m-24 not-prose w-full
+          container: flex-col md:flex-row mx-auto justify-center gap-4 m-24 not-prose w-full items-center
           card: text-center w-1/8
         divider: true
         cards:
-          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£450</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">£750</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,120</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€540</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 15 Apr 2025</span><br><span class="text-4xl">€900</span>
+          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€36</span>
       - component: buttons
         buttons:
-          - text: REGISTER NOW
+          - text: Buy a ticket
+            url: http://linaroconnect.bymeoblueticket.pt/
+            style: linaro-gradient-button mt-4
+          - text: Register with a code
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
       - component: text
-        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass. For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
-        style: text-center mx-56 leading-loose mt-12 text-xl font-light
+        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
+        style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
     no_border: true
     sections:
       - component: faded_line
+      - component: image_cards
+        styles:
+          container: flex mx-auto justify-center flex
+          card: flex items-center
+          image: w-full mx-auto
+        cards:
+          - image:
+              src: linaro-website/images/events/Connect_25_Draft_agenda_graphic_pclvpy.png
+              alt: test
+              height: 1600
+              width: 1600
       - component: text
         text_content: One Day, Early Bird and Standard - What is included?
-        style: text-center text-4xl mx-56 mt-24 mb-16
+        style: text-center text-4xl mx-auto mt-24 mb-16
       - component: cards
         styles:
           title: my-8 text-xl
@@ -86,14 +100,14 @@ flow:
             text: Immerse yourself in live demonstrations of the latest technologies, innovations, and projects.
           - title: Daily Refreshments
             icon: daily-refreshments-1
-            text: Enjoy lunch coffee, and snacks from Wednesday to Friday to stay energized.
+            text: Enjoy lunch, coffee, and snacks from Wednesday to Friday to stay energized.
           - title: Private Meeting Room Booking
             icon: private-meeting-room-bookings-1
             text: Book secure meeting rooms for exclusive discussions, collaboration, or networking.
       - component: faded_line
       - component: text
         text_content: Virtual - What is included?
-        style: text-center text-4xl mx-56 my-16
+        style: text-center text-4xl mx-auto my-16
       - component: cards
         styles:
           title: my-8 text-xl
@@ -129,15 +143,15 @@ flow:
         styles:
           title: bg-linaro-gradient text-transparent bg-clip-text
           description: m-8
-          content: items-center columns-2 w-1/2 gap-12
+          content: items-center md:columns-2 w-1/2 gap-12
         text_content: |
-          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">link</a>
+          Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://reservations.corinthia.com/?adult=1&arrive=2025-05-12&chain=10210&child=0&currency=EUR&depart=2025-05-15&group=LINARO25CL&hotel=28705&level=hotel&locale=en-US&productcurrency=EUR&rooms=1">link</a>
 
           The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
-          <span class="text-linaro-yellow">Visa & Business Letter - </span> If you require a visa and need a business invitation letter and/or visa support letter, please register for Linaro Connect and follow the instructions on Kite.events.
+          <span class="text-linaro-yellow">Visa & Business Invitation Letter - </span> If you require a visa support letter and/or need a business invitation letter, you can request these on KITE, Linaro’s event platform. Once you have registered, log in to KITE and follow the instructions to request these documents.
   - row: container_row
     no_border: true
     styles:
@@ -168,7 +182,7 @@ flow:
         styles:
           title: text-center mx-32 text-3xl font-light
           description: m-8
-          content: items-center columns-2 gap-12 mx-8
+          content: items-center md:columns-2 gap-12 mx-8
   - row: container_row
     animation: none
     styles:
@@ -185,7 +199,7 @@ flow:
         type: accordion
         styles:
           title: md:min-w-[15ch] bg-linaro-gradient text-transparent bg-clip-text
-          content: items-center columns-2 gap-12 w-2/3 mt-6 text-pretty break-words
+          content: items-center columns-1 md:columns-2 gap-12 w-2/3 mt-6 text-pretty break-words
         text_content: |
           Linaro Ltd, as host for Linaro Connect, is dedicated to providing a harassment-free experience for participants at all of our events. Linaro events are working conferences intended for professional networking and collaboration in the Linux community. They exist to encourage the open exchange of ideas and expression and require an environment that recognizes the inherent worth of every person and group. While at Linaro events or related ancillary or social events, any participants, including speakers, attendees, volunteers, sponsors, exhibitors, booth staff and anyone else, should not engage in harassment in any form of communication or media including email, texting and social media.
 

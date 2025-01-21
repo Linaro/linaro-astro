@@ -109,6 +109,5 @@ export default defineConfig({
       "/whitepapers",
     "/sig": "/",
     "/latest/downloads": "/downloads",
-    "/connect/registration": "/404",
   },
 });

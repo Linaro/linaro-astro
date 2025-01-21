@@ -27,16 +27,15 @@ flow:
       outer: flex justify-center
     no_border: true
     sections:
-      - component: text
-        text_content: Calling all Speakers!
-        style: text-xl
-      # - component: connect_save
-      #   btnId: top-btn-save-date
       - component: buttons
         buttons:
+          - text: Register Now
+            url: /connect/registration
+            style: linaro-gradient-button
           - text: Submit your Proposal
             url: /connect/call-for-proposals
             style: linaro-gradient-button
+        style: gap-16
   - row: container_row
     animation: none
     styles:
@@ -105,12 +104,11 @@ flow:
         button_cards: true
         cards:
           - title: About
-            # text: Registration<br>Accommodation<br>Code of Conduct
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Registration<br>Accommodation<br>Code of Conduct
             image:
               src: linaro-website/images/events/connect-about-img_mwdtyg.png
               alt: "about-thumbnail-image"
-            # url: "/connect/registration"
+            url: "/connect/registration"
           - title: Program
             text: Call for Proposals<br>Topics of Interest
             image:
@@ -118,10 +116,11 @@ flow:
               alt: "program-thumbnail-image"
             url: "/connect/call-for-proposals"
           - title: Sponsorship
-            text: <span class="text-linaro-yellow">COMING SOON!</span>
+            text: Sponsorship Packages
             image:
               src: linaro-website/images/events/connect-sponsership-img_wwsncn.png
               alt: "sponsorship-thumbnail-image"
+            url: "/connect/sponsorship"
   - row: container_row
     animation: none
     no_border: true

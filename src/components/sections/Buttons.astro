@@ -3,10 +3,10 @@ import type { buttonsSchema } from "@/content/schemas/sections";
 import type { z } from "astro/zod";
 
 type Props = z.infer<typeof buttonsSchema>;
-const { buttons } = Astro.props;
+const { buttons, style } = Astro.props;
 ---
 
-<ul class="flex justify-center list-none p-0">
+<ul class:list={[style, "flex justify-center list-none p-0"]}>
   {
     buttons.map(({ text, url, style }) => (
       <li>

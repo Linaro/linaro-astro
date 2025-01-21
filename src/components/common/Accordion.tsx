@@ -23,7 +23,7 @@ const AccordionDrawer = ({ id, content }: { id: string; content: string }) => {
           }
         >
           <div
-            class="w-3/4 columns-2 mx-auto gap-16 prose-p:mt-0"
+            class="w-3/4 md:columns-2 mx-auto gap-16 prose-p:mt-0"
             innerHTML={content}
           ></div>
         </Show>

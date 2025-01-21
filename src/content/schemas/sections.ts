@@ -1,8 +1,5 @@
 import { z } from "astro/zod";
-import {
-  reference,
-  type CollectionEntry,
-} from "astro:content";
+import { reference, type CollectionEntry } from "astro:content";
 
 const component = (filename: CollectionEntry<"sections">["slug"]) =>
   z.literal(filename);
@@ -14,8 +11,9 @@ export const buttonsSchema = z.object({
       text: z.string(),
       url: z.string(),
       style: z.string(),
-    })
+    }),
   ),
+  style: z.string().optional(),
 });
 
 export const fileCarouselSchema = z.object({
@@ -27,8 +25,8 @@ export const teamSchema = z.object({
   component: component("team"),
   id: z.string(),
   title: z.string(),
-  members: z.array(reference('team_members')),
-})
+  members: z.array(reference("team_members")),
+});
 
 export const cardsSchema = z.object({
   component: component("cards"),
@@ -55,8 +53,7 @@ export const cardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
-      
-    })
+    }),
   ),
   divider: z.boolean().optional(),
 });
@@ -91,9 +88,10 @@ export const imageCardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
-      url: z.string().optional(),    })
+      url: z.string().optional(),
+    }),
   ),
-  button_cards: z.boolean().optional()
+  button_cards: z.boolean().optional(),
 });
 
 export const threeColumnSchema = z.object({
@@ -109,7 +107,7 @@ export const threeColumnSchema = z.object({
     z.object({
       text: z.string().optional(),
       style: z.string().optional(),
-    })
+    }),
   ),
 });
 
@@ -119,7 +117,7 @@ export const statGridSchema = z.object({
     z.object({
       value: z.number(),
       label: z.string(),
-    })
+    }),
   ),
 });
 
@@ -134,13 +132,13 @@ export const textSchema = z.object({
 });
 
 export const titleSchema = z.object({
-  component: component('title'),
+  component: component("title"),
   title_content: z.object({
     text: z.string(),
     size: z.string().optional(),
   }),
-  style: z.string().optional()
-})
+  style: z.string().optional(),
+});
 
 export const contactSchema = z.object({
   component: component("contact"),
@@ -181,8 +179,8 @@ export const contactButtonsSchema = z.object({
         title: z.string().optional(),
         icon: z.string().optional(),
         style: z.string().optional(),
-      })
-    ])
+      }),
+    ]),
   ),
   styles: z.object({
     card: z.string().optional(),
@@ -208,7 +206,7 @@ export const membershipSchema = z.object({
         name: z.string().optional(),
         title_style: z.string().optional(),
         style: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 });
@@ -226,16 +224,17 @@ export const twoColumnSchema = z.object({
       }),
       z.object({
         type: z.literal("image"),
+        imgContainer: z.boolean().optional(),
         image: z.object({
           src: z.string(),
           alt: z.string(),
-          width: z.number(),
-          height: z.number(),
+          width: z.number().optional(),
+          height: z.number().optional(),
           svg: z.boolean().optional().default(false),
         }),
         styles: z.string().optional(),
       }),
-    ])
+    ]),
   ),
 });
 
@@ -252,7 +251,7 @@ export const moreInfoSchema = z.object({
       title: z.string(),
       icon: z.string().optional(),
       url: z.string(),
-    })
+    }),
   ),
 });
 
@@ -262,7 +261,7 @@ export const logoGridSchema = z.object({
     z.object({
       src: z.string(),
       alt: z.string(),
-    })
+    }),
   ),
 });
 
@@ -297,7 +296,7 @@ export const videosSchema = z.object({
       src: z.string(),
       title: z.string(),
       thumbnail: z.string().optional(),
-    })
+    }),
   ),
 });
 
@@ -330,7 +329,7 @@ export const articlesSchema = z.object({
         collection: z.literal("news"),
         post: reference("news"),
       }),
-    ])
+    ]),
   ),
 });
 
@@ -341,7 +340,7 @@ export const tabsSchema = z.object({
       title: z.string(),
       id: z.string(),
       content: z.string(),
-    })
+    }),
   ),
 });
 
@@ -350,12 +349,12 @@ export const teamTailorSchema = z.object({
 });
 
 export const dateCountdownSchema = z.object({
-  component: component('date_countdown'),
-  countdownDate: z.string() 
+  component: component("date_countdown"),
+  countdownDate: z.string(),
 });
 
 export const fadedLineSchema = z.object({
-  component: component('faded_line')
+  component: component("faded_line"),
 });
 
 export const connectSloganSchema = z.object({
@@ -366,15 +365,15 @@ export const connectSloganSchema = z.object({
 export const connectSaveDateSchema = z.object({
   component: component("connect_save"),
   style: z.string().optional(),
-  btnId: z.string()
+  btnId: z.string(),
 });
 
 export const largeImageSchema = z.object({
   component: component("large_image"),
   src: z.string(),
   alt: z.string(),
-  style: z.string().optional()
-})
+  style: z.string().optional(),
+});
 
 export const largeCardSchema = z.object({
   component: component("large_card"),
@@ -385,7 +384,7 @@ export const largeCardSchema = z.object({
       card_title: z.string().optional(),
       button: z.string().optional(),
       icon: z.string().optional(),
-      card_text: z.string().optional()
+      card_text: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -402,22 +401,30 @@ export const largeCardSchema = z.object({
           url: z.string(),
         })
         .optional(),
-    })
+    }),
   ),
 });
 
 export const connectContentSchema = z.object({
-  component: component('connect_content'),
+  component: component("connect_content"),
   title: z.string().optional(),
   description: z.string().optional(),
   type: z.string().optional(),
-  styles: z.object({
-    container: z.string().optional(),
-    title: z.string().optional(),
-    description: z.string().optional(),
-    content: z.string().optional()
-  }).optional(),
-  text_content: z.string()
+  styles: z
+    .object({
+      container: z.string().optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      content: z.string().optional(),
+    })
+    .optional(),
+  text_content: z.string(),
+  image: z
+    .object({
+      url: z.string(),
+      alt: z.string(),
+    })
+    .optional(),
 });
 
 export default z.discriminatedUnion("component", [
@@ -449,5 +456,5 @@ export default z.discriminatedUnion("component", [
   connectSaveDateSchema,
   largeImageSchema,
   connectContentSchema,
-  titleSchema
+  titleSchema,
 ]);

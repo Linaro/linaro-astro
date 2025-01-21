@@ -54,6 +54,7 @@
     "vanilla-cookieconsent": "^2.9.2"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",

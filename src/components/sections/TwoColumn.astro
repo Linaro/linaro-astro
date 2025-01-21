@@ -22,7 +22,17 @@ const { columns, container_styles } = Astro.props;
       }
 
       if (column.type === "image") {
-        return <CloudinaryImg {...column.image} class:list={[column.styles]} />;
+        if (column.imgContainer) {
+          return (
+            <div>
+              <CloudinaryImg {...column.image} class:list={[column.styles]} />
+            </div>
+          );
+        } else {
+          return (
+            <CloudinaryImg {...column.image} class:list={[column.styles]} />
+          );
+        }
       }
     })
   }

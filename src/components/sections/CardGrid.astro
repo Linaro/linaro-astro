@@ -18,7 +18,7 @@ const { cards, styles, divider } = Astro.props;
           <li class:list={[styles?.card, style]}>
             {icon && <Icon name={icon} size={100} class="my-0" />}
             {title && (
-              <h3 class:list={["text-4xl my-5 z-50", styles?.card_title]}>
+              <h3 class:list={[styles?.card_title, "text-4xl my-5 z-50"]}>
                 {title}
               </h3>
             )}
