@@ -68,7 +68,6 @@ flow:
           card_title: text-center text-wrap !text-2xl
         cards:
           - title: Add-ons
-            icon: placeholder
           - title: Lanyards
             icon: lanyard
             text: $6k
