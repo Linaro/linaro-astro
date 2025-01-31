@@ -70,7 +70,7 @@ flow:
           card: w-[35ch] flex items-center flex-col text-center gap-2
           container: justify-around gap-x-28 mb-40 not-prose gap-y-8
         cards:
-          - text: Meet Arm Excellence and it’s Industry Leaders
+          - text: Meet Arm Excellence and its Industry Leaders
             icon: handshake
           - text: Keep Up-To-Speed with Our Training Sessions
             icon: bulb
