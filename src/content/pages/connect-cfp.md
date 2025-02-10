@@ -66,9 +66,9 @@ flow:
           card: text-center w-1/8
         divider: true
         cards:
-          - text: CFP closes<br><span class="text-linaro-yellow">Tuesday<br>13 February 2025</span>
+          - text: CFP closes<br><span class="text-linaro-yellow">Thursday<br>13 February 2025</span>
           - text: CFP notifications<br><span class="text-linaro-yellow">Wednesday<br>5 March 2025</span>
-          - text: Schedule<br>Announcement<br><span class="text-linaro-yellow">Tuesday<br>12 March 2025</span>
+          - text: Schedule<br>Announcement<br><span class="text-linaro-yellow">Wednesday<br>12 March 2025</span>
           - text: Slides and demo<br>posters submission<br><span class="text-linaro-yellow">Tuesday<br>29 April 2025</span>
       - component: faded_line
   - row: container_row
