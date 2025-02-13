@@ -124,9 +124,9 @@ flow:
         styles:
           card: max-w-[22em] p-8 flex flex-col bg-dark border-white border rounded-3xl border-solid
           container: flex justify-center gap-x-8 flex-wrap
-          card_title: text-2xl
+          card_title: text-linaro-yellow text-2xl
           image: m-0
-          text: text-grey text-md leading-10
+          text: text-md leading-10
         button_cards: true
         cards:
           - title: About
