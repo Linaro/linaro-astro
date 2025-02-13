@@ -46,6 +46,32 @@ flow:
   - row: container_row
     animation: none
     no_border: true
+    sections:
+      - component: text
+        text_content: Thank you to our Sponsors
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
+      - component: two_column
+        container_styles: w-full justify-center gap-16 items-center
+        columns:
+          - type: image
+            image:
+              src: linaro-website/logos/arm.svg
+              alt: |
+                Qualcomm logo
+              height: 200
+              width: 200
+            styles: not-prose
+          - type: image
+            image:
+              src: linaro-website/logos/qualcomm.svg
+              alt: |
+                arm logo
+              height: 200
+              width: 400
+            styles: not-prose
+  - row: container_row
+    animation: none
+    no_border: true
     full_width: true
     styles:
       inner: flex flex-col items-center h-auto w-[110vw] relative overflow-x-hidden inset-0 -left-[5%]
