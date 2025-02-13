@@ -49,7 +49,7 @@ flow:
     sections:
       - component: text
         text_content: Thank you to our Sponsors
-        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-16
       - component: two_column
         container_styles: w-full justify-center gap-16 items-center
         columns:
