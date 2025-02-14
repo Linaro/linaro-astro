@@ -4,96 +4,100 @@ import GoogleAnalytics from "./GoogleAnalytics.astro";
 import { SEO } from "astro-seo";
 import "@fontsource/lato";
 import "../../styles/global.scss";
-import { getCldOgImageUrl } from 'astro-cloudinary/helpers';
+import { getCldOgImageUrl } from "astro-cloudinary/helpers";
 
 const GA_ID = import.meta.env.GA_ID;
 
-const { title = "", description = "", type = "website", image = "" } = Astro.props;
+const {
+  title = "",
+  description = "",
+  type = "website",
+  image = "",
+} = Astro.props;
 
-const logoPublicId = 'linaro-website/graphics/infinito-cropped.svg';
+const logoPublicId = "linaro-website/graphics/infinito-cropped.svg";
 
 const social_image = getCldOgImageUrl({
   src: image,
   effects: [
     {
-      background: 'rgb:010A44'
+      background: "rgb:010A44",
     },
     {
-      color: 'rgb:6715E8',
-      colorize: '100'
+      color: "rgb:6715E8",
+      colorize: "100",
     },
     {
-      gradientFade: 'symmetric'
-    }
+      gradientFade: "symmetric",
+    },
   ],
   overlays: [
     {
       publicId: image,
       width: 1200,
       height: 630,
-      crop: 'fill',
-      effects: [
-        { opacity: 20 }
-      ]
+      crop: "fill",
+      effects: [{ opacity: 20 }],
     },
     {
       width: 1000,
-      crop: 'fit',
+      crop: "fit",
       text: {
-        color: 'white',
-        fontFamily: 'Lato',
+        color: "white",
+        fontFamily: "Lato",
         fontSize: 36,
-        fontWeight: 'normal',
+        fontWeight: "normal",
         lineSpacing: 10,
-        text: title
+        text: title,
       },
       position: {
         x: 100,
         y: 100,
-        gravity: 'north_west'
+        gravity: "north_west",
       },
     },
     {
       publicId: image,
       width: 1000,
       height: 2,
-      effects: [{
-        colorize: '100,co_white',
-        opacity: 70
-      }],
+      effects: [
+        {
+          colorize: "100,co_white",
+          opacity: 70,
+        },
+      ],
       position: {
         x: 100,
         y: 175,
-        gravity: 'south_west'
+        gravity: "south_west",
       },
     },
     {
       width: 60,
-      crop: 'fit',
+      crop: "fit",
       publicId: logoPublicId,
       position: {
         x: 100,
         y: 102,
-        gravity: 'south_west'
+        gravity: "south_west",
       },
     },
     {
       text: {
-        color: 'white',
-        fontFamily: 'Lato',
+        color: "white",
+        fontFamily: "Lato",
         fontSize: 37,
-        fontWeight: 'bold',
-        text: "Linaro.org"
+        fontWeight: "bold",
+        text: "Linaro.org",
       },
       position: {
         x: 180,
         y: 100,
-        gravity: 'south_west'
+        gravity: "south_west",
       },
     },
-  ]
-})
-
+  ],
+});
 ---
 
 <head>
@@ -102,40 +106,44 @@ const social_image = getCldOgImageUrl({
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta charset="utf-8" />
 
-   <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer', 'GTM-5DLPJQ');</script>
-   
-  {typeof GA_ID != 'undefined' && GA_ID != "" ? (
-    <Cookies />
-  ):(
-    <!-- No GA ID -->
-  )}
+  <script type="text/javascript">
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-5DLPJQ");
+  </script>
+ 
+
+  {typeof GA_ID != "undefined" && GA_ID != "" ? <Cookies /> : ( <!-- No GA_ID -->)}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
   <link
-  rel="alternate"
-  type="application/rss+xml"
-  title="Linaro.org"
-  href={new URL("rss/news.xml", Astro.site)}
-/>
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title="Linaro.org"
-  href={new URL("rss/blog.xml", Astro.site)}
-/>
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title="Linaro.org"
-  href={new URL("feed.xml", Astro.site)}
-/>
+    rel="alternate"
+    type="application/rss+xml"
+    title="Linaro.org"
+    href={new URL("rss/news.xml", Astro.site)}
+  />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="Linaro.org"
+    href={new URL("rss/blog.xml", Astro.site)}
+  />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="Linaro.org"
+    href={new URL("feed.xml", Astro.site)}
+  />
   <meta name="msapplication-TileColor" content="#da532c" />
   <meta name="theme-color" content="#ffffff" />
   <SEO

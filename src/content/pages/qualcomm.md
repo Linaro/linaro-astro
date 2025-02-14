@@ -107,6 +107,7 @@ flow:
               * RB3, RB5, RB2, RB1
       - component: membership
         form_id: "4"
+        formName: "projects"
         description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
         styles:
           card: max-w-[30ch] text-center flex flex-col items-center

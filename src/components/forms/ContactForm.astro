@@ -1,5 +1,5 @@
 ---
-const { form_id, description, modal_id } = Astro.props;
+const { form_id, formName, description, modal_id } = Astro.props;
 
 const inputFields = [
   {
@@ -26,6 +26,7 @@ const inputFields = [
       )
     }
     <input type="hidden" name="form_id" value={form_id} />
+    <input type="hidden" name="formName" value={formName} />
     {
       inputFields.map(({ name, label, type }) => (
         <>

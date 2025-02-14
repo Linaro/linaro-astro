@@ -143,6 +143,7 @@ export const titleSchema = z.object({
 export const contactSchema = z.object({
   component: component("contact"),
   form_id: z.string(),
+  formName: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
   styles: z.object({
@@ -172,6 +173,7 @@ export const contactButtonsSchema = z.object({
         button_text: z.string(),
         style: z.string().optional(),
         description: z.string().optional(),
+        formName: z.string().optional(),
       }),
       z.object({
         type: z.literal("insight"),
@@ -192,6 +194,7 @@ export const contactButtonsSchema = z.object({
 export const membershipSchema = z.object({
   component: component("membership"),
   form_id: z.string(),
+  formName: z.string(),
   description: z.string(),
   style: z.string().optional(),
   styles: z.object({
