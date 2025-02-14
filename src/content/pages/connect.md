@@ -6,7 +6,7 @@ description: Linaro Connect is a series of events that brings together the Arm E
 connectHero:
   background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
-  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Wednesday 14 May - Friday 16 May 2025</span><br>Lisbon, Portugal
+  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Boosting the Next Wave of Arm Innovation</span><br>14-16 May 2025  |  Lisbon, Portugal
 flow:
   - row: container_row
     animation: none
@@ -46,10 +46,12 @@ flow:
   - row: container_row
     animation: none
     no_border: true
+    styles:
+      inner: py-4
     sections:
       - component: text
         text_content: Thank you to our Sponsors
-        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-16
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-2
       - component: two_column
         container_styles: w-full justify-center gap-16 items-center
         columns:
