@@ -11,6 +11,7 @@ const { background, inner_image, description, dates, child_page } =
   Astro.props!;
 
 const markdown = description && (await marked.parse(description));
+const currentPath = Astro.url.pathname;
 ---
 
 {
@@ -24,15 +25,38 @@ const markdown = description && (await marked.parse(description));
         class="absolute inset-0 w-full h-full object-cover my-0"
       />
       {inner_image && (
-        <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-center">
-          <div class="flex flex-col items-center">
-            <CloudinaryImg src={inner_image} alt="Linaro Connect Logo" />
+        <>
+          <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center">
+            <div class="flex flex-col items-center">
+              <CloudinaryImg src={inner_image} alt="Linaro Connect Logo" />
+            </div>
+            <div class="flex gap-2 lg:gap-8 mx-auto lg:mb-8">
+              {[
+                { href: "/connect", label: "Connect Home" },
+                { href: "/connect/registration", label: "Registration" },
+                {
+                  href: "/connect/call-for-proposals",
+                  label: "Call for Proposals",
+                },
+                { href: "/connect/sponsorship", label: "Sponsorship" },
+              ].map(({ href, label }) => (
+                <a
+                  href={href}
+                  target="_self"
+                  class={`no-underline inline-block text-sm lg:text-lg transition-all duration-200 ${
+                    currentPath === href ? "text-linaro-yellow" : "text-white"
+                  } hover:text-linaro-yellow hover:scale-105`}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   ) : (
-    <div class="relative w-full h-[500px] overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
+    <div class="relative w-full h-[540px] lg:h-[500px] overflow-hidden border-b-[10px] border-b-[#ffce00] border-solid">
       <video
         autoplay
         muted
@@ -42,7 +66,7 @@ const markdown = description && (await marked.parse(description));
         <source src={background} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-center bg-[rgba(0,_0,_0,_0.6)]">
+      <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center bg-[rgba(0,_0,_0,_0.6)]">
         <div class="flex flex-col items-center">
           {inner_image && (
             <CloudinaryImg
@@ -54,6 +78,27 @@ const markdown = description && (await marked.parse(description));
           )}
           <h1 class="text-3xl m-0" set:html={markdown} />
           <h1 class="text-linaro-yellow text-3xl m-0">{dates}</h1>
+        </div>
+        <div class="flex gap-2 lg:gap-8 mx-auto">
+          {[
+            { href: "/connect", label: "Connect Home" },
+            { href: "/connect/registration", label: "Registration" },
+            {
+              href: "/connect/call-for-proposals",
+              label: "Call for Proposals",
+            },
+            { href: "/connect/sponsorship", label: "Sponsorship" },
+          ].map(({ href, label }) => (
+            <a
+              href={href}
+              target="_self"
+              class={`no-underline inline-block text-sm lg:text-lg transition-all duration-200 ${
+                currentPath === href ? "text-linaro-yellow" : "text-white"
+              } hover:text-linaro-yellow hover:scale-105`}
+            >
+              {label}
+            </a>
+          ))}
         </div>
       </div>
     </div>

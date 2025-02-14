@@ -6,7 +6,7 @@ description: Linaro Connect is a series of events that brings together the Arm E
 connectHero:
   background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
-  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Wednesday 14 May - Friday 16 May 2025</span><br>Lisbon, Portugal
+  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Boosting the Next Wave of Arm Innovation</span><br>14-16 May 2025  |  Lisbon, Portugal
 flow:
   - row: container_row
     animation: none
@@ -43,6 +43,34 @@ flow:
     no_border: true
     sections:
       - component: faded_line
+  - row: container_row
+    animation: none
+    no_border: true
+    styles:
+      inner: py-4
+    sections:
+      - component: text
+        text_content: Thank you to our Sponsors
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-2
+      - component: two_column
+        container_styles: w-full justify-center gap-16 items-center
+        columns:
+          - type: image
+            image:
+              src: linaro-website/logos/arm.svg
+              alt: |
+                Qualcomm logo
+              height: 200
+              width: 200
+            styles: not-prose
+          - type: image
+            image:
+              src: linaro-website/logos/qualcomm.svg
+              alt: |
+                arm logo
+              height: 200
+              width: 400
+            styles: not-prose
   - row: container_row
     animation: none
     no_border: true
@@ -98,9 +126,9 @@ flow:
         styles:
           card: max-w-[22em] p-8 flex flex-col bg-dark border-white border rounded-3xl border-solid
           container: flex justify-center gap-x-8 flex-wrap
-          card_title: text-2xl
+          card_title: text-linaro-yellow text-2xl
           image: m-0
-          text: text-grey text-md leading-10
+          text: text-md leading-10
         button_cards: true
         cards:
           - title: About
