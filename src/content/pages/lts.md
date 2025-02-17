@@ -99,6 +99,7 @@ flow:
     sections:
       - component: contact
         form_id: "6"
+        formName: "solutions"
         description: We are here to support your journey towards long-term stability and success. Complete the form and one of our experts will get in touch.
         content: |
           Are you ready to redefine your Linux Kernel LTS experience? 

@@ -70,6 +70,7 @@ flow:
     sections:
       - component: contact
         form_id: "7"
+        formName: "solutions"
         description: Reach out to our team and level up your interoperability testing process
         content: |
           Solving the challenges of cloud-native edge computing requires collaboration among all contributing players.

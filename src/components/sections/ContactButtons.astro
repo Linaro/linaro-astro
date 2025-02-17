@@ -16,7 +16,9 @@ const { buttons, styles } = Astro.props;
       return (
         <li class:list={[styles?.card]}>
           {icon && <Icon name={icon} size={100} class="my-0" />}
-          {title && <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>}
+          {title && (
+            <h3 class:list={["text-4xl my-5", styles?.card_title]}>{title}</h3>
+          )}
 
           {() => {
             if (props.type === "link") {
@@ -39,14 +41,13 @@ const { buttons, styles } = Astro.props;
                   modal_id={props.modal_id}
                   button_text={button_text}
                   description={title}
+                  formName={props.formName}
                 />
               );
             }
 
             if (props.type === "insight") {
-              return (
-                <InsightModal button_text={button_text} />
-              );
+              return <InsightModal button_text={button_text} />;
             }
           }}
         </li>
@@ -61,7 +62,7 @@ const { buttons, styles } = Astro.props;
 
   function addListeners() {
     const dialogs = document.querySelectorAll(
-      "[data-contact-modal]"
+      "[data-contact-modal]",
     ) as NodeListOf<HTMLDialogElement>;
 
     dialogs.forEach((dialog) => {

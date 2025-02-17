@@ -51,6 +51,11 @@ const { title, description, type = "website", image } = Astro.props;
       });
     </script>
     <script>
+      declare global {
+        interface Window {
+          dataLayer: Record<string, any>[];
+        }
+      }
       ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
         document.addEventListener(event, addListeners);
       });
@@ -81,8 +86,23 @@ const { title, description, type = "website", image } = Astro.props;
         const data = new FormData(e.target as HTMLFormElement);
         const payload = {} as Record<string, any>;
 
+        const formName =
+          (form.querySelector("input[name='formName']") as HTMLInputElement)
+            ?.value || "unknown_form";
+
         data.forEach((value, key) => (payload[key] = value));
         delete payload.agreed;
+
+        if (!window.dataLayer) {
+          window.dataLayer = [];
+        }
+
+        if (window.dataLayer && typeof window.dataLayer.push === "function") {
+          window.dataLayer.push({
+            formName: formName,
+            event: "form_submission",
+          });
+        }
 
         button?.classList.add("hidden");
         loader?.classList.remove("hidden");
