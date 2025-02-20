@@ -28,10 +28,10 @@ A small number of the tests in these projects’ testsuites are “flaky” — 
 
 Back to the main topic, we run the GDB testsuite on four configurations:
 
-1. [GDB](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gdb_check/graph?plot.298740116162343800.0=231404492126674122.298740116162343800.0&plot.464881508912157184.1=231404492126674122.464881508912157184.1&plot.223571625677554027.2=231404492126674122.223571625677554027.2) on AArch64 running Linux, built using the distro’s toolchain (Ubuntu 22.04 as of this writing).
-2. [ditto](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gnu_native_check_gdb/graph?plot.298740116162343800.0=231404492126674122.298740116162343800.0&plot.464881508912157184.1=231404492126674122.464881508912157184.1&plot.223571625677554027.2=231404492126674122.223571625677554027.2), but built with tip of main versions of binutils, GCC and glibc.
-3. [GDB](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gdb_check/graph?plot.298740116162343800.0=1000400360521891559.298740116162343800.0&plot.464881508912157184.1=1000400360521891559.464881508912157184.1&plot.223571625677554027.2=1000400360521891559.223571625677554027.2) on 32-bit Arm with hard-float EABI, built using the distro’s toolchain (also Ubuntu 22.04).
-4. [ditto](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gnu_native_check_gdb/graph?plot.298740116162343800.0=1000400360521891559.298740116162343800.0&plot.464881508912157184.1=1000400360521891559.464881508912157184.1&plot.223571625677554027.2=1000400360521891559.223571625677554027.2), but built with tip of main versions of binutils, GCC and glibc.
+1. GDB on AArch64 running Linux, built using the distro’s toolchain (Ubuntu 22.04 as of this writing).
+2. ditto, but built with tip of main versions of binutils, GCC and glibc.
+3. GDB on 32-bit Arm with hard-float EABI, built using the distro’s toolchain (also Ubuntu 22.04).
+4. ditto, but built with tip of main versions of binutils, GCC and glibc.
 
 The evolution of configuration 3 above is illustrative, so let’s focus on it for this post.
 
