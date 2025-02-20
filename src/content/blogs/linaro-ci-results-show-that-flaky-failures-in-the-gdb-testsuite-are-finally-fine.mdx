@@ -12,6 +12,7 @@ author: thiago-bauermann
 related: []
 
 ---
+import CloudinaryImg from "../../components/cloudinary/CloudinaryImg.astro";
 
 Linaro’s Toolchain team is one of the leading contributors to Arm support in GNU toolchain projects. Linaro has been working on toolchain (compiler, base libraries, debugger) development and maintainership for the Arm architecture since 2011. This involves coding and also supporting activities such as developing and maintaining a CI system. About 2 years ago, Linaro deployed a state of the art continuous testing and integration infrastructure for the GNU Toolchain (aka GNU Toolchain CI).
 
@@ -36,7 +37,8 @@ The evolution of configuration 3 above is illustrative, so let’s focus on it f
 
 ## GDB on 32-bit Arm
 
-![Red line: all tests; green line: failures; blue line: flaky tests.](/linaro-website/images/blog/image1_pz1rom.png "Red line: all tests; green line: failures; blue line: flaky tests.")
+<p align="center"><CloudinaryImg src="/linaro-website/images/blog/image1_pz1rom.png" alt="Red line: all tests; green line: failures; blue line: flaky tests." class="not-prose" /></p>
+<p class="not-prose" style="text-align:center"><em>Red line: all tests; green line: failures; blue line: flaky tests.</em></p>
 
 The x axis spans from 12 February 2024 to 17 January 2025, so nearly a year of testing.
 There are some eye-catching transitions, marked by numbers in the above graph. Let’s go through them, from right to left (that is, most recent to oldest).
