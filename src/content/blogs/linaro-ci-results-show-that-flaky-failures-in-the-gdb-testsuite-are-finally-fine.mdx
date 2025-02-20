@@ -1,0 +1,85 @@
+---
+title: Linaro’s CI results show that flaky failures in the GDB testsuite are finally fine
+description: >
+  Linaro’s Toolchain team is one of the leading contributors to Arm support in GNU toolchain projects. Linaro has been working on toolchain (compiler, base libraries, debugger) development and maintainership for the Arm architecture since 2011. This involves coding and also supporting activities such as developing and maintaining a CI system. About 2 years ago, Linaro deployed a state of the art continuous testing and integration infrastructure for the GNU Toolchain (aka GNU Toolchain CI).
+date: 2025-02-20T09:00:00.000Z
+image: /linaro-website/images/blog/code.jpg
+tags:
+  - toolchain
+  - open-source
+  - testing
+author: thiago-bauermann
+related: []
+
+---
+
+Linaro’s Toolchain team is one of the leading contributors to Arm support in GNU toolchain projects. Linaro has been working on toolchain (compiler, base libraries, debugger) development and maintainership for the Arm architecture since 2011. This involves coding and also supporting activities such as developing and maintaining a CI system. About 2 years ago, Linaro deployed a state of the art continuous testing and integration infrastructure for the GNU Toolchain (aka GNU Toolchain CI).
+
+GDB, the GNU Debugger version 16.1 was recently [released](https://inbox.sourceware.org/gdb-announce/20250118103804.ACAB6803F4@takamaka.gnat.com/) — on Saturday 18th of January — so this feels like a good time to review the recent history of results from the GDB testsuite as run by Linaro’s Toolchain CI.
+
+## The Linaro Toolchain CI
+
+Around August 2023, we (the Linaro Toolchain team) started running CI jobs on upstream main branches of binutils, GDB, GCC and glibc. If regressions are found, this system finds which commit introduced them and emails a report. It does the same for patches posted to the project mailing lists.
+
+A small number of the tests in these projects’ testsuites are “flaky” — i.e., they may randomly flip between PASS and FAIL — which makes using their testsuites to generate automatic reports a not-so-straightforward proposition. Our CI system deals with the problem by automatically detecting these unstable tests and filtering them out from a given testsuite run. There’s a [talk](https://www.youtube.com/watch?v=rlKhVgQjcHM) about it from last year’s Linaro Connect conference for people interested in more details.
+
+## Evolution of testsuite results
+
+Back to the main topic, we run the GDB testsuite on four configurations:
+
+1. [GDB](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gdb_check/graph?plot.298740116162343800.0=231404492126674122.298740116162343800.0&plot.464881508912157184.1=231404492126674122.464881508912157184.1&plot.223571625677554027.2=231404492126674122.223571625677554027.2) on AArch64 running Linux, built using the distro’s toolchain (Ubuntu 22.04 as of this writing).
+2. [ditto](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gnu_native_check_gdb/graph?plot.298740116162343800.0=231404492126674122.298740116162343800.0&plot.464881508912157184.1=231404492126674122.464881508912157184.1&plot.223571625677554027.2=231404492126674122.223571625677554027.2), but built with tip of main versions of binutils, GCC and glibc.
+3. [GDB](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gdb_check/graph?plot.298740116162343800.0=1000400360521891559.298740116162343800.0&plot.464881508912157184.1=1000400360521891559.464881508912157184.1&plot.223571625677554027.2=1000400360521891559.223571625677554027.2) on 32-bit Arm with hard-float EABI, built using the distro’s toolchain (also Ubuntu 22.04).
+4. [ditto](http://llvm.validation.linaro.org:8082/db_default/v4/tcwg_gnu_native_check_gdb/graph?plot.298740116162343800.0=1000400360521891559.298740116162343800.0&plot.464881508912157184.1=1000400360521891559.464881508912157184.1&plot.223571625677554027.2=1000400360521891559.223571625677554027.2), but built with tip of main versions of binutils, GCC and glibc.
+
+The evolution of configuration 3 above is illustrative, so let’s focus on it for this post.
+
+## GDB on 32-bit Arm
+
+![Red line: all tests; green line: failures; blue line: flaky tests.](/linaro-website/images/blog/image1_pz1rom.png "Red line: all tests; green line: failures; blue line: flaky tests.")
+
+The x axis spans from 12 February 2024 to 17 January 2025, so nearly a year of testing.
+There are some eye-catching transitions, marked by numbers in the above graph. Let’s go through them, from right to left (that is, most recent to oldest).
+
+### #1 - Slight bump in failed tests
+
+This was recorded in our Jira instance as [GNU-1498](https://linaro.atlassian.net/browse/GNU-1498). SUSE engineer and GDB maintainer Tom de Vries identified the problem as a GCC -fvar-tracking bug in Thumb mode which was fixed in GCC‌ 14 (the CI system is using an older GCC version). He committed a testsuite [fix](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=c99345db064e1bd645bc08db65174bae7ac20b0e) to work around the problem for older GCC versions.
+
+### #2 - Drop in flaky tests
+
+In this transition, the number of flaky entries dropped by 22%, from 1781 to 1385.
+It’s not always easy to determine why a drop in flaky tests happen. One reason is that this line shows the number of flaky entries expected for a given test run, which means it doesn’t come from the results of that run. Flaky entries are kept in the expected list for up to 3 months, so if the drop was caused by a fix in the testsuite, then the commit could be at any point in the 3 months preceding the drop in the graph.
+
+Nevertheless we can find some contributing factors for the drop here. One is surely commit [2edcfde44c5b](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=2edcfde44c5bf915af5fbe2f25ebafd7ba57fad3) (“[gdb/testsuite] Avoid large timeout in gdb.base/checkpoint.exp”), which fixed 29 flaky entries. The fix made GDB stop after each of the 600 checkpoints is created rather than just once at the end, so that the testsuite timeout limit is more than enough to wait for each checkpoint.
+
+Commit [d41108306934](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=d4110830693458b6ec684b21e64ec6320a400f5b) (“[gdb/testsuite] Fix some test-cases for check-read1 (gdb​_test​_lines)”) also fixed a number of flaky entries by making some tests that generate a lot of GDB output read it line by line instead of in one big lump.
+
+Lastly, there’s been a number of dropped flaky entries corresponding to timeouts and also entries from tests regarding GDB handling of threads (these threading tests are quite timing sensitive, unfortunately). I wasn’t able to find GDB commits explaining those, which makes me suspect that part of the drop may also be explained by a lighter load on the CI’s machines.
+
+### #3 - Drop in failures
+
+In this transition, the number of failures dropped by 28%, from 155 to 111.
+
+Unfortunately I don’t have the build details for the start of this drop (we prune our archive of CI artifacts periodically), so I’m using an earlier build which had slightly more failures, dropping by 31% from 162 to 111.
+
+Of those, 39 were fixed by commit [3bd0f5c4d992](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=3bd0f5c4d9924be476bdcf6a3d77d7b212d22523) (“[gdb/testsuite] Fix gdb.dwarf2/dw2-lines.exp on arm-linux”), which improved the debug info that was manually assembled by a couple of testcases.
+
+In commit [c593605f5f67](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=c593605f5f674b8a3c6252f246205ae74e4eb939) (“[gdb/testsuite] Fix some test-cases for check-read1 (pipe/grep)”), Tom de Vries says that he “ran the testsuite in an environment simulating a stressed system in combination with check-read1” — which reminds me of how our CI systems run the GDB testsuite :) — and found some tests which generate a big amount of output from GDB and thus were failing to keep up with it and missed the test patterns. This kind of test problem usually results in flaky tests, but it appears that on our CI machines they caused the tests to consistently fail instead. Tom fixed them by either passing the output through grep to reduce their volume, or by making the test match it in smaller chunks which makes sure it fits in Expect’s small buffer. This fixed 5 failures in two testcases.
+
+Commit [798bb5cc53ed](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=798bb5cc53edfa13673038b7d76ff09dadfaacb5) (“[gdb/testsuite] Fix gdb.dwarf2/dw2-fixed-point.exp on arm-linux”) fixed 7 failures by adjusting the testcase to avoid a [bug](https://sourceware.org/bugzilla/show_bug.cgi?id=31981) in GDB unrelated to what the testcase aims to exercise.
+
+Finally, commit [bee9d0068824](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=bee9d0068824629a136afc02818a1495209186ae) (“[gdb/testsuite] Fix gdb.base/return.exp on arm-linux”), which fixed a test initialisation problem, removing one error and 5 failures.
+
+## Conclusion
+
+As we have seen, most of the improvements in test results have been from the testsuite (not all though, for example [this](https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=c930a077225ec042287379d8e49b4d547f97d1ba) change to how GDB deals with zombie threads which fixed many flaky tests). This isn’t a surprising result: the GDB testsuite has always suffered from a relatively high number of flaky tests. Not high relative to the total number of tests, but high enough to be a nuisance and to prevent the automated use of testsuite results to detect regressions.
+
+As a result, until recently my understanding (and I welcome feedback on whether this is accurate) is that the GDB testsuite has mostly been used in one of two ways: either run manually by developers to compare results when deemed necessary, or by using a curated subset of the tests for automated use.
+
+Linaro’s toolchain CI ability to automatically detect and ignore most flaky tests allowed us to deploy a CI system using the whole GDB testsuite, checking upstream’s main branch as well as patches posted to the mailing list. This increased the visibility and usefulness of test results in day to day GDB development activities, and also the visibility of flaky tests — especially the ones that our system wasn’t able to filter out.
+
+So it’s no surprise that one big effect of the CI deployment has been a steady increase in the quality of the testsuite. As for the number of stable failures, we can see that the quality of GDB on Arm has increased, then kept stable.
+
+Finally, thank you to the GDB community for being so receptive and supportive of the Linaro Toolchain CI, and for improving the GDB testsuite to make it even more useful to the CI system. And thank you to Tom de Vries in particular, who made many of those improvements.
+
+If you want to follow our work up close, you can go to our [project page](https://linaro.atlassian.net/wiki/spaces/GNU/overview#GNU-Testsuite-CI), which has updated CI stats.
