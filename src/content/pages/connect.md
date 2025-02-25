@@ -59,7 +59,7 @@ flow:
             image:
               src: linaro-website/logos/arm.svg
               alt: |
-                Qualcomm logo
+                arm logo
               height: 200
               width: 200
             styles: not-prose
@@ -67,7 +67,15 @@ flow:
             image:
               src: linaro-website/logos/qualcomm.svg
               alt: |
-                arm logo
+                qualcomm logo
+              height: 200
+              width: 400
+            styles: not-prose
+          - type: image
+            image:
+              src: linaro-website/logos/cix.svg
+              alt: |
+                cix logo
               height: 200
               width: 400
             styles: not-prose
