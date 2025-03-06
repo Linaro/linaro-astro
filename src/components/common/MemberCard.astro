@@ -13,26 +13,25 @@ const { id, id2, name, title, image, info, company } = Astro.props;
 
 {
   id2 === "speakers" ? (
-  <li class="relative flex p-4 flex-col items-start rounded-2xl text-white border border-linaro-yellow aspect-square w-full max-w-[30ch] h-auto pb-16"> <!-- Added padding to the bottom -->
-  <div class="w-full aspect-[4/5] overflow-hidden rounded-2xl mb-4 flex">
-    <CloudinaryImg
-      src={image}
-      alt={name}
-      width={800}
-      height={800}
-      class="w-full h-full object-cover rounded-2xl not-prose"
-    />
-  </div>
-  <div>
-    <h2 class="text-2xl not-prose mt-0 mb-4">{name}</h2>
-    <p class="text-linaro-yellow not-prose">{title}</p>
-    <p class="not-prose">{company}</p>
-  </div>
-  <div class="absolute bottom-4 right-4">
-    <MemberModal modal_id={id} description={info} />
-  </div>
-</li>
-
+    <li class="relative flex p-4 flex-col items-start rounded-2xl text-white border border-linaro-yellow aspect-square w-full max-w-[30ch] h-auto pb-16 min-h-[500px]">
+      <div class="w-full aspect-[4/5] overflow-hidden rounded-2xl mb-4 flex">
+        <CloudinaryImg
+          src={image}
+          alt={name}
+          width={800}
+          height={800}
+          class="w-full h-full object-cover rounded-2xl not-prose"
+        />
+      </div>
+      <div>
+        <h2 class="text-2xl not-prose mt-0 mb-4">{name}</h2>
+        <p class="text-linaro-yellow not-prose">{title}</p>
+        <p class="not-prose">{company}</p>
+      </div>
+      <div class="absolute bottom-4 right-4">
+        <MemberModal modal_id={id} description={info} />
+      </div>
+    </li>
   ) : (
     <li class="flex px-4 flex-col items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch] h-auto">
       <CloudinaryImg
