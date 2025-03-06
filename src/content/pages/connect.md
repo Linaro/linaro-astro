@@ -138,7 +138,7 @@ flow:
       - component: buttons
         buttons:
           - text: Submit proposal here
-            url: /connect/call-for-proposals
+            url: /connect/schedule
             style: linaro-gradient-button mb-16
       - component: faded_line
         styles: mt-8
