@@ -52,7 +52,7 @@ const pages = defineCollection({
               collection: "rows",
               slug: val.row,
             },
-          }))
+          })),
         )
         .optional(),
     }),
@@ -140,6 +140,7 @@ const team_members = defineCollection({
     name: z.string(),
     title: z.string(),
     image: z.string(),
+    company: z.string().optional(),
   }),
 });
 

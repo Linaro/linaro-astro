@@ -16,7 +16,7 @@ flow:
     no_border: true
     sections:
       - component: text
-        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
+        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers in</span>
         style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
         countdownDate: 05/14/2025 09:00 AM
@@ -32,8 +32,8 @@ flow:
           - text: Register Now
             url: /connect/registration
             style: linaro-gradient-button
-          - text: Submit your Proposal
-            url: /connect/call-for-proposals
+          - text: View the Schedule
+            url: /connect/schedule
             style: linaro-gradient-button
         style: gap-16
   - row: container_row
@@ -82,6 +82,22 @@ flow:
   - row: container_row
     animation: none
     no_border: true
+    sections:
+      - component: team
+        id: speakers
+        title: Keynote Speakers
+        members:
+          - grant_likely_2
+          - mike_burssel
+          - marta_rybczynska
+          - leendert_van_doorn
+          - dr_xiong
+          - kate_stewart
+          - henk_van_bremen
+          - pedro_matos
+  - row: container_row
+    animation: none
+    no_border: true
     full_width: true
     styles:
       inner: flex flex-col items-center h-auto w-[110vw] relative overflow-x-hidden inset-0 -left-[5%]
@@ -112,18 +128,6 @@ flow:
             icon: bulb
           - text: Collaborate with your Peers and connect with the Arm Network
             icon: diversity
-      - component: text
-        # text_content: Mark Your Agenda for Lisbon May 13th-17th
-        text_content: Call for Proposals now open
-        style: text-linaro-yellow text-center text-2xl
-      # - component: connect_save
-      #   style: mb-16 flex flex-col
-      #   btnId: bottom-btn-save-date
-      - component: buttons
-        buttons:
-          - text: Submit proposal here
-            url: /connect/call-for-proposals
-            style: linaro-gradient-button mb-16
       - component: faded_line
         styles: mt-8
   - row: container_row
@@ -146,11 +150,11 @@ flow:
               alt: "about-thumbnail-image"
             url: "/connect/registration"
           - title: Program
-            text: Call for Proposals<br>Topics of Interest
+            text: Schedule
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
-            url: "/connect/call-for-proposals"
+            url: "/connect/schedule"
           - title: Sponsorship
             text: Sponsorship Packages
             image:
