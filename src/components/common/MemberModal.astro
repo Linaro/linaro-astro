@@ -15,11 +15,25 @@ const { modal_id, description } = Astro.props;
   }
 </style>
 
-<button
-  style="margin-bottom: 1em;"
-  class="linaro-gradient-button"
-  onclick={`window.${modal_id}.showModal()`}>About</button
->
+{
+  modal_id.includes("speaker") ? (
+    <button
+      class="linaro-gradient-button"
+      onclick={`window.${modal_id}.showModal()`}
+    >
+      Bio
+    </button>
+  ) : (
+    <button
+      style="margin-bottom: 1em;"
+      class="linaro-gradient-button"
+      onclick={`window.${modal_id}.showModal()`}
+    >
+      About
+    </button>
+  )
+}
+
 <div class="relative w-full">
   <dialog
     data-contact-modal={modal_id}

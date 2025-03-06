@@ -16,7 +16,7 @@ flow:
     no_border: true
     sections:
       - component: text
-        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
+        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers in</span>
         style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
         countdownDate: 05/14/2025 09:00 AM
@@ -32,8 +32,8 @@ flow:
           - text: Register Now
             url: /connect/registration
             style: linaro-gradient-button
-          - text: Submit your Proposal
-            url: /connect/call-for-proposals
+          - text: View the Schedule
+            url: /connect/schedule
             style: linaro-gradient-button
         style: gap-16
   - row: container_row
@@ -79,6 +79,23 @@ flow:
               height: 200
               width: 400
             styles: not-prose
+  - row: container_row
+    animation: none
+    no_border: true
+    full_width: true
+    sections:
+      - component: team
+        id: speakers
+        title: Keynote Speakers
+        members:
+          - grant_likely_2
+          - mike_burssel
+          - marta_rybczynska
+          - leendert_van_doorn
+          - dr_xiong
+          - kate_stewart
+          - henk_van_bremen
+          - pedro_matos
   - row: container_row
     animation: none
     no_border: true
@@ -146,7 +163,7 @@ flow:
               alt: "about-thumbnail-image"
             url: "/connect/registration"
           - title: Program
-            text: Call for Proposals<br>Topics of Interest
+            text: Schedule
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
