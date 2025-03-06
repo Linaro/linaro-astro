@@ -166,7 +166,7 @@ flow:
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
-            url: "/connect/call-for-proposals"
+            url: "/connect/schedule"
           - title: Sponsorship
             text: Sponsorship Packages
             image:
