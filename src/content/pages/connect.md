@@ -82,7 +82,6 @@ flow:
   - row: container_row
     animation: none
     no_border: true
-    full_width: true
     sections:
       - component: team
         id: speakers
