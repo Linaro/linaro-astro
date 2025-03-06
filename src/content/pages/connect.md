@@ -128,18 +128,6 @@ flow:
             icon: bulb
           - text: Collaborate with your Peers and connect with the Arm Network
             icon: diversity
-      - component: text
-        # text_content: Mark Your Agenda for Lisbon May 13th-17th
-        text_content: Call for Proposals now open
-        style: text-linaro-yellow text-center text-2xl
-      # - component: connect_save
-      #   style: mb-16 flex flex-col
-      #   btnId: bottom-btn-save-date
-      - component: buttons
-        buttons:
-          - text: Submit proposal here
-            url: /connect/schedule
-            style: linaro-gradient-button mb-16
       - component: faded_line
         styles: mt-8
   - row: container_row
