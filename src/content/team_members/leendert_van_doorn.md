@@ -1,5 +1,5 @@
 ---
-name: Leendert van Doom
+name: Leendert van Doorn
 title: SVP Engineering
 company: Qualcomm
 image: linaro-website/images/events/Leendert_van_Doom_rvc3m0.jpg
