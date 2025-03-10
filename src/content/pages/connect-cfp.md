@@ -23,6 +23,8 @@ flow:
       - component: text
         text_content: We are pleased to announce that the agenda for Linaro Connect 2025 is now live! Make the most of our Early Bird discount and register before Tuesday 15 April for a 30% discount. Alternatively you can purchase a virtual ticket to attend all sessions remotely.
         style: text-center text-3xl mx-auto
+      - component: i_frame
+        url: https://www.kitefor.events/events/linaro-connect-2025/schedule?viewBy=days&embedded=1
       - component: buttons
         buttons:
           - text: Buy a ticket

@@ -1,0 +1,14 @@
+---
+import type { z } from "astro/zod";
+import type { iframeSchema } from "@/content/schemas/sections";
+type Props = z.infer<typeof iframeSchema>;
+
+const { url } = Astro.props;
+---
+
+<div class="rounded-2xl border border-linaro-yellow p-4">
+  <iframe
+    src={url}
+    style="width: 100%; height: 600px; border: none;"
+    loading="lazy"></iframe>
+</div>
