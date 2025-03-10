@@ -1,5 +1,5 @@
 ---
-name: Mike Burssel
+name: Mike Bursell
 title: Executive Director
 company: Confidential Computing Consortium
 image: linaro-website/images/events/Mike_Bursell_Feb_06_2024_87-lo_nrrtur.jpg
