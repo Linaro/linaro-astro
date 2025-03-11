@@ -1,6 +1,6 @@
 ---
 name: Dr Xiong
-title: Executive Director
+title: the Chairperson of openEuler Committee
 company: openEuler
 image: linaro-website/images/events/Xiong_Wei_mczztp.jpg
 ---
