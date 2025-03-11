@@ -95,6 +95,7 @@ flow:
           - kate_stewart
           - henk_van_bremen
           - pedro_matos
+          - richard_kerslake
   - row: container_row
     animation: none
     no_border: true
