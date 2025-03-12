@@ -23,6 +23,8 @@ flow:
       - component: text
         text_content: The Linaro Connect 2025 schedule will go live on Wednesday 12 March 2025.
         style: text-center text-3xl mx-auto
+      - component: i_frame
+        url: https://www.kitefor.events/events/linaro-connect-2025/schedule?viewBy=days&embedded=1
       - component: buttons
         buttons:
           - text: Buy a ticket
