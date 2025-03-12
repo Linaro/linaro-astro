@@ -1,7 +1,7 @@
 ---
 name: Pedro Matos
 title: Business Development Manager
-company: Siemens
+company: Siemens Energy
 image: linaro-website/images/events/Pedro_Matos_mj7rgl.jpg
 ---
 
