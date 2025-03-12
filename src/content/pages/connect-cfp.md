@@ -31,6 +31,7 @@ flow:
           - text: Register with a code
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
+        style: gap-16
       # - component: connect_content
       #   styles:
       #     title: bg-linaro-gradient text-transparent bg-clip-text
