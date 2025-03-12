@@ -40,7 +40,7 @@ flow:
           - text: Buy a ticket
             url: http://linaroconnect.bymeoblueticket.pt/
             style: linaro-gradient-button mt-4
-          - text: REGISTER NOW
+          - text: Register Now
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
         style: gap-16
