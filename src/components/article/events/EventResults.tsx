@@ -77,12 +77,13 @@ const EventResults = ({
   const [events] = createResource(paginatedResults, getEvents);
 
   const upcoming = createMemo(
-    () => events()?.filter((event) => event.meta.event_start > Date.now()) ?? []
+    () =>
+      events()?.filter((event) => event.meta.event_start > Date.now()) ?? [],
   );
 
   const past = createMemo(
     () =>
-      events()?.filter((event) => event.meta.event_start <= Date.now()) ?? []
+      events()?.filter((event) => event.meta.event_start <= Date.now()) ?? [],
   );
 
   return (
