@@ -77,12 +77,13 @@ const EventResults = ({
   const [events] = createResource(paginatedResults, getEvents);
 
   const upcoming = createMemo(
-    () => events()?.filter((event) => event.meta.event_start > Date.now()) ?? []
+    () =>
+      events()?.filter((event) => event.meta.event_start > Date.now()) ?? [],
   );
 
   const past = createMemo(
     () =>
-      events()?.filter((event) => event.meta.event_start <= Date.now()) ?? []
+      events()?.filter((event) => event.meta.event_start <= Date.now()) ?? [],
   );
 
   return (
@@ -97,7 +98,7 @@ const EventResults = ({
           </p> */}
           <Show when={upcoming().length > 0}>
             <h2 class="text-left text-3xl text-linaro-yellow font-bold self-start">
-              Past Events
+              Upcoming Events
             </h2>
             <ul class="flex flex-wrap gap-16  justify-center">
               <For each={upcoming()}>

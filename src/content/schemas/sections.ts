@@ -430,6 +430,11 @@ export const connectContentSchema = z.object({
     .optional(),
 });
 
+export const iframeSchema = z.object({
+  component: component("i_frame"),
+  url: z.string(),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -460,4 +465,5 @@ export default z.discriminatedUnion("component", [
   largeImageSchema,
   connectContentSchema,
   titleSchema,
+  iframeSchema,
 ]);

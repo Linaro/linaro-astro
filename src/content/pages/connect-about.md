@@ -40,12 +40,13 @@ flow:
           - text: Buy a ticket
             url: http://linaroconnect.bymeoblueticket.pt/
             style: linaro-gradient-button mt-4
-          - text: Register with a code
+          - text: Register Now
             url: https://www.kitefor.events/events/linaro-connect-2025/register
             style: linaro-gradient-button mt-4
-      - component: text
-        text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
-        style: text-center mx-auto leading-loose mt-12 text-xl font-light
+        style: gap-16
+      # - component: text
+      #   text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
+      #   style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
     no_border: true

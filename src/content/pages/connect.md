@@ -6,7 +6,7 @@ description: Linaro Connect is a series of events that brings together the Arm E
 connectHero:
   background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
-  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Wednesday 14 May - Friday 16 May 2025</span><br>Lisbon, Portugal
+  description: Linaro Connect 2025<br><span class="text-linaro-yellow">Boosting the Next Wave of Arm Innovation</span><br>14-16 May 2025  |  Lisbon, Portugal
 flow:
   - row: container_row
     animation: none
@@ -16,7 +16,7 @@ flow:
     no_border: true
     sections:
       - component: text
-        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers</span>
+        text_content: <span class="bg-linaro-gradient text-transparent bg-clip-text h-auto">Linaro Connect is where Arm excellence gathers in</span>
         style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center
       - component: date_countdown
         countdownDate: 05/14/2025 09:00 AM
@@ -32,8 +32,8 @@ flow:
           - text: Register Now
             url: /connect/registration
             style: linaro-gradient-button
-          - text: Submit your Proposal
-            url: /connect/call-for-proposals
+          - text: View the Schedule
+            url: /connect/schedule
             style: linaro-gradient-button
         style: gap-16
   - row: container_row
@@ -43,6 +43,59 @@ flow:
     no_border: true
     sections:
       - component: faded_line
+  - row: container_row
+    animation: none
+    no_border: true
+    styles:
+      inner: py-4
+    sections:
+      - component: text
+        text_content: Thank you to our Sponsors
+        style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-2
+      - component: two_column
+        container_styles: w-full justify-center gap-16 items-center
+        columns:
+          - type: image
+            image:
+              src: linaro-website/logos/arm.svg
+              alt: |
+                arm logo
+              height: 200
+              width: 200
+            styles: not-prose
+          - type: image
+            image:
+              src: linaro-website/logos/qualcomm.svg
+              alt: |
+                qualcomm logo
+              height: 200
+              width: 400
+            styles: not-prose
+          - type: image
+            image:
+              src: linaro-website/logos/cix.svg
+              alt: |
+                cix logo
+              height: 200
+              width: 400
+            styles: not-prose
+  - row: container_row
+    animation: none
+    no_border: true
+    sections:
+      - component: team
+        id: speakers
+        title: Keynote Speakers
+        members:
+          - grant_likely_2
+          - mike_burssel
+          - marta_rybczynska
+          - leendert_van_doorn
+          - dr_xiong
+          - kate_stewart
+          - henk_van_bremen
+          - pedro_matos
+          - richard_kerslake
   - row: container_row
     animation: none
     no_border: true
@@ -76,18 +129,6 @@ flow:
             icon: bulb
           - text: Collaborate with your Peers and connect with the Arm Network
             icon: diversity
-      - component: text
-        # text_content: Mark Your Agenda for Lisbon May 13th-17th
-        text_content: Call for Proposals now open
-        style: text-linaro-yellow text-center text-2xl
-      # - component: connect_save
-      #   style: mb-16 flex flex-col
-      #   btnId: bottom-btn-save-date
-      - component: buttons
-        buttons:
-          - text: Submit proposal here
-            url: /connect/call-for-proposals
-            style: linaro-gradient-button mb-16
       - component: faded_line
         styles: mt-8
   - row: container_row
@@ -98,9 +139,9 @@ flow:
         styles:
           card: max-w-[22em] p-8 flex flex-col bg-dark border-white border rounded-3xl border-solid
           container: flex justify-center gap-x-8 flex-wrap
-          card_title: text-2xl
+          card_title: text-linaro-yellow text-2xl
           image: m-0
-          text: text-grey text-md leading-10
+          text: text-md leading-10
         button_cards: true
         cards:
           - title: About
@@ -110,11 +151,11 @@ flow:
               alt: "about-thumbnail-image"
             url: "/connect/registration"
           - title: Program
-            text: Call for Proposals<br>Topics of Interest
+            text: Schedule
             image:
               src: linaro-website/images/events/connect-program-img_wpot8h.png
               alt: "program-thumbnail-image"
-            url: "/connect/call-for-proposals"
+            url: "/connect/schedule"
           - title: Sponsorship
             text: Sponsorship Packages
             image:
