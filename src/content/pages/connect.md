@@ -96,6 +96,7 @@ flow:
           - henk_van_bremen
           - pedro_matos
           - richard_kerslake
+          - bhumik_patel
   - row: container_row
     animation: none
     no_border: true
