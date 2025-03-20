@@ -1,8 +1,12 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
-type Props = { Content: AstroComponentFactory; image: string };
-const { Content, image } = Astro.props;
+type Props = {
+  Content: AstroComponentFactory;
+  image: string;
+  footerButton?: { text: string; url: string };
+};
+const { Content, image, footerButton } = Astro.props;
 ---
 
 <section class="px-[10px]">
@@ -23,5 +27,14 @@ const { Content, image } = Astro.props;
     >
       <Content components={{ img: CloudinaryImg }} />
     </article>
+    {
+      footerButton && (
+        <div class="w-full flex justify-center">
+          <a class="linaro-gradient-button mb-8" href={footerButton.url}>
+            {footerButton.text}
+          </a>
+        </div>
+      )
+    }
   </div>
 </section>
