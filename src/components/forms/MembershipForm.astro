@@ -1,7 +1,8 @@
 ---
 import MembershipCards from "./MembershipCards.astro";
 
-const { form_id, description, MemberManagementPanel, styles } = Astro.props;
+const { form_id, description, MemberManagementPanel, styles, formName } =
+  Astro.props;
 
 const inputFields = [
   {
@@ -27,6 +28,7 @@ const inputFields = [
       styles={styles}
     />
     <input type="hidden" name="form_id" value={form_id} />
+    <input type="hidden" name="formName" value={formName} />
     {
       inputFields.map(({ name, label, type }) => (
         <>
