@@ -31,7 +31,7 @@ import "../../styles/cookies.scss";
               ga("create", "", "auto");
               // @ts-ignore
               ga("send", "pageview");
-            }
+            },
           );
         }
       },
@@ -101,6 +101,25 @@ import "../../styles/cookies.scss";
                     col2: "google.com",
                     col3: "1 day",
                     col4: "Permanent Cookie used to distinguish users.",
+                    col5: '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
+                  },
+                ],
+              },
+              {
+                title: "Marketing Cookies",
+                description:
+                  "These cookies cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.",
+                toggle: {
+                  value: "analytics_cookies",
+                  enabled: true,
+                  readonly: false,
+                },
+                cookie_table: [
+                  {
+                    col1: "marketing cookies",
+                    col2: "linaro.org",
+                    col3: "2 years",
+                    col4: "Cookies used for marketing purposes.",
                     col5: '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
                   },
                 ],

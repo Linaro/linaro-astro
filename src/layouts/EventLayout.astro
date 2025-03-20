@@ -31,6 +31,7 @@ const {
       event_end,
       location,
       button,
+      footerButton,
     },
     body,
     render,
@@ -141,7 +142,11 @@ const upcomingEvents = (
         >{summary}</span
       >
     </section>
-    <ArticleContent Content={Content} image={image} />
+    <ArticleContent
+      Content={Content}
+      image={image}
+      footerButton={footerButton}
+    />
   </main>
   {
     upcomingEvents.length > 0 && (

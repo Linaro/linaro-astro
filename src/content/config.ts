@@ -120,6 +120,12 @@ const events = defineCollection({
         url: z.string(),
       })
       .optional(),
+    footerButton: z
+      .object({
+        text: z.string(),
+        url: z.string(),
+      })
+      .optional(),
   }),
 });
 

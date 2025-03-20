@@ -31,12 +31,14 @@ flow:
             button_text: Get in Touch
             form_id: "7"
             modal_id: general
+            formName: "sales_contact"
           - title: Media Enquiries
             type: form
             icon: flash_on
             button_text: Get in Touch
             form_id: "8"
             modal_id: marketing
+            formName: "media_contact"
           - title: Careers Enquiries
             type: link
             icon: handshake
