@@ -63,4 +63,11 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
+          - text: HPC Performance Tuning Case Study
+            image:
+              src: linaro-website/graphics/shearwater-image_tx7apl.jpg
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Linaro_Forge_Shearwater_Case_Study.pdf
 ---
