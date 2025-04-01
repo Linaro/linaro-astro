@@ -27,14 +27,5 @@ const { Content, image, footerButton } = Astro.props;
     >
       <Content components={{ img: CloudinaryImg }} />
     </article>
-    {
-      footerButton && (
-        <div class="w-full flex justify-center">
-          <a class="linaro-gradient-button mb-8" href={footerButton.url}>
-            {footerButton.text}
-          </a>
-        </div>
-      )
-    }
   </div>
 </section>
