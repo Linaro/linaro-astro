@@ -97,6 +97,7 @@ flow:
           - pedro_matos
           - richard_kerslake
           - bhumik_patel
+          - john_thompson
   - row: container_row
     animation: none
     no_border: true
