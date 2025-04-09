@@ -409,7 +409,7 @@ flow:
           - title: Antitrust Guidelines
             id: antitrust
             content: |
-              View the Antitrust policy [here](https://static-linaro-org.s3.amazonaws.com/assets/LINARO+COMMUNITY+PROJECTS+ANTITRUST+COMPLIANCE+POLICY+03+03+2018+.pdf).
+              View the Antitrust policy [here](https://static.linaro.org/assets/LINARO-COMMUNITY-PROJECTS-ANTITRUST-COMPLIANCE-POLICY-03-03-2018.pdf).
 
               The defined terms in these Antitrust Guidelines shall have the same meanings given to them in these Rules.
                

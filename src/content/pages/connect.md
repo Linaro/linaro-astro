@@ -4,7 +4,7 @@ slug: connect
 title: Connect
 description: Linaro Connect is a series of events that brings together the Arm Ecosystem. This is the ONLY place where developers, maintainers of both hardware and software can collaborate and discuss common problems
 connectHero:
-  background: https://static-linaro-org.s3.amazonaws.com/videos/connect-bg-video.mp4
+  background: https://static.linaro.org/videos/connect-bg-video.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
   description: Linaro Connect 2025<br><span class="text-linaro-yellow">Boosting the Next Wave of Arm Innovation</span><br>14-16 May 2025  |  Lisbon, Portugal
 flow:
