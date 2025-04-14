@@ -4,9 +4,8 @@ import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 type Props = {
   Content: AstroComponentFactory;
   image: string;
-  footerButton?: { text: string; url: string };
 };
-const { Content, image, footerButton } = Astro.props;
+const { Content, image } = Astro.props;
 ---
 
 <section class="px-[10px]">

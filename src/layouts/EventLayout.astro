@@ -14,6 +14,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import dayOfYear from "dayjs/plugin/dayOfYear";
 import { getCollection } from "astro:content";
 import EventListing from "@/components/article/events/EventListing.astro";
+import WebinarContactModal from "@/components/forms/WebinarContactModal.astro";
 dayjs.extend(advancedFormat);
 dayjs.extend(dayOfYear);
 
@@ -31,7 +32,7 @@ const {
       event_end,
       location,
       button,
-      footerButton,
+      webinarContactButton,
     },
     body,
     render,
@@ -126,15 +127,26 @@ const upcomingEvents = (
       </p>
       <div>
         {
-          button && (
-            <a
-              href={button.url}
-              data-pagefind-meta="button_text, button_url[href]"
-              target="_blank"
-              class="my-8 no-underline inline-block"
-            >
-              <div class="linaro-gradient-button ">{button.text}</div>
-            </a>
+          webinarContactButton ? (
+            <WebinarContactModal
+              modal_id={webinarContactButton.modal_id}
+              form_id={webinarContactButton.form_id}
+              formName={webinarContactButton.formName}
+              button_text={webinarContactButton.button_text}
+              description={webinarContactButton.description}
+              styles={{ buttonStyles: "my-8 no-underline inline-block" }}
+            />
+          ) : (
+            button && (
+              <a
+                href={button.url}
+                data-pagefind-meta="button_text, button_url[href]"
+                target="_blank"
+                class="my-8 no-underline inline-block"
+              >
+                <div class="linaro-gradient-button ">{button.text}</div>
+              </a>
+            )
           )
         }
       </div>
@@ -142,11 +154,7 @@ const upcomingEvents = (
         >{summary}</span
       >
     </section>
-    <ArticleContent
-      Content={Content}
-      image={image}
-      footerButton={footerButton}
-    />
+    <ArticleContent Content={Content} image={image} />
   </main>
   {
     upcomingEvents.length > 0 && (
