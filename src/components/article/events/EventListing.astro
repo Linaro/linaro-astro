@@ -5,6 +5,7 @@ import { remark } from "remark";
 import strip from "strip-markdown";
 import dayjs from "dayjs";
 import dayOfYear from "dayjs/plugin/dayOfYear";
+import WebinarContactModal from "@/components/forms/WebinarContactModal.astro";
 
 dayjs.extend(dayOfYear);
 
@@ -17,7 +18,7 @@ const content =
       .use(strip, {
         remove: ["heading"],
       })
-      .process(body)
+      .process(body),
   )
     .split(" ")
     .slice(0, 30)

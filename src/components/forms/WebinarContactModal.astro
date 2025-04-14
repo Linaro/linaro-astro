@@ -1,0 +1,77 @@
+---
+import WebinarContactForm from "./WebinarContactForm.astro";
+
+const { modal_id, form_id, formName, button_text, description, styles } =
+  Astro.props;
+
+console.log(modal_id, form_id, description);
+---
+
+<style lang="scss">
+  dialog {
+    &::backdrop {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+</style>
+
+<button
+  class={`linaro-gradient-button ${styles.buttonStyles}`}
+  onclick={`window.${modal_id}.showModal()`}>{button_text}</button
+>
+<div class="relative w-full">
+  <dialog
+    data-contact-modal={modal_id}
+    id={modal_id}
+    class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[10%] right-0 left-0 mb-4"
+  >
+    <div class="flex flex-col items-center max-w-max">
+      <WebinarContactForm
+        form_id={form_id}
+        description={description}
+        modal_id={modal_id}
+        formName={formName}
+      />
+    </div>
+  </dialog>
+</div>
+<script>
+  declare global {
+    interface Window {
+      webinarContactForm?: {
+        showModal: () => void;
+      };
+    }
+  }
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function addListeners() {
+    const dialogs = document.querySelectorAll(
+      "[data-contact-modal]",
+    ) as NodeListOf<HTMLDialogElement>;
+
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener("click", function (event) {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (!isInDialog) {
+          dialog.close();
+        }
+      });
+    });
+  }
+  if (window.location.href.includes("webinar_form_modal")) {
+    window.webinarContactForm?.showModal();
+  }
+</script>

@@ -120,10 +120,18 @@ const events = defineCollection({
         url: z.string(),
       })
       .optional(),
-    footerButton: z
+    webinarContactButton: z
       .object({
-        text: z.string(),
-        url: z.string(),
+        button_text: z.string(),
+        form_id: z.string(),
+        modal_id: z.string(),
+        description: z.string(),
+        formName: z.string(),
+        styles: z
+          .object({
+            buttonStyles: z.string(),
+          })
+          .optional(),
       })
       .optional(),
   }),
