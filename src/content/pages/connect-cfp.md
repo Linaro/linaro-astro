@@ -27,10 +27,10 @@ flow:
           - text: Buy a ticket
             url: https://www.eventbrite.co.uk/e/linaro-connect-2025-tickets-1324884919459?aff=oddtdtcreator
             style: linaro-gradient-button mt-4
-          - text: Register with a code
-            url: https://www.kitefor.events/events/linaro-connect-2025/register
-            style: linaro-gradient-button mt-4
         style: gap-16
+      - component: text
+        text_content: 'Are you a <span class="text-linaro-yellow">Speaker, Sponsor, Linaro Member or Linaro Employee</span>? If the answer is yes then <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">click here</a> to register!'
+        style: text-center mx-auto leading-loose mt-12 text-xl font-light
       # - component: connect_content
       #   styles:
       #     title: bg-linaro-gradient text-transparent bg-clip-text

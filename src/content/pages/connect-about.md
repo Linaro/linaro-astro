@@ -31,22 +31,19 @@ flow:
           card: text-center w-1/8
         divider: true
         cards:
-          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€540</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">€900</span>
-          - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€36</span>
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£462</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
+          - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,100</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: Buy a ticket
             url: https://www.eventbrite.co.uk/e/linaro-connect-2025-tickets-1324884919459?aff=oddtdtcreator
             style: linaro-gradient-button mt-4
-          - text: Register Now
-            url: https://www.kitefor.events/events/linaro-connect-2025/register
-            style: linaro-gradient-button mt-4
         style: gap-16
-      # - component: text
-      #   text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
-      #   style: text-center mx-auto leading-loose mt-12 text-xl font-light
+      - component: text
+        text_content: 'Are you a <span class="text-linaro-yellow">Speaker, Sponsor, Linaro Member or Linaro Employee</span>? If the answer is yes then <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">click here</a> to register!'
+        style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
     no_border: true
