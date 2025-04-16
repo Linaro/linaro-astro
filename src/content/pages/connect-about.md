@@ -145,7 +145,17 @@ flow:
         text_content: |
           Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://reservations.corinthia.com/?adult=1&arrive=2025-05-12&chain=10210&child=0&currency=EUR&depart=2025-05-15&group=LINARO25CL&hotel=28705&level=hotel&locale=en-US&productcurrency=EUR&rooms=1">link</a>
 
-          The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
+          The room block at the preferred rate is nearly full and may not be available on certain dates. If you encounter any issues booking a room, please contact reservations.lisbon@corinthia.com or make your reservation through the standard Corinthia Lisbon online booking process <a class="text-linaro-yellow no-underline" href="https://www.corinthia.com/en-gb/lisbon/rooms-suites/?start_date=2025-05-14&end_date=2025-05-16&adults=1">here</a>.
+
+          <div class="break-after-column">
+          Other hotels nearby:
+          <ul>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=3346&merchantid=seo-maps-PT-3346&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">Mercure Lisboa</a></li>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=0784&merchantid=seo-maps-PT-0784&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">Novotel Lisboa</a></li>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=1668&merchantid=seo-maps-PT-1668&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">ibis Lisboa Jose Malhoa</a></li>
+            <li><a class="no-underline text-white" href="https://www.sanahotels.com/hotel/sana-malhoa/" target="_blank">SANA Malhoa Hotel</a></li>
+          </ul>
+          </div>
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
