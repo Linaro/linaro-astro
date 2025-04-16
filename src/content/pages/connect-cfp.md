@@ -25,7 +25,7 @@ flow:
       - component: buttons
         buttons:
           - text: Buy a ticket
-            url: http://linaroconnect.bymeoblueticket.pt/
+            url: https://www.eventbrite.co.uk/e/linaro-connect-2025-tickets-1324884919459?aff=oddtdtcreator
             style: linaro-gradient-button mt-4
           - text: Register with a code
             url: https://www.kitefor.events/events/linaro-connect-2025/register

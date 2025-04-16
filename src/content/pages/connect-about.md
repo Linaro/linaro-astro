@@ -33,12 +33,12 @@ flow:
         cards:
           - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€540</span>
           - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">€900</span>
-          - text: Standard<br><span class="text-linaro-yellow">16 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
+          - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
           - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€36</span>
       - component: buttons
         buttons:
           - text: Buy a ticket
-            url: http://linaroconnect.bymeoblueticket.pt/
+            url: https://www.eventbrite.co.uk/e/linaro-connect-2025-tickets-1324884919459?aff=oddtdtcreator
             style: linaro-gradient-button mt-4
           - text: Register Now
             url: https://www.kitefor.events/events/linaro-connect-2025/register
