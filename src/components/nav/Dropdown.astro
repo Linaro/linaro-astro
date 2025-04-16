@@ -1,37 +1,50 @@
 ---
-const { title, lastItem, children } = Astro.props;
+const { item, title, lastItem, children } = Astro.props;
 ---
 
 <menu
-  class:list={["astronav-dropdown group "]}
+  class={"astronav-dropdown group top-full"}
   aria-expanded="false"
   data-nav-group={title}
 >
   <div class="duration-300">
     <button
-      class:list={[
-        "flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text nav-inactive",
-      ]}
+      class={"flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 xl:py-3 hover:linaro-gradient-text nav-inactive"}
     >
       <span>{title}</span>
     </button>
   </div>
-  <div
-    class:list={[" astronav-dropdown dropdown-toggle hidden"]}
-    aria-expanded="false"
-  >
-    <div class:list={[" lg:absolute w-full z-10 mt-1 lg:left-0"]}>
-      <div class="flex flex-col lg:flex-row w-full">
+  <div class={"astronav-dropdown dropdown-toggle hidden"} aria-expanded="false">
+    <div class={"lg:absolute w-full z-10 mt-1 lg:left-0, pl-3 top-full"}>
+      <div class="flex flex-col lg:flex-row gap-8 w-full">
         {
-          children.map((item: any) => (
-            <a
-              href={item.url}
-              class=" lg:px-3 py-2 text-grey  hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm"
-              target={item.url.startsWith("https") ? "_blank" : "_self"}
-            >
-              {item.label}
-            </a>
-          ))
+          item.children.map((item: any) =>
+            item?.items ? (
+              <div class="flex flex-col">
+                <p class="text-white text-sm">{item.label}</p>
+                <ul>
+                  {item.items.map((subItem: any) => (
+                    <li>
+                      <a
+                        class="py-2 text-grey hover:text-linaro-yellow cursor-pointer text-sm"
+                        href={subItem.url}
+                      >
+                        {subItem.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <a
+                href={item.url}
+                class="text-white hover:text-linaro-yellow cursor-pointer whitespace-nowrap text-sm"
+                target={item?.url?.startsWith("https") ? "_blank" : "_self"}
+              >
+                {item.label}
+              </a>
+            ),
+          )
         }
       </div>
     </div>
