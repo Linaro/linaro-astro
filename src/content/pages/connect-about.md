@@ -42,7 +42,7 @@ flow:
             style: linaro-gradient-button mt-4
         style: gap-16
       - component: text
-        text_content: 'Are you a <span class="text-linaro-yellow">Speaker, Sponsor, Linaro Member or Linaro Employee</span>? If the answer is yes then <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register">click here</a> to register!'
+        text_content: 'Are you a <span class="text-linaro-yellow">Speaker, Sponsor, Linaro Member or Linaro Employee</span>? If the answer is yes then <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register" target="_blank">click here</a> to register!'
         style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
