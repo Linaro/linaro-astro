@@ -31,22 +31,19 @@ flow:
           card: text-center w-1/8
         divider: true
         cards:
-          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€540</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">€900</span>
-          - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">€1,350</span>
-          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">€36</span>
+          - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£462</span>
+          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
+          - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,100</span>
+          - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
         buttons:
           - text: Buy a ticket
             url: https://www.eventbrite.co.uk/e/linaro-connect-2025-tickets-1324884919459?aff=oddtdtcreator
             style: linaro-gradient-button mt-4
-          - text: Register Now
-            url: https://www.kitefor.events/events/linaro-connect-2025/register
-            style: linaro-gradient-button mt-4
         style: gap-16
-      # - component: text
-      #   text_content: 'Note: Speakers that get their talks accepted will receive a complimentary speaker pass (one free pass per talk). For more information on how to submit a talk, <a class="text-linaro-yellow no-underline" href="/connect/call-for-proposals">click here</a>.'
-      #   style: text-center mx-auto leading-loose mt-12 text-xl font-light
+      - component: text
+        text_content: 'Are you a <span class="text-linaro-yellow">Speaker, Sponsor, Linaro Member or Linaro Employee</span>? If the answer is yes then <a class="text-linaro-yellow no-underline" href="https://www.kitefor.events/events/linaro-connect-2025/register" target="_blank">click here</a> to register!'
+        style: text-center mx-auto leading-loose mt-12 text-xl font-light
   - row: container_row
     animation: none
     no_border: true
@@ -148,7 +145,17 @@ flow:
         text_content: |
           Attendees can book a room at the Corinthia Lisbon via this <a class="text-linaro-yellow no-underline" href="https://reservations.corinthia.com/?adult=1&arrive=2025-05-12&chain=10210&child=0&currency=EUR&depart=2025-05-15&group=LINARO25CL&hotel=28705&level=hotel&locale=en-US&productcurrency=EUR&rooms=1">link</a>
 
-          The preferred rate is available for the dates 11-17 May for a limited time upon availability - we recommend you book your room as soon as possible.
+          The room block at the preferred rate is nearly full and may not be available on certain dates. If you encounter any issues booking a room, please contact reservations.lisbon@corinthia.com or make your reservation through the standard Corinthia Lisbon online booking process <a class="text-linaro-yellow no-underline" href="https://www.corinthia.com/en-gb/lisbon/rooms-suites/?start_date=2025-05-14&end_date=2025-05-16&adults=1">here</a>.
+
+          <div class="break-after-column">
+          Other hotels nearby:
+          <ul>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=3346&merchantid=seo-maps-PT-3346&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">Mercure Lisboa</a></li>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=0784&merchantid=seo-maps-PT-0784&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">Novotel Lisboa</a></li>
+            <li><a class="no-underline text-white" href="https://all.accor.com/lien_externe.svlt?goto=fiche_hotel&code_hotel=1668&merchantid=seo-maps-PT-1668&sourceid=aw-cen&utm_medium=seo%20maps&utm_source=google%20Maps&utm_campaign=seo%20maps" target="_blank">ibis Lisboa Jose Malhoa</a></li>
+            <li><a class="no-underline text-white" href="https://www.sanahotels.com/hotel/sana-malhoa/" target="_blank">SANA Malhoa Hotel</a></li>
+          </ul>
+          </div>
 
           Please contact connect@linaro.org if you have any issue with booking your accommodation.
 
