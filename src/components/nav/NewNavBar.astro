@@ -1,5 +1,5 @@
 ---
-import NewDropdown from "./NewDropdown.astro";
+import NewDropdown from "./NewDropdown";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
@@ -14,37 +14,35 @@ const navData = await getEntry("data", "nav");
   class="w-full relative fade-border-bottom bg-background z-50"
   id="top-nav"
 >
-  <div
-    class="flex flex-col lg:flex-row max-w-7xl xl:container mx-auto px-8 my-3 lg:mt-4 lg:text-sm xl:text-[1rem] py-4"
-  >
-    <ul class="flex flex-col lg:flex-row w-full lg:items-center gap-6">
-      <li>
-        <a href="/" class="text-lg"
-          ><CloudinaryImg
-            src={"linaro-website/graphics/logo"}
-            alt="Linaro Logo"
-            class="h-auto w-[125px] xl:w-[150px] mt-[-2px] ml-[-10px]"
-            width={500}
-            height={500}
-          /></a
-        >
-      </li>
-      {
-        navData.data.map((item: any) => (
-          <li>
-            <NewDropdown item={item} />
-          </li>
-        ))
-      }
-      <li class="ml-0 lg:ml-2 xl:ml-8 mt-[2px]">
-        <a href="/contact">
-          <div class="linaro-gradient-button-small">Contact us</div>
-        </a>
-      </li>
-      <li class="grow mt-4 lg:mt-0">
-        <SearchModal id="nav-search" />
-      </li>
-    </ul>
-  </div>
+  <nav>
+    <div
+      class="flex flex-col lg:flex-row max-w-7xl xl:container lg:items-center mx-auto px-8 my-3 lg:mt-4 lg:text-sm xl:text-[1rem] py-4"
+    >
+      <a href="/" class="text-xl"
+        ><CloudinaryImg
+          src={"linaro-website/graphics/logo"}
+          alt="Linaro Logo"
+          class="h-auto w-[125px] xl:w-[200px] mt-[-2px] ml-[-10px]"
+          width={500}
+          height={500}
+        />
+      </a>
+      <ul class="flex flex-col lg:flex-row w-full lg:items-center gap-6">
+        {
+          navData.data.map((item: any) => (
+            <NewDropdown item={item} client:only="solid" />
+          ))
+        }
+        <li class="ml-0 lg:ml-2 xl:ml-8 mt-[2px]">
+          <a href="/contact">
+            <div class="linaro-gradient-button-small">Contact us</div>
+          </a>
+        </li>
+        <li class="grow mt-4 lg:mt-0">
+          <SearchModal id="nav-search" />
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>
 <script></script>

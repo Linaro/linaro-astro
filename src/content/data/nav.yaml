@@ -27,7 +27,7 @@
       items: 
         - label: LinaroForge
           url: https://www.linaroforge.com
-    - label: divider
+    - divider: true
     - label: IoT&Embedded
       url: /solutions/onelab
     - label: AI&Machine Learning
