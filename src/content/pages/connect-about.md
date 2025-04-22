@@ -32,7 +32,7 @@ flow:
         divider: true
         cards:
           - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£462</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
+          - text: Discounted<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
           - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,100</span>
           - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
