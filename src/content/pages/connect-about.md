@@ -32,7 +32,7 @@ flow:
         divider: true
         cards:
           - text: One Day<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£462</span>
-          - text: Early Bird<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
+          - text: Discounted<br><span class="text-linaro-yellow">12 Nov 2024 - 29 Apr 2025</span><br><span class="text-4xl">£770</span>
           - text: Standard<br><span class="text-linaro-yellow">29 Apr 2025 - 12 May 2025</span><br><span class="text-4xl">£1,100</span>
           - text: Virtual<br><span class="text-linaro-yellow">12 Nov 2024 - 12 May 2025</span><br><span class="text-4xl">£30</span>
       - component: buttons
@@ -61,7 +61,7 @@ flow:
               height: 1600
               width: 1600
       - component: text
-        text_content: One Day, Early Bird and Standard - What is included?
+        text_content: One Day, Discounted and Standard - What is included?
         style: text-center text-4xl mx-auto mt-24 mb-16
       - component: cards
         styles:
