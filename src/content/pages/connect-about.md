@@ -61,7 +61,7 @@ flow:
               height: 1600
               width: 1600
       - component: text
-        text_content: One Day, Early Bird and Standard - What is included?
+        text_content: One Day, Discounted and Standard - What is included?
         style: text-center text-4xl mx-auto mt-24 mb-16
       - component: cards
         styles:
