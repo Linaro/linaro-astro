@@ -1,0 +1,76 @@
+---
+title: Adding Support for MTE debugging to QEMU
+description: |
+  This blog post explains how Linaro enabled QEMU to debug MTE (Memory Tagging Extension) code on machines that support this feature. We'll start by explaining MTE and what was needed to enable debugging. Then, we'll describe the components we upstreamed to GDB and QEMU to make it work.
+date: 2025-04-24T11:00:00.000Z
+image: linaro-website/images/blog/Virtualization_image_x3vb2d.png
+tags:
+  - qemu
+  - debugging
+author: gustavo-romero
+related: []
+---
+
+## Introduction
+
+MTE (Memory Tagging Extension) is an Arm CPU feature first introduced in Armv8.5-A as an optional feature and later consolidated (mandatory) in version Armv9-A. It serves as a first line of defense against unauthorized access to memory regions. When MTE is enabled, it allows the upper bits of a pointer to hold a tag that is used to track or prevent unauthorized changes to memory contents. MTE can be found, for example, in Google's Pixel device, although currently there are still few CPUs that implement this feature. If you're not familiar with MTE, you can get a bird's-eye view by reading [the MTE whitepaper](https://developer.arm.com/documentation/102925/latest/).
+
+In essence, MTE consists in having two tags (usually 4 bits in length on Arm64): one tag is kept in the MSB[1] bits of the address pointer used to access the data, and another tag is associated to the data region, usually 16 bytes of data, using MTE-specific machine instructions to store the tag into out-of-band memory. The former tag is dubbed "logical tag", and the latter is dubbed "allocation tag". So when data is accessed, if the logical and allocation tags match (are equal), then it works as usual and data is read/written from/to the memory, but if they don't, an exception happens and a segfault is usually generated, for instance, in Linux.
+
+QEMU (aarch64) supports FEAT_MTE3 since release v6.1, which enables the asymmetric fault handling, both on Linux user mode and system mode.
+
+As many folks probably know, QEMU has quite a nice option, "-gdb", that asks QEMU to spawn a GDB server so GDB (client) can connect to it and be used to debug the code running in the VM.
+
+It turns out, though, that just because a CPU feature exists for a certain VM, it doesn't mean the feature is also available on the GDB server, as it's necessary to support the corresponding gdbstubs related to the feature.
+
+QEMU did not support MTE debugging when MTE was enabled in the VM, but recently the due support was added for debugging MTE, both on linux user and on system modes, allowing users and developers to debug code in the VM that uses the MTE feature both in usespace or kernel space. This post will dive a bit into the details of how support for MTE debugging in QEMU was added, available since release v9.1 on user mode (Linux only) and since release v9.2 for system mode.
+
+## MTE support on GDB (client-side)
+
+GDB supports debugging MTE on Linux as a native target since release 13.
+
+The MTE support in GDB 13 introduces a new command, memory-tag, and additional subcommands to allow the users to inspect and set the tags, and the ability to detect when a segfault happens due to a tag mismatch, displaying a nice info message with the value of the tags that caused the segfault. The support also allows the user to inspect Linux core files generated due to MTE exceptions.
+
+This support, however, is only for Linux native targets and relies on reading a Linux-specific file, /proc/<PID>/smaps, to discover which memory regions are tagged or not. If GDB server is being used to debug a process, and so GDB connected to the server via 'target remote <HOST:PORT>' command, GDB reads the smaps contents via a vFile:open/pread [GDB operations](https://sourceware.org/gdb/current/onlinedocs/gdb.html/Host-I_002fO-Packets.html), or, if it's a "direct" debug (executable passed to gdb), GDB opens and reads the smaps file directly.
+
+On QEMU, for Linux native targets, it would be a matter of emulating the smaps file with the proper MTE flags to satisfy the GDB inquires on tagged memory regions and make QEMU gdbstub work with the mechanism introduced in GDB 13 for checking if a memory region is tagged. The [maybe_do_fake_open](https://gitlab.com/qemu-project/qemu/-/blob/master/linux-user/syscall.c#L8403) function in linux-user/syscall.c, in QEMU's source, takes care of creating a fake view of smaps file for Linux user mode. But that would not work for QEMU system mode, since smaps is an OS-related concept.
+
+To avoid designing two different mechanisms to allow GDB discover if a given memory is tagged (one for Linux and OSes-related targets and another one for bare metal), we introduced a new GDB packet called '[qIsAddressTagged](https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-Packets.html#index-qIsAddressTagged-packet)'.
+
+The 'qIsAddressTagged' packet is used by GDB to query if a given memory address in a remote target is tagged or not and is independent of the remote target type, so QEMU, for instance, only needs to handle this packet on its server (gdbstub) to support memory tagging checks.
+
+The old mechanism, which uses the vFile operations to read the contents of the smaps file, is still in place but as a fallback if the 'qIsAddressTagged' query is not supported by the server, so the use of the new way for checking tagged regions is automatic and no new GDB feature string in 'qSupported' (handshake) was introduced with the new mechanism. The new mechanism has been present since GDB 15.1.
+
+OK, 'qIsAddressTagged' packet enabled GDB to query about tagged memory regions in an OS-agnostic way. The MTE debugging support in GDB 13, however, is focused on Linux targets, which allows GDB to connect to and debug Aarch64 QEMU VMs only in Linux user mode. This is great, but the more general case, Aarch64 QEMU VMs in system mode, can't be debugged. If MTE debugging is possible on system mode, it becomes possible to use it for any exception level, including in Linux kernel space and TEEs (Trusted Execution Environments), such as TF-A and OP-TEE, besides userspace processes.
+
+To debug MTE in QEMU system mode GDB needs to support MTE debugging on bare metal targets. Because 'qIsAddressTagged' is already supported on GDB, all that was necessary to support MTE on bare metal targets was a refactor of the GDB code to move the Linux target hooks to the upper layer (aarch64-tdep.c), making them generic. Because the upper layer is inherited by the Linux target and the bare metal target they become available on both target type, and then MTE debugging support becomes available on [bare metal targets](https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=b782c65ba1103270d0e5097b655489ec08470ca9).
+
+MTE support on Aarch64 bare metal targets is available on [GDB 16.1](https://www.sourceware.org/gdb/schedule/), released in January.
+
+Hence, GDB 16 has all the support we need to debug MTE on Aarch64 QEMU Linux user mode and system mode VMs using QEMU gdb server. With that, it's now time to look at the GDB server side, i.e., the QEMU gdbstub subsystem, which is responsible for handling the GDB queries.
+
+## MTE support on QEMU gdbstub (server-side)
+
+GDB protocol packets from clients are handled in QEMU by the gdbstub subsystem, in gdbstub/gdbstub.c.
+
+Before MTE, all the packets handled by QEMU gdbstub were arch-independent, but because MTE is an Arm-specific feature, the gdbstub subsystem was enhanced with new internal API functions to allow arch-specific gdbstubs to extend the query and set tables and the ´qSupported' string (which advertise the features provided by GDB clients and servers during the client/server handshake) with arch-specific packet handlers:
+
+- gdb_extend_query_table(),
+- gdb_extend_set_table(), and
+- gdb_extend_qsupported_features
+
+[Click this link](https://gitlab.com/qemu-project/qemu/-/blob/master/include/gdbstub/commands.h?ref_type=heads#L75-100) for details about the new functions.
+
+The new gdbstub API functions enable other developers to easily extend the QEMU gdbstub to handle other arch-specific GDB packets.
+
+The new API functions simplify adding support for the three Arm64-specific GDB packets ([qMemTags, QMemTags, and qIsAddressTagged](https://gitlab.com/qemu-project/qemu/-/blob/master/target/arm/gdbstub64.c?ref_type=heads#L582-620)) utilized by the GDB [memory-tag subcommands](https://sourceware.org/gdb/current/onlinedocs/gdb.html/Memory-Tagging.html) for MTE management. These handlers are located in QEMU code target/arm/gdbstub64.c because MTE is an Arm64 feature.
+
+The full support for MTE debugging on Aarch64 VMs is available since QEMU 9.2.
+
+## Conclusion
+
+Since QEMU 9.2, MTE debugging is supported in Aarch64 VMs, both on Linux user mode and on system mode. With Linux user mode, the user can easily debug MTE Linux programs (userspace) and on system mode the user can debug MTE in bare metal machines, so debug MTE in kernel space (Linux or any other OS), firmwares, and TEEs. In user mode, GDB will nicely report sigfaults due to a tag mismatch, displaying the logical and location tags. In both modes the developer can use GDB and QEMU to inspect and change both types of tags, being it in userspace (a Linux process) or in kernel space (in case, for instance, one wants to use MTE feature in kernel code, or, which is more common, debug MTE used in firmware code).
+
+To exploit the QEMU 9.2 MTE debugging features the user must use GDB 16.1 or greater.
+
+To learn more about the work Linaro is driving in QEMU, check out our project page [Enable Arm Architecture in QEMU](https://linaro.atlassian.net/wiki/spaces/QEMU/overview).
