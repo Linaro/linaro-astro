@@ -14,7 +14,7 @@ const people = await getEntries(members);
   id === "speakers" ? (
     <div>
       {title && <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>}
-      <ul class="gap-4 justify-center flex flex-wrap">
+      <ul class="not-prose grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
         {people.map((x) => (
           <MemberCard
             id={x.slug + Astro.props.id}
