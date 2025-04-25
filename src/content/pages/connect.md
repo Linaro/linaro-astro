@@ -98,6 +98,7 @@ flow:
           - richard_kerslake
           - bhumik_patel
           - john_thompson
+          - pedro_miguel_justo_teixeira
   - row: container_row
     animation: none
     no_border: true
