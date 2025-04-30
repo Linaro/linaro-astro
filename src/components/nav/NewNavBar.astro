@@ -4,10 +4,16 @@ import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import SearchModal from "../search/NavSearch/SearchModal.astro";
+import { Icon } from "astro-icon/components";
 
 const navData = await getEntry("data", "nav");
 
 // console.log(JSON.stringify(navData, null, 2));
+let isMenuOpen = false;
+
+function toggleMenu() {
+  isMenuOpen = !isMenuOpen;
+}
 ---
 
 <header
@@ -18,16 +24,34 @@ const navData = await getEntry("data", "nav");
     <div
       class="flex flex-col lg:flex-row max-w-7xl xl:container lg:items-center mx-auto px-8 my-3 lg:mt-4 lg:text-sm xl:text-[1rem] py-4"
     >
-      <a href="/" class="text-xl"
-        ><CloudinaryImg
-          src={"linaro-website/graphics/logo"}
-          alt="Linaro Logo"
-          class="h-auto w-[125px] xl:w-[200px] mt-[-2px] ml-[-10px]"
-          width={500}
-          height={500}
-        />
-      </a>
-      <ul class="flex flex-col lg:flex-row w-full lg:items-center gap-6">
+      <div>
+        <a href="/" class="text-xl"
+          ><CloudinaryImg
+            src={"linaro-website/graphics/logo"}
+            alt="Linaro Logo"
+            class="h-auto w-[125px] xl:w-[200px] mt-[-2px] ml-[-10px]"
+            width={500}
+            height={500}
+          />
+        </a>
+        <button
+          type="button"
+          class="block lg:hidden pr-8"
+          onclick={toggleMenu()}
+          aria-label="Toggle menu"
+        >
+          {
+            isMenuOpen ? (
+              <Icon name="close" class="w-6 h-6 text-white" />
+            ) : (
+              <Icon name="menu" class="w-6 h-6 text-white" />
+            )
+          }
+        </button>
+      </div>
+      <ul
+        class="flex flex-col lg:flex-row w-full items-start lg:items-center gap-6 max-w-2xl lg:max-w-full my-8 lg:my-0"
+      >
         {
           navData.data.map((item: any) => (
             <NewDropdown item={item} client:only="solid" />
