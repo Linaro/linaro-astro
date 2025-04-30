@@ -41,7 +41,11 @@ export default function NewDropdown(
   });
 
   return (
-    <>
+    <menu
+      class={"group top-full"}
+      aria-expanded="false"
+      data-nav-group={props.item.label}
+    >
       <button
         ref={buttonRef}
         onClick={toggleDropdown}
@@ -52,17 +56,18 @@ export default function NewDropdown(
       >
         {props.item.label}
       </button>
+      {/* <div class={"astronav-dropdown dropdown-toggle"} aria-expanded="false"> */}
       <ul
         ref={menuRef}
         id={`dropdown-${props.item.label.toLowerCase().replace(/\s+/g, "-")}`}
-        class={`astronav-dropdown dropdown-toggle absolute top-full w-full mt-4 z-40py-4 transition-all duration-200 ${open() ? "" : "hidden opacity-0"}`}
+        class={`lg:absolute w-full lg:left-0 top-full bg-background z-40 py-6 shadow-lg ${open() ? "" : "hidden opacity-0"}`}
       >
-        <div class="flex gap-8">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row gap-8">
           {props.item.children?.map((child) =>
             child.items ? (
-              <li class="flex flex-col gap-2">
-                <p class="text-white text-sm">{child.label}</p>
+              <div class="flex flex-col gap-2">
                 <ul>
+                  <p class="text-white text-md">{child.label}</p>
                   {child.items.map((subItem) => (
                     <li>
                       <a
@@ -74,11 +79,11 @@ export default function NewDropdown(
                     </li>
                   ))}
                 </ul>
-              </li>
+              </div>
             ) : (
               <li>
                 {child.divider ? (
-                  <div class="w-[3px] h-full bg-linaro-purple"></div>
+                  <div class="w-1/2 h-[3px] lg:w-[3px] lg:h-full bg-linaro-purple"></div>
                 ) : (
                   <a
                     href={child.url}
@@ -93,6 +98,7 @@ export default function NewDropdown(
           )}
         </div>
       </ul>
-    </>
+      {/* </div> */}
+    </menu>
   );
 }
