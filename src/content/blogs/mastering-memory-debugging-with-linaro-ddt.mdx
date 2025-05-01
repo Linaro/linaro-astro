@@ -2,7 +2,7 @@
 title: Mastering Memory Debugging with Linaro DDT
 description: Mastering Memory Debugging with Linaro DDT
 date: 2025-1-05T00:00:00.000Z
-image:
+image: linaro-website/images/blog/Forge_DDT_banner_bfakfv.jpg
 tags:
   - hpc
 author: rudy-shand
@@ -35,12 +35,9 @@ Memory debugging with Linaro DDT is cross platform across all major Linux distri
 
 By default, memory debugging with Linaro DDT is not enabled. The feature can be enabled by selecting the memory debugging checkbox in the run dialog. The memory debugging options enable you to tailor the memory debugging capabilities towards a range of memory issues, examples of these are given as we progress through this blog.
 
-Open Screenshot 2025-04-10 at 14.08.22.png
-Screenshot 2025-04-10 at 14.08.22.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Memory Debugging Options</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-10_at_14.08.22_ilxlor.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Memory Debugging Options</p>
 </div>
 
 ## Heap debugging
@@ -55,12 +52,9 @@ Reads from freed memory
 
 When memory debugging is enabled with the default options, trivial bugs on the heap will be detected and Linaro DDT will halt at the specific location that triggered the memory error.
 
-Open Screenshot 2025-04-10 at 15.17.30.png
-Screenshot 2025-04-10 at 15.17.30.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Free Pointer Twice</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-10_at_15.17.30_p8vzod.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Free Pointer Twice</p>
 </div>
 
 If the above code was executed without Linaro DDT, it would crash with no clear reason of what has happened. By running the application with DDT attached, the application halts at line 44. The error message is intuitive enough to determine that the pointer was already freed previously (at line 41) and therefore it cannot be freed again.
@@ -73,12 +67,11 @@ One way to reduce overhead is by selecting `only enable for these processors` in
 
 Once the debugger halts due to a memory error, then various debugging features can be used to drill down into potential causes of the memory error. For example, as shown above, `*a[10]` is initialised, resulting in more elements within `a` being accessed than allocated. This can be seen by comparing where the memory error occurred with the information in the code viewer and the variables window to inspect the variable `a`.
 
-Open Screenshot 2025-04-10 at 16.26.33.png
-Screenshot 2025-04-10 at 16.26.33.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Cannot Locate Pointer in heap</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-10_at_16.26.33_cg4yyb.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>
+    Cannot Locate Pointer in heap
+  </p>
 </div>
 
 In some cases, the above example may not fail. This occurs if `a` and `dynamicArray` are placed on the stack and are laid out as follows:
@@ -97,24 +90,18 @@ dynamicArray`
 
 Arrays in C use pointer arithmetic to address individual elements, this means that element `a + 10` could potentially be `dynamicArray` on the stack. DDT can be used in this case to inspect a with the Pointer Details to determine that `a[10]` is pointing to the address of `dynamicArray`.
 
-Open Screenshot 2025-04-15 at 10.10.40.png
-Screenshot 2025-04-15 at 10.10.40.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Pointer Details</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_10.10.40_hnohnb.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Pointer Details</p>
 </div>
 
 ## Memory leak detection
 
 Memory leaks occur when a program fails to release memory that is no longer in use, leading to a gradual decrease in available memory. One of the most effective strategies to reduce the risk of memory leaks is to fix any memory allocation related warnings that are reported by static analysis tools.
 
-Open Screenshot 2025-04-15 at 10.14.04.png
-Screenshot 2025-04-15 at 10.14.04.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Allocated memory not used</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_10.14.04_bpsono.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Allocated memory not used</p>
 </div>
 
 Linaro DDT will report on allocated memory issues, even without memory debugging being enabled. Allowing your code to be analysed for memory allocation issues without needing to run the code to a specific line.
@@ -127,24 +114,20 @@ To generate a Memory Leak Report, the following ddt offline command can be run.
 
 This generates a report which indicates that memory allocated on `memory_debugging.c:29` was not freed for Rank 0.
 
-Open Screenshot 2025-04-15 at 13.18.38.png
-Screenshot 2025-04-15 at 13.18.38.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Memory leak report</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_13.18.38_ood7ih.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Memory leak report</p>
 </div>
 
 The [Memory Statistics](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/memory_statistics.html#memory-statistics) dialog can be used to obtain a view of the total memory used across processes. The processes using the most amount of memory are displayed in size order which is useful for checking that the application has released large amounts of memory that is no longer in use. The Memory Statistics dialog displays the total amount of memory allocated and freed since the program began, the current number of allocated bytes, and the number of calls to allocation and free routines. These memory statistics enables typical memory leaks to be detected.
 
 The currently allocated memory in your application can be visualised using Linaro DDT’s [Current Memory Usage](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/current_memory_usage.html#current-memory-usage) dialog. This provides a view to see how memory is distributed across processes at the point where the debugger has halted the execution.
 
-Open Screenshot 2025-04-15 at 12.06.01.png
-Screenshot 2025-04-15 at 12.06.01.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Memory usage distributed across processes</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_12.06.01_e7txpq.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>
+    Memory usage distributed across processes
+  </p>
 </div>
 
 The outlier in the above example shows that Rank 0 has allocated more memory than all other ranks and this is due to `memory_debugging.c:29` completing 3 allocations of 400kb each. Looking back on the <strong>Allocated memory not used</strong> code snippet, `memory_debugging.c:29` is allocating memory for Rank 0 which is never used. The [Current Memory Usage](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/current_memory_usage.html) dialog therefore enables memory anomalies to be spotted and related back to the code where the anomaly occurred.
@@ -155,12 +138,9 @@ Performance analysis tools can also be used to detect memory leaks and go a step
 
 Memory corruption happens when a program writes data to a region of memory outside the bounds of its intended allocation. This can lead to crashes, unexpected behaviour, or security vulnerabilities. Persistent but random crashes caused by access of memory beyond the bounds of an allocation block can be diagnosed using the Guard Pages feature within the Memory Debugging options dialog.
 
-Open Screenshot 2025-04-15 at 14.20.10.png
-Screenshot 2025-04-15 at 14.20.10.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Guard Pages</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_14.20.10_divm3k.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Guard Pages</p>
 </div>
 
 Any attempts to read or write to the specified number of pages before or after the block will cause a segmentation violation that stops your program. Add the guard pages after the block to detect heap overflows, or before to detect heap underflows.
@@ -175,12 +155,9 @@ Currently, Linaro DDT supports some memory debugging capabilities on Nvidia GPUs
 
 Running out of memory often causes your application to be killed instantly with no further debugging or diagnostic information. [Node memory threshold detection](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/node_memory_threshold_detection.html#node-memory-threshold-detection) can be used to detect out of memory errors early by setting a memory threshold within the memory debugging dialog.
 
-Open Screenshot 2025-04-15 at 13.34.28.png
-Screenshot 2025-04-15 at 13.34.28.png
-
-<div style={{ textAlign: 'center' }}>
-  ![]({Cloudinary URL})
-  <p style={{ fontSize: '0.9em', color: '#666' }}>Set a memory threshold</p>
+<div style={{ textAlign: "center" }}>
+  ![](linaro-website/images/blog/Screenshot_2025-04-15_at_13.34.28_yjxk7i.png)
+  <p style={{ fontSize: "0.9em", color: "#666" }}>Set a memory threshold</p>
 </div>
 
 Linaro DDT will report an over node memory threshold limit error as soon as a dynamic memory allocation (such as malloc or ALLOCATE) takes the total memory usage over the specified threshold. When this error is reported, you have the option to continue playing the program, or to pause the execution.
