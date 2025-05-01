@@ -9,11 +9,11 @@ author: rudy-shand
 related: []
 ---
 
-# Introduction
+## Introduction
 
 Memory debugging is a critical part of the development lifecycle for memory-intensive applications. Undetected memory issues can lead to performance bottlenecks, unpredictable behaviour, or even application crashes. In this post, we’ll explore how [Linaro DDT’s](https://www.linaroforge.com/linaro-ddt) advanced memory debugging capabilities help uncover and isolate memory bugs in both serial and parallel code, whether you're working on a single processor or across many. Our goal is to equip you with the knowledge and tools to seamlessly integrate memory debugging into your workflow—resulting in faster, more reliable, and predictable code.
 
-## Basics of memory debugging
+### Basics of memory debugging
 
 Effective memory debugging starts with understanding how your programming language manages memory. Different languages offer different levels of abstraction and automatic memory management. For instance, languages like C and C++ require manual memory management, while languages like Java and Python manage memory through garbage collection. A basic understanding of concepts such as memory allocation, pointers, and garbage collection mechanisms is paramount for effectively managing the memory usage of your application. In addition, knowing how to use memory debugging tools specific to your environment can give you a significant advantage in identifying and resolving memory issues early in the development cycle.
 
@@ -27,7 +27,7 @@ When it comes to memory management, developers often encounter a few typical iss
 
 - Improper deallocation, memory that is not released correctly or at the right time, causing leaks or corruption.
 
-# Memory debugging with Linaro DDT
+## Memory debugging with Linaro DDT
 
 Linaro DDT's memory debugging feature intercepts calls to the system memory allocation library, recording memory usage, and confirming correct usage of the library by performing heap and bounds checking. This mechanism enables Linaro DDT to perform memory debugging activities across languages such C, C++, Fortran and Python codes. With Python codes however, memory debugging is done within the underlying native / interpreter code (Typically C code) and not on the Python language itself. This still provides insights into where large chunks of memory were allocated and held.
 
@@ -40,15 +40,15 @@ By default, memory debugging with Linaro DDT is not enabled. The feature can be 
   <p style={{ fontSize: "0.9em", color: "#666" }}>Memory Debugging Options</p>
 </div>
 
-## Heap debugging
+### Heap debugging
 
 Heap debugging focuses on monitoring and analyzing the dynamic allocation and deallocation of memory on the heap during the runtime of a program. Heap corruption detection allows you to detect various types of heap memory errors, such as:
 
-Out-of-bound writes & buffer overflows
+- Out-of-bound writes & buffer overflows
 
-Writes to freed memory
+- Writes to freed memory
 
-Reads from freed memory
+- Reads from freed memory
 
 When memory debugging is enabled with the default options, trivial bugs on the heap will be detected and Linaro DDT will halt at the specific location that triggered the memory error.
 
@@ -59,13 +59,13 @@ When memory debugging is enabled with the default options, trivial bugs on the h
 
 If the above code was executed without Linaro DDT, it would crash with no clear reason of what has happened. By running the application with DDT attached, the application halts at line 44. The error message is intuitive enough to determine that the pointer was already freed previously (at line 41) and therefore it cannot be freed again.
 
-There are however heap memory errors that are more difficult to detect. These types of memory errors can be detected using the Heap Debugging slider within the memory debugging dialog. In practice, setting the slider to `Balanced` is still fast enough to use and will catch most heap memory errors. If you come across a memory error that is difficult to pin down, choosing `Thorough` might expose the problem earlier, but you will need to be very patient for large, memory intensive programs.
+There are however heap memory errors that are more difficult to detect. These types of memory errors can be detected using the Heap Debugging slider within the memory debugging dialog. In practice, setting the slider to **_Balanced_** is still fast enough to use and will catch most heap memory errors. If you come across a memory error that is difficult to pin down, choosing **_Thorough_** might expose the problem earlier, but you will need to be very patient for large, memory intensive programs.
 
-One way to reduce overhead is by selecting `only enable for these processors` in the memory debugging dialog and then entering the range of processors to track memory against. This is useful for applications that are running at very large scales and the memory error can be isolated to a specific range of processors.
+One way to reduce overhead is by selecting **_only enable for these processors_** in the memory debugging dialog and then entering the range of processors to track memory against. This is useful for applications that are running at very large scales and the memory error can be isolated to a specific range of processors.
 
-## Detecting Stack allocation issues
+### Detecting Stack allocation issues
 
-Once the debugger halts due to a memory error, then various debugging features can be used to drill down into potential causes of the memory error. For example, as shown above, `*a[10]` is initialised, resulting in more elements within `a` being accessed than allocated. This can be seen by comparing where the memory error occurred with the information in the code viewer and the variables window to inspect the variable `a`.
+Once the debugger halts due to a memory error, then various debugging features can be used to drill down into potential causes of the memory error. For example, as shown above, **_a[10]_** is initialised, resulting in more elements within **_a_** being accessed than allocated. This can be seen by comparing where the memory error occurred with the information in the code viewer and the variables window to inspect the variable **_a_**.
 
 <div style={{ textAlign: "center" }}>
   ![](/linaro-website/images/blog/Screenshot_2025-04-10_at_16.26.33_cg4yyb.png)
@@ -74,9 +74,9 @@ Once the debugger halts due to a memory error, then various debugging features c
   </p>
 </div>
 
-In some cases, the above example may not fail. This occurs if `a` and `dynamicArray` are placed on the stack and are laid out as follows:
+In some cases, the above example may not fail. This occurs if **_a_** and **_dynamicArray_** are placed on the stack and are laid out as follows:
 
-`a[0]
+a[0]
 
 a[1]
 
@@ -86,16 +86,16 @@ a[8]
 
 a[9]
 
-dynamicArray`
+dynamicArray
 
-Arrays in C use pointer arithmetic to address individual elements, this means that element `a + 10` could potentially be `dynamicArray` on the stack. DDT can be used in this case to inspect a with the Pointer Details to determine that `a[10]` is pointing to the address of `dynamicArray`.
+Arrays in C use pointer arithmetic to address individual elements, this means that element **_a + 10_** could potentially be **_dynamicArray_** on the stack. DDT can be used in this case to inspect a with the Pointer Details to determine that **_a[10]_** is pointing to the address of **_dynamicArray_**.
 
 <div style={{ textAlign: "center" }}>
   ![](/linaro-website/images/blog/Screenshot_2025-04-15_at_10.10.40_hnohnb.png)
   <p style={{ fontSize: "0.9em", color: "#666" }}>Pointer Details</p>
 </div>
 
-## Memory leak detection
+### Memory leak detection
 
 Memory leaks occur when a program fails to release memory that is no longer in use, leading to a gradual decrease in available memory. One of the most effective strategies to reduce the risk of memory leaks is to fix any memory allocation related warnings that are reported by static analysis tools.
 
@@ -130,11 +130,11 @@ The currently allocated memory in your application can be visualised using Linar
   </p>
 </div>
 
-The outlier in the above example shows that Rank 0 has allocated more memory than all other ranks and this is due to `memory_debugging.c:29` completing 3 allocations of 400kb each. Looking back on the <strong>Allocated memory not used</strong> code snippet, `memory_debugging.c:29` is allocating memory for Rank 0 which is never used. The [Current Memory Usage](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/current_memory_usage.html) dialog therefore enables memory anomalies to be spotted and related back to the code where the anomaly occurred.
+The outlier in the above example shows that Rank 0 has allocated more memory than all other ranks and this is due to `memory_debugging.c:29` completing 3 allocations of 400kb each. Looking back on the **_Allocated memory not used_** code snippet, `memory_debugging.c:29` is allocating memory for Rank 0 which is never used. The [Current Memory Usage](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/current_memory_usage.html) dialog therefore enables memory anomalies to be spotted and related back to the code where the anomaly occurred.
 
 Performance analysis tools can also be used to detect memory leaks and go a step further by not only pinpointing memory issues but also providing insights into CPU usage and other crucial performance metrics. Performance tools, like [Linaro MAP](https://www.linaroforge.com/linaro-map), offer a graphical representation of memory usage over time, making it easier to spot unexpected high memory usage during different application phases.
 
-## Memory corruption analysis
+### Memory corruption analysis
 
 Memory corruption happens when a program writes data to a region of memory outside the bounds of its intended allocation. This can lead to crashes, unexpected behaviour, or security vulnerabilities. Persistent but random crashes caused by access of memory beyond the bounds of an allocation block can be diagnosed using the Guard Pages feature within the Memory Debugging options dialog.
 
@@ -147,11 +147,11 @@ Any attempts to read or write to the specified number of pages before or after t
 
 Tools like AddressSanitizer can dynamically detect buffer overflows, use-after-free errors, and other corruption patterns, highlighting the precise location in the code where the corruption occurs. Linaro DDT [supports AddressSanitizer](https://docs.linaroforge.com/latest/html/forge/ddt/using_and_writing_plugins/supported_plugins.html) through a plugin.
 
-## GPU memory debugging
+### GPU memory debugging
 
 Currently, Linaro DDT supports some memory debugging capabilities on Nvidia GPUs. Both CPU and GPU memory can be debugged concurrently, see [CUDA memory debugging](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/cuda_memory_debugging.html) for further information on CUDA memory debugging on Nvidia GPUs.
 
-## Memory threshold detection
+### Memory threshold detection
 
 Running out of memory often causes your application to be killed instantly with no further debugging or diagnostic information. [Node memory threshold detection](https://docs.linaroforge.com/latest/html/forge/ddt/memory_debugging_ddt/node_memory_threshold_detection.html#node-memory-threshold-detection) can be used to detect out of memory errors early by setting a memory threshold within the memory debugging dialog.
 
@@ -164,13 +164,13 @@ Linaro DDT will report an over node memory threshold limit error as soon as a dy
 
 This option is useful to set as a precautionary measure if you suspect your code could hit an OOM killer. Linaro DDT will halt the execution before the OOM killer is triggered which will enable you to inspect the memory allocations and memory usage of the application to identify where the memory is being used.
 
-# Additional tips for efficient memory management
+## Additional tips for efficient memory management
 
 Memory debugging can be a complex task, but certain practices can make the process more efficient. Firstly, adopting a proactive approach to memory management, such as using smart pointers in C++, can significantly reduce the risk of memory leaks. Use static analysis to scan the code for memory issues and ensuring that all errors and warning are fixed before executing code. Incremental testing, where code is tested in small, manageable chunks, can also help in identifying memory issues early in the development cycle. Lastly, utilizing breakpoints within a debug session can offer invaluable insights into the state of the application at various execution points.
 
 Memory optimization involves more than just fixing leaks; it requires a comprehensive approach to reduce overall memory usage and improve application performance. Effective strategies include minimizing the use of global variables, optimizing data structures, and implementing caching mechanisms where appropriate. Additionally, reviewing and refactoring code to eliminate unnecessary memory allocations can result in significant performance gains. It's also beneficial to leverage compiler optimizations and profiling tools to identify bottlenecks within the code.
 
-# Final thoughts
+## Final thoughts
 
 Memory debugging is not a one-time task. It's an ongoing process that plays a vital role in the performance and reliability of software applications. Regularly dedicating time to review and optimize memory usage ensures that your application is performant, reliable and predictable. Familiarizing yourself with the debugging tools and their features before diving into the debugging process saves time and effort. By mastering these techniques and using the appropriate tools, developers can ensure their applications run efficiently and reliably, offering a better experience for users and reducing the time and cost associated with memory-related issues.
 
