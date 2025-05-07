@@ -34,7 +34,7 @@ function toggleMenu() {
             height={500}
           />
         </a>
-        <button
+        <!-- <button
           type="button"
           class="block lg:hidden pr-8"
           onclick={toggleMenu()}
@@ -47,19 +47,38 @@ function toggleMenu() {
               <Icon name="menu" class="w-6 h-6 text-white" />
             )
           }
-        </button>
+        </button> -->
       </div>
       <ul
         class="flex flex-col lg:flex-row w-full items-start lg:items-center gap-6 max-w-2xl lg:max-w-full my-8 lg:my-0"
       >
         {
-          navData.data.map((item: any) => (
-            <NewDropdown item={item} client:only="solid" />
-          ))
+          navData.data.map((item: any) =>
+            item.children ? (
+              <NewDropdown item={item} client:only="solid" />
+            ) : (
+              <li class="" aria-label={item.label}>
+                <div class="transition">
+                  <a
+                    data-nav-group={item.label}
+                    href={item.url}
+                    class:list={[
+                      "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
+                    ]}
+                    target={item.url.startsWith("https") ? "_blank" : "_self"}
+                  >
+                    {item.label}
+                  </a>
+                </div>
+              </li>
+            ),
+          )
         }
         <li class="ml-0 lg:ml-2 xl:ml-8 mt-[2px]">
           <a href="/contact">
-            <div class="linaro-gradient-button-small">Contact us</div>
+            <div class="linaro-gradient-button-small min-w-[115px]">
+              Contact us
+            </div>
           </a>
         </li>
         <li class="grow mt-4 lg:mt-0">

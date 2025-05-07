@@ -42,7 +42,7 @@ export default function NewDropdown(
 
   return (
     <menu
-      class={"group top-full"}
+      class={"group top-full w-full"}
       aria-expanded="false"
       data-nav-group={props.item.label}
     >
