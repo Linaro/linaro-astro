@@ -2,27 +2,15 @@
   key: solutions
   children:
     - label: Linux Kernel Testing
-      items: 
-        - label: Functional testing
-          url: 
+      items:
         - label: Long term Support
           url: /solutions/lts
     - label: Virtualization
       items: 
         - label: QEMU
-          url: 
+          url: /virtualization/qemu
         - label: VIRTIO
-          url:
-    - label: Toolchain
-      items: 
-        - label: LLVM
-          url: 
-    - label: Security
-      items: 
-        - label: Confidential Computing
-          url: 
-        - label: OP-TEE
-          url:
+          url: /virtualization/virtio
     - label: HPC
       items: 
         - label: LinaroForge
@@ -52,8 +40,6 @@
   children:
     - label: Ecosystem Dashboard
       url: https://ecosystemdashboard.linaro.org
-    - label: Projects
-      url:
 - label: Resource Center
   key: resources
   children:
