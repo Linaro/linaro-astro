@@ -22,6 +22,10 @@
       url: /services/nxp-platform-services
     - label: Qualcomm Platform Services
       url: /projects/qualcomm-platform
+    - label: QEMU
+      url: /virtualization/qemu
+    - label: VIRTIO
+      url: /virtualization/virtio
 - label: Ecosystem Projects
   key: ecosystem
   children:
