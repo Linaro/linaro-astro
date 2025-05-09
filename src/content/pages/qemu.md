@@ -60,8 +60,8 @@ flow:
         more_info:
           - title: Check out the most read blogs
             icon: blogs
-            url: /blog?tags=iot-embedded
+            url: /blog?tags=qemu
           - title: Watch presentations and webinars
             icon: webinar
-            url: https://resources.linaro.org/en/themes/50057078-8f3b-4615-8f44-67c194e43b69
+            url: https://resources.linaro.org/en/search?q=Qemu
 ---

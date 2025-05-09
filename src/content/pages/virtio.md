@@ -41,21 +41,5 @@ flow:
         buttons:
           - text: Contact Us to discuss your VIRTIO roadmap
             url: /contact
-            style: linaro-gradient-button mt-16
-  - row: container_row
-    no_border: true
-    styles:
-      outer: bg-transparent z-0
-    sections:
-      - component: more_info
-        styles:
-          container: justify-around border-2 border-[#6B6B6B] rounded-3xl py-10
-          card: max-w-md  text-center
-        more_info:
-          - title: Check out the most read blogs
-            icon: blogs
-            url: /blog?tags=iot-embedded
-          - title: Watch presentations and webinars
-            icon: webinar
-            url: https://resources.linaro.org/en/themes/50057078-8f3b-4615-8f44-67c194e43b69
+            style: linaro-gradient-button mt-1
 ---
