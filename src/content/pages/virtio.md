@@ -8,7 +8,7 @@ hero:
   title: >
     <span class="text-linaro-yellow">VIRTIO</span> accelerates consolidation of ECUs
   background_image: linaro-website/graphics/blurred-motion-shiny-luxury-illuminated-night-drive-generative-ai_1_1_pkecvs.png
-  description: Into a single high-performance processor running virtual machinesSeparating infotainment, ADAS, and instrument clusters securely and efficiently.
+  description: Into a single high-performance processor running virtual machines separating infotainment, ADAS, and instrument clusters securely and efficiently.
   doubleHero: true
   title2: >
     <span class="text-linaro-yellow">VIRTIO</span> supports modular hypervisor architectures
