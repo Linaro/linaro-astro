@@ -42,7 +42,7 @@ export default function NewDropdown(
 
   return (
     <menu
-      class={"group top-full w-full"}
+      class={"group top-full"}
       aria-expanded="false"
       data-nav-group={props.item.label}
     >
@@ -56,11 +56,10 @@ export default function NewDropdown(
       >
         {props.item.label}
       </button>
-      {/* <div class={"astronav-dropdown dropdown-toggle"} aria-expanded="false"> */}
       <ul
         ref={menuRef}
         id={`dropdown-${props.item.label.toLowerCase().replace(/\s+/g, "-")}`}
-        class={`lg:absolute w-full lg:left-0 top-full bg-background z-40 py-6 shadow-lg ${open() ? "" : "hidden opacity-0"}`}
+        class={`lg:absolute w-full lg:left-0 text-left top-full bg-background z-40 py-6 shadow-lg ${open() ? "" : "hidden opacity-0"}`}
       >
         <div class="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row gap-8">
           {props.item.children?.map((child) =>
@@ -98,7 +97,6 @@ export default function NewDropdown(
           )}
         </div>
       </ul>
-      {/* </div> */}
     </menu>
   );
 }

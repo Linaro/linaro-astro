@@ -1,14 +1,11 @@
 ---
 import NewDropdown from "./NewDropdown";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { getEntry } from "astro:content";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import SearchModal from "../search/NavSearch/SearchModal.astro";
-import { Icon } from "astro-icon/components";
 
 const navData = await getEntry("data", "nav");
 
-// console.log(JSON.stringify(navData, null, 2));
 let isMenuOpen = false;
 
 function toggleMenu() {
@@ -22,7 +19,7 @@ function toggleMenu() {
 >
   <nav>
     <div
-      class="flex flex-col lg:flex-row max-w-7xl xl:container lg:items-center mx-auto px-8 my-3 lg:mt-4 lg:text-sm xl:text-[1rem] py-4"
+      class="flex flex-col lg:flex-row max-w-7xl xl:container lg:justify-between mx-auto px-8 my-3 lg:mt-4 lg:text-sm xl:text-[1rem] py-4"
     >
       <div>
         <a href="/" class="text-xl"
@@ -57,14 +54,15 @@ function toggleMenu() {
             item.children ? (
               <NewDropdown item={item} client:only="solid" />
             ) : (
-              <li class="" aria-label={item.label}>
+              <li
+                class="hover:linaro-gradient-text text-md "
+                aria-label={item.label}
+              >
                 <div class="transition">
                   <a
                     data-nav-group={item.label}
                     href={item.url}
-                    class:list={[
-                      "flex lg:px-3 py-2 xl:py-3 text-inherit hover:linaro-gradient-text whitespace-nowrap",
-                    ]}
+                    class:list={["whitespace-nowrap"]}
                     target={item.url.startsWith("https") ? "_blank" : "_self"}
                   >
                     {item.label}
@@ -74,17 +72,19 @@ function toggleMenu() {
             ),
           )
         }
-        <li class="ml-0 lg:ml-2 xl:ml-8 mt-[2px]">
+      </ul>
+      <div class="flex items-center justify-between gap-8 lg:ml-2">
+        <div class="">
           <a href="/contact">
             <div class="linaro-gradient-button-small min-w-[115px]">
               Contact us
             </div>
           </a>
-        </li>
-        <li class="grow mt-4 lg:mt-0">
+        </div>
+        <div class="flex items-center">
           <SearchModal id="nav-search" />
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
