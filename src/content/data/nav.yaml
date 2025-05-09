@@ -59,7 +59,7 @@
       url: /connect
 - label: Support
   key: Support
-  url: /support
+  url: /contact
 - label: Company
   key: company
   children:
