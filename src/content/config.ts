@@ -23,11 +23,6 @@ const pages = defineCollection({
               description: z.string().optional(),
             })
             .optional(),
-          newHero: z.boolean().optional(),
-          doubleHero: z.boolean().optional(),
-          title2: z.string().optional(),
-          description2: z.string().optional(),
-          background_image2: z.string().optional(),
         })
         .optional(),
       connectHero: z
