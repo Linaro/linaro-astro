@@ -78,7 +78,11 @@ const EventResults = ({
 
   const upcoming = createMemo(
     () =>
-      events()?.filter((event) => event.meta.event_start > Date.now()) ?? [],
+      events()?.filter(
+        (event) =>
+          event.meta.event_start > Date.now() ||
+          event.meta.event_start === "Coming Soon",
+      ) ?? [],
   );
 
   const past = createMemo(

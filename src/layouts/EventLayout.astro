@@ -69,13 +69,14 @@ const summary =
 let formattedDate;
 const eventStart = dayjs(event_start);
 const eventEnd = dayjs(event_end);
-if (!(event_start instanceof Date)) {
-  formattedDate = "Coming Soon";
-}
+
 if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   formattedDate = `${dayjs(event_start).format("D MMMM, YYYY")}`;
 } else {
   formattedDate = `${dayjs(event_start).format("D")}-${dayjs(event_end).format("DD MMMM, YYYY")}`;
+}
+if (!(event_start instanceof Date)) {
+  formattedDate = "Coming Soon";
 }
 
 const upcomingEvents = (
