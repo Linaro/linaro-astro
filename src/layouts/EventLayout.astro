@@ -113,7 +113,9 @@ const upcomingEvents = (
         >
           {new Date(event_end).getTime()}
         </div>
-        <span data-pagefind-meta={`dates`}>{formattedDate}</span>
+        <span data-pagefind-meta={`dates`}
+          >{formattedDate ?? "Coming Soon"}</span
+        >
         {
           location && (
             <span
