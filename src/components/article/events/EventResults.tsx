@@ -40,7 +40,7 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
             class="aspect-square object-cover rounded-full my-4 max-w-full"
           />
         </Show>
-        <p class="text-neutral-400 mb-2">{event.meta.dates}</p>
+        <p class="text-neutral-400 mb-2">{event.meta.dates ?? "Coming Soon"}</p>
         <p>{event.meta.summary}</p>
       </a>
       <div class="px-4 py-8 justify-self-end">
