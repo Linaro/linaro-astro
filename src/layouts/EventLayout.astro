@@ -69,10 +69,14 @@ const summary =
 let formattedDate;
 const eventStart = dayjs(event_start);
 const eventEnd = dayjs(event_end);
+
 if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   formattedDate = `${dayjs(event_start).format("D MMMM, YYYY")}`;
 } else {
   formattedDate = `${dayjs(event_start).format("D")}-${dayjs(event_end).format("DD MMMM, YYYY")}`;
+}
+if (!(event_start instanceof Date)) {
+  formattedDate = "Coming Soon";
 }
 
 const upcomingEvents = (
@@ -81,7 +85,8 @@ const upcomingEvents = (
     ({ data }) =>
       (String(import.meta.env.IS_PREVIEW) === "true" ||
         Date.now() > new Date(data.date_published).getTime()) &&
-      new Date(data.event_start).getTime() > Date.now(),
+      (new Date(data.event_start).getTime() > Date.now() ||
+        data.event_start === "Coming Soon"),
   )
 )
   .sort((a, b) => dayjs(b.data.event_start).diff(a.data.event_start))
@@ -96,7 +101,7 @@ const upcomingEvents = (
       ]}
     >
       <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
-      <p class="flex gap-4 flex-wrap items-start block">
+      <p class="flex gap-4 flex-wrap items-start block my-4">
         <div
           data-pagefind-meta={`event_start`}
           data-pagefind-sort={`event_start`}
@@ -113,7 +118,9 @@ const upcomingEvents = (
         >
           {new Date(event_end).getTime()}
         </div>
-        <span data-pagefind-meta={`dates`}>{formattedDate}</span>
+        <span data-pagefind-meta={`dates`}
+          >{formattedDate ?? "Coming Soon"}</span
+        >
         {
           location && (
             <span

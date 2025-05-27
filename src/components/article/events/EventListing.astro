@@ -5,7 +5,6 @@ import { remark } from "remark";
 import strip from "strip-markdown";
 import dayjs from "dayjs";
 import dayOfYear from "dayjs/plugin/dayOfYear";
-import WebinarContactModal from "@/components/forms/WebinarContactModal.astro";
 
 dayjs.extend(dayOfYear);
 
@@ -32,6 +31,9 @@ if (eventStart.dayOfYear() === eventEnd.dayOfYear()) {
   formattedDate = `${eventStart.format("D MMMM, YYYY")}`;
 } else {
   formattedDate = `${eventStart.format("D")}-${eventEnd.format("DD MMMM, YYYY")}`;
+}
+if (!(event.event_start instanceof Date)) {
+  formattedDate = "Coming Soon";
 }
 ---
 

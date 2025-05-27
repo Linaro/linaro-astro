@@ -10,7 +10,7 @@ import {
   type Resource,
 } from "solid-js";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 16;
 
 const getEvents = async (results: any[]) => {
   return await Promise.all(results.map((result) => result.data()));
@@ -40,7 +40,7 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
             class="aspect-square object-cover rounded-full my-4 max-w-full"
           />
         </Show>
-        <p class="text-neutral-400 mb-2">{event.meta.dates}</p>
+        <p class="text-neutral-400 mb-2">{event.meta.dates ?? "Coming Soon"}</p>
         <p>{event.meta.summary}</p>
       </a>
       <div class="px-4 py-8 justify-self-end">
@@ -78,7 +78,11 @@ const EventResults = ({
 
   const upcoming = createMemo(
     () =>
-      events()?.filter((event) => event.meta.event_start > Date.now()) ?? [],
+      events()?.filter(
+        (event) =>
+          event.meta.event_start > Date.now() ||
+          event.meta.dates === "Coming Soon",
+      ) ?? [],
   );
 
   const past = createMemo(
