@@ -10,7 +10,7 @@ import {
   type Resource,
 } from "solid-js";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 16;
 
 const getEvents = async (results: any[]) => {
   return await Promise.all(results.map((result) => result.data()));
@@ -81,7 +81,7 @@ const EventResults = ({
       events()?.filter(
         (event) =>
           event.meta.event_start > Date.now() ||
-          event.meta.event_start === "Coming Soon",
+          event.meta.dates === "Coming Soon",
       ) ?? [],
   );
 

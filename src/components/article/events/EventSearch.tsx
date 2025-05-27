@@ -70,7 +70,7 @@ const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
     window.history.pushState(
       {},
       "",
-      window.location.origin + window.location.pathname
+      window.location.origin + window.location.pathname,
     );
   };
 
@@ -104,7 +104,7 @@ const EventSearch = ({ isSsr }: { isSsr: boolean }) => {
                 query: value ?? null,
               });
             }}
-            class="w-full h-full px-3 w-full h-full px-1 bg-background outline-none"
+            class="w-full h-full px-1 bg-background outline-none"
           />
           <button
             class="py-2 px-2"
