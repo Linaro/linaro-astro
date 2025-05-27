@@ -84,7 +84,8 @@ const upcomingEvents = (
     ({ data }) =>
       (String(import.meta.env.IS_PREVIEW) === "true" ||
         Date.now() > new Date(data.date_published).getTime()) &&
-      new Date(data.event_start).getTime() > Date.now(),
+      (new Date(data.event_start).getTime() > Date.now() ||
+        event_start === "Coming Soon"),
   )
 )
   .sort((a, b) => dayjs(b.data.event_start).diff(a.data.event_start))
