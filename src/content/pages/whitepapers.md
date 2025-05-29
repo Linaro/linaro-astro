@@ -70,4 +70,11 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/Linaro_Forge_Shearwater_Case_Study.pdf
+          - text: Build Production-Ready, Secure Embedded and IoT Devices with CRA compliance in mind
+            image:
+              src: linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_seaskj.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/WP+-+Buile+Modern+Secure+Connected+Devices_v2.pdf
 ---
