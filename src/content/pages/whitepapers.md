@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: Build Production-Ready, Secure Embedded and IoT Devices with CRA compliance in mind
+            image:
+              src: linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_seaskj.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/WP+-+Buile+Modern+Secure+Connected+Devices_v2.pdf
           - text: Security Expertise Case Study
             image:
               src: linaro-website/graphics/airplane-seat-back-with-blank-screen_yaqoa2.jpg
@@ -70,11 +77,4 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/Linaro_Forge_Shearwater_Case_Study.pdf
-          - text: Build Production-Ready, Secure Embedded and IoT Devices with CRA compliance in mind
-            image:
-              src: linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_seaskj.png
-              alt: ""
-            button:
-              text: Read more
-              url: https://static.linaro.org/assets/WP+-+Buile+Modern+Secure+Connected+Devices_v2.pdf
 ---
