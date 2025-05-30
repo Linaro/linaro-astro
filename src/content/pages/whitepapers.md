@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: Security Case Study for next-gen consumer electronics devices
+            image:
+              src: linaro-website/graphics/chip_jzn4vq.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Linaro+Case+Study+-+Building+a+Secure+Platform+for+Next-Generation+Consumer+Electronics+Devices.pdf
           - text: Build Production-Ready, Secure Embedded and IoT Devices with CRA compliance in mind
             image:
               src: linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_seaskj.png
@@ -35,7 +42,14 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/WP+-+Buile+Modern+Secure+Connected+Devices_v2.pdf
-          - text: Security Expertise Case Study
+          - text: HPC Performance Tuning Case Study
+            image:
+              src: linaro-website/graphics/shearwater-image_tx7apl.jpg
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Linaro_Forge_Shearwater_Case_Study.pdf
+          - text: Secure Video Streaming Case Study
             image:
               src: linaro-website/graphics/airplane-seat-back-with-blank-screen_yaqoa2.jpg
               alt: ""
@@ -70,11 +84,4 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
-          - text: HPC Performance Tuning Case Study
-            image:
-              src: linaro-website/graphics/shearwater-image_tx7apl.jpg
-              alt: ""
-            button:
-              text: Read more
-              url: https://static.linaro.org/assets/Linaro_Forge_Shearwater_Case_Study.pdf
 ---
