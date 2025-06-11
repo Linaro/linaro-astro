@@ -1,0 +1,127 @@
+---
+title: Hardening U-Boot's HTTPS with CA Certificate Management
+description: >
+  This blog post documents the introduction of the 'wget cacert' command in U-Boot which adds support for CA Certificates.
+date: 2025-06-12T00:00:00.000Z
+image: linaro-website/images/blog-hero-images/circuit_ogibqv
+tags:
+  - u-boot
+  - security
+author: jerome-forissier
+related: []
+
+---
+
+# introduction
+
+U-Boot is a crucial piece of software in the embedded systems world, responsible for initializing hardware and loading operating systems. As embedded devices become increasingly connected, robust networking capabilities are essential. A common use case for network connectivity in U-Boot is downloading OS images, either for initial booting or for system updates, as described in previous blog posts ([“UEFI HTTP and HTTPS boot in U-Boot”](https://www.linaro.org/blog/ledge-blogs-uefi-http-and-https-boot-in-u-boot/),  [“Installing Fedora with UEFI HTTP boot”](https://www.linaro.org/blog/installing-fedora-with-uefi-http-boot/)). These images *must* be trusted before installation or execution to prevent the introduction of malicious software. Therefore, secure networking is paramount. Recognizing this need, U-Boot has evolved to support modern networking protocols. Initially, U-Boot relied on a custom TCP/IP stack, but to enhance compliance and simplify integration with technologies like HTTPS, support for the lightweight IP ([lwIP](https://en.wikipedia.org/wiki/LwIP)) stack was introduced in U-Boot v2025.01. This brought the `wget` command HTTPS support, but with a critical piece missing: server authentication. This blog post documents how a new command was introduced to add support for server authentication via CA Certificates.
+
+# The HTTPS gap: server authentication and the threat of Man-In-The-Middle attacks
+
+When you access a website over HTTPS, you expect a secure connection. But how do you know you're communicating with the intended server and not a malicious attacker impersonating a web server? That's where server authentication comes in. Without it, your data is vulnerable to a Man-in-the-Middle (MITM) attack, where an attacker intercepts and potentially modifies your communication. Server authentication relies on CA certificates, also known as root certificates. These certificates act as trusted authorities, verifying the identity of websites. When your device connects to a server, it checks the server's certificate against these trusted root certificates.
+
+# Implementing runtime CA certificate handling
+
+To address the lack of server authentication in U-Boot's HTTPS implementation, Linaro has contributed a solution for runtime CA certificate handling. The code was merged into U-Boot v2025.07-rc1. This involved implementing a new `wget cacert` subcommand. This subcommand allows users to load CA certificates in X509 DER format before establishing an HTTPS connection, and also to set the requirement for server authentication. It is enabled by the `WGET_CACERT` Kconfig symbol.
+
+Here is an example:
+
+```
+U-Boot> wget https://myserver.example.com/cacert.crt
+U-Boot> wget cacert $fileaddr $filesize
+U-Boot> wget cacert required
+U-Boot> wget https://www.example.com/file.bin
+```
+
+In this example:
+
+* The first `wget` command downloads the CA certificate from a specified HTTPS server. It is important to note that this initial download is not yet authenticated, as we are downloading the certificate itself.
+
+* The second `wget cacert` command registers the downloaded certificate in U-Boot's certificate store using the `$fileaddr` and `$filesize` variables, which contain the address and size of the downloaded file in memory.
+
+* The third `wget cacert required` command enforces that subsequent HTTPS connections must perform server authentication. This step ensures that all future connections verify the server's identity against the registered certificates.
+
+* The final `wget` command now performs a secure connection, with the server authentication enabled.
+
+The X509 DER format is a binary encoding of certificates, widely used in security applications. The following commits detail the implementation:
+
+* [2df965d38587](https://source.denx.de/u-boot/u-boot/-/commit/2df965d385872b2ae49a79c2cab4679a8999467f) “net: lwip: extend wget to support CA (root) certificates”
+
+* [c6862debd229](https://source.denx.de/u-boot/u-boot/-/commit/2df965d385872b2ae49a79c2cab4679a8999467f) “doc: cmd: wget: document cacert subcommand”
+
+# Embedding CA certificates to secure embedded systems at build time
+
+For many embedded systems, it's more practical to embed CA certificates directly into the U-Boot image during the build process. This eliminates the need to load certificates at runtime, simplifying deployment and enhancing security. Two Kconfig symbols enable this option: `WGET_BUILTIN_CACERT` and `WGET_BUILTIN_CACERT_PATH`.
+
+Here's a practical example using QEMU arm64:
+
+1. Download the CA certificate:
+
+```
+wget -O cacert.crt https://cacerts.digicert.com/DigiCertTLSECCP384RootG5.crt
+```
+
+2. Configure U-Boot:
+
+```
+make qemu_arm64_lwip_defconfig
+echo CONFIG_WGET_BUILTIN_CACERT=y >>.config
+echo CONFIG_WGET_BUILTIN_CACERT_PATH=cacert.crt >>.config
+make olddefconfig
+```
+
+3. Build U-Boot:
+
+```
+make -j$(nproc) CROSS_COMPILE="ccache aarch64-linux-gnu-"
+```
+
+4. Run QEMU:
+
+```
+qemu-system-aarch64 -M virt -nographic -cpu max \
+    -object rng-random,id=rng0,filename=/dev/urandom \
+    -device virtio-rng-pci,rng=rng0 -bios u-boot.bin
+```
+
+5. Inside U-Boot:
+
+```
+=> dhcp
+=> wget https://digicert-tls-ecc-p384-root-g5.chain-demos.digicert.com/
+1867 bytes transferred in 1 ms (1.8 MiB/s)
+Bytes transferred = 1867 (74b hex)
+=> wget https://www.google.com/
+Certificate verification failed
+
+HTTP client error 4
+```
+
+In this example:
+
+* We download a CA certificate from DigiCert.
+* We configure U-Boot to enable built-in CA certificates and specify the path to the downloaded certificate.
+* We build U-Boot for the QEMU arm64 platform.
+* We run QEMU and use the `wget` command to download a file from a server that uses the DigiCert root certificate.
+* Because the certificate is built-in, the HTTPS connection is successfully established.
+* We try to download the Google main page. Because the server certificate is not signed by the DigiCert certificate we have, the verification fails and the download is aborted.
+
+The following commit details the implementation : 
+
+* [12cc6531a1b2](https://source.denx.de/u-boot/u-boot/-/commit/12cc6531a1b2384e6f7d05a7245071536d77e730) “net: lwip: add support for built-in root certificates“
+
+# Security considerations and best practices: runtime vs. embedded certificates
+
+Both runtime loading and embedded certificates have their advantages. Runtime loading offers flexibility, allowing you to update certificates without rebuilding U-Boot. This is particularly useful for testing and dynamic environments. Embedded certificates provide a higher level of security by ensuring that the certificates are always present and cannot be tampered with.
+
+Even when downloading CA certificates, U-Boot provides a mechanism to verify their integrity. The hash command can be used to calculate the hash of the downloaded certificate, allowing you to compare it against a known good value. This should be a mandatory step in any production system, protecting against corrupted or malicious certificates.
+
+Runtime loading is very useful for testing, for example when a developer needs to test a new certificate authority. Embedding certificates is more typical for production systems, where security and reliability are paramount. Note that both methods may be enabled simultaneously.
+
+# Conclusion
+
+Linaro's contributions to U-Boot's HTTPS implementation significantly enhance the security of embedded systems. By enabling CA certificate management, we've made U-Boot more robust against MITM attacks. This work underscores Linaro's commitment to advancing embedded systems security and providing developers with the tools they need to build secure and reliable devices.
+
+We encourage you to explore these new features and incorporate them into your U-Boot projects. By leveraging CA certificate management, you can ensure that your embedded systems communicate securely in an increasingly connected world.
+
+The U-Boot documentation can be found at https://docs.u-boot.org/. For more detail on HTTPS and certificates support please refer to: https://docs.u-boot.org/en/latest/develop/uefi/uefi.html#uefi-http-s-boot-using-lwip and https://docs.u-boot.org/en/latest/usage/cmd/wget.html.
