@@ -12,7 +12,7 @@ related: []
 
 ---
 
-# introduction
+# Introduction
 
 U-Boot is a crucial piece of software in the embedded systems world, responsible for initializing hardware and loading operating systems. As embedded devices become increasingly connected, robust networking capabilities are essential. A common use case for network connectivity in U-Boot is downloading OS images, either for initial booting or for system updates, as described in previous blog posts ([“UEFI HTTP and HTTPS boot in U-Boot”](https://www.linaro.org/blog/ledge-blogs-uefi-http-and-https-boot-in-u-boot/),  [“Installing Fedora with UEFI HTTP boot”](https://www.linaro.org/blog/installing-fedora-with-uefi-http-boot/)). These images *must* be trusted before installation or execution to prevent the introduction of malicious software. Therefore, secure networking is paramount. Recognizing this need, U-Boot has evolved to support modern networking protocols. Initially, U-Boot relied on a custom TCP/IP stack, but to enhance compliance and simplify integration with technologies like HTTPS, support for the lightweight IP ([lwIP](https://en.wikipedia.org/wiki/LwIP)) stack was introduced in U-Boot v2025.01. This brought the `wget` command HTTPS support, but with a critical piece missing: server authentication. This blog post documents how a new command was introduced to add support for server authentication via CA Certificates.
 
