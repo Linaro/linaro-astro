@@ -1,14 +1,9 @@
 ---
-const { modal_id } = Astro.props;
+const { modal_id, formName } = Astro.props;
 ---
 
 <div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full">
-  <form
-    class="flex flex-col items-start gap-8"
-    id="insight-form"
-    action="https://linaro.us3.list-manage.com/subscribe/post?u=14baaae786342d0d405ee59c2&id=bcfa4abc8f"
-    method="post"
-  >
+  <form class="flex flex-col items-start gap-8" id="insight-form">
     <p class="text-3xl text-white my-2 font-bold">Linaro Insights Newsletter</p>
     <label for="EMAIL" class="text-white"> Email address </label>
     <input
@@ -21,7 +16,7 @@ const { modal_id } = Astro.props;
     />
     <div hidden="true">
       <input type="hidden" name="tags" value="10067453" />
-      <input type="hidden" name="formName" value="newsletter" />
+      <input type="hidden" name="formName" value={formName} />
     </div>
     <div style="position: absolute; left: -5000px;" aria-hidden="true">
       <input

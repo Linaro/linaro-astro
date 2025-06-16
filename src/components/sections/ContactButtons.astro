@@ -47,7 +47,12 @@ const { buttons, styles } = Astro.props;
             }
 
             if (props.type === "insight") {
-              return <InsightModal button_text={button_text} />;
+              return (
+                <InsightModal
+                  button_text={button_text}
+                  formName={props.formName}
+                />
+              );
             }
           }}
         </li>

@@ -6,7 +6,7 @@ import type { contactSchema } from "@/content/schemas/sections";
 
 type Props = z.infer<typeof contactSchema>;
 
-const { content, styles, form_id, description } = Astro.props;
+const { content, styles, form_id, description, formName } = Astro.props;
 
 let markdownContent;
 if (content) {
@@ -16,5 +16,9 @@ if (content) {
 
 <div class:list={["items-center gap-12", styles?.card]}>
   <article set:html={markdownContent} class:list={["text-white", styles]} />
-  <ContactForm form_id={form_id} description={description} />
+  <ContactForm
+    form_id={form_id}
+    description={description}
+    formName={formName}
+  />
 </div>

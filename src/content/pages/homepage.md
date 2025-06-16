@@ -166,4 +166,5 @@ flow:
         buttons:
           - button_text: Sign up for Linaro Insights newsletter
             type: insight
+            formName: newsletter
 ---
