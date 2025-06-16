@@ -181,6 +181,7 @@ export const contactButtonsSchema = z.object({
         title: z.string().optional(),
         icon: z.string().optional(),
         style: z.string().optional(),
+        formName: z.string().optional(),
       }),
     ]),
   ),

@@ -68,6 +68,59 @@ const { title, description, type = "website", image } = Astro.props;
         forms.forEach((form) => {
           form.addEventListener("submit", (event) => onSubmit(event, form));
         });
+
+        const newsletterForm = document.querySelector(
+          "#insight-form",
+        ) as HTMLFormElement | null;
+
+        if (newsletterForm) {
+          const mailchimpUrl =
+            "https://linaro.us3.list-manage.com/subscribe/post?u=14baaae786342d0d405ee59c2&id=bcfa4abc8f";
+
+          newsletterForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const button = newsletterForm.querySelector("#contact-submit");
+            const loader = newsletterForm.querySelector("#contact-submitting");
+            button?.classList.add("hidden");
+            loader?.classList.remove("hidden");
+            const formName =
+              (
+                newsletterForm.querySelector(
+                  "input[name='formName']",
+                ) as HTMLInputElement
+              )?.value || "unknown_form";
+
+            if (!window.dataLayer) {
+              window.dataLayer = [];
+            }
+
+            if (typeof window.dataLayer.push === "function") {
+              window.dataLayer.push({
+                formName: formName,
+                event: "form_submission",
+              });
+            }
+            const tempForm = document.createElement("form");
+            tempForm.action = mailchimpUrl;
+            tempForm.method = "POST";
+            tempForm.style.display = "none";
+
+            const inputs = newsletterForm.querySelectorAll(
+              "input, select, textarea",
+            );
+            inputs.forEach((input) => {
+              const cloned = input.cloneNode(true) as HTMLInputElement;
+              tempForm.appendChild(cloned);
+            });
+
+            document.body.appendChild(tempForm);
+            setTimeout(() => {
+              tempForm.submit();
+              loader?.classList.add("hidden");
+              button?.classList.remove("hidden");
+            }, 5000);
+          });
+        }
       }
 
       function onSubmit(e: SubmitEvent, form: HTMLFormElement) {
