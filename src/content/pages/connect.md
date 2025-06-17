@@ -82,7 +82,7 @@ flow:
               width: 400
               height: 400
           - title: Arm Edge AI Strategy
-            url: https://www.youtube.com/watch?v=HdRk0Ecgwqg&list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK&index=2&t=54s
+            url: https://www.youtube.com/playlist?list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK
             text: >
               <span class="text-2xl" style="display: inline-block; margin-bottom: 1rem;">John Thompson</span><br><span class="text-linaro-yellow">Senior Director, Software & Ecosystems</span><br>Arm
             image:
@@ -91,7 +91,7 @@ flow:
               width: 400
               height: 400
           - title: Arm Adoption in the Cloud
-            url: https://www.youtube.com/watch?v=HdRk0Ecgwqg&list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK&index=2&t=54s
+            url: https://www.youtube.com/playlist?list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK
             text: >
               <span class="text-2xl" style="display: inline-block; margin-bottom: 1rem;">Bhumik Patel</span><br><span class="text-linaro-yellow">Director Cloud Software Ecosystem</span><br>Arm
             image:
