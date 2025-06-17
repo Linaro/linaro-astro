@@ -68,6 +68,7 @@ export const imageCardsSchema = z.object({
       card_title: z.string().optional(),
       image: z.string().optional(),
       text: z.string().optional(),
+      textContainer: z.string().optional(),
     })
     .optional(),
   cards: z.array(
