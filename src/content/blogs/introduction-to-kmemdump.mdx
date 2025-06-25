@@ -1,0 +1,83 @@
+---
+title: Introduction to Kmemdump
+description: |
+  A smarter way to Capture Crash Data on Embedded Linux Devices
+date: 2025-06-18T00:00:00.000Z
+image: linaro-website/images/blog-hero-images/embedded_grey_uoo2mb
+tags:
+  - linux-kernel
+  - iot-embedded
+author: eugen-hristev
+related: []
+
+---
+
+# How Linaro Started Kmemdump
+
+Debugging crash issues remains a major challenge especially when storage is limited and traditional tools fall short. To tackle this, a new upstream Linux kernel feature named Kmemdump, is emerging as a flexible and hardware-agnostic alternative.
+
+The story begins some time ago when Qualcomm engineers have been trying to get a new feature into the Linux Kernel called Minidump. The purpose of this feature was to allow embedded devices to select snippets of memory to dump in the case of crash, instead of dumping the whole RAM. 
+
+The main constraint of this feature is dump size. 
+
+Embedded devices have limited storage, connection speed, but do have a large amount of memory that is normally dumped.
+
+However, Minidump did not move much forward due to being too Qualcomm specific. While efficient in concept, Minidump was tightly coupled to Qualcomm hardware and struggled to gain traction in the upstream Linux Kernel due to its lack of generality.
+
+So earlier this year the Minidump idea was evolved  into a more generic feature, this time named Kmemdump.
+
+With Kmemdump, Qualcomm Minidump support becomes a backend for a more generic feature of the kernel. 
+
+# Why Kmemdump
+
+Basically, Kmemdump is a generic mechanism that allows the kernel to mark specific memory regions for potential dumping. It doesn’t perform the dump itself, instead, it maintains an internal list of the marked regions and hands that list off to a backend. The actual dumping of memory is then handled by the backend, which could be firmware or specialized hardware, depending on the system implementation. 
+
+Kmemdump being focused on specific memory regions, drastically reduces dump size and resource requirements:
+
+* It does not rely on panic handlers or a working kernel than can dump the debug information 
+
+* It works independently on traditional tools like Pstore, kdump and other mechanisms that instead can do the same. For example Pstore relies on persistent storage, a dedicated RAM area or flash, which has the disadvantage of having the memory reserved all the time, or another specific non volatile memory. Some devices cannot keep the RAM contents on reboot so ramoops does not work. Some devices do not allow kexec to run another kernel to debug the crashed one.
+
+* It enables firmware-based backends to handle the actual dump, making it viable for a possible wide range of devices
+
+# Why does it matter for Embedded Systems
+
+Embedded devices often lack the luxury of persistent storage or the ability to run a secondary kernel. Kmemdump steps in as a lightweight and versatile solution for platforms where one or more of the following constraints can be present:
+
+* Reserved memory is not feasible
+
+* RAM contents are lost on reboot
+
+* Non-volatile storage is constrained
+
+By enabling developers to register memory regions while the system is still operational, Kmemdump ensures that critical debug data can be captured post-crash, even if the kernel is no longer functional.
+
+# How does Kmemdump work
+
+Kmemdump can:
+
+* Allow marking of memory regions via the kernel API
+
+* Register them anytime while the system is up and running
+
+* Integrate with backend drivers
+
+* Create a core image, similar to `/proc/vmcore`, with only the registered regions included. This can be loaded into the crash `tool/gdb` and analyzed.
+
+All of this happens transparently and developers using Kmemdump don’t need to take any special action once it’s set up.
+
+# How to contribute
+
+Kmemdump is still evolving and welcomes broader industry feedback.
+
+If you are working on a platform that could benefit from the Kmemdump feature, if it matches the requirements of another type of SoC or device, or Kmemdump can be modified to address more requirements from the industry, the kernel mailing list is open to discussions and suggestions, and everyone is welcome to contribute with ideas, code, or testing.
+
+Please follow up the RFC posting with your feedback and review, it is very much appreciated (RFC patches on Kmemdump available [here](https://lore.kernel.org/lkml/20250422113156.575971-1-eugen.hristev@linaro.org/)).
+
+# More information
+
+Linaro Connect 2025 Lisbon presentation video available [here](https://www.youtube.com/watch?v=r4gII7MX9zQ&list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK&index=13).
+
+[phoronix](https://www.phoronix.com/news/kmemdump) also published an article on kmemdump.
+
+Minidump last version sent on the mailing list is available [here](https://lore.kernel.org/lkml/20240131110837.14218-1-quic_mojha@quicinc.com/).
