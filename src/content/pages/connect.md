@@ -260,11 +260,16 @@ flow:
           - title: See what our attendees think of Connect
             icon: playButton
             url: https://www.youtube.com/shorts/16oRMCRV62c
-      - component: buttons
+      - component: contact_buttons
+        styles:
+          card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center
+          container: justify-around gap-x-5 gap-y-20 mt-16
+          button: mt-8 pt-16
+          card_title: text-[2rem] text-center
         buttons:
-          - text: Stay Connected
-            url: /news/linaro-connect-2025-celebrating-16-years-of-arm-innovation-and-charting-the-future/
-            style: linaro-gradient-button
+          - button_text: Stay Connected
+            type: insight
+            formName: newsletter
   - row: container_row
     animation: none
     no_border: true
