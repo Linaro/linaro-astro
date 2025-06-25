@@ -3,22 +3,57 @@ import type { moreInfoSchema } from "@/content/schemas/sections";
 import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
 type Props = z.infer<typeof moreInfoSchema>;
-const { more_info, styles } = Astro.props;
+const { more_info, styles, innerTitle, subtitle } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+<>
   {
-    more_info.map(({ icon, title, url }) => (
-      <li class:list={[styles?.card]}>
-        <a
-          href={url}
-          class="no-underline max-w-full px-2 hover:text-linaro-yellow cursor-pointer"
-          target={url.startsWith("https") ? "_blank" : "_self"}
-        >
-          {icon && <Icon name={icon} size={100} class="my-0 mx-auto" />}
-          <h3 class="text-4xl my-5 text-inherit">{title}</h3>
-        </a>
-      </li>
-    ))
+    innerTitle ? (
+      <div
+        class:list={[
+          "flex md:flex-row flex-col gap-12 px-8",
+          styles?.container,
+        ]}
+      >
+        <div class="w-full lg:w-1/2 flex flex-col justify-center">
+          <h1 class="text-xl md:text-2xl lg:text-5xl text-linaro-yellow mb-0">
+            {innerTitle}
+          </h1>
+          <h2 class="text-sm md:text-lg lg:text-3xl mt-4 mb-0">{subtitle}</h2>
+        </div>
+
+        <ul class="w-full lg:w-1/2 flex gap-6 list-none p-0">
+          {more_info.map(({ icon, title, url }) => (
+            <li class:list={[styles?.card, "w-full p-2"]}>
+              <a
+                href={url}
+                class="no-underline block hover:text-linaro-yellow cursor-pointer w-full"
+                target={url.startsWith("https") ? "_blank" : "_self"}
+              >
+                {icon && <Icon name={icon} size={50} class="mx-auto" />}
+                <h3 class="text-sm md:text-lg my-5 text-center text-inherit">
+                  {title}
+                </h3>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <ul class:list={["list-none flex flex-wrap p-0 ", styles?.container]}>
+        {more_info.map(({ icon, title, url }) => (
+          <li class:list={[styles?.card]}>
+            <a
+              href={url}
+              class="no-underline max-w-full px-2 hover:text-linaro-yellow cursor-pointer"
+              target={url.startsWith("https") ? "_blank" : "_self"}
+            >
+              {icon && <Icon name={icon} size={100} class="my-0 mx-auto" />}
+              <h3 class="text-4xl my-5 text-inherit">{title}</h3>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
   }
-</ul>
+</>

@@ -35,25 +35,33 @@ if (background_image) {
   <div
     class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
   >
-    <div class="flex items-center">
-      {
-        title ? (
-          <>
-            {!no_border && <div class="fade-border" />}
+    {
+      title &&
+        (no_border ? (
+          <div class="w-full text-center">
             <h2
               class:list={[
-                "text-white relative whitespace-prewrap  my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                "text-white relative whitespace-prewrap my-0 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
                 styles?.title ?? "md:min-w-[25ch]",
               ]}
               set:html={titleMarkdown}
             />
-            {!no_border && <div class="fade-border" />}
-          </>
+          </div>
         ) : (
-          !no_border && <div class="fade-border" />
-        )
-      }
-    </div>
+          <div class="flex items-center justify-center w-full">
+            <div class="fade-border" />
+            <h2
+              class:list={[
+                "text-white relative whitespace-prewrap my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                styles?.title ?? "md:min-w-[25ch]",
+              ]}
+              set:html={titleMarkdown}
+            />
+            <div class="fade-border" />
+          </div>
+        ))
+    }
+
     <div
       class:list={[
         "animate-delay-100",

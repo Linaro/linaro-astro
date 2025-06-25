@@ -4,25 +4,64 @@ import type { z } from "astro/zod";
 
 type Props = z.infer<typeof videosSchema>;
 const { videos, styles } = Astro.props;
+
+function getYouTubeThumbnail(url: string): string {
+  const match = url.match(
+    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/,
+  );
+  const id = match?.[1];
+  return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
+}
 ---
 
 <ul
   class:list={[
-    "flex flex-wrap justify-center not-prose gap-12  px-4 py-12 rounded-2xl",
+    "flex justify-center not-prose px-4 py-12 rounded-2xl",
     styles?.container,
   ]}
 >
   {
-    videos.map((video) => (
-      <li class:list={[styles?.card]}>
-        <video
-          src={video.src}
-          poster={video.thumbnail}
-          onmouseover="this.setAttribute('controls','controls')"
-          onmouseout="this.removeAttribute('controls')"
-        />
-        <p class="text-2xl mt-4">{video.title}</p>
-      </li>
-    ))
+    videos.map((video) => {
+      const isYouTube =
+        video.src.includes("youtube.com") || video.src.includes("youtu.be");
+      const thumbnail = video.thumbnail || getYouTubeThumbnail(video.src);
+
+      return (
+        <li class:list={[styles?.card]} class="w-full max-w-md">
+          {isYouTube ? (
+            <a
+              href={video.src}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block w-full aspect-video rounded-xl overflow-hidden relative group"
+            >
+              <img
+                src={thumbnail}
+                alt={video.title ?? "YouTube thumbnail"}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition flex items-center justify-center text-white text-4xl font-bold">
+                ▶
+              </div>
+            </a>
+          ) : (
+            <video
+              src={video.src}
+              poster={video.thumbnail}
+              onmouseover="this.setAttribute('controls','controls')"
+              onmouseout="this.removeAttribute('controls')"
+              class:list={[
+                styles?.video,
+                "rounded-xl w-full aspect-video object-cover",
+              ]}
+              preload="none"
+            />
+          )}
+
+          {video.title && <p class="text-2xl mt-4">{video.title}</p>}
+        </li>
+      );
+    })
   }
 </ul>

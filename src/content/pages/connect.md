@@ -65,7 +65,7 @@ flow:
       - component: image_cards
         button_cards: true
         styles:
-          container: not-prose grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-6 gap-4 mx-auto lg:mx-56 justify-center
+          container: not-prose grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-6 gap-4 mx-auto justify-center
           card: grid grid-cols-[1fr_2fr] border rounded-2xl border-linaro-yellow bg-background w-full p-4 gap-4 relative
           image: object-cover
           textContainer: flex flex-col h-full justify-between
@@ -204,6 +204,65 @@ flow:
       - component: buttons
         buttons:
           - text: Read our 2025 Announcement
+            url: /news/linaro-connect-2025-celebrating-16-years-of-arm-innovation-and-charting-the-future/
+            style: linaro-gradient-button
+  - row: container_row
+    animation: none
+    styles:
+      inner: mt-8 py-8
+    no_border: true
+    sections:
+      - component: faded_line
+  - row: container_row
+    animation: none
+    no_border: true
+    styles:
+      outer: purple-gradient-container-no-padding py-0
+      inner: py-4 mx-auto
+    sections:
+      - component: text
+        style: text-xl md:text-4xl lg:text-6xl text-linaro-yellow text-center
+        text_content: What our customers say about Linaro
+      - component: videos
+        styles:
+          container: flex md:flex-row flex-col gap-4
+          card: max-w-[40ch] border-[0.5px] border-linaro-yellow rounded-xl p-4
+          video: rounded-lg
+        videos:
+          - src: https://www.youtube.com/watch?v=cgYSoFcuWYM
+          - src: https://www.youtube.com/watch?v=CspjFv66of8
+          - src: https://www.youtube.com/watch?v=0z6ZPYGPnQs
+          - src: https://www.youtube.com/watch?v=RfvwhTDs_ak
+  - row: container_row
+    animation: none
+    styles:
+      inner: mt-8 py-8
+    no_border: true
+    sections:
+      - component: faded_line
+  - row: container_row
+    no_border: true
+    animation: none
+    styles:
+      outer: bg-transparent z-0
+      inner: pt-16 mx-auto
+    sections:
+      - component: more_info
+        styles:
+          container: justify-around border-2 border-grey rounded-3xl
+          card: text-center border-[0.5px] border-linaro-yellow rounded-xl text-md
+        innerTitle: What is Linaro Connect?
+        subtitle: Linaro Connect is where Arm excellence gathers.
+        more_info:
+          - title: See a quick overview of the event
+            icon: playButton
+            url: https://www.youtube.com/shorts/P4OrEeAdOLw
+          - title: See what our attendees think of Connect
+            icon: playButton
+            url: https://www.youtube.com/shorts/16oRMCRV62c
+      - component: buttons
+        buttons:
+          - text: Stay Connected
             url: /news/linaro-connect-2025-celebrating-16-years-of-arm-innovation-and-charting-the-future/
             style: linaro-gradient-button
   - row: container_row

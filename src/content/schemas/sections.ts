@@ -245,6 +245,8 @@ export const twoColumnSchema = z.object({
 
 export const moreInfoSchema = z.object({
   component: component("more_info"),
+  innerTitle: z.string().optional(),
+  subtitle: z.string().optional(),
   styles: z
     .object({
       card: z.string().optional(),
@@ -294,12 +296,13 @@ export const videosSchema = z.object({
     .object({
       card: z.string().optional(),
       container: z.string().optional(),
+      video: z.string().optional(),
     })
     .optional(),
   videos: z.array(
     z.object({
       src: z.string(),
-      title: z.string(),
+      title: z.string().optional(),
       thumbnail: z.string().optional(),
     }),
   ),
