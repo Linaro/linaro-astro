@@ -8,42 +8,60 @@ type Props = z.infer<typeof imageCardsSchema>;
 const { cards, styles, button_cards } = Astro.props;
 ---
 
-<ul class:list={["list-none   p-0 ", styles?.container]}>
+<ul class:list={["list-none p-0", styles?.container]}>
   {
     cards.map(async ({ image, title, text, button, style, url }) => {
       const content = text ? await marked.parse(text) : null;
       return (
         <li class:list={[styles?.card, style]}>
           {button_cards ? (
-            <a href={url} class="no-underline">
+            <>
               {image && (
-                <CloudinaryImg
-                  src={image.src}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  class:list={[styles?.image]}
-                />
+                <div class="aspect-[3/4] flex h-full w-full rounded-xl overflow-hidden">
+                  <CloudinaryImg
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    class:list={[styles?.image]}
+                  />
+                </div>
               )}
-              <h3 class:list={[styles?.card_title]}>{title}</h3>
-              {text && (
-                <div
-                  class:list={styles?.text ? [styles?.text] : ["text-xl z-20"]}
-                  set:html={content}
-                />
-              )}
+              <div class:list={styles?.textContainer}>
+                <h3 class:list={[styles?.card_title]}>{title}</h3>
+                {text && (
+                  <div
+                    class:list={
+                      styles?.text ? [styles?.text] : ["text-xl z-20"]
+                    }
+                    set:html={content}
+                  />
+                )}
+              </div>
               {button && (
                 <a
                   href={button.url}
-                  class="no-underline"
+                  class="no-underline z-30 relative"
                   target={button.url.startsWith("https") ? "_blank" : "_self"}
                 >
-                  <div class:list={[`linaro-gradient-button`, styles?.button]}>
+                  <div
+                    class:list={[
+                      "linaro-gradient-button justify-self-start items-start",
+                      styles?.button,
+                    ]}
+                  >
                     {button.text}
                   </div>
                 </a>
               )}
-            </a>
+              <a
+                href={url}
+                class="absolute inset-0 z-10 block pointer-events-auto"
+                aria-label={`Watch recording of ${title}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            </>
           ) : (
             <>
               {image && (
