@@ -120,10 +120,13 @@ flow:
           - title: Windows on Arm Keynote
             url: https://www.youtube.com/watch?v=dbMj54_eD24&list=PLKZSArYQptsODycGiE0XZdVovzAwYNwtK&index=106
             text: >
+              <div class="columns-2">
               <span class="text-2xl" style="display: inline-block; margin-bottom: 1rem;">Pedro Teixeira</span><br><span class="text-linaro-yellow">Partner Software Engineer</span><br>Microsoft
+              <span class="text-2xl" style="display: inline-block; margin-bottom: 1rem;">Marcus Perryman</span><br><span class="text-linaro-yellow">Principle Software Engineer</span><br>Microsoft
+              </div>
             image:
-              src: linaro-website/images/events/pedro_profile_pic_thcknl.jpg
-              alt: Pedro Teixeira
+              src: linaro-website/images/events/pedro_and_marcus_profile_uccalz.png
+              alt: Pedro Teixeira and Marcus Perryman
               width: 400
               height: 400
           - title: openEuler Ignite Intelligence Everywhere
