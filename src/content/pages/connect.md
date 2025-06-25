@@ -7,7 +7,7 @@ connectHero:
   background: https://static.linaro.org/videos/Connect+25+banner.mp4
   inner_image: linaro-website/graphics/connect-logo_u9lscd.svg
   description: >
-    <span class="text-linaro-yellow text-7xl" style="display: inline-block; margin-bottom: 1.5rem;">Thank You!</span><br>Thanks for attending Connect 2025 in Lisbon, it was<br>great to see you!
+    <span class="text-linaro-yellow text-7xl" style="display: inline-block; margin-bottom: 1.5rem;">Thank You!</span><br>Thanks for attending Linaro Connect 2025 in Lisbon, it was<br>great to see you!
 flow:
   - row: container_row
     animation: none
@@ -19,32 +19,29 @@ flow:
         text_content: Thanks again to our great Sponsors
         style: bg-linaro-gradient text-transparent bg-clip-text h-auto text-xl lg:text-4xl text-center mb-4 p-4
       - component: two_column
-        container_styles: w-full justify-center gap-16 items-center
+        container_styles: w-full justify-center gap-16 items-center h-[100px]
         columns:
           - type: image
             image:
               src: linaro-website/logos/arm.svg
               alt: |
                 arm logo
-              height: 200
-              width: 200
-            styles: not-prose
+              width: 400
+            styles: not-prose h-full w-auto object-contain
           - type: image
             image:
-              src: linaro-website/logos/qualcomm.svg
+              src: linaro-website/logos/qualcomm_rti8c6.svg
               alt: |
                 qualcomm logo
-              height: 200
-              width: 400
-            styles: not-prose
+              width: 450
+            styles: not-prose h-full w-auto object-contain
           - type: image
             image:
               src: linaro-website/logos/cix.svg
               alt: |
                 cix logo
-              height: 200
               width: 400
-            styles: not-prose
+            styles: not-prose h-full w-auto object-contain
   - row: container_row
     animation: none
     styles:
