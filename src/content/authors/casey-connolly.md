@@ -1,6 +1,6 @@
 ---
-name: Caleb Connolly
-first_name: Caleb
+name: Casey Connolly
+first_name: Casey
 last_name: Connolly
 image: linaro-website/images/author/avatar-placeholder
 ---
