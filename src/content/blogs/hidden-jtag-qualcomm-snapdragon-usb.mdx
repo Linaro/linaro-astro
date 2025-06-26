@@ -31,8 +31,10 @@ The code has finally dropped ([here’s the link again](https://github.com/quic/
 
 Let’s try to use it…
 
-**`src/swd_api.cpp:408:64:`** `error: cast from 'std::nullptr_t' to 'uint32_t' {aka 'unsigned int'} loses precision [-fpermissive]`                                                                            
- `408 |         queue_swd_packet_special(swd_handle_p, SWD_CMD_STATUS, (uint32_t)NULL, &swd_status);`    
+```
+src/swd_api.cpp:408:64: error: cast from 'std::nullptr_t' to 'uint32_t' {aka 'unsigned int'} loses precision [-fpermissive]
+408 |         queue_swd_packet_special(swd_handle_p, SWD_CMD_STATUS, (uint32_t)NULL, &swd_status);`   
+```
 
 Oh no.
 
@@ -46,8 +48,10 @@ With everything building, the necessary fixes (and a shiny new `.gitignore`) hav
 
 Now we have EUD building, we can try it with OpenOCD. It looks like they based their changes on the latest OpenOCD release 0.12.0, very nice. But wait, this release came out in 2023, and OpenOCD is still in active development… So there’s 2 years worth of changes, and
 
-`; git log --oneline v0.12.0 up/master | wc -l`                                                  
-`10808`
+```
+; git log --oneline v0.12.0 up/master | wc -l
+10808
+```
 
 Almost 11k commits\! It would really be nice to get this upstream eventually, so maybe let’s just rebase it real quick, we need to point it at the cleaned up EUD fork anyways.
 
@@ -55,26 +59,28 @@ Among Qualcomm's changes to support EUD, there are also patches adding Hexagon d
 
 So here we are, a fun day of fixing up and rebasing some codebases, and a very tasty reward\!
 
-`; ./src/openocd -f tcl/interface/eud.cfg -f tcl/target/qualcomm/qcom.cfg`                       
-`Open On-Chip Debugger 0.12.0+dev-01935-g234bdc765544 (2025-04-02-15:20)`                        
-`Licensed under GNU GPL v2`                                                                      
-`For bug reports, read`                                                                          
-       `http://openocd.org/doc/doxygen/bugs.html`                                               
-`force hard breakpoints`                                                                         
-`Info : Listening on port 6666 for tcl connections`                                              
-`Info : Listening on port 4444 for telnet connections`                                           
-`Info : Using EUD 2.1.7`                                                                         
-`Error: Translation from adapter speed to khz not implemented`                                   
-`Info : adapter-specific clock speed value 6`                                                    
-`Info : SWD DPIDR 0x5ba02477`                                                                    
-`Info : QCOM.cpu0: hardware has 6 breakpoints, 4 watchpoints`                                    
-`Info : [QCOM.cpu0] Examination succeed`                                                         
-`Info : [QCOM.cpu0] starting gdb server on 3333`                                                 
-`Info : Listening on port 3333 for gdb connections`                                              
-`Info : QCOM.cpu0 cluster 0 core 0 multi core`                                                   
-`QCOM.cpu0 halted in AArch64 state due to debug-request, current mode: EL0T`                     
-`cpsr: 0x00000000 pc: 0xffff95cf9a4c`                                                            
-`MMU: enabled, D-Cache: enabled, I-Cache: enabled`
+```
+; ./src/openocd -f tcl/interface/eud.cfg -f tcl/target/qualcomm/qcom.cfg
+Open On-Chip Debugger 0.12.0+dev-01935-g234bdc765544 (2025-04-02-15:20)
+Licensed under GNU GPL v2
+For bug reports, read
+      http://openocd.org/doc/doxygen/bugs.html
+force hard breakpoints
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : Using EUD 2.1.7
+Error: Translation from adapter speed to khz not implemented
+Info : adapter-specific clock speed value 6
+Info : SWD DPIDR 0x5ba02477
+Info : QCOM.cpu0: hardware has 6 breakpoints, 4 watchpoints
+Info : [QCOM.cpu0] Examination succeed
+Info : [QCOM.cpu0] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : QCOM.cpu0 cluster 0 core 0 multi core
+QCOM.cpu0 halted in AArch64 state due to debug-request, current mode: EL0T
+cpsr: 0x00000000 pc: 0xffff95cf9a4c
+MMU: enabled, D-Cache: enabled, I-Cache: enabled
+```
 
 You can find the rebased OpenOCD patches [over on the linux-msm GitHub](https://github.com/linux-msm/openocd) along with some quickstart instructions in the README. So far this has been tested on the Snapdragon 845, it should work similarly for the 855 and 865 where we can get away with just poking the enable register and then using Linux or U-Boot to start a USB gadget. Newer SoCs however will probably require additional changes [like these for SM8450](https://lore.kernel.org/all/20240730222439.3469-1-quic_eserrao@quicinc.com/). Let’s hope these old patch series get refreshed now that the tooling side of the story is in better shape\!
 
