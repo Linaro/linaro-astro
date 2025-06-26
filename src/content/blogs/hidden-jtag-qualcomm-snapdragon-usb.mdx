@@ -32,8 +32,10 @@ The code has finally dropped ([here’s the link again](https://github.com/quic/
 Let’s try to use it…
 
 ```
-src/swd_api.cpp:408:64: error: cast from 'std::nullptr_t' to 'uint32_t' {aka 'unsigned int'} loses precision [-fpermissive]
-408 |         queue_swd_packet_special(swd_handle_p, SWD_CMD_STATUS, (uint32_t)NULL, &swd_status);`   
+src/swd_api.cpp:408:64: error: cast from 'std::nullptr_t' to 'uint32_t' {aka 'unsigned
+int'} loses precision [-fpermissive]
+ 408 |         queue_swd_packet_special(swd_handle_p, SWD_CMD_STATUS, (uint32_t)NULL,
+&swd_status);`   
 ```
 
 Oh no.
