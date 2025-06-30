@@ -13,12 +13,13 @@ hero:
     text_container: max-w-[40rem]
     background: bg-right-top
     description: text-md sm:text-lg
+    main_container: h-[600px]
 
 flow:
   - row: container_row
     title: White Papers
     styles:
-      outer: purple-gradient-container
+      outer: purple-gradient-container-no-padding
     sections:
       - component: image_cards
         styles:
