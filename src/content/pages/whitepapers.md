@@ -17,7 +17,6 @@ hero:
 
 flow:
   - row: container_row
-    title: White Papers
     animation: none
     styles:
       outer: purple-gradient-container-no-padding
@@ -30,6 +29,20 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: "HPC Case Study: Developing code for weather forecasting"
+            image:
+              src: linaro-website/graphics/1d1c7394-b36c-4d04-9f73-9567f590adbc_u9sujl.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Met+Office+Case+Study+-+Linaro+Forge.pdf
+          - text: "HPC Case Study: Advancing computational cardiology research"
+            image:
+              src: linaro-website/graphics/University_of_Graz_thumbnail_ddh4rd.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/University+of+Graz+Case+Study+-+Linaro+Forge.pdf
           - text: Security Case Study for next-gen consumer electronics devices
             image:
               src: linaro-website/graphics/chip_jzn4vq.png
