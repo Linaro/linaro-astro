@@ -184,7 +184,15 @@ const { title, description, type = "website", image } = Astro.props;
             feedback!.classList.remove("hidden");
 
             if (formName === "webinar_contact") {
-              fetch("/api/webinar-data")
+              console.log(form, formName);
+              const webinarDataId =
+                (
+                  form.querySelector(
+                    "input[name='webinarDataId']",
+                  ) as HTMLInputElement
+                )?.value || "unknown_webinar";
+              console.log("Webinar Data ID:", webinarDataId);
+              fetch(`/api/webinar-data?webinarDataId=${webinarDataId}`)
                 .then((res) => {
                   if (!res.ok) throw new Error("Failed to load webinar data");
                   return res.json();

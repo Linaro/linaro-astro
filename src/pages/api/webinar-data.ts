@@ -1,8 +1,25 @@
-export async function GET() {
+const webinar_credentials: Record<string, string> = {
+  onelab_scaling:
+    "https://static.linaro.org/webinar_credentials/scaling-interoperability-testing-with-onelab-webinar-credentials.json",
+  linux_snapdragon:
+    "https://static.linaro.org/webinar_credentials/inside-linux-on-snapdragon-webinar-credentials.json",
+};
+export async function GET(context: { url: URL }) {
+  const id = context.url.searchParams.get("webinarDataId");
+  console.log("webinarDataId:", id);
+  console.log("url:", context.url);
+  const targetUrl = id
+    ? webinar_credentials[id as keyof typeof webinar_credentials]
+    : undefined;
+
+  if (!targetUrl) {
+    return new Response(JSON.stringify({ error: "Not found" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
   try {
-    const response = await fetch(
-      "https://static.linaro.org/webinar_credentials/scaling-interoperability-testing-with-onelab-webinar-credentials.json",
-    );
+    const response = await fetch(targetUrl);
 
     if (!response.ok) {
       return new Response(

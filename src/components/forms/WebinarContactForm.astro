@@ -1,5 +1,5 @@
 ---
-const { form_id, formName, description, modal_id } = Astro.props;
+const { form_id, formName, description, modal_id, webinarDataId } = Astro.props;
 
 const inputFields = [
   {
@@ -12,6 +12,15 @@ const inputFields = [
   { name: "customfield_13368", label: "Company Name", type: "text" },
   { name: "customfield_13171", label: "Country", type: "text" },
 ];
+
+console.log(
+  "Webinar Contact Form Props:",
+  form_id,
+  formName,
+  description,
+  modal_id,
+  webinarDataId,
+);
 ---
 
 <div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full">
@@ -28,6 +37,7 @@ const inputFields = [
     }
     <input type="hidden" name="form_id" value={form_id} />
     <input type="hidden" name="formName" value={formName} />
+    <input type="hidden" name="webinarDataId" value={webinarDataId} />
     {
       inputFields.map(({ name, label, type }) => (
         <>
