@@ -132,6 +132,7 @@ const events = defineCollection({
             buttonStyles: z.string(),
           })
           .optional(),
+        webinarDataId: z.string(),
       })
       .optional(),
   }),

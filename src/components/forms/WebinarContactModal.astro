@@ -1,10 +1,15 @@
 ---
 import WebinarContactForm from "./WebinarContactForm.astro";
 
-const { modal_id, form_id, formName, button_text, description, styles } =
-  Astro.props;
-
-console.log(modal_id, form_id, description);
+const {
+  modal_id,
+  form_id,
+  formName,
+  button_text,
+  description,
+  styles,
+  webinarDataId,
+} = Astro.props;
 ---
 
 <style lang="scss">
@@ -36,6 +41,7 @@ console.log(modal_id, form_id, description);
         description={description}
         modal_id={modal_id}
         formName={formName}
+        webinarDataId={webinarDataId}
       />
     </div>
   </dialog>
