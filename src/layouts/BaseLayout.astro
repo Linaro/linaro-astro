@@ -192,7 +192,7 @@ const { title, description, type = "website", image } = Astro.props;
                   ) as HTMLInputElement
                 )?.value || "unknown_webinar";
               console.log("Webinar Data ID:", webinarDataId);
-              fetch(`/api/webinar-data?webinarDataId=${webinarDataId}`)
+              fetch(`/api/webinar-data/${webinarDataId}`)
                 .then((res) => {
                   if (!res.ok) throw new Error("Failed to load webinar data");
                   return res.json();
