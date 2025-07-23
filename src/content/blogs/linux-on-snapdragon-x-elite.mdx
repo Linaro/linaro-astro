@@ -1,0 +1,97 @@
+---
+title: "Linux on Snapdragon X Elite: Linaro and Tuxedo Pave the Way for ARM64 Laptops"
+description: >
+  Linaro Connect 2025 showcases progress in bringing Linux on Snapdragon-Powered Devices
+date: 2025-07-23T08:00:00.000Z
+image: linaro-website/images/blog/4d2dae06-d294-4d4b-aeb2-56bc4f76d94a_vudrqm.jpg
+tags:
+  - qualcomm
+  - open-source
+  - linux-kernel
+author: ettore-chimenti
+related: []
+---
+
+At Linaro Connect 2025 Linaro, thanks to its work within the Qualcomm ecosystem, and TUXEDO Computers, showcased an off-the-shelf prototype ARM64 Linux laptop using the Snapdragon X Elite SoC, demonstrating progress in enabling Linux on Snapdragon devices to meet the increasing demand for ARM computing.
+
+But wait! This is just the tip of the iceberg of a long journey!
+
+## Advancements in Linux Support for Snapdragon X Elite:
+
+Over the past year, substantial progress has been made in integrating Linux support for Snapdragon X Elite laptops.
+
+Qualcomm and many laptop vendors worked together to bring to market a new family of Snapdragon-powered personal computers. This new processor family ticks all the boxes for powerful and productive machines, and the collaboration with Microsoft brought the support for Windows on Arm on these devices as the main operating system (which Linaro has [contributed to as well](https://www.linaro.org/projects/windows-on-arm/)).
+
+Unfortunately, like Apple computers, there is no native out-of-the-box Linux support.
+
+The effort from Qualcomm and Linaro has been crucial to bring a functional Linux to the new family of ARM64-powered laptops. <strong>The engineering experts from Qualcomm, Linaro and the kernel community have made a stable Linux experience possible across many Qualcomm processors, including the newer Snapdragon X Elite.</strong>
+
+But we are still missing pre-installed Linux laptops. In the x86 processor-based laptop market, many vendors now offer Linux options.
+
+## State of the art:
+
+Where are we now with the Linux support on these Snapdragon laptops?
+
+A year after the processor announcement, the current Linux Kernel 6.15 already supports many commercial laptops:
+
+- Lenovo Yoga 7x
+- Lenovo ThinkPad T14s Gen 6
+- Dell XPS 13
+- Asus Vivobook S15
+- HP Omnibook x14
+- Microsoft Surface 13/15
+
+The enablement wouldn’t have been possible without the collaboration between Linaro, Qualcomm, the community, and the laptop vendors.
+
+During the last few years, Linaro engineers have contributed to many improvements in terms of functionalities and use cases, including:
+
+- GPU and 2D/3D acceleration
+- External display output (USB-C DP altmode)
+- USB enablement
+- Audio support
+- Software camera support
+- Thermal management
+- Wi-Fi/Bluetooth/Modem
+- Suspend/resume
+
+[Contact Us](https://www.linaro.org/contact) to know more.
+
+Currently, the Linux experience on ARM64 laptops lags behind Windows on the same hardware and Linux on x86 laptops. Linaro's goal is to enhance the out-of-the-box experience, reliability, and overall user experience on Qualcomm-powered laptops running popular Linux distributions, such as Debian and Fedora, by addressing fundamental issues.
+
+[Watch the Linux ARM64 Compute Laptops BoF discussion at Linaro Connect 2025](https://www.youtube.com/watch?v=2JOsQToPt00&t=11s)
+
+Thanks to the changes available in the kernel, Ubuntu community has released an installable Concept Distro for Ubuntu 24.10 and now Canonical is adding ARM64 Laptops [support for Ubuntu 25.04 distro](https://discourse.ubuntu.com/t/faq-ubuntu-25-04-on-snapdragon-x-elite/61016) and also [Fedora is working on it](https://discussion.fedoraproject.org/t/snapdragon-x-elite-fedora-42-system-bring-up-and-looking-for-collaborators-or-sigs/153631/).
+
+In other words, the development progress is going in the right direction, distro support is on its way and many people are starting to drive these devices with Linux daily.
+
+## TUXEDO Computers’ Commitment to Linux on ARM:
+
+The integration of Linux on Qualcomm laptops signifies more than just a technical milestone. It has the potential to create a positive impact on the global technology ecosystem and the wider market.
+
+This is what the folks at <strong>TUXEDO Computers</strong> are putting their bets on, a full-fledged laptop with one of the latest and innovative ARM64 processors with Linux. The promise and the commitment from TUXEDO to release a Qualcomm Laptop with pre-installed Linux is a living fact that this operating system is mature enough for desktop use on these devices.
+
+Tuxedo directly contacted us for help for technical support to bring up the missing bits on the device, and they sent us two prototypes to develop on. Collaboration between experts from both companies successfully enabled Linux installation and the proper functioning of many features on this device.
+
+The unique nature of this case study and its growing interest create new opportunities for developers, businesses, and consumers who require Linux in their Snapdragon X Series family products, paving the way for increased choice and innovation in the ARM64-based laptop space and beyond.
+
+_"Many customers are eagerly awaiting an alternative to x86 notebooks, and the new Snapdragon architecture makes this possible for the first time with Linux, offering comparable performance alongside reduced energy consumption. While we are still in the development phase, we can confidently say that users can look forward to long battery life and solid performance in a lightweight, quiet device. We consider our collaboration with Linaro to be highly cooperative and inspiring,"_ said Herbert Feiler, CEO of TUXEDO.
+
+## The demo
+
+Here is a video of the <strong>TUXEDO Elite 14 Gen1</strong> prototype showcased at Linaro Connect 2025:
+
+<video controls width="50%">
+  <source
+    src="https://static.linaro.org/videos/8494357F-6B47-4DC4-8C13-99BB510BF447.mp4"
+    type="video/mp4"
+  />
+  Your browser does not support the video tag.
+</video>
+
+The conference demonstration featured the device connected via a fully functional USB-C port to a keyboard, mouse, and external monitor while charging.
+
+To showcase the stability during multitasking use, we were able to browse several internet pages while running classic X86-64 playable 3D games emulated with the X86-64 emulator FEX-EMU.
+
+While the device is still a prototype, it requires some manual setup and some of the feature enablements are work in progress, but the main things are all in place, demonstrating the potential use as daily drive use.
+
+We made this happen by working together with TUXEDO engineers. We extended the initial support they sent on the [Linux Kernel Mailing List](https://lkml.org/lkml/2025/3/6/867) with patches that enable more hardware components.
