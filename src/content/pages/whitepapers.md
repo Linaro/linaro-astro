@@ -99,4 +99,11 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
+          - text: VirtIO for PCI Endpoint Subsystem in the Linux Kernel
+            image:
+              src: linaro-website/graphics/THUMBNAIL_-_WP_-_VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel_cfdjzh
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel.pdf
 ---
