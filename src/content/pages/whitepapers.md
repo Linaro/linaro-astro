@@ -29,6 +29,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: VirtIO for PCI Endpoint Subsystem in the Linux Kernel
+            image:
+              src: linaro-website/graphics/THUMBNAIL_-_WP_-_VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel_cfdjzh
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel.pdf
           - text: "HPC Case Study: Developing code for weather forecasting"
             image:
               src: linaro-website/graphics/1d1c7394-b36c-4d04-9f73-9567f590adbc_u9sujl.png
@@ -99,11 +106,4 @@ flow:
             button:
               text: Read more
               url: https://static.linaro.org/assets/automotive_white_paper_0921.pdf
-          - text: VirtIO for PCI Endpoint Subsystem in the Linux Kernel
-            image:
-              src: linaro-website/graphics/THUMBNAIL_-_WP_-_VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel_cfdjzh
-              alt: ""
-            button:
-              text: Read more
-              url: https://static.linaro.org/assets/VirtIO_for_PCI_Endpoint_Subsystem_in_the_Linux_Kernel.pdf
 ---
