@@ -1,5 +1,5 @@
 ---
-const { form_id, formName, description, modal_id, whitepaperId } = Astro.props;
+const { form_id, formName, description, whitepaperId } = Astro.props;
 
 const inputFields = [
   {
@@ -19,7 +19,7 @@ const inputFields = [
     class="flex flex-col items-start gap-8"
     id="contact-form"
     data-contact-form={form_id}
-    method={modal_id ? "modal" : "get"}
+    method="get"
   >
     {
       description && (
@@ -100,14 +100,8 @@ const inputFields = [
       </div>
     </div>
     <div>
-      <input
-        type="checkbox"
-        name="agreed"
-        id={modal_id ? `agreed-${modal_id}` : "agreed"}
-        class="mr-2"
-        required
-      />
-      <label for={modal_id ? `agreed-${modal_id}` : "agreed"} class="text-white"
+      <input type="checkbox" name="agreed" id="agreed" class="mr-2" required />
+      <label for="agreed" class="text-white"
         >I’ve read and agreed to Linaro’s <a
           href="/legal#privacy"
           class="text-white">Privacy Policy</a
@@ -140,30 +134,9 @@ const inputFields = [
         </svg>
         Submitting</button
       >
-      {
-        modal_id && (
-          <button
-            class="text-white font-bold"
-            onclick={`window.${modal_id}.close()`}
-          >
-            Close
-          </button>
-        )
-      }
     </div>
   </form>
   <div id="contact-feedback" class="hidden">
     <p id="contact-feedback-text" class="text-white"></p>
-
-    {
-      modal_id && (
-        <button
-          class="text-white font-bold"
-          onclick={`window.${modal_id}.close()`}
-        >
-          Close
-        </button>
-      )
-    }
   </div>
 </div>
