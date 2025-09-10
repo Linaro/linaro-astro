@@ -144,6 +144,8 @@ const { title, description, type = "website", image } = Astro.props;
             ?.value || "unknown_form";
 
         data.forEach((value, key) => {
+          if (key === "webinarDataId" || key === "whitepaperId") {
+          }
           if (key === "customfield_13586" || key === "customfield_13587") {
             payload[key] = { id: value };
           } else {
@@ -215,6 +217,41 @@ const { title, description, type = "website", image } = Astro.props;
                 .catch((err) => {
                   console.error("Webinar fetch error:", err);
                   feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the webinar info.</p>`;
+                });
+            } else if (formName === "whitepaper_contact") {
+              const whitepaperId =
+                (
+                  form.querySelector(
+                    "input[name='whitepaperId']",
+                  ) as HTMLInputElement
+                )?.value || "unknown_whitepaper";
+
+              fetch(`/api/whitepaper-data/${whitepaperId}`)
+                .then((res) => {
+                  if (!res.ok)
+                    throw new Error("Failed to load whitepaper data");
+                  return res.json();
+                })
+                .then((whitepaperData) => {
+                  const { url } = whitepaperData;
+
+                  feedbackText!.innerHTML = `
+          <div class="space-y-4 text-center">
+            <p class="text-base">Thank you! Your download should start automatically. If not, click below:</p>
+            <div>
+              <a href="${url}" class="inline-block text-xl text-blue-700 font-semibold underline" target="_blank">
+                Download Whitepaper
+              </a>
+            </div>
+          </div>
+        `;
+
+                  // trigger auto-download
+                  window.location.href = url;
+                })
+                .catch((err) => {
+                  console.error("Whitepaper fetch error:", err);
+                  feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the whitepaper.</p>`;
                 });
             } else {
               feedbackText!.innerText = result.message;
