@@ -1,0 +1,55 @@
+---
+import WhitepaperContactForm from "../../../components/forms/WhitepaperContactForm.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import type { GetStaticPaths } from "astro";
+
+// Centralized whitepaper definitions
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const whitepapers = [
+    {
+      id: "from-x86-to-arm",
+      title: "From x86 to Arm",
+      pdf: "https://static.linaro.org/assets/WP+-+From+x86+to+Arm_v9_combined.pdf",
+      image: "linaro-website/graphics/IMG_0522_fts8my.jpg",
+    },
+  ];
+  return whitepapers.map((wp) => ({
+    params: { whitepaperId: wp.id },
+    props: { whitepaper: wp },
+  }));
+};
+
+interface Whitepaper {
+  id: string;
+  title: string;
+  pdf: string;
+  image: string;
+}
+
+const { whitepaper } = Astro.props as { whitepaper: Whitepaper };
+---
+
+<BaseLayout
+  title={`Download ${whitepaper.title} Whitepaper`}
+  description={`Access the ${whitepaper.title} whitepaper.`}
+  image={whitepaper.image}
+>
+  <head>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+
+  <main class="max-w-2xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">
+      Download {whitepaper.title} Whitepaper
+    </h1>
+    <WhitepaperContactForm
+      form_id="9"
+      formName="whitepaper_contact"
+      pdfUrl={whitepaper.pdf}
+      title={whitepaper.title}
+      whitepaperId={whitepaper.id}
+      modal_id="whitepaperContactForm"
+    />
+  </main>
+</BaseLayout>

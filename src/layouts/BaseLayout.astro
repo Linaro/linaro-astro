@@ -144,13 +144,36 @@ const { title, description, type = "website", image } = Astro.props;
             ?.value || "unknown_form";
 
         data.forEach((value, key) => {
-          if (key === "customfield_13586" || key === "customfield_13587") {
-            payload[key] = { id: value };
-          } else {
-            payload[key] = value;
+          // Only include the fields that are mapped in form_data.json
+          // or are explicitly needed by the serverless function
+          if (
+            key === "form_id" ||
+            key === "email" ||
+            key.startsWith("customfield_")
+          ) {
+            if (key === "customfield_13586" || key === "customfield_13587") {
+              // Handle nested structure for specific custom fields
+              payload[key] = { id: value };
+            } else {
+              payload[key] = value;
+            }
           }
         });
+        // Ensure 'email' is in the payload for the backend validation and user creation
+        // and is mapped correctly if it's a custom field ID
+        if (!payload.email) {
+          // Assuming the email field has a specific custom ID in the form data
+          payload.email = data.get("customfield_13484"); // Adjust this based on your form data
+          if (!payload.email) {
+            console.error("Email field not found in form data.");
+            // Handle the error appropriately, e.g., show an error message to the user
+            return;
+          }
+        }
+
         delete payload.agreed;
+
+        console.log(payload);
 
         if (!window.dataLayer) {
           window.dataLayer = [];
@@ -215,6 +238,41 @@ const { title, description, type = "website", image } = Astro.props;
                 .catch((err) => {
                   console.error("Webinar fetch error:", err);
                   feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the webinar info.</p>`;
+                });
+            } else if (formName === "whitepaper_contact") {
+              const whitepaperId =
+                (
+                  form.querySelector(
+                    "input[name='whitepaperId']",
+                  ) as HTMLInputElement
+                )?.value || "unknown_whitepaper";
+
+              fetch(`/api/whitepaper-data/${whitepaperId}`)
+                .then((res) => {
+                  if (!res.ok)
+                    throw new Error("Failed to load whitepaper data");
+                  return res.json();
+                })
+                .then((whitepaperData) => {
+                  const { url } = whitepaperData;
+
+                  feedbackText!.innerHTML = `
+          <div class="space-y-4 text-center">
+            <p class="text-base">Thank you! Your download should start automatically. If not, click below:</p>
+            <div>
+              <a href="${url}" class="inline-block text-xl text-blue-700 font-semibold underline" target="_blank">
+                Download Whitepaper
+              </a>
+            </div>
+          </div>
+        `;
+
+                  // trigger auto-download
+                  window.location.href = url;
+                })
+                .catch((err) => {
+                  console.error("Whitepaper fetch error:", err);
+                  feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the whitepaper.</p>`;
                 });
             } else {
               feedbackText!.innerText = result.message;
