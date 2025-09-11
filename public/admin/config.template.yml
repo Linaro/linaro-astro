@@ -1,0 +1,48 @@
+local_backend: true
+backend:
+  name: github
+  branch: main
+
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dl7c2wmhi
+    api_key: 166967243526213
+    folder: "linaro/website"
+
+media_folder: ""
+
+collections:
+  - name: "blog" # used in /admin routes
+    label: "Blog" # UI label
+    label_singular: "Post"
+    folder: "src/content/blogs" # update if your posts live elsewhere
+    create: true # allow creating new posts
+    extension: "mdx" # use "mdx" if your posts are MDX
+    format: "frontmatter"
+    slug: "{{slug}}" # filename generated from Title by default
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      # Your frontmatter uses "image" (string path). Use the image widget but allow URLs/absolute paths too.
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          choose_url: true,
+        }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      # "related" appears to be a list. If it's a list of slugs/IDs, keep it as strings:
+      - {
+          label: "Related",
+          name: "related",
+          widget: "list",
+          default: [],
+          field: { label: "Item", name: "item", widget: "string" },
+        }
+      # Main content
+      - { label: "Body", name: "body", widget: "markdown" }
