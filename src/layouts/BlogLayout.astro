@@ -36,8 +36,6 @@ const {
   },
 } = Astro.props;
 
-console.log(`PAGEFIND DEBUG for "${title}": Description is "${description}"`);
-
 const { data: author } = (await getEntry(
   authorRef,
 )) as CollectionEntry<"authors">;
@@ -54,7 +52,8 @@ const optimizedBackground = await getImage({
     height: 1182.9,
   }),
   format: "webp",
-  inferSize: true,
+  width: 1724.55,
+  height: 1182.9,
 });
 const { Content, headings } = await render();
 
@@ -87,7 +86,7 @@ if (related.length > 0) {
         "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
-      <h1 data-pagefind-meta="title[title]" class="text-5xl font-bold mb-16 max-w-4xl">
+      <h1 data-pagefind-meta="title" class="text-5xl font-bold mb-16 max-w-4xl">
         {title}
       </h1>
       <div class="flex items-center gap-6">
@@ -137,7 +136,7 @@ if (related.length > 0) {
       </ul>
     </section>
     <div style="visibility: hidden; position: absolute;">
-      <div data-pagefind-excerpt>{description}</div>
+      <div data-pagefind-excerpt data-pagefind-meta="description">{description}</div>
     </div>
     <div data-pagefind-body>
     <ArticleContent Content={Content} image={image} />

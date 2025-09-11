@@ -57,7 +57,7 @@ const BlogResult = ({
         <p class="text-neutral-400 mb-2">
           {dayjs(article()?.meta.date).format("dddd, MMMM D, YYYY")}
         </p>
-        <p innerHTML={article()?.excerpt} />
+        <p>{article()?.meta.description}</p>
       </a>
       <ul class="flex flex-wrap gap-x-4 gap-y-8 px-4 py-8 justify-self-end">
         {article()?.filters.tags.map((tag: string) => (
