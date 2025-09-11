@@ -135,8 +135,10 @@ if (related.length > 0) {
           ))
         }
       </ul>
-      <div data-pagefind-excerpt>{description}</div>
     </section>
+    <div style="visibility: hidden; position: absolute;">
+      <div data-pagefind-excerpt>{description}</div>
+    </div>
     <div data-pagefind-body>
     <ArticleContent Content={Content} image={image} />
     </div>
