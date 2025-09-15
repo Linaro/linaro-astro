@@ -118,7 +118,7 @@ Each commit requires a message that follows a strict, well-defined format. This 
 6. **Tags**: At the end of the commit message there are machine-readable tags:
    a. Signed-off-by: `"Your RealName <your.email@example.com>"`
    This tag is always required at the end of the patch. With this line you certify that you wrote the patch yourself or have the right to pass it on as an open-source patch. Please read the instructions and the “Developer’s Certificate of Origin” carefully before adding this line.
-   b. Fixes: <commit hash> (“original commit message”)
+   b. Fixes: `<commit hash> (“original commit message”)`
    If you fix a bug, please inspect the Git history to determine which commit originally introduced the bug and mention it in your commit message. This simplifies backporting the fix to stable releases later. The “git blame” command is often helpful for this.
    c. Reported-by: `"Reporter RealName <reporter.email@example.com>"`
    Use this to give credit to the person who initially reported the bug.
