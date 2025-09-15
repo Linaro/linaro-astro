@@ -29,7 +29,7 @@ The Linux kernel is a large project, and as such, all patches must conform to a 
 
 The "upstream" kernel is the main, official version that serves everyone. Every change must be a benefit for the community as a whole, not just for you or your company. Before you start, ask yourself:
 
-\ _Does my change solve a problem that others could experience?_
+_Does my change solve a problem that others could experience?_
 
 Your change is likely relevant for upstream if it:
 
@@ -90,7 +90,7 @@ Now that `b4` has created a branch, you can commit individual changes to the top
 
 Each commit you make on your topic branch will become a single patch file in your series. Therefore, every commit must be "atomic": it must do **one logical thing, and do it completely**. Mixing unrelated changes into a single commit makes your work difficult to review and debug. Ask yourself:
 
-\ \_Can I describe this commit's purpose without using the word “and”?\_
+_Can I describe this commit's purpose without using the word “and”?_
 
 For example: If you need to refactor a function significantly to add a new feature you need two commits: one to make the refactoring, and one to add the new feature.
 
@@ -154,7 +154,7 @@ This will modify the cover letter of your series and add maintainers and reviewe
 
 There is one final, critical step before sending: validating your changes. Submitting a patch that fails basic checks or breaks the build will waste everyone's time. Always run these checks yourself before sending out patches:
 
-- <strongBuild\*\*: Make sure your changes build correctly without compile warnings. Build new code with “make W=1 C=1” to perform additional checks. It is a good practice to compile each commit in a series to ensure bisect never breaks.
+- **Build**: Make sure your changes build correctly without compile warnings. Build new code with “make W=1 C=1” to perform additional checks. It is a good practice to compile each commit in a series to ensure bisect never breaks.
 - **Boot**: Make sure your changes work correctly, not just on your target device, but also do not break functionality for any other device supported upstream. If needed, ask others for help with testing up front or note that additional testing would be appreciated in your patch.Also, make sure you test your changes on upstream and not some old vendor kernel. For example, follow this guide to test your changes: [Booting the Mainline Linux Kernel on Qualcomm Devices](https://www.linaro.org/blog/let-s-boot-the-mainline-linux-kernel-on-qualcomm-devices/)
 - **Style-check**: Run `“b4 prep --check”` to perform basic style checks. Ensure there are no ERRORs or WARNINGs.
 - **Subsystem-specific checks**: Look for additional checks expected when contributing to certain subsystems. For example, if you are submitting device tree changes or bindings, make sure to run the DT checks. See: [Tips and Tricks for Validating Devicetree sources with the Devicetree Schema](https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/)
