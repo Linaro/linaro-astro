@@ -33,10 +33,10 @@ _Does my change solve a problem that others could experience?_
 
 Your change is likely relevant for upstream if it:
 
-- Fixes a verifiable bug. This could be a crash, a security flaw, incorrect behavior, or a performance regression.
-- Adds support for new hardware. If you get a new device working, chances are someone else has that device too.
-- Improves performance or reduces complexity. Patches that make the kernel faster, smaller, or easier to read are almost always welcome.
-- Removes dead or unused code. Deleting code is a fantastic way to contribute, as it reduces the kernel's maintenance burden.
+- **Fixes a verifiable bug.** This could be a crash, a security flaw, incorrect behavior, or a performance regression.
+- **Adds support for new hardware.** If you get a new device working, chances are someone else has that device too.
+- **Improves performance or reduces complexity.** Patches that make the kernel faster, smaller, or easier to read are almost always welcome.
+- **Removes dead or unused code.** Deleting code is a fantastic way to contribute, as it reduces the kernel's maintenance burden.
 
 Your change is **not** relevant if it is (for example):
 
@@ -112,19 +112,22 @@ Each commit requires a message that follows a strict, well-defined format. This 
 
 1. **Subject**: This is a one-line summary of what the patch does. It's the first thing a reviewer sees in their inbox. The format for this is “subsystem: Short, imperative summary of the change”, for example `“arm64: dts: qcom: x1e80100: Fix USB interrupts”`. If you are unsure which prefix to use, check what prior commits to similar files used.
 2. **Body**: After the subject line comes a blank line, followed by the body of the message. Here you explain your change in detail. Focus on the "why", rather than the "how":
-3. Describe the problem. Why is this change needed? What was the problematic behavior?
-4. Describe your solution. How does your change fix the problem? Explain the logic of your approach.
-5. Describe any testing you performed. This helps build confidence that your patch will not introduce new regressions.
-6. **Tags**: At the end of the commit message there are machine-readable tags:
+   1. Describe the problem. Why is this change needed? What was the problematic behavior?
+   2. Describe your solution. How does your change fix the problem? Explain the logic of your approach.
+   3. Describe any testing you performed. This helps build confidence that your patch will not introduce new regressions.
+3. **Tags**: At the end of the commit message there are machine-readable tags:
    a. Signed-off-by: `"Your RealName <your.email@example.com>"`
+
    This tag is always required at the end of the patch. With this line you certify that you wrote the patch yourself or have the right to pass it on as an open-source patch. Please read the instructions and the “Developer’s Certificate of Origin” carefully before adding this line.
    b. Fixes: `<commit hash> (“original commit message”)`
+
    If you fix a bug, please inspect the Git history to determine which commit originally introduced the bug and mention it in your commit message. This simplifies backporting the fix to stable releases later. The “git blame” command is often helpful for this.
    c. Reported-by: `"Reporter RealName <reporter.email@example.com>"`
    Use this to give credit to the person who initially reported the bug.
    d. Link: https://lore.kernel.org/r/.../
    Use this to link to prior discussions or bug reports.
-7. **Footer**: Everything written below a “---” line in the commit message will not end up getting applied to the kernel commit log. Use this space to provide additional comments about your patch. If you are uncertain about a certain part of your patch or would like to ask questions, indicate this here.
+
+4. **Footer**: Everything written below a “---” line in the commit message will not end up getting applied to the kernel commit log. Use this space to provide additional comments about your patch. If you are uncertain about a certain part of your patch or would like to ask questions, indicate this here.
 
 If you want to make changes to prior commits, reorder them or similar, you can simply use `“git rebase --interactive”` inside the b4 topic branch.
 
