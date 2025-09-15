@@ -13,7 +13,7 @@ related: []
 
 Contributing to the Linux kernel can seem complex and intimidating. Following the established process for sending patches to the Linux kernel mailing lists is essential to land your changes successfully and become further involved in the community. Linaro has a long track record of contributing to the Linux kernel and is frequently listed as one of the top ten contributors to the Linux kernel (as can be seen below in [LWN’s development statistics](https://lwn.net/Articles/1031161/) from the 6.16 Linux kernel release). Many of our engineers have also become an integral part of the community: they handle maintainer duties such as reviewing and applying patches sent by others.
 
-![Most active 6.16 emplyers](linaro-website/images/blog/most_active_6.16_emplyers_s4wf03.png)
+![Most active 6.16 employers](linaro-website/images/blog/most_active_6.16_emplyers_s4wf03.png)
 
 In this three-part blog series, we will share our experience and know-how, walking you through everything you need to know to write your first patch and become a trusted member of the community. We will break down the entire journey into three blog posts:
 
@@ -38,7 +38,7 @@ Your change is likely relevant for upstream if it:
 - Improves performance or reduces complexity. Patches that make the kernel faster, smaller, or easier to read are almost always welcome.
 - Removes dead or unused code. Deleting code is a fantastic way to contribute, as it reduces the kernel's maintenance burden.
 
-Your change is <strong>not<strong> relevant if it is (for example):
+Your change is **not** relevant if it is (for example):
 
 - A quick hack that only works on your specific, highly customized machine.
 - A feature that only benefits a proprietary, closed-source application.
@@ -80,7 +80,7 @@ $ git checkout next/master
 
 Now you can create your new topic branch using the `“b4 prep”` command inside your kernel tree:
 
-<strong>Please note that the `<topic-name>` will end up being public on the mailing list!<strong> It will be used to refer to your patch series. Do not use internal code or project names.
+**Please note that the `<topic-name>` will end up being public on the mailing list!** It will be used to refer to your patch series. Do not use internal code or project names.
 
 ## Step 4: Make your changes
 
@@ -88,13 +88,13 @@ Now that `b4` has created a branch, you can commit individual changes to the top
 
 ### Keep your commits atomic
 
-Each commit you make on your topic branch will become a single patch file in your series. Therefore, every commit must be "atomic": it must do <strong>one logical thing, and do it completely<strong>. Mixing unrelated changes into a single commit makes your work difficult to review and debug. Ask yourself:
+Each commit you make on your topic branch will become a single patch file in your series. Therefore, every commit must be "atomic": it must do **one logical thing, and do it completely**. Mixing unrelated changes into a single commit makes your work difficult to review and debug. Ask yourself:
 
 \ \_Can I describe this commit's purpose without using the word “and”?\_
 
 For example: If you need to refactor a function significantly to add a new feature you need two commits: one to make the refactoring, and one to add the new feature.
 
-Just as importantly, "atomic" also means that <strong>each commit must be self-contained and result in a fully functional kernel<strong>. Once your series has been applied and merged into the kernel, other developers may use `“git bisect”` to automatically search through thousands of commits to pinpoint the exact one that introduced a bug. If a commit in the middle of your series breaks the build or causes a regression, `“git bisect”` will fail, wasting hours of debugging time.
+Just as importantly, "atomic" also means that **each commit must be self-contained and result in a fully functional kernel**. Once your series has been applied and merged into the kernel, other developers may use `“git bisect”` to automatically search through thousands of commits to pinpoint the exact one that introduced a bug. If a commit in the middle of your series breaks the build or causes a regression, `“git bisect”` will fail, wasting hours of debugging time.
 
 ### Keep your patch series focused and limited to a reasonable size
 
@@ -110,21 +110,21 @@ With your code changes organized into atomic commits, the next step is to descri
 
 Each commit requires a message that follows a strict, well-defined format. This message has three parts:
 
-1. <strong>Subject<strong>: This is a one-line summary of what the patch does. It's the first thing a reviewer sees in their inbox. The format for this is “subsystem: Short, imperative summary of the change”, for example `“arm64: dts: qcom: x1e80100: Fix USB interrupts”`. If you are unsure which prefix to use, check what prior commits to similar files used.
-2. <strong>Body<strong>: After the subject line comes a blank line, followed by the body of the message. Here you explain your change in detail. Focus on the "why", rather than the "how":
+1. **Subject**: This is a one-line summary of what the patch does. It's the first thing a reviewer sees in their inbox. The format for this is “subsystem: Short, imperative summary of the change”, for example `“arm64: dts: qcom: x1e80100: Fix USB interrupts”`. If you are unsure which prefix to use, check what prior commits to similar files used.
+2. **Body**: After the subject line comes a blank line, followed by the body of the message. Here you explain your change in detail. Focus on the "why", rather than the "how":
 3. Describe the problem. Why is this change needed? What was the problematic behavior?
 4. Describe your solution. How does your change fix the problem? Explain the logic of your approach.
 5. Describe any testing you performed. This helps build confidence that your patch will not introduce new regressions.
-6. <strong>Tags<strong>: At the end of the commit message there are machine-readable tags:
-a. Signed-off-by: Your RealName <your.email@example.com>
-This tag is always required at the end of the patch. With this line you certify that you wrote the patch yourself or have the right to pass it on as an open-source patch. Please read the instructions and the “Developer’s Certificate of Origin” carefully before adding this line.
-b. Fixes: <commit hash> (“original commit message”)
-If you fix a bug, please inspect the Git history to determine which commit originally introduced the bug and mention it in your commit message. This simplifies backporting the fix to stable releases later. The “git blame” command is often helpful for this.
-c. Reported-by: Reporter RealName <reporter.email@example.com>
-Use this to give credit to the person who initially reported the bug.
-d. Link: https://lore.kernel.org/r/.../
-Use this to link to prior discussions or bug reports.
-7. <strong>Footer<strong>: Everything written below a “---” line in the commit message will not end up getting applied to the kernel commit log. Use this space to provide additional comments about your patch. If you are uncertain about a certain part of your patch or would like to ask questions, indicate this here.
+6. **Tags**: At the end of the commit message there are machine-readable tags:
+   a. Signed-off-by: Your RealName <your.email@example.com>
+   This tag is always required at the end of the patch. With this line you certify that you wrote the patch yourself or have the right to pass it on as an open-source patch. Please read the instructions and the “Developer’s Certificate of Origin” carefully before adding this line.
+   b. Fixes: <commit hash> (“original commit message”)
+   If you fix a bug, please inspect the Git history to determine which commit originally introduced the bug and mention it in your commit message. This simplifies backporting the fix to stable releases later. The “git blame” command is often helpful for this.
+   c. Reported-by: Reporter RealName <reporter.email@example.com>
+   Use this to give credit to the person who initially reported the bug.
+   d. Link: https://lore.kernel.org/r/.../
+   Use this to link to prior discussions or bug reports.
+7. **Footer**: Everything written below a “---” line in the commit message will not end up getting applied to the kernel commit log. Use this space to provide additional comments about your patch. If you are uncertain about a certain part of your patch or would like to ask questions, indicate this here.
 
 If you want to make changes to prior commits, reorder them or similar, you can simply use `“git rebase --interactive”` inside the b4 topic branch.
 
@@ -154,10 +154,10 @@ This will modify the cover letter of your series and add maintainers and reviewe
 
 There is one final, critical step before sending: validating your changes. Submitting a patch that fails basic checks or breaks the build will waste everyone's time. Always run these checks yourself before sending out patches:
 
-- <strongBuild<strong>: Make sure your changes build correctly without compile warnings. Build new code with “make W=1 C=1” to perform additional checks. It is a good practice to compile each commit in a series to ensure bisect never breaks.
-- <strong>Boot<strong>: Make sure your changes work correctly, not just on your target device, but also do not break functionality for any other device supported upstream. If needed, ask others for help with testing up front or note that additional testing would be appreciated in your patch.Also, make sure you test your changes on upstream and not some old vendor kernel. For example, follow this guide to test your changes: [Booting the Mainline Linux Kernel on Qualcomm Devices](https://www.linaro.org/blog/let-s-boot-the-mainline-linux-kernel-on-qualcomm-devices/)
-- <strong>Style-check<strong>: Run `“b4 prep --check”` to perform basic style checks. Ensure there are no ERRORs or WARNINGs.
-- <strong>Subsystem-specific checks<strong>: Look for additional checks expected when contributing to certain subsystems. For example, if you are submitting device tree changes or bindings, make sure to run the DT checks. See: [Tips and Tricks for Validating Devicetree sources with the Devicetree Schema](https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/)
+- <strongBuild\*\*: Make sure your changes build correctly without compile warnings. Build new code with “make W=1 C=1” to perform additional checks. It is a good practice to compile each commit in a series to ensure bisect never breaks.
+- **Boot**: Make sure your changes work correctly, not just on your target device, but also do not break functionality for any other device supported upstream. If needed, ask others for help with testing up front or note that additional testing would be appreciated in your patch.Also, make sure you test your changes on upstream and not some old vendor kernel. For example, follow this guide to test your changes: [Booting the Mainline Linux Kernel on Qualcomm Devices](https://www.linaro.org/blog/let-s-boot-the-mainline-linux-kernel-on-qualcomm-devices/)
+- **Style-check**: Run `“b4 prep --check”` to perform basic style checks. Ensure there are no ERRORs or WARNINGs.
+- **Subsystem-specific checks**: Look for additional checks expected when contributing to certain subsystems. For example, if you are submitting device tree changes or bindings, make sure to run the DT checks. See: [Tips and Tricks for Validating Devicetree sources with the Devicetree Schema](https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/)
 
 ## Step 8: Send your changes
 
