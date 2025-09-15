@@ -54,14 +54,14 @@ There is little that divides kernel developers as much as the set of tooling the
 Ensuring that your patches are correctly formatted for email submission is a common failure point for new contributors. Patches with incorrect formatting will cause delays in the submission process and take up precious time from the busy maintainers. Nowadays, many of the technical aspects can be automated using [Git](https://git-scm.com/) and [b4](https://b4.docs.kernel.org/en/latest/), which help with preparing your patch series, sending it, and revising it based on the review feedback you will receive later. Both tools are packaged for many distributions, so you can likely install them directly using your preferred package manager. `b4` is also available from the Python Package Index (PyPI) and can be installed using `pip`:
 
 ```
-$ pip install --user b4
+pip install --user b4
 ```
 
 To configure Git, make sure that you set your correct identity. In most cases this should be your real name:
 
 ```
-$ git config --global user.name "Your RealName"
-$ git config --global user.email "your.email@example.com"
+git config --global user.name "Your RealName"
+git config --global user.email "your.email@example.com"
 ```
 
 To configure Git and b4 for submitting patches via email there are two different options: You can use your own SMTP server, or you can use the web submission endpoint. The web submission endpoint helps, especially if you are worried that your email server will mangle submitted patches. This can often happen for example for corporate email servers that add footers with confidentiality notices or similar. It is essential that the generated plain text patches are submitted exactly how they were generated, so use the web submission endpoint if you are unsure.
@@ -73,9 +73,9 @@ The b4 configuration has detailed step-by-step instructions for both options, so
 The b4 workflow is focused around topical branches named `“b4/<topic-name>”`. You create one branch for each of the patch series you want to send. This branch will always have the latest version of the patches you are working on. If you are revising your patches, you will also make your changes in this branch. To create a new branch and start a new submission, you should first check out the base branch you want to use in your local Linux repository. This should usually be the “next” branch of the maintainer you are targeting. If the target subsystem does not provide a -next branch, you can fall back to the latest [linux-next](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/) tag:
 
 ```
-$ git remote add next https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
-$ git fetch next master
-$ git checkout next/master
+git remote add next https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+git fetch next master
+git checkout next/master
 ```
 
 Now you can create your new topic branch using the `“b4 prep”` command inside your kernel tree:
@@ -116,11 +116,11 @@ Each commit requires a message that follows a strict, well-defined format. This 
 4. Describe your solution. How does your change fix the problem? Explain the logic of your approach.
 5. Describe any testing you performed. This helps build confidence that your patch will not introduce new regressions.
 6. **Tags**: At the end of the commit message there are machine-readable tags:
-   a. Signed-off-by: "Your RealName <your.email@example.com>"
+   a. Signed-off-by: `"Your RealName <your.email@example.com>"`
    This tag is always required at the end of the patch. With this line you certify that you wrote the patch yourself or have the right to pass it on as an open-source patch. Please read the instructions and the “Developer’s Certificate of Origin” carefully before adding this line.
    b. Fixes: <commit hash> (“original commit message”)
    If you fix a bug, please inspect the Git history to determine which commit originally introduced the bug and mention it in your commit message. This simplifies backporting the fix to stable releases later. The “git blame” command is often helpful for this.
-   c. Reported-by: "Reporter RealName <reporter.email@example.com>"
+   c. Reported-by: `"Reporter RealName <reporter.email@example.com>"`
    Use this to give credit to the person who initially reported the bug.
    d. Link: https://lore.kernel.org/r/.../
    Use this to link to prior discussions or bug reports.
@@ -133,7 +133,7 @@ _Note: It might be tempting to use an AI tool to generate a commit message. Do n
 If your submission contains more than one patch, you must include a "cover letter" (PATCH 0/N). Its purpose is to introduce your series as a whole. You can easily edit it using the following command:
 
 ```
-$ b4 prep --edit-cover
+b4 prep --edit-cover
 ```
 
 This will open a template in your editor, where you can describe your series. Some maintainers integrate it into the commit log when merging changes.
@@ -145,7 +145,7 @@ If your series depends on other patches on the mailing list that are not merged 
 With your changes structured and described, the next step is to identify which maintainers need to review it. Sending a patch to the wrong mailing list or forgetting to include a key maintainer is a sure way for it to get lost. Historically, this involved manually running scripts like “get_maintainer.pl”, nowadays `b4` can automate this task. Run the following command in your topic branch:
 
 ```
-$ b4 prep --auto-to-cc
+b4 prep --auto-to-cc
 ```
 
 This will modify the cover letter of your series and add maintainers and reviewers as “To:” and “Cc:” entries there. Review the list of reviewers in the cover letter (“b4 prep –edit-cover”). If you have a large number of recipients listed, this could be an indication that your patch series is too large or spans too many subsystems. Prefer sending small patch series focused on a single subsystem when possible, since this will reduce coordination effort for the maintainers.
@@ -164,7 +164,7 @@ There is one final, critical step before sending: validating your changes. Submi
 Now that your changes are ready, all that is left is to send your changes to the mailing lists. The b4 tool makes this simple and safe:
 
 ```
-$ b4 send
+b4 send
 ```
 
 Before confirming and sending out the patches, run the command with the “--dry-run” option to see exactly which emails the b4 tool will send out. If you would like to send a preview just to yourself before sending out the patches you can use the “--reflect” option. You can also use the “--preview-to” option to send out a draft to some of your colleagues.
