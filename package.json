@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "preview": "astro preview",
-    "build": "astro build && node scripts/replace-config.mjs",
+    "build": "astro build",
     "start:public": "IS_PUBLIC=true astro dev",
     "dev:public": "IS_PUBLIC=true astro dev",
     "preview:public": "IS_PUBLIC=true astro preview",
@@ -56,7 +56,6 @@
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "dotenv": "^17.2.2",
     "dotenv-cli": "^10.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
