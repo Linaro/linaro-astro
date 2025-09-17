@@ -16,14 +16,14 @@ media_library:
 media_folder: ""
 
 collections:
-  - name: "blog" # used in /admin routes
-    label: "Blog" # UI label
+  - name: "blog"
+    label: "Blog"
     label_singular: "Post"
-    folder: "src/content/blogs" # update if your posts live elsewhere
-    create: true # allow creating new posts
-    extension: "mdx" # use "mdx" if your posts are MDX
+    folder: "src/content/blogs"
+    create: true
+    extension: "mdx"
     format: "frontmatter"
-    slug: "{{slug}}" # filename generated from Title by default
+    slug: "{{slug}}"
     summary: "{{title}} — {{date}}"
     sortable_fields: ["date", "title"]
     fields:
@@ -31,7 +31,7 @@ collections:
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Author", name: "author", widget: "string" }
-      # Your frontmatter uses "image" (string path). Use the image widget but allow URLs/absolute paths too.
+
       - {
           label: "Featured Image",
           name: "image",
@@ -39,7 +39,6 @@ collections:
           choose_url: true,
         }
       - { label: "Tags", name: "tags", widget: "list", default: [] }
-      # "related" appears to be a list. If it's a list of slugs/IDs, keep it as strings:
       - {
           label: "Related",
           name: "related",
