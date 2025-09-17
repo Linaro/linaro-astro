@@ -16,10 +16,10 @@ config = config.replace(/\${(\w+)}/g, (_, key) => {
   }
 
   console.log("DEBUG env vars:");
-  console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY);
   console.log(
-    "CLOUDINARY_UNSIGNED_UPLOAD_PRESET:",
-    process.env.CLOUDINARY_UNSIGNED_UPLOAD_PRESET,
+    "CLOUDINARY_API_KEY:",
+    process.env.CLOUDINARY_API_KEY,
+    process.env.CLOUDINARY_CLOUD_NAME,
   );
 
   return process.env[key];

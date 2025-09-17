@@ -11,7 +11,7 @@ media_library:
       path: "linaro-website"
       search:
         expression: 'folder="linaro-website/images/blog"'
-    upload_preset: "${CLOUDINARY_UNSIGNED_UPLOAD_PRESET}"
+    upload_preset: DecapConfig
 
 media_folder: ""
 
