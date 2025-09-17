@@ -1,0 +1,50 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: "${CLOUDINARY_CLOUD_NAME}"
+    api_key: "${CLOUDINARY_API_KEY}"
+    folder:
+      path: "linaro-website"
+      search:
+        expression: 'folder="linaro-website/images/blog"'
+    upload_preset: DecapConfig
+
+media_folder: ""
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    label_singular: "Post"
+    folder: "src/content/blogs"
+    create: true
+    extension: "mdx"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          choose_url: true,
+        }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - {
+          label: "Related",
+          name: "related",
+          widget: "list",
+          default: [],
+          field: { label: "Item", name: "item", widget: "string" },
+        }
+      # Main content
+      - { label: "Body", name: "body", widget: "markdown" }

@@ -24,3 +24,7 @@ pnpm-debug.log*
 cache
 dist_prebuild
 .sst
+
+# Decap CMS generated config
+/public/admin/config.yml
+
