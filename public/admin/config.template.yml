@@ -1,14 +1,17 @@
-local_backend: true
 backend:
-  name: github
+  name: git-gateway
   branch: main
 
 media_library:
   name: cloudinary
   config:
-    cloud_name: dl7c2wmhi
-    api_key: 166967243526213
-    folder: "linaro/website"
+    cloud_name: "${CLOUDINARY_CLOUD_NAME}"
+    api_key: "${CLOUDINARY_API_KEY}"
+    folder:
+      path: "linaro-website"
+      search:
+        expression: 'folder="linaro-website/images/blog"'
+    upload_preset: "${CLOUDINARY_UNSIGNED_UPLOAD_PRESET}"
 
 media_folder: ""
 

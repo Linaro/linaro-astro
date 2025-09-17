@@ -59,6 +59,7 @@ jobs:
           export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          export CLOUDINARY_UNSIGNED_UPLOAD_PRESET=${{secrets.CLOUDINARY_UNSIGNED_UPLOAD_PRESET}}
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           # For pull requests, we set custom domain to the preview URL
           export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"

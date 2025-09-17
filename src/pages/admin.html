@@ -18,5 +18,15 @@
       // Register Cloudinary picker with Decap
       window.CMS.registerMediaLibrary(window.cloudinary);
     </script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => location.reload());
+          }
+        });
+      }
+    </script>
   </body>
 </html>
