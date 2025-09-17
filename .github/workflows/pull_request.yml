@@ -68,6 +68,7 @@ jobs:
           /srv/github-action-scripts/build-astro-site.sh
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLOUDINARY_UNSIGNED_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UNSIGNED_UPLOAD_PRESET }}
 
       - uses: actions/cache/save@v4
         with:
