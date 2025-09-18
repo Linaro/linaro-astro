@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "preview": "astro preview",
-    "build": "astro build && node scripts/replace-config.mjs",
+    "build": "node scripts/replace-config.mjs && astro build",
     "start:public": "IS_PUBLIC=true astro dev",
     "dev:public": "IS_PUBLIC=true astro dev",
     "preview:public": "IS_PUBLIC=true astro preview",
