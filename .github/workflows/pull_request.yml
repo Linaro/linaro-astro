@@ -52,8 +52,21 @@ jobs:
       - name: Build site
         run: |
           # Set up the environment variables
+          export NODE_OPTIONS=--experimental-wasm-modules
+          export IS_PUBLIC=true
+          export IS_PREVIEW=true
+          export CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+          export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+          export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
           echo "DECAP_DOMAIN is $DECAP_DOMAIN"
+          # For pull requests, we set custom domain to the preview URL
+          export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
+          export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
+          # Build script does yarn install and yarn build
+          /srv/github-action-scripts/build-astro-site.sh
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
