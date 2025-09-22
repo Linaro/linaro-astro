@@ -17,7 +17,7 @@
     "dev:auth": "IS_PUBLIC=false sst bind astro dev",
     "start:auth": "IS_PUBLIC=false sst bind astro dev",
     "prebuild:auth": "PRE_BUILD=true astro build --outDir ./dist_prebuild/",
-    "build:auth": "yarn prebuild:auth && node scripts/replace-config.mjs && astro build"
+    "build:auth": "yarn prebuild:auth && astro build"
   },
   "dependencies": {
     "@astrojs/check": "^0.6.0",
