@@ -59,6 +59,7 @@ jobs:
           export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}

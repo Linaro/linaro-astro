@@ -1,6 +1,13 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Linaro/linaro-astro
   branch: main
+  base_url: "${DECAP_DOMAIN}"
+  auth_endpoint: auth
+  squash_merges: true
+  cms_label_prefix: cms/
+
+publish_mode: editorial_workflow
 
 media_library:
   name: cloudinary

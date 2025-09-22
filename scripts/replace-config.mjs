@@ -14,14 +14,6 @@ config = config.replace(/\${(\w+)}/g, (_, key) => {
   if (!process.env[key]) {
     throw new Error(`Missing environment variable: ${key}`);
   }
-
-  console.log("DEBUG env vars:");
-  console.log(
-    "CLOUDINARY_API_KEY:",
-    process.env.CLOUDINARY_API_KEY,
-    process.env.CLOUDINARY_CLOUD_NAME,
-  );
-
   return process.env[key];
 });
 
