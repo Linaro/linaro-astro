@@ -24,6 +24,7 @@ export default {
             CLOUDINARY_URL: process.env.CLOUDINARY_URL!,
             PUBLIC_CLOUDINARY_CLOUD_NAME:
               process.env.PUBLIC_CLOUDINARY_CLOUD_NAME!,
+            DECAP_DOMAIN: process.env.DECAP_DOMAIN!,
           },
         });
         stack.addOutputs({
