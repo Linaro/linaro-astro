@@ -11,7 +11,7 @@ concurrency:
 
 env:
   NODE_VERSION: "20.x"
-  DECAP_DOMAIN: ${{ secrets.DECAP_DOMAIN }}
+  DECAP_DOMAIN: ${{ vars.DECAP_DOMAIN }}
 
 jobs:
   process-pull-request:
