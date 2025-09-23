@@ -107,8 +107,6 @@ Once the panic happens, wait for the Qualcomm upper level firmware to kick in an
 
 When this happens, you will see some information on the console, ending with something similar to:
 
-``
-
 ```
 B -   1096414 - usb: init start
 B -   1100287 - usb: qusb_dci_platform , 0x19
@@ -140,8 +138,6 @@ EDL will connect and download all the files and place them into the \`memory/\` 
 
 This can be done in many ways, but one simple way is just using \`cat\` to put them all together:
 
-``
-
 ```
 cat memory/md_KELF1.BIN memory/md_Kvmcorein2.BIN memory/md_Kconfig3.BIN \
 memory/md_Kmemsect4.BIN memory/md_Ktotalram5.BIN memory/md_Kcpu_poss6.BIN \
@@ -172,8 +168,6 @@ If the patch on the Crash tool was not applied, you can only use the \`--minimal
 
 Once crash finishes loading, it will print something similar to:
 
-``
-
 ```
 KERNEL: /home/eugen/linux-minidump/vmlinux  [TAINTED]
     DUMPFILE: /home/eugen/new
@@ -191,12 +185,13 @@ KERNEL: /home/eugen/linux-minidump/vmlinux  [TAINTED]
 
 The prompt for Crash will show up, taking up all GDB commands and specific Crash commands, like the \`log\` which will output the dmesg kernel log:
 
-``
-
 ```
 crash> log
 [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd4b2]
-[    0.000000] Linux version 6.17.0-rc5-next-20250910-00020-g7dfa02aeae7e (eugen@eugen-station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #116 SMP PREEMPT Thu Sep 11 18:28:06 EEST 2025
+[    0.000000] Linux version 6.17.0-rc5-next-20250910-00020-g7dfa02aeae7e (eugen@eugen-
+station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 
+20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #116 SMP 
+PREEMPT Thu Sep 11 18:28:06 EEST 2025
 ```
 
 You can then use Crash to debug anything related to the kernel, bearing in mind that not all the kernel memory is available, rather just the memory registered through kmemdump.
@@ -207,7 +202,10 @@ In these examples we can see how to use Crash to inspect structures and variable
 
 ```
 crash> p linux_banner
-linux_banner = $1 = 0xffffdbc68ea56340 <linux_banner> "Linux version 6.16.0-rc7-next-20250721-00043-g0e33acc05bc3-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #87 "...
+linux_banner = $1 = 0xffffdbc68ea56340 <linux_banner> "Linux version 6.16.0-rc7-
+next-20250721-00043-g0e33acc05bc3-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc 
+(Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 
+13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #87 "...
 
 crash> p node_states
 node_states = $2 = 
