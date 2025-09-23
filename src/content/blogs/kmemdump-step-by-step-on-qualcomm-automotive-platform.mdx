@@ -1,0 +1,240 @@
+---
+title: Kmemdump step by step on Qualcomm Automotive platform
+description: |-
+  A step by step guide to try out kmemdump on the SA8775P Ride SX 4.0 Automotive
+  Development Platform
+date: 2025-09-23T10:00:00.000+01:00
+author: linaro
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758626414/linaro-website/images/blog/embedded_grey_1_uipctu.jpg
+tags:
+  - iot-embedded
+  - linux-kernel
+  - automotive
+related: []
+---
+# Introduction
+
+Kmemdump is a mechanism to obtain a small footprint debug dump from a crashed kernel.
+
+In a [previous blog post](https://www.linaro.org/blog/introduction-to-kmemdump/) we talked about how kmemdump came about with a few details on
+
+how to run it. This time we are going to deep dive into a simple yet efficient way to run
+
+kmemdump on a specific platform that supports it. By using kmemdump we will end up with
+
+a small but usable crash core dump that we can inspect.
+
+# SA8775P Ride platform
+
+Informally known as LeMans, the [SA8875P Ride platform](https://www.lantronix.com/products/ride-sx-4-0-automotive-development-platform/) is the next-generation
+
+Qualcomm Snapdragon Advanced Driver Assistance System (ADAS) and
+
+automotive infotainment SoC designed for superior performance and power
+
+efficiency in automotive applications.
+
+![SA8775P Ride platform image](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758619475/linaro-website/images/blog/sa8875p_ride_platform_ygavop.png)
+
+# Preparing the environment
+
+First things first, build the Linux Kernel, create a root file system, and boot your board. Now
+
+we can get kmemdump up and running!
+
+The LeMans is already supported in the upstream kernel, so you only have to apply the
+
+kmemdump RFC patch series on top of your kernel from [here](https://lore.kernel.org/all/20250912150855.2901211-1-eugen.hristev@linaro.org/).
+
+## Kernel config
+
+Prepare the kernel using the following kernel configuration options:
+
+```
+CONFIG_DEBUG_INFO_REDUCED=n
+CONFIG_KMEMDUMP=y
+CONFIG_KMEMDUMP_COREIMAGE=y
+CONFIG_KMEMDUMP_QCOM_MINIDUMP_BACKEND=m
+```
+
+This will enable the kmemdump feature, its minidump backend driver, and more debugging
+
+information in the kernel that will be used later.
+
+## Kernel boot arguments
+
+The Qualcomm SCM driver needs to instruct the firmware to use the *‘mini’* mode for
+
+dumping, instead of the *‘full’* mode. *Full* mode means the whole memory is dumped, while
+
+*mini* mode in turn will have the firmware to walk the minidump table, only dumping specific
+
+memory areas that were registered by kmemdump.
+
+To achieve this, add `qcom scm.download mode=mini` to the kernel boot command.
+
+## Crash tool
+
+[Crash](https://www.man7.org/linux/man-pages/man8/crash.8.html) is a tool that can load the obtained debug dump and load it for inspection and analysis. Crash source code can be downloaded from [github](https://github.com/crash-utility/crash).
+
+To use the full functionality of Crash, you need to apply a small patch that will make full mode operational. Crash can still load the debug image using \`minimal\` mode. If you want to use only minimal mode, you can skip this step.
+
+The patch to apply can be downloaded from [here](https://p.calebs.dev/49a048). To build and use Crash on an x86 machine, it has to be built with \`target=ARM64\` as LeMans is an ARM64 platform.
+
+## Emergency download mode (EDL) tool
+
+You will need the [EDL tool](https://github.com/bkerler/edl) to run on the host, to be able to interface the Qualcomm firmware and download the debug files. The tool needs to be compiled and installed.
+
+## Booting and getting ready
+
+Once the kernel boots, you need to load the backend driver, which is built as a module:
+
+```
+$ modprobe qcom_minidump
+```
+
+After this step, the environment is ready for any possible event.
+
+# Acting on the panic
+
+You can generate an artificial panic to test kmemdump now.
+
+```
+$ echo c > /proc/sysrq-trigger
+```
+
+Once the panic happens, wait for the Qualcomm upper level firmware to kick in and take control of the system.
+
+When this happens, you will see some information on the console, ending with something similar to:
+
+```
+B -   1096414 - usb: init start
+B -   1100287 - usb: qusb_dci_platform , 0x19
+B -   1105686 - usb: usb3phy: PRIM success: lane_A , 0x60
+B -   1107455 - usb: usb2phy: PRIM success , 0x4
+B -   1112670 - usb: dci, chgr_type_det_err
+B -   1117154 - usb: ID:0x260, value: 0x4
+B -   1121942 - usb: ID:0x108, value: 0x1d90
+B -   1124992 - usb: timer_start , 0x4c4b40
+B -   1129140 - usb: vbus_det_pm_unavail
+B -   1133136 - usb: ID:0x252, value: 0x4
+B -   1148874 - usb: SUPER , 0x900e
+B -   1275510 - usb: SUPER , 0x900e
+B -   1388970 - usb: ID:0x20d, value: 0x0
+B -   1411113 - usb: ENUM success
+B -   1411113 - Sahara Init
+B -   1414285 - Sahara Open
+```
+
+The firmware will prepare the dump files and open up an USB gadget, such that you can connect from the host with a cable, and use EDL tool:
+
+```
+$ edl
+```
+
+EDL will connect and download all the files and place them into the \`memory/\` subdir which will have been created.
+
+# Assembling the debug image
+
+This can be done in many ways, but one simple way is just using \`cat\` to put them all together:
+
+```
+cat memory/md_KELF1.BIN memory/md_Kvmcorein2.BIN memory/md_Kconfig3.BIN \
+memory/md_Kmemsect4.BIN memory/md_Ktotalram5.BIN memory/md_Kcpu_poss6.BIN \
+memory/md_Kcpu_pres7.BIN memory/md_Kcpu_onli8.BIN memory/md_Kcpu_acti9.BIN \
+memory/md_Kjiffies10.BIN memory/md_Klinux_ba11.BIN memory/md_Knr_threa12.BIN \
+memory/md_Knr_irqs13.BIN memory/md_Ktainted_14.BIN memory/md_Ktaint_fl15.BIN \
+memory/md_Kmem_sect16.BIN memory/md_Knode_dat17.BIN memory/md_Knode_sta18.BIN \
+memory/md_K__per_cp19.BIN memory/md_Knr_swapf20.BIN memory/md_Kinit_uts21.BIN \
+memory/md_Kprintk_r22.BIN memory/md_Kprintk_r23.BIN memory/md_Kprb24.BIN \
+memory/md_Kprb_desc25.BIN memory/md_Kprb_info26.BIN memory/md_Kprb_data27.BIN \
+memory/md_Krunqueue28.BIN memory/md_Khigh_mem29.BIN memory/md_Kinit_mm30.BIN \
+memory/md_Kinit_mm_31.BIN memory/md_Kunknown32.BIN memory/md_Kunknown33.BIN \
+memory/md_Kunknown34.BIN  memory/md_Kunknown35.BIN memory/md_Kunknown36.BIN \
+memory/md_Kunknown37.BIN memory/md_Kunknown38.BIN memory/md_Kunknown39.BIN \
+memory/md_Kunknown40.BIN memory/md_Kunknown41.BIN memory/md_Kunknown42.BIN \
+memory/md_Kunknown43.BIN memory/md_Kunknown44.BIN memory/md_Kunknown45.BIN \
+memory/md_Kunknown46.BIN memory/md_Kunknown49.BIN  memory/md_Kunknown50.BIN \
+memory/md_Kunknown51.BIN > ~/minidump_image
+```
+
+## Loading the image into Crash
+
+`$ ./crash --no_modules --no_panic --no_kmem_cache --zero_excluded vmlinux minidump_image`
+
+Where vmlinux is created when building the kernel, and minidump_image is the dump created at the previous step.
+
+If the patch on the Crash tool was not applied, you can only use the \`--minimal\` mode instead of all the arguments above. Minimal mode will only allow a small subset of Crash functionality.
+
+Once crash finishes loading, it will print something similar to:
+
+```
+KERNEL: /home/eugen/linux-minidump/vmlinux  [TAINTED]
+    DUMPFILE: /home/eugen/new
+        CPUS: 8 [OFFLINE: 5]
+        DATE: Thu Jan  1 02:00:00 EET 1970
+      UPTIME: 00:00:22
+       TASKS: 0
+    NODENAME: qemuarm64
+     RELEASE: 6.17.0-rc5-next-20250910-00020-g7dfa02aeae7e
+     VERSION: #116 SMP PREEMPT Thu Sep 11 18:28:06 EEST 2025
+     MACHINE: aarch64  (unknown Mhz)
+      MEMORY: 34.2 GB
+       PANIC: ""
+```
+
+The prompt for Crash will show up, taking up all GDB commands and specific Crash commands, like the \`log\` which will output the dmesg kernel log:
+
+```
+crash> log
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd4b2]
+[    0.000000] Linux version 6.17.0-rc5-next-20250910-00020-g7dfa02aeae7e (eugen@eugen-
+station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 
+20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #116 SMP 
+PREEMPT Thu Sep 11 18:28:06 EEST 2025
+```
+
+You can then use Crash to debug anything related to the kernel, bearing in mind that not all the kernel memory is available, rather just the memory registered through kmemdump.
+
+# More examples
+
+In these examples we can see how to use Crash to inspect structures and variables in the dump.
+
+```
+crash> p linux_banner
+linux_banner = $1 = 0xffffdbc68ea56340 <linux_banner> "Linux version 6.16.0-rc7-
+next-20250721-00043-g0e33acc05bc3-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc 
+(Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 
+13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #87 "...
+
+crash> p node_states
+node_states = $2 = 
+ {{
+    bits = {1}
+  }, {
+    bits = {1}
+  }, {
+    bits = {1}
+  }, {
+    bits = {1}
+  }, {
+    bits = {1}
+  }, {
+    bits = {0}
+  }}
+
+crash> p mem_section[0][0]
+$6 = {
+  section_mem_map = 0,
+  usage = 0x0
+}
+
+crash> p nr_irqs
+nr_irqs = $7 = 378
+```
+
+# Conclusion
+
+Kmemdump can be used on the SA8775P LeMans platform to obtain a small footprint for quick kernel debugging. The readily available open source tools can be used to facilitate the process, which is simple yet efficient.
+
+To learn more or contribute, you can join the [discussion on the mailing list](https://lore.kernel.org/all/20250912150855.2901211-1-eugen.hristev@linaro.org/).
