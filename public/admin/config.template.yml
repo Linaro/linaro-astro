@@ -23,6 +23,34 @@ media_library:
 media_folder: ""
 
 collections:
+  # Authors collection
+  - name: "authors"
+    label: "Authors"
+    folder: "src/content/authors"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "name"
+    fields:
+      - { label: "Full Name", name: "name", widget: "string" }
+      - { label: "First Name", name: "first_name", widget: "string" }
+      - { label: "Last Name", name: "last_name", widget: "string" }
+      - { label: "Image", name: "image", widget: "image", choose_url: true }
+
+  # Tags collection
+  - name: "tags"
+    label: "Tags"
+    folder: "src/content/tags"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "name"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+
+  # Blog collection
   - name: "blog"
     label: "Blog"
     label_singular: "Post"
@@ -37,7 +65,23 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Author", name: "author", widget: "string" }
+
+      - label: "Author"
+        name: "author"
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+
+      - label: "Tags"
+        name: "tags"
+        widget: "relation"
+        collection: "tags"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+        multiple: true
 
       - {
           label: "Featured Image",
@@ -45,7 +89,6 @@ collections:
           widget: "image",
           choose_url: true,
         }
-      - { label: "Tags", name: "tags", widget: "list", default: [] }
       - {
           label: "Related",
           name: "related",
