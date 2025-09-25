@@ -1,0 +1,100 @@
+---
+title: "Blog 2: Posted patches, what next?"
+description: "The Linux kernel development community is largely built around
+  collaboration and communication. In last week's blog we talked about how to
+  submit a patch. In this blog - the second part of our blog series on how to
+  become a Kernel Developer - we talk about how to work effectively with the
+  Linux kernel community. "
+date: 2025-09-25T10:21:00.000+01:00
+author: Neil Armstrong
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/IMG_0635_om3lxo.jpg
+tags:
+  - linux-kernel
+  - open-source
+related: []
+---
+# Interacting with the Linux Kernel Community
+
+The Linux kernel development community is a vibrant and active ecosystem, largely built around collaboration and communication. While sending patches is a core activity that was discussed in the [previous part of this blog series](https://www.linaro.org/blog/becoming-a-kernel-developer-part1-posting-your-first-patch/), being an active participant involves more than just submitting code.This blog post is all about how to work effectively with the Linux kernel community. We'll especially focus on reviewing and testing patches, which really helps out maintainers, makes contributing smoother, and keeps the kernel's code in great shape.
+
+Linaro is a vital contributor to the kernel community, focusing on direct code development (new features, optimizations, bug fixes), rigorous code review, maintenance of kernel subsystems and drivers, and comprehensive testing (unit, integration, performance, regression). These efforts shape the Linux kernel, fostering innovation and ensuring a robust foundation for global devices.
+
+# The Linux Kernel Mailing List (LKML)
+
+The Linux Kernel Mailing List (LKML) is the primary communication channel for kernel development. Understanding and adhering to its netiquette is crucial for effective interaction.
+
+- Be polite and professional: Always maintain a respectful tone, even when disagreeing.
+- Keep threads focused: Stick to the topic of the thread. If you need to discuss something new, start a new thread.
+- Use plain text: Avoid HTML or rich text formatting in your emails.
+- Top-post (reply above the quoted text) is generally discouraged: It's often preferred to reply inline or below the quoted text to maintain readability.
+- Be concise and clear: Get to the point quickly and ensure your message is easy to understand.
+- Consider using mutt or similar command-line email clients: Many kernel developers prefer these tools for their efficiency and plain-text focus, which aligns well with LKML practices.
+
+# Reviewing and Testing Patches
+One of the most valuable ways to contribute to the Linux kernel community without necessarily writing new code is by reviewing and testing patches submitted by others. This process is vital for several reasons:
+
+- Easing the maintainer's burden: Maintainers receive a large volume of patches. Reviews and tests from the community help them identify issues early and prioritize what needs their direct attention.
+- Helping contributors: A well-reviewed patch has a much higher chance of being accepted upstream. Constructive feedback helps contributors improve their code.
+- Maintaining codebase quality: Reviews and tests catch bugs, identify inconsistencies, and ensure new code integrates cleanly with the existing kernel, preventing dead code and regressions.
+
+When reviewing a patch, consider:
+- Correctness and Functionality: Does the patch solve the problem it claims to solve? Does it introduce any new bugs or regressions? Are there edge cases that haven't been considered?
+- Code Style and Conventions: Adherence to the Linux kernel coding style guide is paramount. This ensures readability, maintainability, and consistency across millions of lines of code. Reviewers will check for proper indentation, variable naming, comment quality, and adherence to established patterns.
+- Architectural Design and Best Practices: For more significant changes, reviewers assess the patch's design. Does it fit well within the existing kernel architecture? Are there more elegant or efficient ways to achieve the same result? Does it follow established kernel API usage guidelines?
+- Performance and Resource Usage: Is the patch efficient in terms of CPU, memory, and power consumption? Does it introduce any unnecessary overhead?
+- Security Implications: Is there any potential for security vulnerabilities introduced by the patch? Are appropriate security measures in place?
+- Testability and Documentation: Are there adequate tests for the changes? Is the relevant documentation updated or new documentation created where necessary?
+
+Patches are rarely accepted on first submission. Reviewers provide detailed feedback, crucial for refining the patch. Developers then revise, leading to multiple submissions. This iterative process, though time-consuming, ensures high-quality code integration.
+
+As a patch matures through the review process, specific tags become crucial metadata, providing a transparent audit trail of community vetting and approval.
+- `Reviewed-by:`: When a reviewer has thoroughly examined a patch and is confident in its correctness, quality, and adherence to kernel standards, they can add a `Reviewed-by:` tag. This tag is typically included in their email response to the mailing list or directly in the patch's commit message by the person who merges the patch. The `Reviewed-by:` tag signifies that the individual has invested time and effort in understanding the patch and believes it is suitable for inclusion. It serves as a public endorsement, boosting confidence in the patch's quality. A patch often accumulates multiple `Reviewed-by:` tags from different individuals, demonstrating widespread community consensus. Having a widespread collection of reviews from outside your organization helps to avoid potential bias towards a specific solution.
+- `Acked-by:`: The `Acked-by:` tag has a slightly different nuance. It is often used by subsystem maintainers or individuals with domain expertise who agree with the general direction, technical approach, or specific aspects of a patch, even if they haven't performed a full, line-by-line review. For example, a maintainer of an unrelated subsystem might `Acked-by:` a patch that touches their area tangentially, or a hardware vendor might `Acked-by:` a driver change for their device. It indicates agreement and acceptance of the change, even without the full review responsibility of a `Reviewed-by:`. It can also be used to acknowledge that the maintainer has seen the patch and understands its intent, or that the patch aligns with their subsystem's roadmap.
+
+The accumulation of `Reviewed-by:` and `Acked-by:` tags, alongside the overall positive sentiment from the mailing list discussions, significantly increases the likelihood of a patch being accepted. These tags act as signals to the relevant subsystem maintainer (or the benevolent dictator for life, Linus Torvalds, for core kernel changes). The maintainer ultimately decides whether to pull the patch into their subsystem's branch of the kernel tree. Once merged, the patch becomes part of the official kernel source code, contributing to the next kernel release.
+
+# Tools for Reviewing and Testing
+A robust set of tools is indispensable for anyone involved in reviewing, testing, and contributing to the Linux kernel. These tools streamline the workflow, enhance code quality, and ensure compatibility across various platforms. Below is an elaboration on the essential tools and methodologies:
+- Git: Git is crucial for kernel development, essential for managing patches, applying them, creating branches, rebasing, and preparing contributions. Proficiency in Git is key for navigating the kernel's history and patch states.
+- checkpatch.pl: Use scripts/checkpatch.pl to ensure coding style compliance. This script, found in the kernel source, checks for common style violations like indentation, whitespace, and SPDX identifiers, as detailed in Documentation/process/coding-style.rst. Running it before submission can minimize review iterations, as maintainers expect patches to pass checkpatch.pl with few warnings.
+- Email Clients (Thunderbird, Mutt, etc.): The Linux kernel development workflow heavily relies on email-based communication, specifically mailing lists. Therefore, a capable email client is crucial for sending, receiving, and managing patch series.
+    - Thunderbird is a popular graphical client that offers robust features for managing mailboxes, filtering messages, and handling attachments, making it suitable for both sending and receiving patches.
+    - Mutt is a highly configurable, text-based email client favored by many kernel developers for its speed, efficiency, and powerful keyboard-driven interface, which can be particularly efficient for handling large volumes of patch emails.
+    - Regardless of the client, understanding how to properly format and send patches via email (e.g., using `git send-email`) and how to apply incoming patches (`git am`) is fundamental.
+- lei: For developers who prefer not to subscribe to every relevant kernel mailing list directly, lei (a tool for working with `lore.kernel.org`) offers a powerful alternative. It allows users to fetch patch series and discussions from `lore.kernel.org`, the archive for kernel mailing list traffic, providing a more structured and potentially faster way to access patches without the overhead of traditional mailing list subscriptions. `lei` can be particularly useful for quickly pulling down a specific patch series for testing or review.
+- Cross-compilation and Different Architectures: The Linux kernel supports diverse architectures beyond x86. Testing patches on these different architectures is crucial for robustness and portability, revealing platform-specific issues. Cross-compilation, building for a target architecture on a different host, requires specific toolchains. QEMU is invaluable for emulating various architectures, enabling testing without physical hardware. Buildroot and Yocto Project simplify building complete embedded Linux systems for various architectures, abstracting cross-compilation and dependency management, despite a steeper learning curve.
+- Kernel Test Robots/Frameworks: Kernel test robots, like KernelCI and 0-Day, automate patch testing (applying, building, running tests like boot, runtime, performance, and static analysis) across kernel versions and architectures. Their mailing list feedback highlights regressions, build failures, and other issues, accelerating review and stabilization. Understanding these reports helps quickly fix issues pre-merge.
+
+The seamless integration of `lei` with `mutt` offers a highly efficient and powerful workflow for patch review, a common task in open-source development, particularly within the Linux kernel community. This synergy allows developers to leverage `lei`'s robust capabilities for fetching and managing patches from various sources, such as `lore.kernel.org`, and then utilize `mutt`'s feature-rich text-based email client for detailed examination and interaction.
+
+A good blog post about how to leverage `lei` can be found at: [Using lei, b4, and mutt to do kernel development | Josef Bacik’s Blog](https://josefbacik.github.io/kernel/2021/10/18/lei-and-b4.html) 
+
+# Linux Stable Tree
+The Linux stable tree is a critical component of the Linux kernel development process, responsible for releasing regular updates and maintenance versions of the kernel. While the main Linux development (the "mainline" kernel or "Linus' tree") is about adding new features and drivers, and also fixing bugs and regressions in the release candidate period, the stable tree's job is to make sure those already-released kernels stay solid. This split is super important for keeping Linux reliable.
+
+Here's how it generally works: when a developer makes a change, it first goes into the mainline kernel. It gets thoroughly reviewed there and once it's merged and proven stable, then it can be considered for a stable branch. This "mainline first" rule is key because it catches any potential problems in the more active development environment before those changes hit the stable versions, where stability is everything.
+
+If a fix (like for a critical bug or security issue) is needed for a stable release, it's sent to the stable tree maintainers. This small, super-trusted team reviews it again, even more carefully than for the mainline tree. They check if it's truly a fix, if it adds anything new, and if it can be easily applied to older stable kernels without causing new headaches. They prefer minimal, targeted fixes.
+
+The key tag here to identify where a fix should apply is the `Fixes` tag, it formally identifies which commit(s) the fix is supposed to fix, and it helps determine which branch should have the fix backported to. In addition to that, the stable team runs an “autosel” process to pick more fixes that are not necessarily tagged appropriately.
+
+Once approved, the stable maintainers "backport" the patch, which means they adapt it for specific stable kernel branches like 6.1.y or 6.6.y (the .y just means it's a stable release series). Multiple stable branches are actively maintained at the same time.
+
+This careful process means that people running older, but still supported, kernel versions get all the crucial updates they need. Without the stable tree, they'd have to jump to the very latest mainline kernels to get fixes, which often come with big changes that could mess with their systems, require tons of retesting, or just not play nice with their hardware or software. By delivering a steady stream of essential fixes without new features, the stable tree keeps the kernel secure and dependable for all kinds of uses, from tiny embedded systems to huge enterprise servers and cloud setups. It's all about balancing innovation with rock-solid stability for production environments.
+
+More information about the stable kernel tree can be found at the [Everything you ever wanted to know about Linux -stable releases](https://docs.kernel.org/process/stable-kernel-rules.html) section of the Kernel documentation.
+
+# Beyond the Mailing List
+While the LKML is central, Linux kernel developers engage in various other platforms and events:
+
+- IRC (Internet Relay Chat): Many developers use IRC for real-time discussions, quick questions, and informal collaboration. Channels like #linux-kernel on OFTC (or Libera.Chat) are common gathering places.
+- Fediverse (e.g., Mastodon): A growing number of developers are active on decentralized social media platforms, providing another avenue for less formal interaction and sharing updates.
+- Conferences: Attending conferences is an excellent way to meet developers in person, have in-depth discussions, and solve issues collaboratively. Key conferences include:
+    - Linux Plumbers Conference (LPC): Focuses on "plumbing" topics, deep technical discussions, and problem-solving.
+    - FOSDEM: A large free and open-source software event in Brussels, with a dedicated Linux kernel development room.
+    - Embedded Linux Conference (ELC) / Open Source Summit (OSS): Broader open-source conferences often with significant kernel content.
+    - Kernel Recipes/Embedded Recipes: A smaller, more focused kernel development conference in Paris & Nice.
+
+By actively participating in patch reviews, engaging on various platforms, and attending conferences, you not only contribute to the health of the Linux kernel but also build valuable relationships within the community, making your own contributions more impactful and enjoyable.
+
+Linaro is proud to be part of these communities,come find us at Linux Plumbers where our Engineers are due to give presentations and run several mini conferences!
