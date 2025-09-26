@@ -176,6 +176,35 @@ Environment variables can also be overriden oravoided by using the `:public` vs 
 
 The site is deployed using the [SST AstroSite construct](https://docs.sst.dev/constructs/AstroSite). The configuration is located in `./sst.config.ts`.
 
+# CMS Integration Overview
+
+This project integrates [Decap CMS](https://decapcms.org/) (formerly Netlify CMS) with an Astro frontend to provide a simple, Git-based content management system.
+
+## Overview
+
+- **Frontend**: The Astro site serves the CMS at `/admin`, where editors can log in and manage content.
+- **CMS Configuration**: The CMS uses `public/admin/config.yml`, generated from `public/admin/config.template.yml` through the `replace-config.mjs` script. This file defines the backend, collections, and media storage.
+- **Authentication**: GitHub OAuth is used for authentication, ensuring only authorized contributors can edit content.
+- **Backend**: Authentication is handled by the [`netlify-cms-github-oauth-provider`](https://github.com/vencax/netlify-cms-github-oauth-provider), deployed on AWS.
+  - The backend exchanges GitHub OAuth tokens and passes them to the CMS.
+  - A GitHub OAuth App is registered to connect the site with GitHub’s API.
+
+## Deployment
+
+- The **Astro site** (including the CMS frontend) is deployed normally.
+- The **OAuth provider backend** is deployed separately on AWS and exposed through a public domain.
+- The CMS frontend (`/admin`) communicates with this backend for login and token handling.
+
+## Usage
+
+- Visit `/admin` on the site.
+- Log in using a GitHub account with access to the repo.
+- Create, edit, and publish content directly through the CMS interface.
+
+## Notes
+
+- Content is stored directly in the GitHub repository, keeping the workflow version-controlled.
+
 ## Questions?
 
 If you have any questions about updating or building this website, please contact Linaro IT Support at [it-support@linaro.org](mailto:it-support@linaro.org).
