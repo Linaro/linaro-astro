@@ -20,7 +20,7 @@ Currently, Windows on Arm machines have support for two different modes of execu
 
 After initial enablement of OpenSSL, running some benchmarks revealed some interesting results. The following shows the execution of MD5 using both OpenSSL compiled for x86 and native Microsoft Visual C++ (MSVC).
 
-![Openssl native results](/linaro-website/images/blog/openssl-native-results)
+![Openssl native results](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/openssl-native-results)
 
 Here ci is the native Arm64 version, compared against the emulated one. The graph shows the number of MD5s executed in 3s. This shows that although we were compiling OpenSSL natively, the performance on some algorithms was still quite bad compared to the emulated version. So this poses the question, why wasn’t OpenSSL performing better natively?
 
@@ -34,13 +34,13 @@ The problem here is borne out of the fact that MSVC does not have a seamless way
 
 The above benchmark now with all available configurations can be seen below.
 
-![openssl proposed linaro solution](/linaro-website/images/blog/openssl-proposed-linaro-solution)
+![openssl proposed linaro solution](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/openssl-proposed-linaro-solution)
 
 Notice that in this particular case OpenSSL was compiled on hardware that lacks the crypto extension. Also, using clang-cl as just an assembler is just slightly better than full MSVC however using LLVM as both compiler and assembler is considerably better. Benchmarks for SHA512 show a different behaviour.
 
 # Linaro’s solution: Using clang-cl as the assembler
 
-![clang cl as the assembler openssl](/linaro-website/images/blog/clang-cl-as-the-assembler-openssl)
+![clang cl as the assembler openssl](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/clang-cl-as-the-assembler-openssl)
 
 Here the improvements gained from using clang-cl as the assembler are quite obvious. Further analysis on the full benchmark needs to be done, evaluating all the points where performance is still not as expected along with possible causes and solutions. Here the improvements gained from using clang-cl as the assembler are quite obvious. Further analysis on the full benchmark needs to be done, evaluating all the points where performance is still not as expected along with possible causes and solutions.
 

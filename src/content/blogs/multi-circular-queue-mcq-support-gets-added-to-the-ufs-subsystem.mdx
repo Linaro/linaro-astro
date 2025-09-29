@@ -32,7 +32,7 @@ of data buffers.
 
 The UTRL has a doorbell register associated with it, which indicates which UTRDs are available for processing. When the HCI driver writes (rings) to the doorbell register, the controller is signaled of a new work item added to the list. And when the host controller has received the response from the device, it generates an interrupt that allows the HCI driver to handle the completion.
 
-![Data transfer between the HCI driver and the UFS device](/linaro-website/images/blog/data-transfer-between-the-hci-driver-and-the-ufs-device)
+![Data transfer between the HCI driver and the UFS device](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/data-transfer-between-the-hci-driver-and-the-ufs-device)
 
 UFS supports a subset of SCSI commands and uses them to communicate with the device. Each SCSI command is identified using a unique task tag, an identifier defined by SCSI. To service a SCSI request, the HCI driver prepares a UTRD, places it on the UTRL and rings the doorbell indicating to the host controller that the UTRD is ready for processing. The host controller parses the UTRDs in the order they were placed on the list and issues the commands to UFS device. On receiving the response from the device, controller updates the response UPIU fields of the corresponding UTRD on the list and notifies the HCI driver through interrupt if applicable. The host controller and driver make use of the task tag to identify the UTRDs in the list.
 
@@ -64,13 +64,13 @@ An SQ is implemented as a circular queue of UTRDs, where the HCI driver is the p
 
 A CQ is also implemented as a circular queue, where the host controller is the producer and the HCI driver is the consumer. After receiving the response UPIU from the device, the host controller updates the relevant head entry of the CQ and raises the interrupt to the HCI driver. The content of the CQ entries looks similar to the UTRDs but they vary slightly by the addition of ID corresponding to the SQ and the Overall Command Status (OCS) field.
 
-![Completion queue](/linaro-website/images/blog/completion-queue)
+![Completion queue](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/completion-queue)
 
 ### Doorbell (DB)
 
 UFSHCI defines separate doorbell registers for each of the SQ and CQ in the host controller’s MMIO region. The doorbell registers are used to pass the head and tail pointers (offsets) of the SQ and CQ between the host controller and the driver. The doorbell registers associated with the SQ are also used to signal notifications by the driver to the host controller for processing the SQs.
 
-![Host memory](/linaro-website/images/blog/host-memory)
+![Host memory](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/host-memory)
 
 ## MCQ implementation in Linux Kernel
 

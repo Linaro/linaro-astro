@@ -16,7 +16,7 @@ related: []
 
 Previously to the work discussed in this blog post, U-boot only supported the User datagram protocol (UDP). That limitation meant that downloading images or files from the network could only use protocols that were based on UDP, for example Trivial File Transfer Protocol (TFTP) and Network File System (NFS). After 20 rounds of reviews we have now landed HTTP and TCP support in the U-boot mainline! This means that we can transfer files from an HTTP server. This feature simplifies the development of the embedded systems because HTTP servers are more popular than other servers. Currently it only supports downloading files from an HTTP server on port 80, and there is no support yet for HTTPS.
 
-![Commits-HTTP now supported](/linaro-website/images/blog/commits-http-now-supported-in-uboot)
+![Commits-HTTP now supported](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/commits-http-now-supported-in-uboot)
 
 ## Turning on this feature
 
@@ -45,7 +45,7 @@ Or we can directly get the file by
 
 * wget $loadaddr 192.168.0.1:/\~paulliu/vmlinuz
 
-![Running wget](/linaro-website/images/blog/running-wget)
+![Running wget](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/running-wget)
 
 ## Conclusion
 

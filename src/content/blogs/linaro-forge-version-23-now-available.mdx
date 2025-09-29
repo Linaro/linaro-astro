@@ -37,23 +37,23 @@ DDT has improvements to existing Python capabilities and many additions.
 
 Categorization of time spent in the Python interpreter has been added to the Performance Report output.   This is particularly useful for Python driven HPC workloads because this often involves making sure you are using your C or FORTRAN compiled frameworks such as numpy or cupy correctly.   If you think it is easy to misunderstand your overall application performance with C or FORTRAN, it’s even easier in Python HPC!  Support of the allinea\_start\_sampling() and allinea\_stop\_sampling() functions in .py scripts has been added.   These routines have been important for a long time in compiled codes that have expensive setup or cleanup phases.  These routines are even more important in Python codes where understanding different  phases of your application may require more focused analysis.
 
-![linaro performance reports linaro forge release 23.png](/linaro-website/images/blog/linaro-performance-reports-release-23)
+![linaro performance reports linaro forge release 23.png](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/linaro-performance-reports-release-23)
 
 Performance Reports can now be generated directly from the MAP user interface.  Export the report as HTML, TXT or CSV and then open directly with your favorite viewing tool.
 
-![opening performance report in your browser](/linaro-website/images/blog/opening-performance-report-in-your-browser)
+![opening performance report in your browser](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/opening-performance-report-in-your-browser)
 
 Performance Reports can still be generated with the perf-report tool from the command line but this direct access from the MAP interface greatly streamlines the workflow supporting good performance engineering methodology.
 
 The text version of the Performance Report output is also now available in the Program Details dialog.   A lot of performance engineering workflows involve looking at runs with different configurations and the inclusion of this data greatly simplifies that analysis.
 
-![text version of linaro performance reports](/linaro-website/images/blog/text-version-of-linaro-performance-reports)
+![text version of linaro performance reports](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/text-version-of-linaro-performance-reports)
 
 ## Other Performance Engineering Tool Enhancements
 
 The CPU name is now included in the Performance Reports and MAP metadata output.   With the growing number of CPU brands and families in use at HPC centers this information has become even more important for performance comparisons.
 
-![linaro performance reports linaro forge release 23 image 2](/linaro-website/images/blog/linaro-performance-reports-release-23-image-2)
+![linaro performance reports linaro forge release 23 image 2](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/linaro-performance-reports-release-23-image-2)
 
 The architecture and usability of DDT and MAP has been highly optimized over the years to support large scale SPMD (single process multiple data) applications.  As we have been watching the evolving design of HPC codes take on other design paradigms we have been evolving our tools to support those models.   With this release, MAP has made several user interface enhancements to simplify the analysis of OpenMP threaded codes, non OpenMP threaded codes and GPU codes.
 

@@ -33,13 +33,13 @@ To address this issue, the Firmware Handoff specification defines a universal an
 
 TL defines a header followed by a sequence of TEs, all of which are contiguous in physical address space. Each TE represents the information produced by a bootloader and is intended to be consumed by a component running later, which needs to consume this information.
 
-![Transfer list layout](/linaro-website/images/blog/transfer-list-layout)
+![Transfer list layout](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/transfer-list-layout)
 
 **F﻿igure 1: Transfer list layout**
 
 Furthermore, the Firmware Handoff specification outlines a straightforward, extensible, and easily accessible registration mechanism by defining multiple TE types and TE ID ranges, enabling communities to register new TEs for various use cases without barriers.
 
-![Transfer entry types and ID ranges](/linaro-website/images/blog/transfer-entry-types-and-id-ranges)
+![Transfer entry types and ID ranges](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/transfer-entry-types-and-id-ranges)
 
 **Table 1: Transfer Entry types and ID ranges**
 
@@ -101,7 +101,7 @@ CFG_MAP_EXT_DT_SECURE=y
 
 The diagram below illustrates how a TL, containing two entries (TEs) (FDT and OPTEE pageable part), is generated, handed off, and consumed between different firmware components.
 
-![Transfer list handoff between boot stages](/linaro-website/images/blog/transfer-handoff-between-boot-stages)
+![Transfer list handoff between boot stages](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/transfer-handoff-between-boot-stages)
 
 **Figure 2: Transfer List handoff between boot stages**
 

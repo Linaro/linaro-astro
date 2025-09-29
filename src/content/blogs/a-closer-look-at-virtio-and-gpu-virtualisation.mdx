@@ -23,7 +23,7 @@ Unlike most CPUs however, the details of the GPUs execution model are often hidd
 
 All this has made the virtualisation of GPUs a particularly challenging field. There are broadly two approaches that can be used: Virtual Functions and API Forwarding.
 
-![A 2D desktop scene being composited by glmark2-wayland](/linaro-website/images/blog/uvqt)
+![A 2D desktop scene being composited by glmark2-wayland](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/uvqt)
 
 ## Virtual Functions
 
@@ -45,7 +45,7 @@ To address these limitations, various software aided approaches have been adopte
 
 The original form of this is an extension called [Mediated Devices](https://docs.kernel.org/driver-api/vfio-mediated-device.html) (mdev)  which, hardware permitting, allows the host kernel to partition up a device. Currently the only in-kernel drivers that support this are the Intel i915 driver and one s390 crypto driver.
 
-![Native context rendering with GPU user space in guest](/linaro-website/images/blog/yhcs)
+![Native context rendering with GPU user space in guest](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/yhcs)
 
 A more recent approach is to leverage an extension to virtio-gpu known as the [Native ](https://www.youtube.com/watch?v=9sFP_yddLLQ)[Context](https://www.youtube.com/watch?v=9sFP_yddLLQ). This re-uses the VirtIO machinery for a number of common functions but also exposes the native context directly to the guest. The guest ends up running a lightly modified version of the native GPU driver which is made VirtIO aware in combination with changes made to the rendering backend to support a custom guest/host protocol for that particular GPU.
 
@@ -53,7 +53,7 @@ A more recent approach is to leverage an extension to virtio-gpu known as the [N
 
 The other approach seen in GPU virtualisation is API forwarding. This works by presenting the guest with an idealised piece of virtual hardware which closely maps onto the requirements of the shared library abstractions. The original 3D acceleration for VirtIO GPU was based on [OpenGL](https://www.opengl.org/). The device provides a virtual OpenGL device called VirGL which is based on the Gallium3D interface. This allows the guest to simply feed the device a series of OpenGL commands along with a universal GPU independent shader intermediate language. At the back end these commands are fed into [virglrenderer](https://gitlab.freedesktop.org/virgl/virglrenderer) which will then render through the host GPU.
 
-![API forwarding GPU specific drivers in host](/linaro-website/images/blog/pfun)
+![API forwarding GPU specific drivers in host](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/pfun)
 
 The main complaint against the VirGL approach is efficiency. While fine for running a smooth desktop experience, performance is well below what you would expect running directly on the host. One reason for this could be that the venerable OpenGl programming model is a little too abstract from the way modern GPUs tend to be programmed. Combined with the inevitable virtualisation overhead this exacerbates its performance problems.
 
@@ -71,7 +71,7 @@ Also for Linaro, as a company which works predominantly with open source, adding
 
 We think that some of the security concerns around the graphics stack can be ameliorated by using safer languages like Rust to write our VirtIO backends.  However it should be noted that a large chunk of the backend will still eventually end up being processed on common C libraries. One approach to mitigating the risk of exploits in the privileged host is to move the graphics backend into a separate virtual machine (sometimes called a driver domain). This way if the daemon is breached the attacker should still be contained in a relatively limited environment.
 
-![A 3D horse as rendered by glmark2-wayland](/linaro-website/images/blog/a_bb)
+![A 3D horse as rendered by glmark2-wayland](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/a_bb)
 
 ## **How this relates to Project Orko**
 

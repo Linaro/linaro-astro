@@ -51,20 +51,20 @@ Note: U-Boot does not currently support HTTPS and HTTP redirection, so we need t
 
 When the menu appears on the console we can start the UEFI HTTP Boot by selecting the boot option ‘fedora-netinst’ we just added.
 
-![uboot bootmenu](/linaro-website/images/blog/uboot-bootmenu)
+![uboot bootmenu](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/uboot-bootmenu)
 
 U-Boot will automatically start the download of the Fedora ISO installer.
 
-![uboot wget download](/linaro-website/images/blog/uboot-wget-download)
+![uboot wget download](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/uboot-wget-download)
 
 After the download completes, the Fedora installer is launched. 
 
-![Start Fedora installation](/linaro-website/images/blog/start-fedora-installation)
+![Start Fedora installation](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/start-fedora-installation)
 
 \
 Since the ramdisk created by U-Boot is not passed to the OS and installer loses the access to it after ExitBootServices, in order to continue the Fedora installation, an extra parameter needs to be defined during boot.  Select the “Install Fedora 38” entry, then press ‘e’ to edit the commands (it’s worth noting that the procedure is identical for EDK2).
 
-![edit inst.stage2](/linaro-website/images/blog/edit-inst.stage2)
+![edit inst.stage2](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/edit-inst.stage2)
 
 \
 Add ‘inst.stage2’ kernel parameter to point to the appropriate http server. The following http server must be used:
@@ -75,11 +75,11 @@ inst.stage2=https://dl.fedoraproject.org/pub/fedora/linux/releases/38/Server/aar
 
 Press F10 to start the installer. Since I am using the box in headless mode (the GPU support has [known issues](https://www.96boards.org/documentation/enterprise/developerbox/support/known-issues.html)), installing via VNC is a nice option.
 
-![VNC Fedora Installation](/linaro-website/images/blog/vnc-fedora-installation)
+![VNC Fedora Installation](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/vnc-fedora-installation)
 
 It's worth noting that since U-Boot does not support SetVariable at runtime you'll get an error while the installer is trying to update the EFI Boot#### variables. This is not fatal, you can just continue the installation and fix up the boot options later.
 
-![Fedora installation SetVariable error](/linaro-website/images/blog/fedora-installation-setvariable-error)
+![Fedora installation SetVariable error](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/fedora-installation-setvariable-error)
 
 \
 After the installation completes, reboot the board and manually add the boot option in U-Boot console.

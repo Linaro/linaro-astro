@@ -166,7 +166,7 @@ f_s16:
 \
 While the fallback sequence is shorter, each successive ins instruction has dependency on previous one (because it has to update v0 from previous ins along with setting the vector lane), which forces the entire sequence to execute serially. With the divide and conquer approach the code-gen for initializing respective halves is interleaved and can thus be parallelized as illustrated in the diagram below:
 
-![ Diagram that illustrates parallel execution of instructions to initialize two halves of the vector ](/linaro-website/images/blog/improvements-to-gcc-s-code-gen-for-vector-initialization-on-aarch64)
+![ Diagram that illustrates parallel execution of instructions to initialize two halves of the vector ](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/improvements-to-gcc-s-code-gen-for-vector-initialization-on-aarch64)
 
 Note that this strategy may not always be optimal. For example:
 
