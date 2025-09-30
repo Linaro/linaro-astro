@@ -7,7 +7,18 @@ import * as marked from "marked";
 
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
-const { title, background_image, button, description, styles } = Astro.props!;
+const {
+  title,
+  background_image,
+  button,
+  description,
+  styles,
+  newHero,
+  doubleHero,
+  title2,
+  description2,
+  background_image2,
+} = Astro.props!;
 let optimizedBackground: GetImageResult | undefined;
 if (background_image) {
   optimizedBackground = await getImage({
@@ -21,77 +32,164 @@ if (background_image) {
     inferSize: true,
   });
 }
+let optimizedBackground2: GetImageResult | undefined;
+if (background_image2) {
+  optimizedBackground2 = await getImage({
+    src: getCloudinarySrc({
+      src: background_image2,
+      alt: "",
+      width: 1724.55,
+      height: 1182.9,
+    }),
+    format: "webp",
+    inferSize: true,
+  });
+}
 
 const titleMarkdown = await marked.parseInline(title);
 const descriptionMarkdown = await marked.parse(description);
+const titleMarkdown2 = await marked.parseInline(title2 ?? "");
+const descriptionMarkdown2 = await marked.parse(description2 ?? "");
 ---
 
-<section
-  class:list={[
-    // style,
-    `relative text-white  w-full max-w-screen overflow-hidden`,
-    styles?.main_container
-      ? styles.main_container
-      : "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
-  ]}
->
-  <div
-    class:list={[
-      "absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container",
-      styles?.background_container,
-    ]}
-  >
-    <div
+{
+  newHero ? (
+    <section
       class:list={[
-        "w-full h-full hero-background-image bg-no-repeat bg-contain z-10",
-        styles?.background,
-        background_image && "hero-background-image",
+        "relative text-white w-full max-w-screen overflow-hidden flex items-start justify-center",
+        styles?.main_container ??
+          "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
       ]}
     >
-    </div>
-  </div>
-  <div
-    class:list={[
-      "relative container mx-auto flex flex-col justify-center h-full px-8 z-20",
-    ]}
-  >
-    <div class:list={["flex flex-col items-start", styles?.text_container]}>
-      <h1
+      <div
         class:list={[
-          "text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
-          styles?.title,
+          "absolute inset-0 w-full h-full max-w-[160rem] mx-auto -z-10",
+          styles?.background_container ?? "p-[5%]",
         ]}
-        set:html={titleMarkdown}
-      />
+      >
+        <div
+          class:list={[
+            "w-full h-full hero-background-image bg-no-repeat bg-center bg-contain",
+            styles?.background ?? "mx-auto",
+            background_image && "hero-background-image",
+          ]}
+        />
+      </div>
 
       <div
-        class:list={["text-xl", styles?.description]}
-        set:html={descriptionMarkdown}
-      />
-      {
-        button && (
-          <a
-            href={button.url}
-            target={button.url.startsWith("https://") ? "_blank" : "self"}
-            class="mt-12 no-underline inline-block"
-          >
-            <div class="linaro-gradient-button">{button.text}</div>
-          </a>
-        )
-      }
-    </div>
-    <span class="hidden" data-pagefind-meta={`summary`}>{description}</span>
-    <span class="hidden" data-pagefind-meta={`heading`}>{title}</span>
-    {
-      optimizedBackground && (
-        <div
-          class="hidden"
-          data-pagefind-meta={`image:${optimizedBackground.src}`}
+        class:list={[
+          styles?.text_container ??
+            "max-w-2xl text-center w-full mx-auto z-10 pt-24",
+        ]}
+      >
+        <h1
+          class:list={[
+            "text-inherit text-4xl md:text-5xl leading-tight lg:leading-tight mb-0 mt-24 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
+            styles?.title ?? "max-w-2xl text-center",
+          ]}
+          set:html={titleMarkdown}
         />
-      )
-    }
-  </div>
-</section>
+      </div>
+    </section>
+  ) : doubleHero ? (
+    <>
+      <section class="relative text-white w-full max-w-screen overflow-hidden min-h-[500px]">
+        <div class="absolute top-0 bottom-0 right-0 left-0 md:left-[30%] z-0">
+          <div class="w-full h-full bg-no-repeat bg-contain bg-right hero-background-image" />
+        </div>
+        <div class="relative container mx-auto flex items-center p-8 z-20 text-left min-h-[500px]">
+          <div class="max-w-[700px]">
+            <h1
+              class="text-4xl md:text-5xl text-white"
+              set:html={titleMarkdown}
+            />
+            <div class="text-xl" set:html={descriptionMarkdown} />
+          </div>
+        </div>
+      </section>
+      <section class="relative text-white w-full max-w-screen overflow-hidden min-h-[500px]">
+        <div class="absolute top-0 bottom-0 left-0 right-0 md:right-[30%] z-0">
+          <div class="w-full h-full bg-no-repeat bg-contain bg-left hero-background-image2" />
+        </div>
+        <div class="relative container mx-auto flex items-center p-8 z-20 text-right min-h-[500px] w-full justify-end ">
+          <div class="max-w-[700px]">
+            <h1
+              class="text-4xl md:text-5xl text-white"
+              set:html={titleMarkdown2}
+            />
+            <div class="text-xl" set:html={descriptionMarkdown2} />
+          </div>
+        </div>
+      </section>
+    </>
+  ) : (
+    <section
+      class:list={[
+        // style,
+        `relative text-white  w-full max-w-screen overflow-hidden`,
+        styles?.main_container
+          ? styles.main_container
+          : "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
+      ]}
+    >
+      <div
+        class:list={[
+          "absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container",
+          styles?.background_container,
+        ]}
+      >
+        <div
+          class:list={[
+            "w-full h-full hero-background-image bg-no-repeat bg-contain z-10",
+            styles?.background,
+            background_image && "hero-background-image",
+          ]}
+        />
+      </div>
+      <div
+        class:list={[
+          "relative container mx-auto flex flex-col justify-center h-full px-8 z-20",
+        ]}
+      >
+        <div class:list={["flex flex-col items-start", styles?.text_container]}>
+          <h1
+            class:list={[
+              "text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
+              styles?.title,
+            ]}
+            set:html={titleMarkdown}
+          />
+
+          <div
+            class:list={["text-xl", styles?.description]}
+            set:html={descriptionMarkdown}
+          />
+          {button && (
+            <a
+              href={button.url}
+              target={button.url.startsWith("https://") ? "_blank" : "self"}
+              class="mt-12 no-underline inline-block"
+            >
+              <div class="linaro-gradient-button">{button.text}</div>
+            </a>
+          )}
+        </div>
+        <span class="hidden" data-pagefind-meta={`summary`}>
+          {description}
+        </span>
+        <span class="hidden" data-pagefind-meta={`heading`}>
+          {title}
+        </span>
+        {optimizedBackground && (
+          <div
+            class="hidden"
+            data-pagefind-meta={`image:${optimizedBackground.src}`}
+          />
+        )}
+      </div>
+    </section>
+  )
+}
 
 <style
   define:vars={{ backgroundUrl: `url(${optimizedBackground?.src ?? ""})` }}
@@ -99,5 +197,14 @@ const descriptionMarkdown = await marked.parse(description);
 >
   .hero-background-image {
     background-image: var(--backgroundUrl);
+  }
+</style>
+
+<style
+  define:vars={{ backgroundUrl2: `url(${optimizedBackground2?.src ?? ""})` }}
+  lang="scss"
+>
+  .hero-background-image2 {
+    background-image: var(--backgroundUrl2);
   }
 </style>
