@@ -3,7 +3,7 @@ name: Masahisa Kojima
 first_name: Masahisa
 last_name: Kojima
 image: linaro-website/images/author/unnamed-2
-
+slug_name: masahisa-kojima
 ---
 
 Masahisa started working as an embedded software engineer and focused\

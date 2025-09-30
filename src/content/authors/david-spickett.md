@@ -3,7 +3,7 @@ name: David Spickett
 first_name: David
 last_name: Spickett
 image: linaro-website/images/author/_mg_3850
-
+slug_name: david-spickett
 ---
 
 David started his career at Imagination Technologies working on debuggers, primarily for MIPS. Doing software and firmware development to support new and legacy processors.

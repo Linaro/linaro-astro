@@ -1,9 +1,9 @@
 ---
 name: David Brown
-first_name: "David "
+first_name: 'David '
 last_name: Brown
 image: linaro-website/images/author/david-brown
-
+slug_name: david-brown
 ---
 
 David Brown is a member of the Linaro IoT and Embedded Group (LITE),

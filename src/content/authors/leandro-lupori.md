@@ -1,9 +1,9 @@
 ---
-name: "Leandro Lupori "
-first_name: "Leandro "
+name: 'Leandro Lupori '
+first_name: 'Leandro '
 last_name: Lupori
 image: linaro-website/images/author/leandro-l
-
+slug_name: leandro-lupori
 ---
 
 Prior to joining Linaro as a Toolchain Engineer, I worked with system software, binary translation and embedded systems programming.\

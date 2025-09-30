@@ -47,6 +47,7 @@
     "marked": "^12.0.1",
     "pagefind": "^1.1.0",
     "remark": "^15.0.1",
+    "slugify": "^1.6.6",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.16",
     "sst": "2.48.5",

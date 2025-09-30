@@ -3,7 +3,7 @@ name: Pierrick Bouvier
 first_name: Pierrick
 last_name: Bouvier
 image: linaro-website/images/author/id
-
+slug_name: pierrick-bouvier
 ---
 
 Pierrick worked at MathWorks as a compiler engineer for static analyzer Polyspace.

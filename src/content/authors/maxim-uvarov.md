@@ -3,7 +3,7 @@ name: Maxim Uvarov
 first_name: Maxim
 last_name: Uvarov
 image: linaro-website/images/author/maxim-uvarov
-
+slug_name: maxim-uvarov
 ---
 
 Maxim has 10+ years experience developing commercial Linux operation\

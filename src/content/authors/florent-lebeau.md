@@ -3,5 +3,6 @@ name: Florent Lebeau
 first_name: Florent
 last_name: Lebeau
 image: linaro-website/images/author/avatar-placeholder
-
+slug_name: florent-lebeau
 ---
+
