@@ -2,7 +2,8 @@
 name: Daniel Thompson
 first_name: Daniel
 last_name: Thompson
-image: linaro-website/images/author/daniel-thompson
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/daniel-thompson
 slug_name: daniel-thompson
 ---
 

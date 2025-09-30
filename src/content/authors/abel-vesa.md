@@ -2,7 +2,8 @@
 name: Abel Vesa
 first_name: Abel
 last_name: Vesa
-image: linaro-website/images/author/unknown
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/unknown
 slug_name: abel-vesa
 ---
 

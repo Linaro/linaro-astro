@@ -2,7 +2,8 @@
 name: ' Przemyslaw Wirkus'
 first_name: ' Przemyslaw'
 last_name: Wirkus
-image: linaro-website/images/author/img_20220722_152207
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/img_20220722_152207
 slug_name: przemyslaw-wirkus
 ---
 

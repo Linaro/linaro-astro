@@ -2,7 +2,8 @@
 name: Sumit Garg
 first_name: Sumit
 last_name: Garg
-image: linaro-website/images/author/sumit-garg
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/sumit-garg
 slug_name: sumit-garg
 ---
 

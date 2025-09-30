@@ -2,7 +2,8 @@
 name: Viresh Kumar
 first_name: Viresh
 last_name: Kumar
-image: linaro-website/images/author/viresh-picture
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/viresh-picture
 slug_name: viresh-kumar
 ---
 

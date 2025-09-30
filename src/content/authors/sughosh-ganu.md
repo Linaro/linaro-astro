@@ -2,7 +2,8 @@
 name: Sughosh Ganu
 first_name: Sughosh
 last_name: Ganu
-image: linaro-website/images/author/sng
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/sng
 slug_name: sughosh-ganu
 ---
 

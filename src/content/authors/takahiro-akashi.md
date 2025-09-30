@@ -2,7 +2,8 @@
 name: 'Takahiro Akashi '
 first_name: Takahiro
 last_name: 'Akashi '
-image: linaro-website/images/author/takahiro-akashi
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/takahiro-akashi
 slug_name: takahiro-akashi
 ---
 

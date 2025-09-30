@@ -2,7 +2,8 @@
 name: Kristine Dill
 first_name: Kristine
 last_name: Dill
-image: linaro-website/images/author/sfo17-profiles-109-prof-pic
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/sfo17-profiles-109-prof-pic
 slug_name: kristine-dill
 ---
 

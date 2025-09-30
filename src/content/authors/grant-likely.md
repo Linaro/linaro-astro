@@ -2,7 +2,8 @@
 name: Grant Likely
 first_name: Grant
 last_name: Likely
-image: linaro-website/images/author/grant-likely
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/grant-likely
 slug_name: grant-likely
 ---
 

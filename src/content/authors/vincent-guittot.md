@@ -2,7 +2,8 @@
 name: Vincent Guittot
 first_name: Vincent
 last_name: Guittot
-image: linaro-website/images/author/VincentGuittot
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/VincentGuittot
 slug_name: vincent-guittot
 ---
 

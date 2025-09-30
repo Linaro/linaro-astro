@@ -2,7 +2,8 @@
 name: Erik Schilling
 first_name: Erik
 last_name: Schilling
-image: linaro-website/images/author/unnamed-3
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/unnamed-3
 slug_name: erik-schilling
 ---
 

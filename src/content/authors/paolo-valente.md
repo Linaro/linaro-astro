@@ -2,7 +2,8 @@
 name: Paolo Valente
 first_name: Paolo
 last_name: Valente
-image: linaro-website/images/author/paolo
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/paolo
 slug_name: paolo-valente
 ---
 

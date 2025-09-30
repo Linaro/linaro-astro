@@ -2,7 +2,8 @@
 name: Senthil Kumaran S
 first_name: Senthil
 last_name: Kumaran S
-image: linaro-website/images/author/senthil-kumaran-profile-picture
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/senthil-kumaran-profile-picture
 slug_name: senthil-kumaran-s
 ---
 

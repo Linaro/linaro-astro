@@ -2,7 +2,8 @@
 name: Andrea Gallo
 first_name: Andrea
 last_name: Gallo
-image: linaro-website/images/author/andrea-gallo
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/andrea-gallo
 description: >
   Andrea Gallo is the VP of Business Development at Linaro. Read his posts here
   such as IoT security with the Microsoft Azure Sphere team.

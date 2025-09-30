@@ -2,7 +2,8 @@
 name: Neil Armstrong
 first_name: Neil
 last_name: Armstrong
-image: linaro-website/images/author/neil-armstrong
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/neil-armstrong
 slug_name: neil-armstrong
 ---
 

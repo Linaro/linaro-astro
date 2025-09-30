@@ -2,7 +2,8 @@
 name: Maxim Uvarov
 first_name: Maxim
 last_name: Uvarov
-image: linaro-website/images/author/maxim-uvarov
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/maxim-uvarov
 slug_name: maxim-uvarov
 ---
 

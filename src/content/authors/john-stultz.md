@@ -2,7 +2,8 @@
 name: John Stultz
 first_name: John
 last_name: Stultz
-image: linaro-website/images/author/john-stultz
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/john-stultz
 description: >
   John Stultz  works on upstreaming the Android kernel patches and enabling AOSP
   devboards and form-factor devices with mainline. Read his posts here.

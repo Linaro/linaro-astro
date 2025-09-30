@@ -2,7 +2,8 @@
 name: Paul Liu
 first_name: Paul
 last_name: Liu
-image: linaro-website/images/author/paul-liu
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/paul-liu
 slug_name: paul-liu
 ---
 

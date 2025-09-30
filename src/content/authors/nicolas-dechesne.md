@@ -2,7 +2,8 @@
 name: Nicolas Dechesne
 first_name: Nicolas
 last_name: Dechesne
-image: linaro-website/images/author/nicolas-dechesne
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/nicolas-dechesne
 slug_name: nicolas-dechesne
 ---
 

@@ -2,7 +2,8 @@
 name: Ryan Arnold
 first_name: Ryan
 last_name: Arnold
-image: linaro-website/images/author/ryan-copy
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/ryan-copy
 slug_name: ryan-arnold
 ---
 

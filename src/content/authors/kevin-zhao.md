@@ -2,7 +2,8 @@
 name: Kevin Zhao
 first_name: Kevin
 last_name: Zhao
-image: linaro-website/images/author/kevin
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/kevin
 slug_name: kevin-zhao
 ---
 

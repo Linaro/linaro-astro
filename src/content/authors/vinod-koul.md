@@ -2,7 +2,8 @@
 name: Vinod Koul
 first_name: Vinod
 last_name: Koul
-image: linaro-website/images/author/vinod-koul
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/vinod-koul
 slug_name: vinod-koul
 ---
 

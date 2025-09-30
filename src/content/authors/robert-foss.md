@@ -2,7 +2,8 @@
 name: Robert Foss
 first_name: Robert
 last_name: Foss
-image: linaro-website/images/author/robert-foss
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/robert-foss
 slug_name: robert-foss
 ---
 

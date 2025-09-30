@@ -2,7 +2,8 @@
 name: Rémi Duraffort
 first_name: Rémi
 last_name: Duraffort
-image: linaro-website/images/author/remi-duraffort
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/remi-duraffort
 slug_name: remi-duraffort
 ---
 

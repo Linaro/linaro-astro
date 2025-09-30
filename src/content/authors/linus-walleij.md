@@ -2,7 +2,8 @@
 name: Linus Walleij - Author
 first_name: Linus
 last_name: Walleij
-image: linaro-website/images/author/linus-walleij
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/linus-walleij
 slug_name: linus-walleij
 ---
 

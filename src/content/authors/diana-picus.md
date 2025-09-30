@@ -2,7 +2,8 @@
 name: Diana Picus
 first_name: Diana
 last_name: Picus
-image: linaro-website/images/author/dianapicus
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/dianapicus
 slug_name: diana-picus
 ---
 

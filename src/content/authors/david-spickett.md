@@ -2,7 +2,8 @@
 name: David Spickett
 first_name: David
 last_name: Spickett
-image: linaro-website/images/author/_mg_3850
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/_mg_3850
 slug_name: david-spickett
 ---
 

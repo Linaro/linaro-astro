@@ -2,7 +2,8 @@
 name: Nader Zouaoui
 first_name: Nader
 last_name: Zouaoui
-image: linaro-website/images/author/unnamed
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/unnamed
 slug_name: nader-zouaoui
 ---
 

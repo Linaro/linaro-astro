@@ -2,7 +2,8 @@
 name: ' Loic Poulain'
 first_name: 'Loic '
 last_name: Poulain
-image: linaro-website/images/author/loic_poulain_150_150
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/loic_poulain_150_150
 slug_name: loic-poulain
 ---
 

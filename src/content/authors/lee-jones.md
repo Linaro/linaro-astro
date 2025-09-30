@@ -2,7 +2,8 @@
 name: Lee Jones
 first_name: Lee
 last_name: Jones
-image: linaro-website/images/author/lee-jones
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/lee-jones
 slug_name: lee-jones
 ---
 

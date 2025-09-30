@@ -2,7 +2,8 @@
 name: Krzysztof Kozlowski
 first_name: Krzysztof
 last_name: Kozlowski
-image: linaro-website/images/author/img_20210720_200635-01
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/img_20210720_200635-01
 slug_name: krzysztof-kozlowski
 ---
 

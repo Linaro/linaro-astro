@@ -2,7 +2,8 @@
 name: Amit Pundir
 first_name: Amit
 last_name: Pundir
-image: linaro-website/images/author/amit-pundir
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/amit-pundir
 slug_name: amit-pundir
 ---
 

@@ -2,7 +2,8 @@
 name: David Brown
 first_name: 'David '
 last_name: Brown
-image: linaro-website/images/author/david-brown
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/david-brown
 slug_name: david-brown
 ---
 

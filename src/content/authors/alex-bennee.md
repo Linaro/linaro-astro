@@ -2,7 +2,8 @@
 name: Alex Bennée
 first_name: Alex
 last_name: Bennée
-image: linaro-website/images/author/alex
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/alex
 slug_name: alex-bennee
 ---
 

@@ -2,7 +2,8 @@
 name: Julianus Larson
 first_name: Julianus
 last_name: Larson
-image: linaro-website/images/author/julianus-larson
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/julianus-larson
 slug_name: julianus-larson
 ---
 

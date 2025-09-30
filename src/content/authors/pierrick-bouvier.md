@@ -2,7 +2,8 @@
 name: Pierrick Bouvier
 first_name: Pierrick
 last_name: Bouvier
-image: linaro-website/images/author/id
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/id
 slug_name: pierrick-bouvier
 ---
 

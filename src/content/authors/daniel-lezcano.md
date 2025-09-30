@@ -2,7 +2,8 @@
 name: Daniel Lezcano
 first_name: Daniel
 last_name: Lezcano
-image: linaro-website/images/author/daniel-lezcano
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/daniel-lezcano
 slug_name: daniel-lezcano
 ---
 

@@ -2,7 +2,8 @@
 name: Yongqin Liu
 first_name: Yongqin
 last_name: Liu
-image: linaro-website/images/author/yongqin
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/yongqin
 slug_name: yongqin-liu
 ---
 

@@ -2,7 +2,8 @@
 name: Jens Wiklander
 first_name: Jens
 last_name: Wiklander
-image: linaro-website/images/author/bud17-profile-scaled
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/bud17-profile-scaled
 slug_name: jens-wiklander
 ---
 

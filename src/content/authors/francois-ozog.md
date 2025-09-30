@@ -2,7 +2,8 @@
 name: Francois Ozog
 first_name: Francois
 last_name: Ozog
-image: linaro-website/images/author/francois-ozog
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/francois-ozog
 slug_name: francois-ozog
 ---
 

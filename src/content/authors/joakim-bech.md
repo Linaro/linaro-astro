@@ -2,7 +2,8 @@
 name: Joakim Bech
 first_name: Joakim
 last_name: Bech
-image: linaro-website/images/author/joakim-bech
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/joakim-bech
 slug_name: joakim-bech
 ---
 
