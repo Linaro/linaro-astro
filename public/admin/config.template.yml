@@ -37,6 +37,7 @@ collections:
       - { label: "First Name", name: "first_name", widget: "string" }
       - { label: "Last Name", name: "last_name", widget: "string" }
       - { label: "Image", name: "image", widget: "image", choose_url: true }
+      - { label: "Slug Name", name: "slug_name", widget: string }
 
   # Tags collection
   - name: "tags"
@@ -49,6 +50,7 @@ collections:
     identifier_field: "name"
     fields:
       - { label: "Name", name: "name", widget: "string" }
+      - { label: "Slug Name", name: "slug_name", widget: string }
 
   # Blog collection
   - name: "blog"
@@ -64,14 +66,19 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - {
+          label: "Publish Date",
+          name: "date",
+          widget: "utc-datetime",
+          format: "YYYY-MM-DDTHH:mm:ss.SSSZ",
+        }
 
       - label: "Author"
         name: "author"
         widget: "relation"
         collection: "authors"
         search_fields: ["name"]
-        value_field: "name"
+        value_field: "slug_name"
         display_fields: ["name"]
 
       - label: "Tags"
@@ -79,7 +86,61 @@ collections:
         widget: "relation"
         collection: "tags"
         search_fields: ["name"]
-        value_field: "name"
+        value_field: "slug_name"
+        display_fields: ["name"]
+        multiple: true
+
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          choose_url: true,
+        }
+      - {
+          label: "Related",
+          name: "related",
+          widget: "list",
+          default: [],
+          field: { label: "Item", name: "item", widget: "string" },
+        }
+      # Main content
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # News Collection
+  - name: "news"
+    label: "News"
+    label_singular: "Post"
+    folder: "src/content/news"
+    create: true
+    extension: "mdx"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - {
+          label: "Publish Date",
+          name: "date",
+          widget: "utc-datetime",
+          format: "YYYY-MM-DDTHH:mm:ss.SSSZ",
+        }
+
+      - label: "Author"
+        name: "author"
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name"]
+        value_field: "slug_name"
+        display_fields: ["name"]
+
+      - label: "Tags"
+        name: "tags"
+        widget: "relation"
+        collection: "tags"
+        search_fields: ["name"]
+        value_field: "slug_name"
         display_fields: ["name"]
         multiple: true
 

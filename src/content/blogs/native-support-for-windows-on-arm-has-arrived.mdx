@@ -1,15 +1,16 @@
 ---
 title: Native Support for Windows on Arm has arrived
-description: In this blog, we look at some of the big announcements made at
-  Microsoft Build and how they signal a huge leap forward for native development
-  on Windows on Arm. Read more here!
+description: >-
+  In this blog, we look at some of the big announcements made at Microsoft Build
+  and how they signal a huge leap forward for native development on Windows on
+  Arm. Read more here!
 date: 2023-06-15T10:22:14.000Z
-image: linaro-website/images/blog/open_source_keyboard_under_2mbjpg
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/open_source_keyboard_under_2mbjpg
 tags:
   - windows-on-arm
 author: andrea-gallo
 related: []
-
 ---
 
 # Introduction
@@ -40,29 +41,29 @@ The closing and most exciting announcement by the speakers at the end of their s
 
 The slides presented by Ivette are available on the [Microsoft BUILD website](https://www.google.com/url?q=https://medius.microsoft.com/video/asset/PPT/ab47e3cf-274e-421d-82d2-8b39fa1fde60\&sa=D\&source=docs\&ust=1686835756549661\&usg=AOvVaw1l7-JRjEK2wP1C98CCFgGR) and it is worth calling out the “Arm development ecosystem” page:
 
-![Arm development ecosystem](/linaro-website/images/blog/arm-development-ecosystem)
+![Arm development ecosystem](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/arm-development-ecosystem)
 
 Ivette clearly walked the audience through the slide and explained the three phases of their approach: (1) deliver critical development tools (2) solve the open source dependencies and then (3) deploy powerful development platforms to all developers.
 
 Since late 2020, Linaro has been focusing on #2, solving the open source dependencies and in February 2022 we announced that [Microsoft joined Linaro, Arm and Qualcomm to advance Windows on Arm](https://www.linaro.org/news/microsoft-joins-linaro-arm-and-qualcomm-technologies-to-advance-windows-on-arm/).
 
-![llvm logo](/linaro-website/images/blog/llvm-release-heading-woa)
+![llvm logo](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/llvm-release-heading-woa)
 
 Actually the first breakthrough was in April 2021, when Linaro announced the first piece of collaborative work: [Linaro, Arm and Qualcomm® collaborate to enable native LLVM for Windows 10 on Arm](https://www.linaro.org/news/linaro-arm-and-qualcomm-collaborate-to-enable-native-llvm-for-windows-10-on-arm/). This was the first LLVM release for Windows 10 on Arm and marked a significant step towards enabling developers to build natively with LLVM on Windows 10 on Arm.
 
 LLVM is one of the main tools the open-source community uses to compile their code and Linaro is the maintainer of LLVM for Arm for Linux, it was just straightforward for our engineers to extend coverage to include Windows on Arm too. Probably the complexity was not on the software engineering side but on setting up a build farm in the early days when Arm nodes running Windows were not available yet from Azure.
 
-![python logo](/linaro-website/images/blog/python-heading-woa)
+![python logo](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/python-heading-woa)
 
 In October 2022 Linaro announced: [Windows on Arm now supported in Python 3.11 Release](https://www.linaro.org/blog/windows-on-arm-now-supported-in-python-3-11-release/). It took a few months of work, after contributing to several key packages, and providing a CI machine to build and test for Windows on Arm.
 
-![flutter logo](/linaro-website/images/blog/flutter-heading-woa)
+![flutter logo](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/flutter-heading-woa)
 
 In October 2022 Linaro started contributing to Flutter, the open source framework by Google for building beautiful, natively compiled, multi-platform applications from a single codebase. It is a key component that allows Android applications to be recompiled for Windows on Arm and then run natively under Windows.
 
 The work is showing good progress, as demonstrated by Marcus in their video at 30’36”. You can follow the Flutter porting notes on our [Flutter Enablement Notes page](https://linaro.atlassian.net/wiki/spaces/WOAR/pages/28745138193/Dart+Flutter).
 
-![bazel logo](/linaro-website/images/blog/bazel-heading-woa)
+![bazel logo](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/bazel-heading-woa)
 
 Bazel was mentioned by Ivette in her talk as a dependency for DropBox. Bazel is an open-source build and test tool that scalably supports multi-language and multi-platform projects. Bazel is used for many popular projects and is the only support build platform for popular frameworks like TensorFlow.
 
@@ -72,7 +73,7 @@ Linaro started contributing to the Windows on Arm port of Bazel as early as Febr
 
 A summary of all projects is available from our [Windows On Arm page](https://www.linaro.org/windows-on-arm/) while the engineering landing page at [http://aka.ms/ArmOSS](https://linaro.atlassian.net/wiki/spaces/WOAR/overview) provides full details for all open source projects and dependencies on our radar with full status and enablement notes.
 
-![woa ecosystem projects](/linaro-website/images/blog/woa-ecosystem-projects)
+![woa ecosystem projects](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/woa-ecosystem-projects)
 
 For more information on Windows on Arm you can also scroll down on the Windows on Arm page to find videos and blogs:
 

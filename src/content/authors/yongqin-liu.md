@@ -2,8 +2,9 @@
 name: Yongqin Liu
 first_name: Yongqin
 last_name: Liu
-image: linaro-website/images/author/yongqin
-
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/yongqin
+slug_name: yongqin-liu
 ---
 
 Liu Yongqin worked for NEC for 7 years, 6 years on NAS Management System based on Linux on Disk Storage/LVM/FS modules, 1 year on software factory work and from then on became interested in python/Trac. He started Android related work from LAVA team on lava-android-test. Now Yongqin works in Linaro's Android Team.

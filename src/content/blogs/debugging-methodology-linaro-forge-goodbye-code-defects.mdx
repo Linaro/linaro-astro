@@ -1,15 +1,16 @@
 ---
 title: Debugging Methodology + Linaro Forge = Goodbye Code Defects!
-description: In this blog, Beau Paisley talks about the state of debugging tools
-  for HPC. Read more here!
+description: >-
+  In this blog, Beau Paisley talks about the state of debugging tools for HPC.
+  Read more here!
 date: 2023-05-23T01:24:23.000Z
-image: linaro-website/images/blog/Banner_Toolchain
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Banner_Toolchain
 tags:
   - hpc
   - debugging
 author: beau-paisley
 related: []
-
 ---
 
 If you work in the Rocky Mountain region and you can spell HPC, you have probably heard of the Rocky Mountain Advanced Computing Consortium (RMACC) HPC Symposium.   This is an excellent conference that provides an intimate environment for connecting with colleagues and always has a rich agenda with content for attendees ranging from students to veteran practitioners.   At this year’s event I had the opportunity to present on debugging methodology.   Preparing for this event reminded me of the importance of good methodology so I want to revisit and continue the topic here.   The state of debugging tools has advanced dramatically since your grandma first entered a write(*,*) statement in her code deck but unfortunately the adoption of best practices in debugging still has room for improvement.
@@ -40,7 +41,7 @@ There are tools ranging from simple to sophisticated to support these steps but 
 
 In HPC I prefer using the scientific method to support steps 4-6 in the TRAFFIC process.   Most practitioners in this field come from scientific disciplines, so the technique leverages a well understood technique and has a strong focus on repeatability which is essential for deterministic debugging.
 
-![Methodology-debugging technique](/linaro-website/images/blog/methodology-debugging-technique)
+![Methodology-debugging technique](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/methodology-debugging-technique)
 
 ## Select and Adopt Tools
 
@@ -54,25 +55,25 @@ Linaro DDT has myriad features for debugging complex applications but in this ar
 
 Setting up your logbook is the first step in applying the scientific method to debugging.  The logbook in DDT logs information about the executable being run, the time and parameters of your run, and the state of your application during execution.   The logbook can be saved as an HTML file and stored with other development artifacts.    Most importantly the logbook is the place to express your debugging hypotheses and log your experiment.  The archived logbooks can be invaluable references as you progress through the investigation of various hypotheses.
 
-![the DDT logbook](/linaro-website/images/blog/the-ddt-logbook)
+![the DDT logbook](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/the-ddt-logbook)
 
 ### Configurable Breakpoints
 
 A key part of methodical debugging is focusing the range of your search.  This limits the quantity of output you need to review and reduces the overhead on your run.  This is very easy in DDT with tools to constrict the iterator space and set conditionals.
 
-![Configurable breakpoints](/linaro-website/images/blog/configurable-breakpoints)
+![Configurable breakpoints](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/configurable-breakpoints)
 
 ### Tracepoints (A Modern print statement)
 
 Tracepoints enable you to output values without rebuilding your program and without the need to re-submit your run.   This greatly accelerates the experimentation process and most importantly enables you to output information without changing the state of your program.  Since the days of grandma adding write statements to her code the problem of print statements changing determinism has complicated debugging.   In HPC codes with many processes this problem can be significantly amplified.
 
-![Tracepoints](/linaro-website/images/blog/tracepoints)
+![Tracepoints](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/tracepoints)
 
 ### Debugging While You Sleep
 
 Linaro DDT can be run without using the GUI environment.  We call this offline mode.   In offline mode you submit your job similarly as you would for a production run.  It will generate the usual output files, and in addition will generate an HTML or CSV file that logs information about the state of your executable.   This method of debugging is invaluable for a broad class of bugs including those that can only be re-produced at large scale,  those that take a long run time to reproduce or re-appear in non-deterministic ways.
 
-![Html formatted output from a linaro ddt offline run](/linaro-website/images/blog/html-formatted-output-from-a-linaro-ddt-offline-run)
+![Html formatted output from a linaro ddt offline run](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/html-formatted-output-from-a-linaro-ddt-offline-run)
 
 ## Continuing the Journey
 

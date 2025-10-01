@@ -1,18 +1,19 @@
 ---
 title: Subkeys in OP-TEE part 2
-description: Up to now, Trusted Applications (TAs) for OP-TEE could be signed
-  and later verified by a single certificate. When multiple vendors are involved
-  though having a single signer doesn’t scale well. A while back we took a quick
-  look at the subkeys implemented in OP-TEE. In this blog, we will do a deep
-  dive on the implementation.
+description: >-
+  Up to now, Trusted Applications (TAs) for OP-TEE could be signed and later
+  verified by a single certificate. When multiple vendors are involved though
+  having a single signer doesn’t scale well. A while back we took a quick look
+  at the subkeys implemented in OP-TEE. In this blog, we will do a deep dive on
+  the implementation.
 date: 2024-04-26T01:48:55.000Z
-image: linaro-website/images/blog/Code_Image_Core_tech
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Code_Image_Core_tech
 tags:
   - security
   - toolchain
 author: jens-wiklander
 related: []
-
 ---
 
 # Introduction
@@ -23,7 +24,7 @@ related: []
 
 Subkeys define a hierarchy of keys, where the root key is the root of trust. The root key is used to verify the first-level subkeys and the first-level subkeys are used to verify their second-level subkeys, the second-level subkeys the third-level, and so on.
 
-![Hierarchy of Keys](/linaro-website/images/blog/hierarchy-of-keys)
+![Hierarchy of Keys](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/hierarchy-of-keys)
 
 **Figure 1: Hierarchy of keys**
 
@@ -35,7 +36,7 @@ Each subkey defines a UUIDv5 namespace \[1] to which the next signed subkey or T
 
 When expanding one branch of the example above with a Universally Unique IDentifier (UUID) it becomes:
 
-![namespace with UUIDv5](/linaro-website/images/blog/namespace-with-uuidv5-figure)
+![namespace with UUIDv5](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/namespace-with-uuidv5-figure)
 
 **Figure 2: Namespace with UUIDv5**
 
@@ -51,7 +52,7 @@ The UUID of the first-level subkey can be any UUID and does not need to be deter
 
 When adding a TA to the example above it becomes:
 
-![multiple subkey levels](/linaro-website/images/blog/multiple-subkey-levels)
+![multiple subkey levels](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/multiple-subkey-levels)
 
 **Figure 3: Multiple subkey levels**
 
@@ -73,7 +74,7 @@ Verifying the First-level subkey in the example above is a special case since th
 
 # Outside a UUIDv5 namespace
 
-![using root key only](/linaro-website/images/blog/using-root-key-only)
+![using root key only](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/using-root-key-only)
 
 **Figure 4: Using root key only**
 
@@ -81,7 +82,7 @@ A well-known UUID or a UUID generated outside a UUIDv5 scheme can’t be part of
 
 A concept called identity subkey is introduced to handle that. It’s similar to a normal subkey, except that it can only be used to verify a TA with the same UUID as the subkey itself.
 
-![adding an identity subkey](/linaro-website/images/blog/adding-an-identity-subkey)
+![adding an identity subkey](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/adding-an-identity-subkey)
 
 **Figure 5: Adding an identity subkey**
 
@@ -117,13 +118,13 @@ Identity subkeys should typically use the value 0 here as it might not make much
 
 A TA verified by subkeys has the needed subkeys before the signature. The subkeys are provided in the order needed when verifying the TA. The root key is used to verify the first subkey and each subkey is used to verify the next until the TA itself has been verified.
 
-![ta verified with two subkeys](/linaro-website/images/blog/ta-verified-with-two-subkeys)
+![ta verified with two subkeys](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/ta-verified-with-two-subkeys)
 
 **Figure 8: TA verified with two subkeys**
 
 A TA verified by an Identity subkey is handled similarly to other subkeys.
 
-![ta verified with an identity subkey](/linaro-website/images/blog/ta-verified-with-an-identity-subkey)
+![ta verified with an identity subkey](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/ta-verified-with-an-identity-subkey)
 
 **Figure 9: TA verified with an identity subkey**
 

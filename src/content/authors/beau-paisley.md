@@ -2,8 +2,9 @@
 name: Beau Paisley
 first_name: Beau
 last_name: Paisley
-image: linaro-website/images/author/avatar-placeholder
-
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/avatar-placeholder
+slug_name: beau-paisley
 ---
 
 Beau Paisley is a Senior Technologist with over 30 years of experience in the scientific and engineering software field in academia, research, and start-up environments. He has served in engineering development, technology leadership, management and founding partner roles ranging from individual contributor to CEO in various organizations.

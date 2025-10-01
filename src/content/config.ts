@@ -146,6 +146,7 @@ const authors = defineCollection({
     last_name: z.string(),
     username: z.string().optional(),
     image: z.string().optional(),
+    slug_name: z.string(),
   }),
 });
 
@@ -161,7 +162,7 @@ const team_members = defineCollection({
 
 const tags = defineCollection({
   type: "content",
-  schema: z.object({ name: z.string() }),
+  schema: z.object({ name: z.string(), slug_name: z.string().optional() }),
 });
 
 export const collections = {

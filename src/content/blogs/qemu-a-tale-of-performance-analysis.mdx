@@ -1,14 +1,16 @@
 ---
-title: "QEMU: A Tale of Performance analysis"
+title: 'QEMU: A Tale of Performance analysis'
 description: >
-  In this post, we will present the performance issues we identified when booting Android using QEMU, and how we solved these upstream. We will also answer the question “How fast can you boot Android using QEMU?”
+  In this post, we will present the performance issues we identified when
+  booting Android using QEMU, and how we solved these upstream. We will also
+  answer the question “How fast can you boot Android using QEMU?”
 date: 2025-01-14T00:00:00.000Z
-image: linaro-website/images/blog/Virtualization_image_x3vb2d.png
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Virtualization_image_x3vb2d.png
 tags:
   - virtualization
 author: pierrick-bouvier
 related: []
-
 ---
 
 Recently we were asked the question “How fast can you boot Android using QEMU?”.
@@ -51,17 +53,17 @@ Booting an x86-64 Android with 1 virtual cpu:
 
 `qemu-system-x86_64 -accel tcg -smp 1 -cpu max`
 
-![Booting an x86-64 Android with 1 virtual cpu](/linaro-website/images/blog/image6_znohkp.png "Booting an x86-64 Android with 1 virtual cpu")
+![Booting an x86-64 Android with 1 virtual cpu](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image6_znohkp.png "Booting an x86-64 Android with 1 virtual cpu")
 
 Booting an aarch64 Android with 1 virtual cpu:
 
 `qemu-system-aarch64 –accel tcg -smp 1 -cpu max`
 
-![Booting an aarch64 Android with 1 virtual cpu](/linaro-website/images/blog/image1_bj7q8a.png "Booting an aarch64 Android with 1 virtual cpu")
+![Booting an aarch64 Android with 1 virtual cpu](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image1_bj7q8a.png "Booting an aarch64 Android with 1 virtual cpu")
 
 The QEMU developer will see:
 
-![Perf report](/linaro-website/images/blog/image9_dhp1et.png "Perf report")
+![Perf report](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image9_dhp1et.png "Perf report")
 
 Looking at flamegraph (or more simply the perf report), we quickly identified that pointer authentication emulation is expensive. By default, QEMU uses an expensive standard cryptographic algorithm (QARMA5). Switching to the fast implementation defined version solves the problem.
 
@@ -79,19 +81,19 @@ However, with the aarch64 image, we noticed that execution time was always incre
 
 1 cpu:
 
-![1 CPU](/linaro-website/images/blog/image3_iheqk1.png "1 CPU")
+![1 CPU](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image3_iheqk1.png "1 CPU")
 
 2 cpus:
 
-![2 CPUs](/linaro-website/images/blog/image2_tklv0y.png "2 CPUs")
+![2 CPUs](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image2_tklv0y.png "2 CPUs")
 
 4 cpus:
 
-![4 CPUs](/linaro-website/images/blog/image5_go9npa.png "4 CPUs")
+![4 CPUs](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image5_go9npa.png "4 CPUs")
 
 8 cpus, and the (newcomer) QEMU developer that I am will see:
 
-![8 CPUs](/linaro-website/images/blog/image10_mejpa1.png "8 CPUs")
+![8 CPUs](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image10_mejpa1.png "8 CPUs")
 
 After invoking help from the (experienced) QEMU developers, and being introduced to the [QEMU tracing framework](https://qemu-project.gitlab.io/qemu/devel/tracing.html), we realised that the contention is located around emulation of guest atomic instructions.
 
@@ -107,7 +109,7 @@ We came for bug hunting, and ended up publishing a [series](https://lore.kernel.
 
 Now that we fixed the most obvious issues, we can really start to observe the difference between emulation of x86-64 and aarch64 architectures.
 
-![The difference between emulation of x86-64 and aarch64 architectures](/linaro-website/images/blog/image8_ikel15.png "The difference between emulation of x86-64 and aarch64 architectures")
+![The difference between emulation of x86-64 and aarch64 architectures](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image8_ikel15.png "The difference between emulation of x86-64 and aarch64 architectures")
 
 The flamegraphs mostly look similar, but we can see that more time is spent in “helpers” on aarch64 side. Looking more closely, we can see it’s related to float and vectorized instructions. This is where our investigation ends for now.
 
@@ -119,11 +121,11 @@ Now let’s get to the numbers! We present here the results to boot an Android V
 
 The reference time was established using hardware assisted virtualization and 4 cpus, which is the fastest setup we observed. All other runs are using TCG software acceleration. All aarch64 runs are using the pointer authentication fast algorithm.
 
-![Android boot time using QEMU](/linaro-website/images/blog/image7_kizndw.png "Android boot time using QEMU")
+![Android boot time using QEMU](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image7_kizndw.png "Android boot time using QEMU")
 
 Beyond absolute time, representing this as a slowdown factor is more interesting.
 
-![Android boot time slowdown using QEMU](/linaro-website/images/blog/image4_gwwshp.png "Android boot time slowdown using QEMU")
+![Android boot time slowdown using QEMU](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/image4_gwwshp.png "Android boot time slowdown using QEMU")
 
 In the end, running with TCG software acceleration is 8 times slower for x86-64 guest architecture and 12 times slower for aarch64 guest architecture, compared to using hardware acceleration. We can see that adding more than 4 guest cpus does not speed up the boot time.
 

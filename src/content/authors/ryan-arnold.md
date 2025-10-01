@@ -2,8 +2,9 @@
 name: Ryan Arnold
 first_name: Ryan
 last_name: Arnold
-image: linaro-website/images/author/ryan-copy
-
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/ryan-copy
+slug_name: ryan-arnold
 ---
 
 Ryan Arnold is the Engineering Director for the Linaro System Technologies Group which is an engineering organization that has developed industry-leading software tools and services that expand the DevOps toolbox for embedded device-automation, operating system & firmware development, and comprehensive OS level testing.

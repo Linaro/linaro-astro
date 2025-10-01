@@ -1,8 +1,11 @@
 ---
 title: Initial U-Boot release for Qualcomm platforms
-description: Today we announce the first binary release of U-Boot for Qualcomm boards, following a year long bringup and upstreaming effort.
+description: >-
+  Today we announce the first binary release of U-Boot for Qualcomm boards,
+  following a year long bringup and upstreaming effort.
 date: 2024-08-21T01:53:28.000Z
-image: linaro-website/images/blog/U-Boot_blg_esrd1w.png
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/U-Boot_blg_esrd1w.png
 tags:
   - qualcomm
   - u-boot
@@ -35,7 +38,7 @@ KVM support is experimental, and breaks the DSPs (as well as potentially other t
 ## Supported platforms
 
 The exact status of support depends on the device. The current integration branch lacks support for UFS on SM8550/SM8650. Other devices can boot from internal storage or USB.
-![WindowsPerf counting data](/linaro-website/images/blog/Chainload_diagram_djfdeb.png)
+![WindowsPerf counting data](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Chainload_diagram_djfdeb.png)
 
 ## Flashing U-Boot
 
@@ -50,7 +53,7 @@ Installation is almost the same for all methods, for the boot, uefi, or hyp imag
 OR
 
 `edl --loader path/to/prog_firehose_ddr.elf w PART u-boot-BOARD-PART.xyz`
-![WindowsPerf counting data](/linaro-website/images/blog/Chainload_table_g3bqvi.png)
+![WindowsPerf counting data](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Chainload_table_g3bqvi.png)
 
 ## Building from source
 
@@ -124,7 +127,7 @@ fastboot flash hyp .output/u-boot-hyp.mbn
 ## A deeper dive into Qualcomm’s boot flow
 
 Qualcomm's Android boot flow & Chainloading
-![WindowsPerf counting data](/linaro-website/images/blog/Qualcomm_s_Android_boot_flow_chainloading_ht0lyy.png)
+![WindowsPerf counting data](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Qualcomm_s_Android_boot_flow_chainloading_ht0lyy.png)
 
 The standard boot flow on Qualcomm devices looks roughly like this (source: [Qualcomm secure boot and image authentication](https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/secure-boot-and-image-authentication-version_final.pdf)).
 
@@ -198,7 +201,7 @@ DRAM: 8 GiB (effective 7.9 GiB)
 
 Qualcomm’s new RB3 Gen 2 board is the first to be supported by [Qualcomm Linux](https://www.qualcomm.com/developer/software/qualcomm-linux), a close(r) to upstream Yocto build. It boots with systemd-boot stub out of the box, and can run systemd-boot or GRUB. However, the stock bootloader includes a lot of customisations, a custom DTB store and various non-standard DTB changes done by the bootloader.
 
-![WindowsPerf counting data](/linaro-website/images/blog/Qualcomm_RB3_Gen_2_Platform_mf4ftb.png)
+![WindowsPerf counting data](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Qualcomm_RB3_Gen_2_Platform_mf4ftb.png)
 
 In the long term, it is anticipated that Qualcomm’s EDK2 will become SystemReady compliant. But interest in U-Boot is still strong (both to offer a standard EFI interface in the short term and to offer more diversity to Qualcomm’s customers).
 
