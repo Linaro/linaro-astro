@@ -1,16 +1,17 @@
 ---
-title: "Top Byte Ignore For Fun and Memory Savings "
-description: In this article, David Spickett talks about how Top Byte Ignore
-  works and how to use it. Read more here!
+title: 'Top Byte Ignore For Fun and Memory Savings '
+description: >-
+  In this article, David Spickett talks about how Top Byte Ignore works and how
+  to use it. Read more here!
 date: 2023-02-08T09:32:00.000Z
-image: linaro-website/images/blog/Code_Image_Core_tech
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Code_Image_Core_tech
 tags:
   - open-source
   - arm
   - toolchain
 author: david-spickett
 related: []
-
 ---
 
 [Top Byte Ignore](https://developer.arm.com/documentation/den0024/a/ch12s05s01) (TBI) is a feature of Armv8-a AArch64 that allows software to use unused pointer bits to store data without having to hide them from the hardware. Reducing memory use, software overhead and programmer frustration.
@@ -117,7 +118,7 @@ Now remember that we also want to type check our arguments. So in this case we h
 
 With all that, this is a symbol table entry:
 
-![Symbol table entry](/linaro-website/images/blog/symbol-table-entry-)
+![Symbol table entry](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/symbol-table-entry-)
 
 We’ll use that symbol index (the index of the entry in the table) to reference the symbol. For example:
 
@@ -185,7 +186,7 @@ On AArch64 this is 8 bytes saving 2 bytes per entry compared to the packed struc
 
 It’s not as simple as the storage makes it look. Here’s how the value is used:
 
-![TBI for symbol table](/linaro-website/images/blog/tbi-for-symbol-table-)
+![TBI for symbol table](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/tbi-for-symbol-table-)
 
 Now you see why I specified that integers would be stored directly in the table and that they would be 32 bit. If they were 64 bit we would not be able to store them in the table because the top byte would corrupt their value (if this was [Zig](https://ziglang.org/documentation/0.4.0/#Primitive-Types) we could use “u56”).
 

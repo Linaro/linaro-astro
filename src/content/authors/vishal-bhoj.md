@@ -1,7 +1,9 @@
 ---
 name: Vishal Bhoj
-first_name: Vincent
-last_name: Guittot
-image: linaro-website/images/author/avatar-placeholder
-
+first_name: Vishal
+last_name: Bhoj
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/avatar-placeholder
+slug_name: vishal-bhoj
 ---
+

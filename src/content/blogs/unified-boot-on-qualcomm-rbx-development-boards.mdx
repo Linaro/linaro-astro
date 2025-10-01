@@ -1,20 +1,21 @@
 ---
 title: Unified Boot on Qualcomm RBx development boards
-description: "This blog talks about benefits of Linaro Core and Club memberships
-  with the optional Landing Team. Dedicated Linaro engineers contribute to
-  private and public projects while partnering with the open-source community.
-  The Linaro Qualcomm Landing Team has been actively involved since 2014,
-  building stable releases for the 96Boards Dragonboard program and supporting
-  next-gen Qualcomm mobile platforms. #Linaro #LandingTeam #OpenSource"
+description: >-
+  This blog talks about benefits of Linaro Core and Club memberships with the
+  optional Landing Team. Dedicated Linaro engineers contribute to private and
+  public projects while partnering with the open-source community. The Linaro
+  Qualcomm Landing Team has been actively involved since 2014, building stable
+  releases for the 96Boards Dragonboard program and supporting next-gen Qualcomm
+  mobile platforms. #Linaro #LandingTeam #OpenSource
 date: 2023-07-06T08:48:17.000Z
-image: linaro-website/images/blog/96boards-specification-consumer-edition-v2
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/96boards-specification-consumer-edition-v2
 tags:
   - android
   - linux-kernel
   - open-source
 author: vinod-koul
 related: []
-
 ---
 
 One of the benefits of Linaro Core and Club memberships is the optional Landing Team. A Landing Team is a group of Linaro engineers dedicated to one Linaro member, and whose work contributes to both private and public projects. Beginning in 2014, the Linaro Qualcomm Landing Team has been an active contributor to upstream Qualcomm platforms, building stable releases for the 96Boards Dragonboard program and adding support to the next generation Qualcomm mobile platforms. Fostering and partnering with the open source community is a primary goal of this Landing Team, often in the role of maintainers for Qualcomm sub-systems.
@@ -29,7 +30,7 @@ For the context of this blog, unified boot refers to the ability of multiple pla
 
 The existing boot flow on Qualcomm devices has various stages in the bootloader, eventually loading Android Bootloader (ABL) which then loads the appended device-tree (DT) and kernel image and can then boot. The steps to boot upstream Linux kernel using appended DT method can be found in this [blog.](https://www.linaro.org/blog/let-s-boot-the-mainline-linux-kernel-on-qualcomm-devices/)
 
-![Existing boot flow on Qualcomm devices](/linaro-website/images/blog/existing-boot-flow-on-qualcomm-devices)
+![Existing boot flow on Qualcomm devices](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/existing-boot-flow-on-qualcomm-devices)
 
 The problem with this method is that the device tree is appended to the kernel image, making it board specific. As a result, getting a generic kernel image to load on any Qualcomm platform is virtually impossible.
 
@@ -37,7 +38,7 @@ The problem with this method is that the device tree is appended to the kernel i
 
 This limitation can be overcome by using U-boot to perform the task of loading the DT from device storage and then loading the kernel from either USB/SD-Card/storage.
 
-![Unified Boot using U-boot](/linaro-website/images/blog/unified-boot-using-u-boot)
+![Unified Boot using U-boot](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/unified-boot-using-u-boot)
 
 In this mechanism, the existing bootloader chain on the Qualcomm Snapdragon device can be utilised “as-is”. Here the u-boot is chainloaded as an Android boot image by Qualcomm’s  ABL bootloader. Then, using the U-boot, we can load a generic arm64 Linux kernel image.
 

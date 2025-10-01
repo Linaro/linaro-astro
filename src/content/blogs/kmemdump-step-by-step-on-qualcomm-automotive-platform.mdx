@@ -3,7 +3,7 @@ title: Kmemdump step by step on Qualcomm Automotive platform
 description: |-
   A step by step guide to try out kmemdump on the SA8775P Ride SX 4.0 Automotive
   Development Platform
-date: 2025-09-23T10:00:00.000+01:00
+date: 2025-09-23T09:00:00.000Z
 author: eugen-hristev
 image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758626414/linaro-website/images/blog/embedded_grey_1_uipctu.jpg
 tags:
@@ -12,6 +12,7 @@ tags:
   - automotive
 related: []
 ---
+
 # Introduction
 
 Kmemdump is a mechanism to obtain a small footprint debug dump from a crashed kernel.
@@ -63,11 +64,11 @@ information in the kernel that will be used later.
 
 ## Kernel boot arguments
 
-The Qualcomm SCM driver needs to instruct the firmware to use the *‘mini’* mode for
+The Qualcomm SCM driver needs to instruct the firmware to use the _‘mini’_ mode for
 
-dumping, instead of the *‘full’* mode. *Full* mode means the whole memory is dumped, while
+dumping, instead of the _‘full’_ mode. _Full_ mode means the whole memory is dumped, while
 
-*mini* mode in turn will have the firmware to walk the minidump table, only dumping specific
+_mini_ mode in turn will have the firmware to walk the minidump table, only dumping specific
 
 memory areas that were registered by kmemdump.
 
@@ -189,8 +190,8 @@ The prompt for Crash will show up, taking up all GDB commands and specific Crash
 crash> log
 [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd4b2]
 [    0.000000] Linux version 6.17.0-rc5-next-20250910-00020-g7dfa02aeae7e (eugen@eugen-
-station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 
-20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #116 SMP 
+station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1
+20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #116 SMP
 PREEMPT Thu Sep 11 18:28:06 EEST 2025
 ```
 
@@ -203,12 +204,12 @@ In these examples we can see how to use Crash to inspect structures and variable
 ```
 crash> p linux_banner
 linux_banner = $1 = 0xffffdbc68ea56340 <linux_banner> "Linux version 6.16.0-rc7-
-next-20250721-00043-g0e33acc05bc3-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc 
-(Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 
+next-20250721-00043-g0e33acc05bc3-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc
+(Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain
 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #87 "...
 
 crash> p node_states
-node_states = $2 = 
+node_states = $2 =
  {{
     bits = {1}
   }, {

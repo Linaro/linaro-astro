@@ -18,6 +18,8 @@
       // Register Cloudinary picker with Decap
       window.CMS.registerMediaLibrary(window.cloudinary);
     </script>
+
+    <!-- Netlify Identity (for GitHub OAuth flow) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
       if (window.netlifyIdentity) {
@@ -27,6 +29,35 @@
           }
         });
       }
+    </script>
+
+    <!-- Custom UTC Datetime widget -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const DateTimeWidget = window.CMS.getWidget("datetime");
+
+        // Higher-Order Component wrapper that enforces UTC
+        const UTCDateTimeControl = (props) => {
+          const onChange = (val) => {
+            if (!val) return props.onChange(val);
+            const utcString = new Date(val).toISOString(); // always UTC with Z
+            props.onChange(utcString);
+          };
+
+          return window.h(
+            DateTimeWidget.control,
+            { ...props, onChange },
+            props.children,
+          );
+        };
+
+        // Register as a new widget
+        window.CMS.registerWidget(
+          "utc-datetime",
+          UTCDateTimeControl,
+          DateTimeWidget.preview,
+        );
+      });
     </script>
   </body>
 </html>

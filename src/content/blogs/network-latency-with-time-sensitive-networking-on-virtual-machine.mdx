@@ -1,9 +1,11 @@
 ---
 title: Network Latency with Time Sensitive Networking on Virtual Machine
-description: In this article, we look at how to address Network Latency through
-  Time Sensitive Networking on a Virtual Machine. Read more here!
+description: >-
+  In this article, we look at how to address Network Latency through Time
+  Sensitive Networking on a Virtual Machine. Read more here!
 date: 2023-05-15T08:34:27.000Z
-image: linaro-website/images/blog/Banner_Virtualization
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Banner_Virtualization
 tags:
   - virtualization
   - automotive
@@ -21,7 +23,7 @@ Please also see [my presentation in Linaro Connect](https://resources.linaro.org
 
 A real automotive system is likely much more complicated, consisting of a lot of devices, gateways with a few central servers which are connected with each other via ethernet routers. In my experiments, however, a much simpler system configuration is adopted: Two evaluation boards are directly connected by a cable without using any intermediate switch as our aim here is to evaluate activities at the VM (Virtual Machine) host side.
 
-![System overview-evaluation boards](/linaro-website/images/blog/system-overview-evaluation-boards-)
+![System overview-evaluation boards](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/system-overview-evaluation-boards-)
 
 We use two applications:
 
@@ -34,11 +36,11 @@ It originally supported only the txtime-assist mode of taprio qdisc combined wit
 
 The sender(TX) side simply wakes up at a given interval within a given time slot (see TSN configuration below) and sends out a small test packet. The receiver(RX) side is to poll for incoming packets and calculate a latency based on the difference between the TX timestamp in a packet and the RX timestamp captured by the NIC. Please note that most of the time consumed in a guest OS (Operating System) will be excluded from the definition of latency here because we want to focus on the overhead which comes from the VM host OS (In this sense, the guest OS need not be PREEMPT_RT kernel in the test.)
 
-![TSN Set Up](/linaro-website/images/blog/tsn-set-up-image)
+![TSN Set Up](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/tsn-set-up-image)
 
 The sender and the receiver belong to and communicate via a dedicated VLAN (Virtual Local Area Network). While the use of VLAN will expectedly make sense to satisfy QoS (Quality of Service) requirements against multiple applications in a more realistic network, it will have little impact on the behaviors in a simple system configuration like here.
 
-![TSN System Overview](/linaro-website/images/blog/tsn-system-overview)
+![TSN System Overview](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/tsn-system-overview)
 
 ## PTP (Precision Time Protocol) Setup
 
@@ -46,7 +48,7 @@ Clock synchronization among the devices and servers over the network is one of k
 
 While there are many parameters to define PTP's behavior, I start by using a predefined profile (for automotive use) from the repository. The daemon is assigned to a real-time scheduling class to help improve the responsiveness.
 
-![PTP Set up](/linaro-website/images/blog/ptp-set-up-)
+![PTP Set up](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/ptp-set-up-)
 
 `P﻿rofile: automotive-{master,slave}.cfg` can be found [here](https://sourceforge.net/p/linuxptp/code/ci/master/tree/configs/).
 
@@ -56,13 +58,13 @@ TSN standard defines a couple of shapers and schedulers; Qav (or Credit-Based Sc
 
 Qbv provides a mechanism of time-multiplexing traffic flows from various applications. More specifically, the network bandwidth is divided into several time slots with constant intervals while all the traffic coming from different applications are set to be classified into different queues or traffic classes. NIC is scheduled to open the gate for allowed TX queues at any time slot so that packets will be allowed to transmit only for the assigned period within a cycle. So the mechanism theoretically assures that the transmission of prioritised packets are not interfered by other (and even excessive) traffic.
 
-![Time-aware shaper](/linaro-website/images/blog/time-aware-shaper-)
+![Time-aware shaper](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/time-aware-shaper-)
 
 The definition of gate list can vary from system to system depending on applications and their requirements. Here I adopt the configuration in the table below to make streams from the benchmark program and netperf bound to different TX queues, #0 and #3, respectively, while PTP packets are allowed at any slot. So the traffic from the benchmark and the traffic from netperf are not mixed in any single slot and fully isolated from each other to theoretically preclude, at least at hardware level, any traffic collision or congestion at any time.
 
 The duration times (interval) of each time slot may be arbitrary, but these odd (and prime) numbers are chosen not to easily resonate with the kernel tick (4 msec by default).
 
-![Duration times](/linaro-website/images/blog/duration-times-)
+![Duration times](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/duration-times-)
 
 ## Other Optimisation
 
@@ -92,13 +94,13 @@ A couple of context switches may take place before a packet finally reaches the 
 
 That said, my early experiments suggest that the bottom-half code is mostly executed immediately following hardirq, I only put a vhost thread in SCHED_FIFO after starting the guest VM.
 
-![Prioritising kernel threads](/linaro-website/images/blog/prioritising-kernel-threads)
+![Prioritising kernel threads](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/prioritising-kernel-threads)
 
 ### Packet filtering with IRQ affinity
 
 While the network bandwidth is split by time slots using Qbv scheduler, IRQ affinity and RSS (Receive Side Scaling) may help distribute the burden by the kernel stack in packet handling to different processors.
 
-![Packet filtering with irq affinity](/linaro-website/images/blog/packet-filtering-with-irq-affinity)
+![Packet filtering with irq affinity](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/packet-filtering-with-irq-affinity)
 
 # Set up network bridges under virtio
 
@@ -159,7 +161,7 @@ Then start a guest VM, specifying this device at the kvm command line as follows
 David Ahern has made a [very interesting study](https://legacy.netdevconf.info/0x14/pub/slides/24/netdev-0x14-XDP-and-the-cloud.pdf), in [this area](https://people.kernel.org/dsahern/xdp-vs-ovs). His interest may be in the cloud environment, but his approach can also be applied to embedded systems. Since his sample code is quite useful, I re-use it with a minor change to fit it into my test purpose.
 There are two XDP (eXpress Data Path) programs, xdp_l2fwd and xdp_vmegress_simple. They are loaded and attached to a physical NIC port and a tap device for the guest VM, respectively. When a packet is to be sent out from the egress port, XDP programs are called out to determine if any action is needed for that packet using their own database (or map in XDP term). If the program returns XDP_REDIRECT, the packet will be directly redirected to another port. If it returns XDP_PASS, the packet will be simply forwarded to the kernel network stack as usual.
 
-![XDP bridge](/linaro-website/images/blog/xdp-bridge)
+![XDP bridge](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/xdp-bridge)
 
 If you want to try this case, first download the modified code from [my repository](https://git.linaro.org/people/takahiro.akashi/bpf-progs.git) and build eBPF programs:
 
@@ -282,7 +284,7 @@ Those stats are calculated against an arbitrarily chosen range of data recorded 
 
 I tried to fix those issues but still fail to identify root causes. Since the weirdness might indicate that there is some problem in the hardware (NIC) or its driver, we have a good reason to exclude a specific portion of data from the evaluation. See some discussions in "Annex-1. Dependency on data range" for those known issues.
 
-![Summary of latencies](/linaro-website/images/blog/summary-of-latencies)
+![Summary of latencies](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/summary-of-latencies)
 
 First of all, please note that, in this table, VFIO (Virtual Function I/O) is listed only as a reference for comparison since its performance is obviously expected to be as optimal as the native NIC can perform. In addition, the resultant numbers may easily vary from test to test with some margin, which means that we should not immediately determine which one is the best or the worst from this table alone.
 
@@ -300,11 +302,11 @@ Moreover, we sometimes see the delay goes beyond 500 microseconds, which account
 
 Here are the graphs, along with histograms on the right side, which plot latencies under netperf stress in time sequence for each bridge type (no netperf in VFIO case). You can confirm that all the charts expose similar characteristics except for a few singular samples as mentioned above. None of the bridge types indicate that it has a trivial advantage over the others under my test environment.
 
-![Latency figures](/linaro-website/images/blog/latency-figures)
+![Latency figures](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/latency-figures)
 
-![Latency figures](/linaro-website/images/blog/latency-figures-2)
+![Latency figures](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/latency-figures-2)
 
-![Latency figures](/linaro-website/images/blog/latency-figures-3)
+![Latency figures](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/latency-figures-3)
 
 # Step up this study
 
@@ -316,7 +318,7 @@ On the other hand, from the viewpoint of real-time systems, we need to pay more 
 
 In the section "Other optimisation", I mentioned a couple of hints and tips in tuning the system to acquire the best result with some accuracy and stability. While I have concentrated on the overhead and interference imposed by the host OS or the hypervisor, the total end-to-end latencyup to the time a packet reaches the application in user space, should be a final target. As the histogram below shows,
 
-![End-to-end latency histogram](/linaro-website/images/blog/end-to-end-latency-histogram)
+![End-to-end latency histogram](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/end-to-end-latency-histogram)
 
 we see even more divergence in end-to-end latencies, shown as the green"latency-user" bar in the graph, due to the guest OS which is also a PREEMPT_RT linux in this case. (Please note that the cpu which houses the guest VM is fully isolated from the host kernel's scheduler.) It is no doubt another key point to evaluate when it comes with system-wide tunings.
 
@@ -333,7 +335,7 @@ The weird behaviors seen in the results include
 
 For instance, see the graph in the figure below. It illustrates the same data in figure "Latency (Macvtap)", but in a different scale at y-axis to show the whole range of data.
 
-![latency figure](/linaro-website/images/blog/latency-figure-4)
+![latency figure](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/latency-figure-4)
 
 A big spike of latency reached up to 160 milliseconds and it is also sometimes seen that rather big spikes (around 6 milliseconds) occur in a periodic manner, say, at every one minute. The timestamp record shows that all the packets were sent out at the expected time but that the delivery on the receiver side seemed to be delayed (for a few milliseconds) and all the packets were suddenly received almost at once. This explains why the latencies were linearly declined.
 
@@ -341,7 +343,7 @@ Meanwhile, the latency may swing between a large minus and a large plus and this
 
 I want to exclude all these irregular values from statistics to understand static and average behaviors. While it is crucial to eliminate any possibility of big latencies in real-time applications, it's a bit beyond the scope of my study here.
 
-![data range and latencies](/linaro-website/images/blog/data-range-and-latencies)
+![data range and latencies](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/data-range-and-latencies)
 
 Here is the stats comparison; one for using the whole data in a 15-minute run and the other against a 5-minute portion where the latencies are relatively stable. Obviously the maximum latency drops, while the average is almost the same and the standard deviation can be reduced which I believe reflects a general character of the graphs.
 

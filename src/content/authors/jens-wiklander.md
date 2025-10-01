@@ -2,8 +2,9 @@
 name: Jens Wiklander
 first_name: Jens
 last_name: Wiklander
-image: linaro-website/images/author/bud17-profile-scaled
-
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/bud17-profile-scaled
+slug_name: jens-wiklander
 ---
 
 Jens has spent most of his career in security. First developing PC TCP/IP firewalls at Effnet and Rockstorm and later developing a system for CCTV monitoring of roads in Sweden at ISG. When he joined the security team at Ericsson Mobile Platforms, later ST-Ericsson, he was introduced to ARM/TrustZone and became one of the lead engineers developing a TEE which is now known as OP-TEE.

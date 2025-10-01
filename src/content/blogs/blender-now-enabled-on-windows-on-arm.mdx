@@ -3,12 +3,12 @@ title: Blender now enabled on Windows on Arm
 description: |
   Blender now enabled on Windows on Arm. Here is the story of how we got there.
 date: 2024-07-14T10:00:00.000Z
-image: linaro-website/images/blog/blender-image3_ohobsy.png
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/blender-image3_ohobsy.png
 tags:
   - windows-on-arm
 author: anthony-roberts
 related: []
-
 ---
 In March 2024, the pull request to enable native [Windows on Arm](https://www.linaro.org/projects/windows-on-arm/) (WoA) builds of Blender was finally merged, and [daily builds](https://builder.blender.org/download/daily/) became available from May. The enablement effort has been a long road - starting in September 2022, and coming to a close in March 2024 - with a number of bumps, twists, and turns. This blog article discusses the process of enablement that was undertaken, and a few of the things that came up along the way. It also explains the scope of the work required to enable a large community-driven project such as Blender - historically targeted at x64 Windows - on the Windows on ARM platform.
 
@@ -19,7 +19,7 @@ Initially released in 1998 as Shareware for the IRIX operating system, it was la
 
 Blender is popularly used in animation, and to showcase Blender, the Blender foundation creates and releases short films under Creative Commons licences - one of the most well-known is “Big Buck Bunny”, a film very commonly used to test video playback, due to its open nature.
 
-![A still from the short film “Big Buck Bunny” - © Blender Foundation | peach.blender.org](/linaro-website/images/blog/blender-image5_uybsk8.png)
+![A still from the short film “Big Buck Bunny” - © Blender Foundation | peach.blender.org](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/blender-image5_uybsk8.png)
 Image 1: A still from the short film “Big Buck Bunny” - © Blender Foundation | peach.blender.org
 
 For further reading on the history of Blender, this page is extremely informative: https://docs.blender.org/manual/en/latest/getting_started/about/history.html
@@ -52,7 +52,7 @@ For the purpose of our initial enablement effort, a small list of libraries was 
 
 Once these dependencies were built, and a few small patches applied to Blender (as seen in this [commit](https://gitlab.com/Linaro/windowsonarm/packages/blender/-/commit/500bb52975f3909c820c4af91214299bf83dea37), which also indicates which libraries were needed in `build.bat`), it was possible to get a working copy of Blender! This proved that native builds of Blender were possible, and the work doable. However, this initial proof-of-concept build was very far from what would ultimately be required for production builds of Blender.
 
-![A screen capture of our first native ARM64 build of Blender](/linaro-website/images/blog/blender-image2_heb7dh.png)
+![A screen capture of our first native ARM64 build of Blender](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/blender-image2_heb7dh.png)
 Image 2: A screen capture of our first native ARM64 build of Blender
 
 # Part 2: Blender’s dependency build system, getting rid of GCC, and how we checked it worked
@@ -71,7 +71,7 @@ Deps are simple CMake projects that are added as sub-projects - most use the def
 
 A simplified diagram is as follows:
 
-![A diagram depicting how some parts of the dependency build system work](/linaro-website/images/blog/blender-image1_jg1iso.png)
+![A diagram depicting how some parts of the dependency build system work](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/blender-image1_jg1iso.png)
 Image 3: A diagram depicting how some parts of the dependency build system work
 
 Of each of these projects, some of them may additionally have some of their own Blender-specific patches that are applied.
@@ -118,7 +118,7 @@ Another dependency of note was TBB (oneAPI Thread Building Blocks). This is curr
 
 The most visually noticeable dep, which was one of the last to be enabled, was [“OpenImageDenoise”](https://github.com/RenderKit/oidn) (OIDN), a library maintained by Intel. The enablement of this library was tricky, as the CPU implementation relied on a heavily customised version of oneDNN at the time, which needed to be ported over. Ultimately, before this work was done in full (only the slow reference implementation was done), the maintainer eliminated oneDNN completely, and provided a working version of OIDN for Windows ARM64 platforms.
 
-![A “before and after” of a subsection of the Blender demo file “Spring” run through OIDN, showing improvement in visual quality](/linaro-website/images/blog/blender-image4_uycgbo.png)
+![A “before and after” of a subsection of the Blender demo file “Spring” run through OIDN, showing improvement in visual quality](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/blender-image4_uycgbo.png)
 Image 4: A “before and after” of a subsection of the Blender demo file “Spring” run through OIDN, showing improvement in visual quality. Original render using Cycles, and an intentionally low value of 10 samples.
 
 Finally, once all the dependencies were ported, the WoA version of Blender was nearly ready to be merged.

@@ -1,8 +1,17 @@
 ---
-title: "Linaro enables OP-TEE RPMB access directly from the Linux Kernel"
-description: Tee-supplicant, the user space application in the OP-TEE solution has been responsible for the communication with the RPMB (Replay Protected Memory Block) device. This however, also meant that access to secure storage hasn't been available until the system has been fully up and running. Nowadays functionality depends on the secure storage being up and running early – e.g implementing a firmware TPM to enhance the system security. To address this issue, Linaro have worked on and upstreamed support enabling RPMB access directly from Linux kernel before user space has been started.
+title: Linaro enables OP-TEE RPMB access directly from the Linux Kernel
+description: >-
+  Tee-supplicant, the user space application in the OP-TEE solution has been
+  responsible for the communication with the RPMB (Replay Protected Memory
+  Block) device. This however, also meant that access to secure storage hasn't
+  been available until the system has been fully up and running. Nowadays
+  functionality depends on the secure storage being up and running early – e.g
+  implementing a firmware TPM to enhance the system security. To address this
+  issue, Linaro have worked on and upstreamed support enabling RPMB access
+  directly from Linux kernel before user space has been started.
 date: 2024-10-22T00:00:00.000Z
-image: linaro-website/images/blog/Virtualization_image_x3vb2d.png
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/Virtualization_image_x3vb2d.png
 tags:
   - system-ready
 author: ilias-apalodimas
@@ -24,7 +33,7 @@ We are interested in the latter and the documentation describes in [detail](http
 
 Since the eMMC (embedded Multi-Media Card) is not under the control of the Secure World and OP-TEE does not have any RPMB drivers, we need help from Linux userspace to complete the transactions and mediate the messages to the Linux kernel. The OP-TEE supplicant is a userspace application that mediates accesses for us and it looks like this:
 
-![tpm-access-diagram-one](/linaro-website/images/blog/flow-diagram_fo1czc.png)
+![tpm-access-diagram-one](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/flow-diagram_fo1czc.png)
 
 ## Early storage access
 
@@ -44,7 +53,7 @@ With this [patchset](https://lore.kernel.org/lkml/20240916145352.388340-1-ulf.ha
 
 The TPM access to the RPMB now looks like this
 
-![tpm-access-diagram-two](/linaro-website/images/blog/flow-diagram-2_gzcyij.png)
+![tpm-access-diagram-two](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/flow-diagram-2_gzcyij.png)
 
 ## Contact us
 

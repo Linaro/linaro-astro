@@ -2,7 +2,7 @@
 name: Tom Gall
 first_name: Tom
 last_name: Gall
-
+slug_name: tom-gall
 ---
 
 ***

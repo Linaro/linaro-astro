@@ -1,13 +1,15 @@
 ---
 title: Securing a device with Trusted Substrate
-description: In this article we talk about how to secure your embedded device with Trusted Substrate.
+description: >-
+  In this article we talk about how to secure your embedded device with Trusted
+  Substrate.
 date: 2022-02-24T01:21:12.000Z
-image: /linaro-website/images/blog/tech_background_1.jpg
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/tech_background_1.jpg
 tags:
   - u-boot
 author: ilias-apalodimas
 related: []
-
 ---
 # Introduction
 
@@ -108,15 +110,15 @@ Since I am using the box in headless mode (the GPU support has [known issues](ht
 
 Start the installer and enable VNC
 
-![Enabling VNC](/linaro-website/images/blog/enabling-vnc3-720-cfbfa5_thlu9s.webp)
+![Enabling VNC](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/enabling-vnc3-720-cfbfa5_thlu9s.webp)
 
 Make sure you encrypt the filesystem using a password as we'll be needing this later on:
 
-![Encrypting filesystem](/linaro-website/images/blog/encrypting-filesystem-v1-1200-5fbf9f_iqj0ty.webp)
+![Encrypting filesystem](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/encrypting-filesystem-v1-1200-5fbf9f_iqj0ty.webp)
 
 It's worth noting that since U-Boot does not support SetVariable at runtime you'll get an error while the installer is trying to update the EFI Boot variables. This is far from fatal, you can just continue the installation and fix up the boot options later.
 
-![Encrypting filesystem](/linaro-website/images/blog/encrypting-filesystem-v2-1200-94d00a_ov9chi.webp)
+![Encrypting filesystem](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/blog/encrypting-filesystem-v2-1200-94d00a_ov9chi.webp)
 
 Once the installation completes, you will have three partitions: EFI, boot, and the LUKS encrypted root.
 

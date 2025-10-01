@@ -2,8 +2,9 @@
 name: Sumit Garg
 first_name: Sumit
 last_name: Garg
-image: linaro-website/images/author/sumit-garg
-
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1758792170/linaro-website/images/author/sumit-garg
+slug_name: sumit-garg
 ---
 
 For most of Sumit's early career he worked at NXP, focused largely on system boot and security frameworks such as Secure boot, ARM TrustZone based TEE, PKCS#11 crypto, SELinux and IMA/EVM. Sumit's work at NXP
