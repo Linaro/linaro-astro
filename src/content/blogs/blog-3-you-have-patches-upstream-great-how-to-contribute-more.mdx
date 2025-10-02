@@ -1,0 +1,82 @@
+---
+title: "Becoming a Kernel Developer (3/3): You have patches upstream, great! How to contribute more!"
+description: In this third and final part to our Blog Series on how to become a
+  Kernel Developer, we take a look at how to contribute more to the Linux kernel
+  through testing, maintaining and reviewing the code.
+date: 2025-10-01T08:00:00.000+00:00
+author: vinod-koul
+tags:
+  - linux-kernel
+  - open-source
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759301846/linaro-website/images/blog/3ef621b3-3efe-400d-a29a-941810aefae4_f7hkoy.jpg
+related: []
+---
+
+# You have patches upstream, great! How to contribute more!
+
+In the preceding two blogs in our blog series “Becoming a Kernel Developer”, ([Posting your first patch](https://www.linaro.org/blog/becoming-a-kernel-developer-part1-posting-your-first-patch/) and [Posted patches, what next?](https://www.linaro.org/blog/blog-2-posted-patches-what-next/)), we delved into the intricate process of preparing your work for upstream submission, exploring essential tools, and understanding effective strategies for community engagement to ensure your patches are accepted. Now, as a result of your diligent efforts, you have successfully joined a diverse global community of open-source contributors who wholeheartedly embrace the Free and Open Source (FOSS) ethos.
+
+Open source offers far more than just the ability to submit your work; it provides a vibrant ecosystem where you can actively participate, collaborate, and contribute in a myriad of ways. This blog serves as your guide to the next steps, outlining the additional tools and avenues available to you as you deepen your involvement in the open source world.
+
+## Testing the code
+
+Looking to contribute to open source but unsure where to start? Testing the Linux kernel is an accessible entry point! You can start with the hardware you already have and test development code on it. Testing and reporting problems does not need prior kernel development experience.Many volunteers already test the Linux-next trees and Linus Torvald's "rc" (release candidate) kernel releases, often concluding with a call to action: "Hey, go test this!"
+
+You can use your existing hardware. If you encounter issues, reporting them is crucial and highly valued within the Linux kernel community. Testing on widely available hardware, like a popular x86_64 based laptop, does make it accessible. On the other side of the spectrum a complex or rarely available embedded system does also need ongoing testing. Continuously testing development code on such hardware and reporting working and non-working patches gives confidence to developers and maintainers alike. Testing and reporting is strengthening the full development process. The reporter gets credit in the community as well:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759303009/linaro-website/images/blog/image2_uxnbbh.png)
+
+Once you are comfortable with reporting, the next step is to conduct a deeper investigation. Running regression tests is very helpful. For those seeking more adventure, tracing the regression's origin and "bisecting" issues ([doing a binary search to pinpoint when a bug was introduced](https://git-scm.com/book/en/v2/Git-Tools-Debugging-with-Git#_binary_search)) are options. The truly brave can even propose and aim to get a fix accepted into the main Linux codebase—how cool is that?
+
+## Reviews
+
+Typically, maintainers prefer it when people review not just their own/related code, but also other patches coming into the subsystem, and always look for consistent people who can regularly offer reviews. Once you have established yourself as a credible reviewer, it can be formalized in the MAINTAINERS file as a reviewer of the driver or a subsystem. This formal recognition solidifies your standing within the Linux kernel development community and indicates a significant level of trust and responsibility.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759303012/linaro-website/images/blog/image1_otb6i9.png)
+
+It's a well-known fact that Linux kernel maintainers are often overwhelmed with the sheer volume of patches, so any helping hand is greatly appreciated. Engaging in code reviews is an excellent exercise for developers seeking to deepen their understanding of the Linux kernel. By examining others' code and observing diverse implementations, reviewers can gain a more nuanced and comprehensive perspective.
+
+If you find a patch to be satisfactory and believe it adheres to the high standards of the Linux kernel, you can provide your approval by replying to the patch email with a "Reviewed-by" tag. The standard format for this tag is:
+
+`Reviewed-by: Your RealName <your.email@example.com>`
+
+Your contributions to code reviews are formally recognized. [LWN (Linux Weekly News) ](https://lwn.net/)statistics credit reviewers when patches are published, providing valuable statistics for each kernel release. It's noteworthy that companies like Linaro, which deeply embody the principles of open source development, frequently have a significant number of their employees featured in these review statistics lists, highlighting their consistent contributions to the community.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759326507/linaro-website/images/blog/image4-2_esv5pt.png)
+
+## Maintain
+
+Becoming a maintainer in the Linux kernel community is a significant achievement, typically reserved for frequent reviewers who have consistently demonstrated their expertise and earned the trust of existing maintainers. These individuals are entrusted with the well-being and strategic direction of their respective subsystems, effectively acting as both architect and visionary. Their responsibilities are multifaceted, encompassing:
+
+- **Architect and Visionary**: Maintainers guide the long-term development of their subsystem, ensuring that new contributions align with its overall design principles and future trajectory. They foresee potential issues and steer development towards robust and sustainable solutions.
+- **Patch Reviewer**: A core duty involves meticulously reviewing incoming patches for their subsystem. This includes scrutinizing code quality, adherence to coding standards, correctness, performance implications, and overall impact on the system's stability.
+- **Conflict Resolver**: When disagreements arise among developers regarding design choices or implementation details, maintainers act as impartial arbiters, facilitating consensus and ensuring that conflicts are resolved constructively.
+- **Patch Monkey**: This informal term highlights the practical responsibility of collecting, organizing, and ultimately forwarding accepted patches to the benevolent dictator for life, Linus Torvalds, for inclusion in the main kernel tree. This involves ensuring patches are correctly formatted, signed-off, and ready for integration.
+
+The pivotal role of a maintainer is officially recognized and documented within the MAINTAINERS file in the Linux kernel source tree. This file serves as a comprehensive directory, outlining the specific maintainers for various subsystems and components.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759303015/linaro-website/images/blog/image3_mmqprq.png)
+
+One of the most crucial attributes of a successful maintainer, as famously emphasized by Linus Torvalds himself, is the ability to decisively say "NO." This isn't a negative stance but rather a protective one, designed to safeguard the integrity and long-term health of the kernel. Maintainers must be prepared to reject subsystem changes that:
+
+- **Cause Maintainability Issues**: Code that is overly complex, difficult to understand, or prone to breaking existing functionality can severely hamper future development and bug fixing.
+- **Have Suspect Code Quality:** Substandard code, security vulnerabilities, or inefficient algorithms are detrimental to the kernel's overall performance and reliability.
+- **Don't Align with the Vision of the Subsystem**: Contributions that deviate from the established architectural principles or the intended direction of the subsystem can lead to fragmentation and an incoherent design.
+
+The position of a maintainer is arguably one of the most critical and highly trusted roles within the Linux community. It is testament to years of dedicated experience, profound technical knowledge, and consistent hard work demonstrated by the individual. Their decisions directly impact the stability, performance, and future evolution of the world's most widely used operating system kernel.
+
+Statistical analyses of kernel development often highlight the contributions of top maintainers, identifying those who consistently add their Signed-off-by: line when applying patches. It is noteworthy that Linaro, a leading open-source software engineering organization, frequently features among the top 10 employers for kernel maintainers, underscoring its significant contributions to the Linux ecosystem.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1759303018/linaro-website/images/blog/image5_lcmp2u.png)
+
+For those aspiring to or currently serving as Linux kernel maintainers, the [Linux Kernel Maintainer Handbook](https://www.kernel.org/doc/html/latest/maintainer/index.html) is an indispensable resource. It provides comprehensive guidance on best practices, responsibilities, and the intricacies of navigating the kernel development process.
+
+## Participate
+
+While contributing code and developing new drivers or subsystems are vital, they are not the sole avenues for participation in the Linux kernel community. Once individuals have established themselves as credible reviewers or maintainers, there are numerous other ways to contribute to the ongoing health and evolution of the kernel process and to shape how the community itself functions. These include:
+
+- **Linux Kernel Maintainer Summit**: The annual Maintainer Summit is an exclusive invite-only gathering that brings together Linus Torvalds and a select group of top kernel maintainers. This high-level conference serves as a critical forum for discussing fundamental technical topics, strategizing future kernel development, and addressing pressing issues. One of the pathways to receiving an invitation to this elite event is to actively participate in discussions and propose significant process improvements that can benefit the entire community. The archives of past Kernel Summits, accessible via https://lore.kernel.org/ksummit/, provide invaluable insights into historical discussions and decisions that have shaped the kernel.
+- **Workflows Mailing List**: The workflows mailing list, located at https://lore.kernel.org/workflows/, is dedicated to discussions about the various workflows and tools used in kernel development. This includes topics such as patch submission procedures, version control strategies, automated testing frameworks, and other infrastructure-related matters. Contributing to these discussions can lead to tangible improvements in the efficiency and effectiveness of the entire kernel development lifecycle.
+- **Linux Foundation Technical Advisory Board (TAB)**: The technical advisory board’s role is to help the Linux Foundation Board of Directors. They run dedicated programs to enhance Linux and report back to the board. More details can be found in their [charter](https://git.kernel.org/pub/scm/docs/tab/tab.git/tree/documents/charter.md).
+
+Engaging in these discussions and contributing to the community's organizational and procedural aspects is just as crucial as writing code. It ensures that the development process remains efficient, inclusive, and adaptable to the ever-evolving landscape of technology.
