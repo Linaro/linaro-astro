@@ -1,36 +1,43 @@
 - label: Products & Solutions
   key: solutions
   children:
+    - label: Linux Kernel Testing
+      items:
+        - label: Long term Support
+          url: /solutions/lts
+    - label: Virtualization
+      items: 
+        - label: QEMU
+          url: /virtualization/qemu
+        - label: VIRTIO
+          url: /virtualization/virtio
     - label: HPC
-      url: https://www.linaroforge.com
-    - label: IoT & Embedded Systems
-      url: /solutions/iot-embedded
-    - label: AI & Machine Learning
+      items: 
+        - label: LinaroForge
+          url: https://www.linaroforge.com
+    - divider: true
+    - label: IoT&Embedded
+      url: /solutions/onelab
+    - label: AI&Machine Learning
       url: /solutions/ai-ml
     - label: Automotive
       url: /solutions/automotive
-    - label: Long Term Support
-      url: /solutions/lts
-- label: Services & Support
+- label: Services
   key: Services
   children:
-    - label: Consulting
-      url: /services/consulting
-    - label: Training & Learning
-      url: /services/training
     - label: NXP Platform Services
       url: /services/nxp-platform-services
     - label: Qualcomm Platform Services
       url: /projects/qualcomm-platform
+    - label: Windows on Arm
+      url: /projects/windows-on-arm
+    - label: Android Platform Services
+      url: /services/training
+    - label: Training
+      url: /services/training
 - label: Ecosystem Projects
   key: ecosystem
   children:
-    - label: Windows on Arm
-      url: /projects/windows-on-arm
-    - label: Automotive, IoT & Edge
-      url: /projects/automotive-iot-edge
-    - label: Cloud Computing & Servers
-      url: /projects/cloud-computing
     - label: Ecosystem Dashboard
       url: https://ecosystemdashboard.linaro.org
 - label: Resource Center
@@ -50,6 +57,9 @@
       url: /events
     - label: Connect 2025
       url: /connect
+- label: Support
+  key: Support
+  url: /contact
 - label: Company
   key: company
   children:
@@ -57,3 +67,6 @@
       url: /about
     - label: Careers
       url: /careers
+- label: Linaro Solutions Hub
+  key: solutionsHub
+  url: https://hub.linaro.com
