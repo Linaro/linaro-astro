@@ -23,7 +23,9 @@ if (background_image) {
 }
 
 const titleMarkdown = await marked.parseInline(title);
-const descriptionMarkdown = await marked.parse(description);
+const descriptionMarkdown = description
+  ? await marked.parse(description)
+  : undefined;
 ---
 
 <section
@@ -64,10 +66,14 @@ const descriptionMarkdown = await marked.parse(description);
         set:html={titleMarkdown}
       />
 
-      <div
-        class:list={["text-xl", styles?.description]}
-        set:html={descriptionMarkdown}
-      />
+      {
+        descriptionMarkdown && (
+          <div
+            class:list={["text-xl", styles?.description]}
+            set:html={descriptionMarkdown}
+          />
+        )
+      }
       {
         button && (
           <a

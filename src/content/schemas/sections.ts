@@ -150,6 +150,9 @@ export const contactSchema = z.object({
   styles: z.object({
     card: z.string().optional(),
     container: z.string().optional(),
+    form: z.string().optional(),
+    description: z.string().optional(),
+    content: z.string().optional(),
   }),
 });
 
@@ -440,6 +443,33 @@ export const iframeSchema = z.object({
   url: z.string(),
 });
 
+export const expandingCardsSchema = z.object({
+  component: component("expandingcards"),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+      card_title: z.string().optional(),
+      button: z.string().optional(),
+      icon: z.string().optional(),
+      card_text: z.string().optional(),
+      content: z.string().optional(),
+    })
+    .optional(),
+  cards: z
+    .array(
+      z.object({
+        id: z.number(),
+        title: z.string(),
+        description: z.string(),
+        longDescription: z.string(),
+        image: z.string(),
+      }),
+    )
+    .optional(),
+  divider: z.boolean().optional(),
+});
+
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
@@ -471,4 +501,5 @@ export default z.discriminatedUnion("component", [
   connectContentSchema,
   titleSchema,
   iframeSchema,
+  expandingCardsSchema,
 ]);
