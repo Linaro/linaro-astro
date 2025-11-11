@@ -31,7 +31,7 @@ flow:
               alt: |
                 automation transport concept
               inferSize: true
-            styles: not-prose lg:w-1/2
+            styles: not-prose lg:w-1/2 h-auto object-contain
           - type: text
             title: Automotive manufacturers operate in a highly challenging landscape.
             text_content: |
@@ -160,7 +160,7 @@ flow:
               alt: |
                 computer-screen-display-concept
               inferSize: true
-            styles: not-prose lg:w-1/2 rounded-3xl
+            styles: not-prose lg:w-1/2 rounded-3xl h-auto object-contain
   - row: container_row
     sections:
       - component: contact
