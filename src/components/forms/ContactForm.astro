@@ -14,7 +14,7 @@ const inputFields = [
 ---
 
 <div
-  class={styles.form
+  class={styles?.form
     ? styles.form
     : ["bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full"]}
 >
@@ -33,7 +33,7 @@ const inputFields = [
               : "text-3xl text-white my-2 font-bold"
           }
           set:html={description}
-        ></p>
+        />
       )
     }
     <input type="hidden" name="form_id" value={form_id} />
