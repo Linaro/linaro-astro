@@ -13,9 +13,11 @@ hero:
     title: max-w-2xl mb-12
     description: max-w-xl text-xl
     background: bg-right-top xl:bg-right
-    background_container: p-[5%] md:ml-[5%]
+    background_container: md:ml-[5%]
+    main_container: h-[calc(75vh)]
 flow:
   - row: container_row
+    animation: none
     styles:
       inner: py-0
     sections:
