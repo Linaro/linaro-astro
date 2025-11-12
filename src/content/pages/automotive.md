@@ -3,7 +3,7 @@ layout: ../../layouts/Flow.astro
 slug: solutions/automotive
 title: Automotive
 description: |
-  ONELab revolutionizes edge and IoT device interoperability testing. We help Silicon Vendors and Device Makers to conduct continuous interoperability tests among different Operating Systems and Cloud Services.
+  The future of transportation lies in connected and autonomous vehicles. We actively work on technologies that enable seamless connectivity, such as V2X (Vehicle-to-Everything) communication, 5G integration, and edge computing.
 hero:
   title: >
     Changing gears with Linaro:<br>Shifting to software-first in Automotive on Arm
