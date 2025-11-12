@@ -1,5 +1,5 @@
 ---
-const { form_id, formName, description, modal_id } = Astro.props;
+const { form_id, formName, description, modal_id, styles } = Astro.props;
 
 const inputFields = [
   {
@@ -13,7 +13,11 @@ const inputFields = [
 ];
 ---
 
-<div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full">
+<div
+  class={styles?.form
+    ? styles.form
+    : ["bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full"]}
+>
   <form
     class="flex flex-col items-start gap-8"
     id="contact-form"
@@ -22,7 +26,14 @@ const inputFields = [
   >
     {
       description && (
-        <p class="text-3xl text-white my-2 font-bold">{description}</p>
+        <p
+          class={
+            styles?.description
+              ? styles.description
+              : "text-3xl text-white my-2 font-bold"
+          }
+          set:html={description}
+        />
       )
     }
     <input type="hidden" name="form_id" value={form_id} />

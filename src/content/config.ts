@@ -11,7 +11,7 @@ const pages = defineCollection({
         .object({
           title: z.string(),
           background_image: z.string().optional(),
-          description: z.string(),
+          description: z.string().optional(),
           button: z.object({ text: z.string(), url: z.string() }).optional(),
           styles: z
             .object({

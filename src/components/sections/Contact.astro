@@ -15,10 +15,14 @@ if (content) {
 ---
 
 <div class:list={["items-center gap-12", styles?.card]}>
-  <article set:html={markdownContent} class:list={["text-white", styles]} />
+  <article
+    set:html={markdownContent}
+    class:list={["text-white", styles.content]}
+  />
   <ContactForm
     form_id={form_id}
     description={description}
     formName={formName}
+    styles={styles}
   />
 </div>

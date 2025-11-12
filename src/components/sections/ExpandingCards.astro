@@ -1,0 +1,110 @@
+---
+import type { expandingCardsSchema } from "@/content/schemas/sections";
+import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import type { z } from "astro/zod";
+import { marked } from "marked";
+
+type Props = z.infer<typeof expandingCardsSchema>;
+const { cards } = Astro.props;
+
+const cardsWithHTML = await Promise.all(
+  (cards ?? []).map(async (card) => ({
+    ...card,
+    longDescriptionHTML: await marked.parse(card.longDescription),
+  })),
+);
+---
+
+<div
+  class="flex flex-col md:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 w-4/5 mx-auto"
+  id="cards-container"
+>
+  {
+    cardsWithHTML?.map((card) => (
+      <div
+        class="card bg-background rounded-2xl shadow-lg transition-all duration-500 ease-in-out border-gray-500 border-[1px] p-6"
+        data-id={card.id}
+      >
+        <div class="collapsed flex flex-col h-full w-full justify-between">
+          <CloudinaryImg
+            src={card.image}
+            alt={card.title}
+            class="w-full h-36 object-cover mt-0 rounded-lg"
+          />
+          <div>
+            <h2 class="text-lg md:text-2xl font-bold mb-4 mt-0">
+              {card.title}
+            </h2>
+            <p class="text-xs md:text-lg">{card.description}</p>
+          </div>
+          <button class="linaro-gradient-button transition learn-more lg:max-w-48">
+            Learn More
+          </button>
+        </div>
+
+        <div class="expanded hidden flex flex-col md:flex-row w-full h-full items-start md:m-4">
+          <CloudinaryImg
+            src={card.image}
+            alt={card.title}
+            class="md:w-1/2 md:h-auto object-contain mt-0"
+          />
+          <div class="p-2 md:p-6 md:pt-0 mt-0 flex flex-col justify-center md:w-1/2">
+            <h2 class="text-lg md:text-3xl font-bold mb-4 mt-0">
+              {card.title}
+            </h2>
+            <p
+              class="text-xs md:text-lg mb-6"
+              set:html={card.longDescriptionHTML}
+            />
+            <button class="linaro-gradient-button transition back-btn max-w-32">
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("cards-container");
+    const cards = container?.querySelectorAll(".card");
+
+    cards?.forEach((card) => {
+      const learnMore = card.querySelector(".learn-more");
+      const backBtn = card.querySelector(".back-btn");
+
+      learnMore?.addEventListener("click", () => {
+        cards.forEach((c) => {
+          c.classList.remove("expanded-card");
+          c.querySelector(".collapsed")?.classList.remove("hidden");
+          c.querySelector(".expanded")?.classList.add("hidden");
+        });
+        card.classList.add("expanded-card");
+        card.querySelector(".collapsed")?.classList.add("hidden");
+        card.querySelector(".expanded")?.classList.remove("hidden");
+        setTimeout(() => {
+          const y = card.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }, 50);
+      });
+
+      backBtn?.addEventListener("click", () => {
+        card.classList.remove("expanded-card");
+        card.querySelector(".collapsed")?.classList.remove("hidden");
+        card.querySelector(".expanded")?.classList.add("hidden");
+      });
+    });
+  });
+</script>
+
+<style>
+  .expanded-card {
+    grid-column: span 3 / span 3;
+  }
+
+  .card {
+    transition: all 0.4s ease;
+  }
+</style>
