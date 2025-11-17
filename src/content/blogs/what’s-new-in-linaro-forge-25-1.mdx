@@ -1,0 +1,38 @@
+---
+title: What’s New in Linaro Forge 25.1
+description: We are thrilled to unveil the latest advancements in Linaro Forge
+  25.1 at SC’25.
+date: 2025-11-14T15:28:00.000Z
+author: linaro
+tags:
+  - hpc
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1763134173/linaro-website/images/blog/IMG_1507_fjnytv.jpg
+related: []
+---
+## What’s New in Linaro Forge 25.1
+We are thrilled to unveil the latest advancements in [Linaro Forge 25.1](https://www.linaroforge.com/download-documentation) at SC’25. In this release, we focused on addressing tooling performance challenges, expanding hardware support, and ensuring currency across the HPC ecosystem, making your debugging and profiling workflows more robust and efficient.
+On top of these updates we are excited to release an initial set of Linaro Forge tutorial videos, available to watch on demand in our Linaro Forge [YouTube playlist](https://www.youtube.com/watch?v=I3oswXFO5GI&list=PLKZSArYQptsO7Vfl5UJfWdzdVgmVA848q).
+
+## Key Highlights of Linaro Forge 25.1
+    - **Product Memory Reduction in MAP and Performance Reports:** We’ve implemented a major architectural change to support GDB multiplexing, dramatically reducing the product’s memory usage on compute nodes. This feature, which is opt-in and tuneable, directly addresses memory consumption of Linaro Forge when running at very large scales.
+    - **NCCL Metrics Collection [preview]:** You can now collect NCCL metrics with MAP. This feature requires the ```nccl-prototype``` license and the ```--nccl``` command line option. Please see us at booth 6120 to learn more about our NCCL metrics.
+    - **Continued GPU Debugging and Profiling Support:**
+        - **AMD GPU Support:** We’ve successfully integrated **rocprofiler-sdk** to continue providing essential kernel profiling support for AMD GPUs.
+        - **CUDA 13+ Support:** Forge now auto-detects and uses the system's ```cuda-gdb``` for CUDA 13+ debugging. This ensures you immediately benefit from the latest NVIDIA bug fixes.
+    - **Improved Stability with Large Files:** A new warning system proactively prevents system memory exhaustion (OOM) and unresponsiveness when attempting to open large MAP files.
+
+## Ecosystem Currency
+We continue to ensure that Linaro Forge is current with the HPC software landscape. Key updates in 25.1 include:
+    - **Compilers:** NVHPC 25.9, Intel oneAPI 2025.2, ATfL 21.1.1, and Clang/Flang LLVM 21.1.4.
+    - **Accelerators:** ROCm versions 7.0 and CUDA 12.9/13.0.
+    - **OS/Tools:** Red Hat 10, macOS 26, Python 3.14, and Slurm 25.05.4, along with the latest Perf PMU events from Linux 6.18.
+You can find a complete list of bug fixes and improvements in the [release history](https://www.linaroforge.com/release-history).
+
+## Conclusion
+The release of Linaro Forge 25.1 marks a significant step forward in addressing the memory and performance challenges of debugging and profiling at scale. From major architectural improvements  to continued support for the latest AMD and NVIDIA hardware, this release is built to make your workflows more efficient.
+But don't just take our word for it—come see it in person!
+We encourage everyone attending SC'25 to **stop by our booth #6120**. Our team will be on hand to demonstrate the new features and discuss how Forge can accelerate your applications.
+We also invite you to join our session at the Exhibitor Forum, which is a perfect opportunity to learn more about our vision for the future of HPC tooling.
+    - **Talk:** Accelerating Discovery: Intuitive Debugging & Profiling for HPC Applications
+    - **Time:** Wednesday, November 19 at 11:00-11:30 am.
+We hope to connect with you there!
