@@ -40,7 +40,7 @@ flow:
               Auto makers are constantly tackling how to meet customer demands while protecting their data and ensuring the vehicle is safe. How can open source be leveraged as a sustainable and flexible alternative to proprietary software to achieve this?
             styles: lg:w-1/2 text-lg
   - row: container_row
-    title: Accelerate you Automotive Development with Linaro
+    title: Accelerate your Automotive Development with Linaro
     styles:
       outer: purple-gradient-container
     sections:
