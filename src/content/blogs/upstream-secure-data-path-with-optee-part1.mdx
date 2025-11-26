@@ -1,0 +1,68 @@
+---
+title: Upstream Secure Data Path with OP-TEE Part 1
+description: >
+  Beyond Digital Rights Management (DRM) solutions, there has always been a demand for applications such as Secure Video Playback and Secure Video Recording. Let’s explore how Linaro’s Secure Data Path patchset enables these use cases.
+date: 2025-11-26T00:00:00.000Z
+image: >-
+  https://res.cloudinary.com/dl7c2wmhi/image/upload/v1764139988/linaro-website/images/blog/IMG_1634_ogl9df.jpg
+tags:
+  - iot-embedded
+  - op-tee
+  - security
+  - meta
+author: jens-wiklander
+related: []
+---
+
+Beyond Digital Rights Management (DRM) solutions, there has always been a demand for applications such as Secure Video Playback and Secure Video Recording. Let’s explore how Linaro’s Secure Data Path patchset enables these use cases.
+
+## Introduction
+
+OP-TEE, a secure world OS implementation, is maintained by Linaro and adheres to the [GlobalPlatform specifications](https://globalplatform.org/specs-library/tee-client-api-specification/).
+
+There has always been a need for applications beyond Digital Rights Management (DRM) solutions, like Secure Video Playback. It also facilitates Trusted UI and Secure Video Recording. For instance, Trusted UI provides a more secure way to authenticate with services like your bank. Additionally, Secure Video Recording can prove that a video stream has not been altered since its capture.
+
+Secure Data Path (SDP) is implemented using Protected memory. The term Protected memory is used to distinguish it from Secure memory. It’s also an established term in other [solutions](https://docs.vulkan.org/guide/latest/protected.html). The patches for Secure Data Path with OP-TEE are now upstream. They were merged during the Linux kernel 6.18 merge window.
+
+In this blog, we will cover the earlier designs and attempts to upstream SDP to the Linux kernel.
+
+## History
+
+We have seen a few SDP designs with OP-TEE over the years. Check out some of our presentations from previous Linaro Connects to learn more about these:
+
+    - [SFO15-205: OP-TEE Content Decryption with Microsoft PlayReady on ARM TrustZone](https://static.linaro.org/connect/sfo15/Presentations/09-22-Tuesday/SFO15-205-%20%20OP-TEE%20Content%20Decryption%20with%20Microsoft%20PlayReady%20on%20ARM%20TrustZone.pdf) (2015)
+    - [BKK16-201 - PlayReady OPTEE Integration with Secure Video Path](https://static.linaro.org/connect/bkk16/Presentations/Tuesday/BKK16-201.pdf) (2016)
+    - [Android Widevine on OP-TEE](https://static.linaro.org/connect/las16/Presentations/Thursday/LAS16-406%20-%20Android%20Widevine%20on%20OP-TEE.pdf) (2016)
+    - [BUD17-400 Secure Data Path with OP-TEE](https://static.linaro.org/connect/bud17/Presentations/BUD17-400%20-%20Secure%20Data%20Path%20with%20OPTEE.pdf) (2017)
+    - [SECURE DATA PATH ON LINUX AND NXP I.MX 8M](https://static.linaro.org/connect/san19/presentations/san19-107.pdf) (2019)
+
+Upstreaming SDP with OP-TEE has also been attempted a few times over the years without much success.
+
+All the attempts have been built on an out-of-tree version of the patch “tee: new ioctl to a register tee_shm from a dmabuf file descriptor”. The patch originates from a pull [request](https://github.com/linaro-swg/linux/pull/26) authored by [Etienne Carriere](https://github.com/etienne-lms) (ST) in 2016 to the Linaro Security Working Group’s fork of the Linux kernel.
+
+The principle has been to provide a DMA heap to allocate DMA-bufs that can be used in an SDP use-case.
+
+In 2022, Oliver Masse (NXP) posted a patchset with a secure static carveout using the "linaro,secure-heap" compatible in [Device Tree](https://lore.kernel.org/lkml/20220805135330.970-1-olivier.masse@nxp.com/). The secure memory was managed by genalloc to avoid unnecessary secure world entries. However, this patch set did not lead to further developments after the initial discussions.
+
+Between 2023 and 2024, Yong Wu (Mediatek) introduced a series of patch sets, "dma-buf: heaps: [Add restricted heap](https://lore.kernel.org/dri-devel/20240515112308.10171-1-yong.wu@mediatek.com/)", which included two secure heaps. These heaps, one static carveout and one allocated with CMA, differed from Olivier's patch set in that they used OP-TEE to manage allocations and protect memory during initialization. Reviewers ultimately decided to name this "restricted memory" to distinguish it from other types of secure memory. Version 5 of the patch set turned out to be the last in this series.
+
+In 2024, right after Yong’s v5, Jens Wiklander (Linaro) posted the first version of the Secure Data Path patch [set](https://lore.kernel.org/lkml/20240830070351.2855919-1-jens.wiklander@linaro.org/). This patchset was a small increment on top of Yong’s v5. Feedback for the posted versions up to the last [v12](https://lore.kernel.org/op-tee/20250911135007.1275833-1-jens.wiklander@linaro.org/) resulted in the following changes:
+
+    - A demonstration of protected DMA-bufs based on Gstreamer on a RockPI-4 board
+    - Changed from restricted to protected buffers to align with Vulkan [documentation](https://docs.vulkan.org/guide/latest/protected.html)
+    - Moved instantiation of the DMA heap into the TEE subsystem
+    - Dynamic or temporarily carved out protected memory for the DMA heap, so the memory can be returned when the use case is finished
+    - Support in the FF-A OP-TEE driver
+
+The purpose of upstreaming these patches is to reduce fragmentation. Having a common approach in security-sensitive operations also reduces the likelihood of security bugs.
+
+## Stay tuned
+
+This blog provided a quick overview of the Secure Data Path. In part 2, we will delve deeper into the technical details of the design.
+
+    - [Subscribe](https://lists.trustedfirmware.org/mailman3/lists/op-tee.lists.trustedfirmware.org/) to the OP-TEE mailing list [op-tee@lists.trustedfirmware.org](op-tee@lists.trustedfirmware.org)
+    - Join the [Linaro OP-TEE Contributions (LOC) monthly meeting](https://www.trustedfirmware.org/meetings/) or check out the project page [Linaro's OP-TEE Contributions - Confluence](https://linaro.atlassian.net/wiki/spaces/LOC/overview)
+    - Visit the [OP-TEE page](https://www.trustedfirmware.org/projects/op-tee/) at trusted firmware.
+
+Thank you for reading this far. If you have any questions or thoughts, feel free to
+create an issue at https://github.com/OP-TEE/optee_os/issues or to reach out on the mailing list. You’re also welcome to join the OP-TEE Contributions Forum (https://www.trustedfirmware.org/meetings).
