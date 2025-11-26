@@ -7,47 +7,30 @@ description: |
 hero:
   title: >
     Contact Linaro
-  background_image: linaro-website/graphics/close-up-woman_sbf1xz
+  background_image: /linaro-website/graphics/young-woman-with-curly-hair-using-phone-street_1_zfsbea.png
   description: ""
   styles:
-    text_container: text-center w-full
-    title: w-full text-center
-    background: bg-right-top md:bg-top opacity-50
+    main_container: lg:h-[calc(100vh)] h-[calc(35vh)]
+    text_container: text-center w-full lg:pl-40
+    title: w-full text-left
+    background: w-full
     description: text-md sm:text-lg
-    main_container: max-h-[30rem] min-h-[30ch] h-[30vh]
 flow:
-  - row: container_row
-    sections:
-      - component: contact_buttons
-        styles:
-          card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center
-          container: justify-around gap-x-5 gap-y-20
-          button: mt-8
-          card_title: text-[2rem] text-center
-        buttons:
-          - title: Sales Enquiries
-            type: form
-            icon: workspaces
-            button_text: Get in Touch
-            form_id: "7"
-            modal_id: general
-            formName: "sales_contact"
-          - title: Media Enquiries
-            type: form
-            icon: flash_on
-            button_text: Get in Touch
-            form_id: "8"
-            modal_id: marketing
-            formName: "media_contact"
-          - title: Careers Enquiries
-            type: link
-            icon: handshake
-            button_text: Get in Touch
-            url: /careers
   - row: container_row
     styles:
       outer: purple-gradient-container
     sections:
+      - component: contact
+        form_id: "7"
+        formName: "sales_contact"
+        styles:
+          card: flex flex-col md:flex-row bg-background border rounded-xl p-8
+          form: w-full md:w-1/2 bg-background
+          content: w-full md:w-1/2 text-2xl
+        content: We’d love to hear from you so please send us a message and one of our team will be in touch!
+  - row: container_row
+    sections:
+      - component: faded_line
       - component: cards
         styles:
           card: max-w-[40ch]  flex flex-col items-start
@@ -55,10 +38,16 @@ flow:
         cards:
           - title: Technical Support
             text: |
+              96Boards Technical Support - If you have a technical support query relating to 96Boards, please post your question on [96Boards](https://discuss.96boards.org/).
+
+              Linaro Technical Support - If you have a technical support query relating to Linaro, please go to our support page.
               If you have a technical support query relating to Linaro, please go to our [support page](https://support.linaro.org/).
           - title: Legal Information
             text: Linaro's legal information can be found on the [Legal page](/legal).
 
-          - title: Getting Involved with the Community
-            text: For discussion around Linux and Open Source on Arm, subscribe to the lists on [Linaro Lists Site](https://lists.linaro.org/mailman3/lists/).
+          - title: <span class="text-linaro-yellow">Subscribe to our newsletter</span>
+            contact_button:
+              button_text: Subscribe
+              type: insight
+              formName: newsletter
 ---
