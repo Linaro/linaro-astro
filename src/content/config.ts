@@ -13,6 +13,7 @@ const pages = defineCollection({
           background_image: z.string().optional(),
           description: z.string().optional(),
           button: z.object({ text: z.string(), url: z.string() }).optional(),
+          bottom_fade: z.boolean().optional(),
           styles: z
             .object({
               text_container: z.string().optional(),

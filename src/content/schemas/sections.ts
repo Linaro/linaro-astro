@@ -39,6 +39,7 @@ export const cardsSchema = z.object({
       icon: z.string().optional(),
       card_text: z.string().optional(),
       content: z.string().optional(),
+      gradient_border_container: z.string().optional(),
     })
     .optional(),
   cards: z.array(
@@ -53,9 +54,17 @@ export const cardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
+      image: z
+        .object({
+          url: z.string(),
+          alt: z.string(),
+          container: z.boolean().optional(),
+        })
+        .optional(),
     }),
   ),
   divider: z.boolean().optional(),
+  gradient_border: z.boolean().optional(),
 });
 
 export const imageCardsSchema = z.object({
