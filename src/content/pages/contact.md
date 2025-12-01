@@ -36,12 +36,6 @@ flow:
           card: max-w-[40ch]  flex flex-col items-start
           container: justify-center gap-24
         cards:
-          - title: Technical Support
-            text: |
-              96Boards Technical Support - If you have a technical support query relating to 96Boards, please post your question on [96Boards](https://discuss.96boards.org/).
-
-              Linaro Technical Support - If you have a technical support query relating to Linaro, please go to our support page.
-              If you have a technical support query relating to Linaro, please go to our [support page](https://support.linaro.org/).
           - title: Legal Information
             text: Linaro's legal information can be found on the [Legal page](/legal).
 

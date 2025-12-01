@@ -143,6 +143,29 @@ const { title, description, type = "website", image } = Astro.props;
           (form.querySelector("input[name='formName']") as HTMLInputElement)
             ?.value || "unknown_form";
 
+        // Telephone Number Validation
+        const messageKey = "customfield_13365";
+        const phoneNumberInput = form.querySelector(
+          'input[name="telephone_number"]',
+        ) as HTMLInputElement;
+        const phoneNumber = phoneNumberInput?.value || null;
+        const phoneRegex = new RegExp("^[+]?[0-9\\s\\-()]{6,25}$");
+
+        if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+          feedback!.classList.remove("hidden");
+          feedbackText!.innerText = "Please enter a valid telephone number.";
+
+          phoneNumberInput?.classList.add("border-4", "border-red-500");
+
+          button?.classList.remove("hidden");
+          loader?.classList.add("hidden");
+
+          return;
+        }
+        phoneNumberInput?.classList.remove("border-4", "border-red-500");
+
+        let message = data.get(messageKey) as string | null;
+
         data.forEach((value, key) => {
           // Only include the fields that are mapped in form_data.json
           // or are explicitly needed by the serverless function
@@ -159,6 +182,16 @@ const { title, description, type = "website", image } = Astro.props;
             }
           }
         });
+
+        // Prepend the telephone number to the message field (customfield_13365)
+        if (phoneNumber && message) {
+          const phoneLine = `Telephone: ${phoneNumber}\n---\n`;
+          payload[messageKey] = phoneLine + message;
+        } else if (phoneNumber) {
+          // Handle case where message is empty but phone number exists
+          payload[messageKey] = `Telephone: ${phoneNumber}\n---\n`;
+        }
+
         // Ensure 'email' is in the payload for the backend validation and user creation
         // and is mapped correctly if it's a custom field ID
         if (!payload.email) {
@@ -172,6 +205,7 @@ const { title, description, type = "website", image } = Astro.props;
         }
 
         delete payload.agreed;
+        delete payload.telephone_number;
 
         console.log(payload);
 
