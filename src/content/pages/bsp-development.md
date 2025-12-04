@@ -29,8 +29,8 @@ flow:
       - component: cards
         # divider: true
         styles:
-          container: mx-auto flex flex-col md:flex-row gap-2 md:gap-0 justify-evenly bg-[url('/wave-vert.svg')] lg:bg-[url('/wave.svg')] bg-no-repeat bg-center bg-cover md:bg-contain min-h-[1450px] md:min-h-[450px] px-4 items-center
-          card: rounded-full !bg-[#D9D9D910] w-56 h-56 flex items-center justify-center text-center p-6 text-xs m-0
+          container: mx-auto flex flex-col md:flex-row gap-2 md:gap-0 justify-evenly min-h-[1450px] md:min-h-[450px] px-4 items-center
+          card: rounded-full bg-[linear-gradient(260deg,rgba(34,32,37,1)_39%,rgba(107,107,107,1)_100%)] w-56 h-56 flex items-center justify-center text-center p-6 text-xs m-0
           content: "!text-sm"
         cards:
           - text: Develop all aspects of your BSP for your product - including bootloaders, kernels, and root file systems.
