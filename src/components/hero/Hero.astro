@@ -7,7 +7,8 @@ import * as marked from "marked";
 
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
-const { title, background_image, button, description, styles } = Astro.props!;
+const { title, background_image, button, description, styles, bottom_fade } =
+  Astro.props!;
 let optimizedBackground: GetImageResult | undefined;
 if (background_image) {
   optimizedBackground = await getImage({
@@ -37,6 +38,14 @@ const descriptionMarkdown = description
       : "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
   ]}
 >
+  {
+    bottom_fade && (
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-[130px]
+           bg-gradient-to-t from-white/15 to-white/0"
+      />
+    )
+  }
   <div
     class:list={[
       "absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container",

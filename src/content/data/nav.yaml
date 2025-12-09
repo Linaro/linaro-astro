@@ -18,6 +18,8 @@
       url: /services/consulting
     - label: Training & Learning
       url: /services/training
+    - label: BSP Development
+      url: /services/bsp-development
     - label: NXP Platform Services
       url: /services/nxp-platform-services
     - label: Qualcomm Platform Services
