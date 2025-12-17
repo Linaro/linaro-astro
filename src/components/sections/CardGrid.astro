@@ -4,82 +4,141 @@ import { Icon } from "astro-icon/components";
 import type { z } from "astro/zod";
 import { marked } from "marked";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import ContactModal from "../forms/ContactModal.astro";
+import InsightModal from "../forms/InsightModal.astro";
 type Props = z.infer<typeof cardsSchema>;
 const { cards, styles, divider, gradient_border } = Astro.props;
 ---
 
 <ul class:list={["list-none flex flex-wrap", styles?.container]}>
   {
-    cards.map(async ({ icon, title, text, button, style, image }, index) => {
-      const content = text ? await marked.parse(text) : null;
-      const isLast = index === cards.length - 1;
-      const cardContent = (
-        <li class:list={[styles?.card, style]}>
-          {icon && <Icon name={icon} size={100} class="my-0" />}
-          {title && (
-            <h3 class:list={[styles?.card_title, "text-4xl my-5 z-50"]}>
-              {title}
-            </h3>
-          )}
+    cards.map(
+      async (
+        { icon, title, text, button, style, image, contact_button },
+        index,
+      ) => {
+        const content = text ? await marked.parse(text) : null;
+        const isLast = index === cards.length - 1;
+        const cardContent = (
+          <li class:list={[styles?.card, style]}>
+            {icon && <Icon name={icon} size={100} class="my-0" />}
+            {title && (
+              <h3 class:list={[styles?.card_title, "text-4xl my-5 z-50"]}>
+                {title}
+              </h3>
+            )}
 
-          <div
-            class:list={[
-              `text-xl prose-a:text-blue-300 text-inherit`,
-              styles?.content,
-            ]}
-            set:html={content}
-          />
+            <div
+              class:list={[
+                `text-xl prose-a:text-blue-300 text-inherit`,
+                styles?.content,
+              ]}
+              set:html={content}
+            />
 
-          {image && image.container && (
-            <div class="w-full h-2/5 mt-auto bg-[#D9D9D910] rounded-lg mb-4 flex justify-center items-center">
+            {image && image.container && (
+              <div class="w-full h-2/5 mt-auto bg-[#D9D9D910] rounded-lg mb-4 flex justify-center items-center">
+                <CloudinaryImg
+                  src={image.url}
+                  alt={image.alt}
+                  class="w-auto h-auto"
+                />
+              </div>
+            )}
+            {image && !image.container && (
               <CloudinaryImg
                 src={image.url}
                 alt={image.alt}
-                class="w-auto h-auto"
+                class="w-full h-auto mt-auto"
               />
-            </div>
-          )}
-          {image && !image.container && (
-            <CloudinaryImg
-              src={image.url}
-              alt={image.alt}
-              class="w-full h-auto mt-auto"
-            />
-          )}
+            )}
 
-          {button && (
-            <a
-              href={button.url}
-              target={button.url.startsWith("https") ? "_blank" : "_self"}
-              class="no-underline inline-block mt-auto"
-            >
-              <div
-                class:list={[`linaro-gradient-button mt-auto`, styles?.button]}
+            {button && (
+              <a
+                href={button.url}
+                target={button.url.startsWith("https") ? "_blank" : "_self"}
+                class="no-underline inline-block mt-auto"
               >
-                {button.text}
-              </div>
-            </a>
-          )}
-        </li>
-      );
+                <div
+                  class:list={[
+                    `linaro-gradient-button mt-auto`,
+                    styles?.button,
+                  ]}
+                >
+                  {button.text}
+                </div>
+              </a>
+            )}
+            {contact_button &&
+              (() => {
+                if (contact_button.type === "form") {
+                  return (
+                    <ContactModal
+                      form_id={contact_button.form_id}
+                      modal_id={contact_button.modal_id}
+                      button_text={contact_button.button_text}
+                      description={contact_button.title}
+                      formName={contact_button.formName}
+                    />
+                  );
+                }
 
-      return (
-        <>
-          {gradient_border ? (
-            <div
-              id="gradient-border-container"
-              class:list={[styles?.gradient_border_container]}
-            >
-              {cardContent}
-            </div>
-          ) : (
-            cardContent
-          )}
-          {divider && !isLast && (
-            <li class="not-prose w-[100px] h-[2px] bg-gradient-to-r md:bg-gradient-to-b from-transparent via-white to-transparent opacity-50 my-4 md:w-[2px] md:h-[160px] md:mx-4" />
-          )}
-        </>
-      );
-    })
+                if (contact_button.type === "insight") {
+                  return (
+                    <InsightModal
+                      button_text={contact_button.button_text}
+                      formName={contact_button.formName}
+                    />
+                  );
+                }
+                return null;
+              })()}
+          </li>
+        );
+
+        return (
+          <>
+            {gradient_border ? (
+              <div
+                id="gradient-border-container"
+                class:list={[styles?.gradient_border_container]}
+              >
+                {cardContent}
+              </div>
+            ) : (
+              cardContent
+            )}
+            {divider && !isLast && (
+              <li class="not-prose w-[100px] h-[2px] bg-gradient-to-r md:bg-gradient-to-b from-transparent via-white to-transparent opacity-50 my-4 md:w-[2px] md:h-[160px] md:mx-4" />
+            )}
+          </>
+        );
+      },
+    )
   }
 </ul>
+<script>
+  ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+    document.addEventListener(event, addListeners);
+  });
+
+  function addListeners() {
+    const dialogs = document.querySelectorAll(
+      "[data-contact-modal]",
+    ) as NodeListOf<HTMLDialogElement>;
+
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener("click", function (event) {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (!isInDialog) {
+          dialog.close();
+        }
+      });
+    });
+  }
+</script>
