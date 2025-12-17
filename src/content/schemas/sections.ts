@@ -54,11 +54,13 @@ export const cardsSchema = z.object({
           url: z.string(),
         })
         .optional(),
-      image: z.object({
-        url: z.string(),
-        alt: z.string(),
-        container: z.boolean().optional(),
-      }),
+      image: z
+        .object({
+          url: z.string(),
+          alt: z.string(),
+          container: z.boolean().optional(),
+        })
+        .optional(),
       contact_button: z
         .object({
           form_id: z.string().optional(),
