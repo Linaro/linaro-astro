@@ -71,16 +71,6 @@ export const cardsSchema = z.object({
           formName: z.string(),
         })
         .optional(),
-      contact_button: z
-        .object({
-          form_id: z.string().optional(),
-          modal_id: z.string().optional(),
-          button_text: z.string(),
-          type: z.string(),
-          title: z.string().optional(),
-          formName: z.string(),
-        })
-        .optional(),
     }),
   ),
   divider: z.boolean().optional(),
