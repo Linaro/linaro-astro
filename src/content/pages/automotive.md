@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: solutions/automotive
+slug: industries/automotive
 title: Automotive
 description: |
   The future of transportation lies in connected and autonomous vehicles. We actively work on technologies that enable seamless connectivity, such as V2X (Vehicle-to-Everything) communication, 5G integration, and edge computing.

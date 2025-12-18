@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: solutions/ai-ml
+slug: technologies/ai-ml
 title: AI & Machine Learning
 description: |
   Our expertise in the Arm ecosystem enables us to deliver high-performance, efficient, and scalable solutions for your AI-driven applications. From optimized frameworks to hardware acceleration, we provide a comprehensive suite of tools and technologies designed to empower developers, data scientists, and businesses to unlock the true potential of artificial intelligence.
