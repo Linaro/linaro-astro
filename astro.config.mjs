@@ -107,9 +107,18 @@ export default defineConfig({
       "/whitepapers",
     "/sig": "/",
     "/latest/downloads": "/downloads",
+    //hidden pages
     "/connect": "/",
     "/connect/registration": "/",
     "/connect/schedule": "/",
     "/connect/sponsorship": "/",
+    "/technologies/apache-big-top": "/",
+    "/projects/automotive-iot-edge": "/",
+    "/technologies/ai-ml": "/",
+    "/projects/cloud-computing": "/",
+    "/solutions/codelinaro": "/",
+    "/services/consulting": "/",
+    "/solutions/iot-embedded": "/",
+    "/projects/windows-on-arm": "/",
   },
 });
