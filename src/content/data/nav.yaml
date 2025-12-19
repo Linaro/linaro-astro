@@ -21,7 +21,7 @@
     - label: Linaro Forge
       url: https://www.linaroforge.com
     - label: ONELab
-      url: https://hub.linaro.com/
+      url: /solutions/onelab
     # - label: IoT & Embedded Systems
     #   url: /solutions/iot-embedded
 - label: Industries
@@ -35,9 +35,9 @@
     #   url: /industries/consumer
     # - label: Enterprise
     #   url: /industries/enterprise
-- label: Technologies
-  key: technologies
-  children:
+# - label: Technologies
+#   key: technologies
+#   children:
     # - label: Firmware
     #   url: /technologies/firmware
     # - label: Security
@@ -52,8 +52,8 @@
     #   url: /technologies/testing
     # - label: Confidential Computing
     #   url: /technologies/confidential-computing
-    - label: AI & Machine Learning
-      url: /technologies/ai-ml
+    # - label: AI & Machine Learning
+    #   url: /technologies/ai-ml
 - label: Resources
   key: resources
   children:
