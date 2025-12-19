@@ -1,4 +1,5 @@
 ---
+# hidden - not needed
 layout: ../../layouts/Flow.astro
 slug: connect/sponsorship
 title: Connect

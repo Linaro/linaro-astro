@@ -1,4 +1,5 @@
 ---
+# hide - in progress
 layout: ../../layouts/Flow.astro
 slug: technologies/ai-ml
 title: AI & Machine Learning

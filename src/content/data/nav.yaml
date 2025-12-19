@@ -22,8 +22,6 @@
       url: https://www.linaroforge.com
     - label: ONELab
       url: /solutions/onelab
-    # - label: IoT & Embedded Systems
-    #   url: /solutions/iot-embedded
 - label: Industries
   key: industries
   children: 
@@ -76,17 +74,3 @@
       url: /careers
     - label: Contact Us
       url: /contact
-
-# - label: Ecosystem Projects
-#   key: ecosystem
-#   children:
-#     - label: Windows on Arm
-#       url: /projects/windows-on-arm
-#     - label: Automotive, IoT & Edge
-#       url: /projects/automotive-iot-edge
-#     - label: Cloud Computing & Servers
-#       url: /projects/cloud-computing
-    # - label: Ecosystem Dashboard
-    #   url: https://ecosystemdashboard.linaro.org
-
-
