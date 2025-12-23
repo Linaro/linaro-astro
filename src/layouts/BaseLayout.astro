@@ -172,7 +172,8 @@ const { title, description, type = "website", image } = Astro.props;
           if (
             key === "form_id" ||
             key === "email" ||
-            key.startsWith("customfield_")
+            key.startsWith("customfield_") ||
+            key === "frc-captcha-response"
           ) {
             if (key === "customfield_13586" || key === "customfield_13587") {
               // Handle nested structure for specific custom fields

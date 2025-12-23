@@ -60,6 +60,7 @@ jobs:
           export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
           echo "DECAP_DOMAIN is $DECAP_DOMAIN"
           # For pull requests, we set custom domain to the preview URL

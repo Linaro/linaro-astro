@@ -30,6 +30,7 @@
     "@biscuit-auth/biscuit-wasm": "^0.4.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@fontsource/lato": "^5.0.20",
+    "@friendlycaptcha/sdk": "^0.1.36",
     "@iconify-json/mdi": "^1.1.64",
     "@solid-primitives/scheduled": "^1.4.3",
     "@tailwindcss/typography": "^0.5.12",
