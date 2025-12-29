@@ -56,6 +56,12 @@ flow:
   - row: container_row
     sections:
       - component: team
+        id: bod
+        title: Board of Directors
+        members:
+          - li_gong
+          - rob_booth
+      - component: team
         id: exec
         title: The Executive Team
         members:
