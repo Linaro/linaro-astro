@@ -29,11 +29,11 @@ const people = await getEntries(members);
       </ul>
     </div>
   ) : (
-    <div>
+    <div class="w-full">
       {title && <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>}
       <ul
-        class="gap-2 justify-center flex flex-wrap"
-        style="align-items: stretch; display: flex; justify-content: stretch"
+        class="gap-2 justify-center flex flex-wrap mx-auto"
+        style="align-items: stretch;"
       >
         {people.map((x) => (
           <MemberCard
