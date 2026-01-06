@@ -137,7 +137,106 @@ const { title, description, type = "website", image } = Astro.props;
         }
       }
 
-      function onSubmit(e: SubmitEvent, form: HTMLFormElement) {
+      async function handleWebinarResponse(
+        form: HTMLFormElement,
+        feedbackText: HTMLParagraphElement,
+      ) {
+        const webinarDataId =
+          (
+            form.querySelector(
+              "input[name='webinarDataId']",
+            ) as HTMLInputElement
+          )?.value ?? "unknown_webinar";
+
+        try {
+          const res = await fetch(`/api/webinar-data/${webinarDataId}`);
+          if (!res.ok) {
+            throw new Error("Failed to load webinar data");
+          }
+
+          const { passcode, url } = await res.json();
+
+          feedbackText.innerHTML = `
+      <div class="space-y-4 text-center">
+        <p class="text-base">
+          Thank you! Please use the passcode below to access the webinar.
+        </p>
+
+        <div class="text-lg font-semibold text-blue-600">
+          Passcode:
+          <div class="text-2xl font-bold text-blue-700">${passcode}</div>
+        </div>
+
+        <div>
+          <a
+            href="${url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block text-xl text-blue-700 font-semibold underline"
+          >
+            Link to webinar recording
+          </a>
+        </div>
+      </div>
+    `;
+        } catch (err) {
+          console.error("Webinar fetch error:", err);
+          feedbackText.innerHTML = `
+      <p class="text-red-600">
+        Sorry, something went wrong loading the webinar information.
+      </p>
+    `;
+        }
+      }
+
+      async function handleWhitepaperResponse(
+        form: HTMLFormElement,
+        feedbackText: HTMLParagraphElement,
+      ) {
+        const whitepaperId =
+          (form.querySelector("input[name='whitepaperId']") as HTMLInputElement)
+            ?.value ?? "unknown_whitepaper";
+
+        try {
+          const res = await fetch(`/api/whitepaper-data/${whitepaperId}`);
+          if (!res.ok) {
+            throw new Error("Failed to load whitepaper data");
+          }
+
+          const { url } = await res.json();
+
+          feedbackText.innerHTML = `
+      <div class="space-y-4 text-center">
+        <p class="text-base">
+          Thank you! Your download should start automatically.
+        </p>
+
+        <div>
+          <a
+            href="${url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block text-xl text-blue-700 font-semibold underline"
+          >
+            Download Whitepaper
+          </a>
+        </div>
+      </div>
+    `;
+
+          // Trigger auto-download
+          window.location.href = url;
+        } catch (err) {
+          console.error("Whitepaper fetch error:", err);
+          feedbackText.innerHTML = `
+      <p class="text-red-600">
+        Sorry, something went wrong loading the whitepaper.
+      </p>
+    `;
+        }
+      }
+
+      async function onSubmit(e: SubmitEvent, form: HTMLFormElement) {
         e.preventDefault();
 
         const feedback = form.parentElement!.querySelector("#contact-feedback");
@@ -151,70 +250,75 @@ const { title, description, type = "website", image } = Astro.props;
         if (!e.target) return;
 
         const data = new FormData(e.target as HTMLFormElement);
-        const payload = {} as Record<string, any>;
+        const payload: Record<string, any> = {};
 
         const formName =
           (form.querySelector("input[name='formName']") as HTMLInputElement)
-            ?.value || "unknown_form";
+            ?.value ?? "unknown_form";
 
-        // Telephone Number Validation
-        const messageKey = "customfield_13365";
-        const phoneNumberInput = form.querySelector(
-          'input[name="telephone_number"]',
-        ) as HTMLInputElement;
-        const phoneNumber = phoneNumberInput?.value || null;
-        const phoneRegex = new RegExp("^[+]?[0-9\\s\\-()]{6,25}$");
+        const captchaSolution = captchaWidget?.response;
 
-        if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+        console.log(captchaSolution, captchaWidget);
+
+        if (!captchaSolution) {
           feedback!.classList.remove("hidden");
-          feedbackText!.innerText = "Please enter a valid telephone number.";
-
-          phoneNumberInput?.classList.add("border-4", "border-red-500");
-
+          feedbackText!.innerText =
+            "Please complete the captcha before submitting.";
           button?.classList.remove("hidden");
           loader?.classList.add("hidden");
-
           return;
         }
-        phoneNumberInput?.classList.remove("border-4", "border-red-500");
 
+        payload["frc-captcha-response"] = captchaSolution;
+
+        // -----------------------
+        // Telephone validation
+        // -----------------------
+        const messageKey = "customfield_13365";
+        const phoneInput = form.querySelector(
+          'input[name="telephone_number"]',
+        ) as HTMLInputElement;
+
+        const phoneNumber = phoneInput?.value || null;
+        const phoneRegex = /^[+]?[0-9\s\-()]{6,25}$/;
+
+        if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+          feedback?.classList.remove("hidden");
+          feedbackText!.innerText = "Please enter a valid telephone number.";
+          phoneInput?.classList.add("border-4", "border-red-500");
+          return;
+        }
+
+        phoneInput?.classList.remove("border-4", "border-red-500");
+
+        // -----------------------
+        // Build payload
+        // -----------------------
         let message = data.get(messageKey) as string | null;
 
         data.forEach((value, key) => {
-          // Only include the fields that are mapped in form_data.json
-          // or are explicitly needed by the serverless function
           if (
             key === "form_id" ||
             key === "email" ||
             key.startsWith("customfield_") ||
             key === "frc-captcha-response"
           ) {
-            if (key === "customfield_13586" || key === "customfield_13587") {
-              // Handle nested structure for specific custom fields
-              payload[key] = { id: value };
-            } else {
-              payload[key] = value;
-            }
+            payload[key] =
+              key === "customfield_13586" || key === "customfield_13587"
+                ? { id: value }
+                : value;
           }
         });
 
-        // Prepend the telephone number to the message field (customfield_13365)
-        if (phoneNumber && message) {
+        if (phoneNumber) {
           const phoneLine = `Telephone: ${phoneNumber}\n---\n`;
-          payload[messageKey] = phoneLine + message;
-        } else if (phoneNumber) {
-          // Handle case where message is empty but phone number exists
-          payload[messageKey] = `Telephone: ${phoneNumber}\n---\n`;
+          payload[messageKey] = message ? phoneLine + message : phoneLine;
         }
 
-        // Ensure 'email' is in the payload for the backend validation and user creation
-        // and is mapped correctly if it's a custom field ID
         if (!payload.email) {
-          // Assuming the email field has a specific custom ID in the form data
-          payload.email = data.get("customfield_13484"); // Adjust this based on your form data
+          payload.email = data.get("customfield_13484");
           if (!payload.email) {
-            console.error("Email field not found in form data.");
-            // Handle the error appropriately, e.g., show an error message to the user
+            console.error("Email missing from payload");
             return;
           }
         }
@@ -224,134 +328,65 @@ const { title, description, type = "website", image } = Astro.props;
 
         console.log(payload);
 
-        if (!window.dataLayer) {
-          window.dataLayer = [];
-        }
+        // -----------------------
+        // Analytics
+        // -----------------------
+        window.dataLayer ??= [];
+        window.dataLayer.push({
+          event: "form_submission",
+          formName,
+        });
 
-        if (window.dataLayer && typeof window.dataLayer.push === "function") {
-          window.dataLayer.push({
-            formName: formName,
-            event: "form_submission",
-          });
-        }
-
+        // -----------------------
+        // UI state
+        // -----------------------
         button?.classList.add("hidden");
         loader?.classList.remove("hidden");
 
-        fetch(
-          "https://avqfk3gzg2.execute-api.us-east-1.amazonaws.com/prod/formSubmit",
-          {
-            method: "POST",
-            body: JSON.stringify(payload),
-            headers: {
-              "X-Api-Key": "ox9fSkYfRK16mxy5Gv6pM121H7iAubAQ6uzsDmoW",
+        try {
+          const response = await fetch(
+            "https://j0gpx7uov2.execute-api.us-east-1.amazonaws.com/staging/formSubmit",
+            {
+              method: "POST",
+              headers: {
+                "X-Api-Key": "aQWBiyJN1C14guxCQ4z458F3PScCKWXz9br9GeXh",
+              },
+              body: JSON.stringify(payload),
             },
-          },
-        )
-          .then((response) => {
-            const result = response.json();
+          );
 
-            // --- NEW: Handle Captcha/Validation Errors ---
-            if (!response.ok) {
-              if (response.status === 403 || response.status === 400) {
-                // Reset the captcha widget so they can try again
-                if (typeof captchaWidget !== "undefined") captchaWidget.reset();
+          const result = await response.json();
 
-                throw new Error(
-                  result.message || "Captcha verification failed.",
-                );
-              }
-              throw new Error("Server error occurred.");
+          if (!response.ok) {
+            if (response.status === 400 || response.status === 403) {
+              captchaWidget?.reset();
+              throw new Error(result.message || "Captcha verification failed");
             }
-            // ---------------------------------------------
+            throw new Error("Server error");
+          }
 
-            return result;
-          })
-          .then((result) => {
-            form.classList.add("hidden");
-            feedback!.classList.remove("hidden");
+          // -----------------------
+          // Success UI
+          // -----------------------
+          form.classList.add("hidden");
+          feedback?.classList.remove("hidden");
 
-            if (formName === "webinar_contact") {
-              const webinarDataId =
-                (
-                  form.querySelector(
-                    "input[name='webinarDataId']",
-                  ) as HTMLInputElement
-                )?.value || "unknown_webinar";
-              fetch(`/api/webinar-data/${webinarDataId}`)
-                .then((res) => {
-                  if (!res.ok) throw new Error("Failed to load webinar data");
-                  return res.json();
-                })
-                .then((webinarData) => {
-                  const { passcode, url } = webinarData;
-                  feedbackText!.innerHTML = `
-      <div class="space-y-4 text-center">
-        <p class="text-base">Thank you! Please use the passcode below to access the webinar.</p>
-        <div class="text-lg font-semibold text-blue-600">
-          Passcode:
-          <div class="text-2xl font-bold text-blue-700">${passcode}</div>
-        </div>
-        <div>
-          <a href="${url}" class="inline-block text-xl text-blue-700 font-semibold underline" target="_blank">
-            Link to webinar recording
-          </a>
-        </div>
-      </div>
-    `;
-                })
-                .catch((err) => {
-                  console.error("Webinar fetch error:", err);
-                  feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the webinar info.</p>`;
-                });
-            } else if (formName === "whitepaper_contact") {
-              const whitepaperId =
-                (
-                  form.querySelector(
-                    "input[name='whitepaperId']",
-                  ) as HTMLInputElement
-                )?.value || "unknown_whitepaper";
-
-              fetch(`/api/whitepaper-data/${whitepaperId}`)
-                .then((res) => {
-                  if (!res.ok)
-                    throw new Error("Failed to load whitepaper data");
-                  return res.json();
-                })
-                .then((whitepaperData) => {
-                  const { url } = whitepaperData;
-
-                  feedbackText!.innerHTML = `
-          <div class="space-y-4 text-center">
-            <p class="text-base">Thank you! Your download should start automatically. If not, click below:</p>
-            <div>
-              <a href="${url}" class="inline-block text-xl text-blue-700 font-semibold underline" target="_blank">
-                Download Whitepaper
-              </a>
-            </div>
-          </div>
-        `;
-
-                  // trigger auto-download
-                  window.location.href = url;
-                })
-                .catch((err) => {
-                  console.error("Whitepaper fetch error:", err);
-                  feedbackText!.innerHTML = `<p class="text-red-600">Sorry, something went wrong loading the whitepaper.</p>`;
-                });
-            } else {
-              feedbackText!.innerText = result.message;
-            }
-          })
-          .catch((error) => {
-            feedback!.classList.remove("hidden");
-            feedbackText!.innerText =
-              "There was an error during submission. Please try again later.";
-            button?.classList.remove("hidden");
-          })
-          .finally(() => {
-            loader?.classList.add("hidden");
-          });
+          if (formName === "webinar_contact") {
+            await handleWebinarResponse(form, feedbackText);
+          } else if (formName === "whitepaper_contact") {
+            await handleWhitepaperResponse(form, feedbackText);
+          } else {
+            feedbackText!.innerText = result.message;
+          }
+        } catch (err) {
+          console.error("Form submission error:", err);
+          feedback?.classList.remove("hidden");
+          feedbackText!.innerText =
+            "There was an error during submission. Please try again later.";
+          button?.classList.remove("hidden");
+        } finally {
+          loader?.classList.add("hidden");
+        }
       }
     </script>
   </body>
