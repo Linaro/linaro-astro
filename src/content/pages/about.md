@@ -23,15 +23,15 @@ flow:
       - component: cards
         styles:
           container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-p:text-2xl
-          card: max-w-[60ch]
+          card: max-w-[90ch]
           card_title: text-linaro-yellow
         cards:
           - text: |
-              At Linaro, we represent a global community of engineers, developers, and technology enthusiasts dedicated to pushing the boundaries of what's possible with Arm-based technologies. 
+              In 2010, Linaro was formed to unify a fragmented Arm software ecosystem. Our mission was clear: consolidate the code base to drive innovation on Arm. Today, that vision is a global reality. From Linus Torvalds releasing the kernel on Arm64 hardware to every cloud vendor having an Arm offering, the foundational challenges we set out to tackle have been solved.
 
-              Since 2010, we have played a pivotal role in shaping the Arm ecosystem, fostering collaboration, standardization, and optimization to drive innovation and accelerate product deployment.
-          - title: Collaboration lies at the heart of everything we do at Linaro.
-            text: We work closely with industry leaders, open-source communities, and technology partners to co-create, standardize, and optimize solutions that drive innovation and enable seamless integration across diverse platforms and environments.
+              As the industry matured, so did we. Linaro has evolved into a Services provider, leveraging our unrivaled Arm expertise to help customers build high-performing, compliant, and sustainable products. 
+
+              While the way we collaborate has changed, our commitment to the open-source community remains the same. We continue to invest upstream and maintain critical projects, ensuring that every solution we build for our clients also strengthens the broader ecosystem.
   - row: container_row
     styles:
       inner: max-w-5xl mx-auto
@@ -61,17 +61,12 @@ flow:
         members:
           - li_gong
           - rob_booth
-          - mark_hambleton
-          - jonathan_cameron
-          - sandeep_singhai
-          - todd_kjos
       - component: team
         id: exec
         title: The Executive Team
         members:
           - li_gong
           - rob_booth
-          - grant_likely
           - tim_benton
   - row: container_row
     sections:

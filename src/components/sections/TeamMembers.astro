@@ -29,21 +29,27 @@ const people = await getEntries(members);
       </ul>
     </div>
   ) : (
-    <div>
+    <div class="w-full">
       {title && <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>}
       <ul
-        class="gap-2 justify-center flex flex-wrap"
-        style="align-items: stretch; display: flex; justify-content: stretch"
+        class="gap-2 justify-center flex flex-wrap mx-auto"
+        style="align-items: stretch;"
       >
-        {people.map((x) => (
-          <MemberCard
-            id={x.slug + Astro.props.id}
-            name={x.data.name}
-            title={x.data.title}
-            image={x.data.image}
-            info={x.body}
-          />
-        ))}
+        {people.map((x) => {
+          let displayTitle = x.data.title;
+          if (id === "bod" || id === "exec") {
+            displayTitle = displayTitle.replace(/\s+at Linaro$/i, "");
+          }
+          return (
+            <MemberCard
+              id={x.slug + Astro.props.id}
+              name={x.data.name}
+              title={displayTitle}
+              image={x.data.image}
+              info={x.body}
+            />
+          );
+        })}
       </ul>
     </div>
   )
