@@ -61,27 +61,27 @@ flow:
             button:
               text: See More
               url: https://linaro.atlassian.net/wiki/spaces/HPP/overview
-  - row: container_row
-    sections:
-      - component: membership
-        form_id: "4"
-        formName: "projects"
-        description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
-        styles:
-          card: max-w-[30ch] text-center flex flex-col items-center
-        text: "Check the different possibilities to become a project member:"
-        MemberManagementPanel:
-          - title: Become a
-            title_style: whitespace-nowrap
-            name: Project Member
-            description: Access one project
-          - title: Become a
-            title_style: whitespace-nowrap
-            name: Group Member
-            description: Access a group and enter its entire projects portfolio
-          - title: Become a
-            title_style: whitespace-nowrap
-            name: Core Member
-            description: Access all Linaro driven projects & groups
-        style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
+  # - row: container_row
+  #   sections:
+  #     - component: membership
+  #       form_id: "4"
+  #       formName: "projects"
+  #       description: We provide a collaborative platform for the different industry players within the Arm ecosystem to come together, discuss, agree upon, and implement solutions to shared problems. We offer various avenues for engaging in collaborative engineering.
+  #       styles:
+  #         card: max-w-[30ch] text-center flex flex-col items-center
+  #       text: "Check the different possibilities to become a project member:"
+  #       MemberManagementPanel:
+  #         - title: Become a
+  #           title_style: whitespace-nowrap
+  #           name: Project Member
+  #           description: Access one project
+  #         - title: Become a
+  #           title_style: whitespace-nowrap
+  #           name: Group Member
+  #           description: Access a group and enter its entire projects portfolio
+  #         - title: Become a
+  #           title_style: whitespace-nowrap
+  #           name: Core Member
+  #           description: Access all Linaro driven projects & groups
+  #       style: max-w-xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-headings:my-3 prose-ul:text-xl prose-headings:leading-tight prose-p:text-3xl text-center
 ---

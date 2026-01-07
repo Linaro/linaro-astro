@@ -68,6 +68,7 @@ jobs:
           export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
           # Set up yarn
