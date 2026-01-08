@@ -139,9 +139,6 @@ flow:
           - title: Check out the most read blogs
             icon: blogs
             url: /blog?tags=qualcomm
-          - title: Watch presentations and webinars
-            icon: webinar
-            url: https://resources.linaro.org/en/search?q=qualcomm
 #   - row: container_row
 #     title: Explore Related Resources
 #     styles: purple-gradient-container
