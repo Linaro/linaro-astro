@@ -175,9 +175,6 @@ flow:
           - title: Check out the most read blogs
             icon: blogs
             url: /blog?tags=windows-on-arm
-          - title: Watch presentations and webinars
-            icon: webinar
-            url: https://resources.linaro.org/en/tags/0e965752-e803-4fd8-9a71-f01c5c1a113f
 #   - row: container_row
 #     title: Explore Related Resources
 #     styles: purple-gradient-container

@@ -89,7 +89,4 @@ flow:
           - title: Check out the most read blogs
             icon: blogs
             url: /blog?tags=datacenter
-          - title: Watch presentations and webinars
-            icon: webinar
-            url: https://resources.linaro.org/en/themes/04687b37-4cdc-4716-a26b-64e0e55ed988
 ---
