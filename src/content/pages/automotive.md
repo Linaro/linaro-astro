@@ -24,6 +24,7 @@ flow:
       - component: two_column
         container_styles: flex align-center w-full mb-24 gap-24 mx-auto item-center justify-center
         animation: none
+        bottom_fade: true
         columns:
           - type: image
             image:
@@ -41,6 +42,7 @@ flow:
             styles: lg:w-1/2 text-lg
   - row: container_row
     title: Accelerate your Automotive Development with Linaro
+    no_border: true
     styles:
       outer: purple-gradient-container
     sections:

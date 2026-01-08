@@ -241,6 +241,7 @@ export const membershipSchema = z.object({
 export const twoColumnSchema = z.object({
   component: component("two_column"),
   container_styles: z.string().optional(),
+  bottom_fade: z.boolean().optional(),
   columns: z.array(
     z.discriminatedUnion("type", [
       z.object({

@@ -25,14 +25,14 @@
 - label: Industries
   key: industries
   children: 
-    # - label: Industrial
-    #   url: /industries/industrial
+    - label: Industrial
+      url: /industries/industrial
     - label: Automotive
       url: /industries/automotive
-    # - label: Consumer
-    #   url: /industries/consumer
-    # - label: Enterprise
-    #   url: /industries/enterprise
+    - label: Client Devices
+      url: /industries/client-devices
+    - label: Enterprise
+      url: /industries/enterprise
 # - label: Technologies
 #   key: technologies
 #   children:
