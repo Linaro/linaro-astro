@@ -70,20 +70,20 @@ flow:
               linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-compliance-on-__88629_1_kej04p.png
           - id: 3
             title: |
-              Guarantee your devices meet regulatory requirements
+              Achieve regulatory compliance with Linaro's Experts
             description: |
-              Regulations such as the Cyber Resilience Act (CRA) is putting pressure on device makers to establish robust processes and infrastructure.
+              With regulations such as the CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits, and more, companies are under pressure to ensure they have the infrastructure, know-how, and processes in place to meet these requirements.
             longDescription: |
-              Regulations such as the Cyber Resilience Act (CRA) is putting pressure on device makers to establish robust processes and infrastructure for cybersecurity risk assessments, continuous security auditing and more. Without the right tools in place, maintaining regulatory compliance across the lifetime of a device can quickly become a costly and labour-intensive undertaking. 
+              With regulations such as the CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits, and more, companies are under pressure to ensure they have the infrastructure, know-how, and processes in place to meet these requirements.
 
-              Linaro created LAVA (Linaro Automated Validation Architecture) and LKFT (Linux Kernel Functional Test) - two de-facto open source frameworks widely used for continuous automated testing. Through this work, we have become highly specialised in running large-scale continuous testing and demonstrating results to the wider community. We have built on this experience to develop a dashboard which allows you to continuously demonstrate regulatory compliance. Through our dashboard you will be able to:
+              Linaro specialises in continuous testing, having created LAVA and LKFT (Linaro Kernel Functional Test), which runs millions of tests per year to spot security vulnerabilities before they end up in finished products. We have now created tooling to help customers prepare for CRA. The tooling consists of a back-end toolchain that integrates directly into the customer's build system, as well as a front-end dashboard to present data. Combined, the tooling provides the capability to:
 
                 - Generate a complete SBOM (Software Bill of Materials)
-
-                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored. 
+                
+                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored.
 
                 - Analyse the provenance of each software package to highlight potential cybersecurity risks
-
+                
                 - Continuously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
             image: |
               linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-secure-user-ex__88630_1_eg3oja.png

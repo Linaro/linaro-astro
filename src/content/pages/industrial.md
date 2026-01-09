@@ -76,14 +76,18 @@ flow:
             title: |
               Achieve regulatory compliance with Linaro’s Experts 
             description: |
-              With regulations such as CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits and more, companies are under pressure to ensure they have the infrastructure, know-how and process in place to meet these requirements.
+              With regulations such as the CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits, and more, companies are under pressure to ensure they have the infrastructure, know-how, and processes in place to meet these requirements.
             longDescription: |
-              With regulations such as CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits and more, companies are under pressure to ensure they have the infrastructure, know-how and process in place to meet these requirements.
+              With regulations such as the CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits, and more, companies are under pressure to ensure they have the infrastructure, know-how, and processes in place to meet these requirements.
 
-              Linaro specialises in continuous testing, having created LAVA and LKFT (Linaro Kernel Functional Test) which runs millions of tests per year to spot security vulnerabilities before they end up in finished products. We have now created a CRA dashboard to help customers prepare for CRA. Through this dashboard we can: 
+              Linaro specialises in continuous testing, having created LAVA and LKFT (Linaro Kernel Functional Test), which runs millions of tests per year to spot security vulnerabilities before they end up in finished products. We have now created tooling to help customers prepare for CRA. The tooling consists of a back-end toolchain that integrates directly into the customer's build system, as well as a front-end dashboard to present data. Combined, the tooling provides the capability to:
+
                 - Generate a complete SBOM (Software Bill of Materials)
-                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored. 
+                
+                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored.
+                
                 - Analyse the provenance of each software package to highlight potential cybersecurity risks
+                
                 - Continuously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
             image: |
               linaro-website/graphics/freepik__abstract-dynamic-image-showing-regulatory-complian__49850_1_eog0gn.png
