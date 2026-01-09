@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/Flow.astro
-slug: projects/qualcomm-platform
+slug: services/qualcomm-platform
 title: Qualcomm Platform Services
 description: |
   Linaro is a leader in providing Linux BSP development, maintenance and optimization for Qualcomm platforms such as Qualcomm Snapdragon. 

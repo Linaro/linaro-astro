@@ -1,4 +1,5 @@
 ---
+# hidden - not needed
 layout: ../../layouts/Flow.astro
 slug: solutions/iot-embedded
 title: IoT & Embedded
