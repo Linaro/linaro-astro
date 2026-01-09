@@ -13,11 +13,25 @@ const cardsWithHTML = await Promise.all(
     longDescriptionHTML: await marked.parse(card.longDescription),
   })),
 );
+
+function getGridCols(count: number) {
+  if (count % 3 === 0) return 3;
+  if (count % 2 === 0) return 2;
+  return 2;
+}
+
+const cols = getGridCols(cardsWithHTML.length);
+
+const gridColsClass = {
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+}[cols];
 ---
 
 <div
-  class="flex flex-col md:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 w-4/5 mx-auto"
+  class=`flex flex-col md:grid grid-cols-1 ${gridColsClass} gap-12 w-4/5 mx-auto`
   id="cards-container"
+  style={`--grid-cols: ${cols};`}
 >
   {
     cardsWithHTML?.map((card) => (
@@ -25,17 +39,19 @@ const cardsWithHTML = await Promise.all(
         class="card bg-background rounded-2xl shadow-lg transition-all duration-500 ease-in-out border-gray-500 border-[1px] p-6"
         data-id={card.id}
       >
-        <div class="collapsed flex flex-col h-full w-full justify-between">
-          <CloudinaryImg
-            src={card.image}
-            alt={card.title}
-            class="w-full h-36 object-cover mt-0 rounded-lg"
-          />
+        <div class="collapsed flex flex-col h-full justify-between">
           <div>
-            <h2 class="text-lg md:text-2xl font-bold mb-4 mt-0">
-              {card.title}
-            </h2>
-            <p class="text-xs md:text-lg">{card.description}</p>
+            <CloudinaryImg
+              src={card.image}
+              alt={card.title}
+              class="w-full h-36 object-cover mt-0 rounded-lg"
+            />
+            <div>
+              <h2 class="text-lg md:text-2xl font-bold mb-4 mt-0">
+                {card.title}
+              </h2>
+              <p class="text-xs md:text-lg">{card.description}</p>
+            </div>
           </div>
           <button class="linaro-gradient-button transition learn-more lg:max-w-48">
             Learn More
@@ -101,7 +117,7 @@ const cardsWithHTML = await Promise.all(
 
 <style>
   .expanded-card {
-    grid-column: span 3 / span 3;
+    grid-column: span var(--grid-cols) / span var(--grid-cols);
   }
 
   .card {

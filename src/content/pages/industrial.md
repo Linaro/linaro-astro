@@ -3,7 +3,7 @@ layout: ../../layouts/Flow.astro
 slug: industries/industrial
 title: Industrial
 description: |
-  The future of transportation lies in connected and autonomous vehicles. We actively work on technologies that enable seamless connectivity, such as V2X (Vehicle-to-Everything) communication, 5G integration, and edge computing.
+  Bridge innovation and life-cycle management for your embedded solutions with Linaro
 hero:
   title: >
     Bridge innovation and life-cycle management for your embedded solutions with Linaro
@@ -34,14 +34,12 @@ flow:
               inferSize: true
             styles: not-prose lg:w-1/2 h-auto object-contain
           - type: text
-            title: Industry 4.0 has created a world in which machines, sensors and software systems can seamlessly communicate.
+            title: Guaranteeing that products are secure and meet regulatory requirements is an ongoing battle
             text_content: |
-              Optimized workflows, faster decision making - the benefits of automation and real-time data analytics are plain to see but achieving this transformation has its challenges.Manufacturers must not only meet customer expectations, they also need to be able to guarantee that their products are safe, secure and meet regulatory requirements. 
-
-              To accomplish this, companies need the ability to continually update and maintain their software - an undertaking which requires expertise and ongoing investment. How can Linaro help you ensure consistent high quality products which are secure, safe and compliant through sustainable open source software?
+              To accomplish this, companies need the ability to efficiently update and maintain their software in response to published security vulnerabilities - an undertaking which requires expertise and ongoing investment. How can Linaro help you ensure consistent high quality products which are secure and meet new regulatory compliance requirements through sustainable open source software?
             styles: lg:w-1/2 text-lg
   - row: container_row
-    title: Develop high quality, compliant and secure embedded solutions with Linaro
+    title: Develop high quality, compliant and secure Arm-based industrial products with Linaro
     no_border: true
     styles:
       outer: purple-gradient-container
@@ -50,22 +48,22 @@ flow:
         cards:
           - id: 1
             title: |
-              Future-proof your embedded solution through upstreaming
+              Future-proofing your Linux-based product
             description: |
               What happens when the kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements?
             longDescription: |
-              What happens when the Linux kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements? With regulations such as the EU CRA (Cyber Resilience Act) kicking in next year, it is essential that your product is leveraging open source software which aligns with these standards. 
+              What happens when the Linux kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements? With regulations such as the EU CRA (Cyber Resilience Act) kicking in next year, it is essential that your product is leveraging open source software which aligns with these standards. 
 
-              Linaro specializes in developing code to meet the demanding quality standards required for upstreaming to the Linux kernel and has supported many companies in contributing their software upstream. By ensuring that your software is updatable to the latest kernel—and by minimizing the amount of non-upstream code you use your products will benefit from the most up-to-date open-source software and a clear strategy to achieve compliance with new cybersecurity regulations. 
+              Linaro specializes in developing code to meet the demanding quality standards required for upstreaming to the Linux kernel and has supported many companies in contributing their software upstream. By ensuring that your software is updatable to the latest kernel—and by minimizing the amount of non-upstream code you use your products will benefit from the most up-to-date open-source software and a clear strategy to achieve compliance with new cybersecurity regulations. 
 
               Once your product aligns closely with the upstream mainline kernel,the cost, complexity and cycle time to update, including new features and security patches, is very significantly reduced. This enables you to focus on innovation instead of managing costly repeated porting of your out-of-tree code to achieve compatibility with every new kernel release.
             image: |
               linaro-website/graphics/freepik__abstract-dynamic-image-showing-leveraging-software__49848_1_pj1ujb.png
           - id: 2
             title: |
-              Guarantee secure and innovative products with Long-Term Support 
+              Lifetime support for secure and innovative industrial products
             description: |
-              Today’s industrial machinery typically operates for 15–20 years, yet the open-source software that powers it is normally supported for only 2–6 years.
+              Industrial end-users still expect an installed life of up to 15–20 years with little or no change to the installed software.The new regulatory requirements require this software to receive updates during its lifetime, yet the open-source software that powers it is normally supported for only 2–6 years. How do you bridge this gap if you don’t have the in-house expertise or costly infrastructure to maintain your product for the remaining decade or more?
             longDescription: |
               Industrial end-users still expect an installed life of up to 15–20 years with little or no change to the installed software.The new regulatory requirements require this software to receive updates during its lifetime, yet the open-source software that powers it is normally supported for only 2–6 years. How do you bridge this gap if you don’t have the in-house expertise or costly infrastructure to maintain your product for the remaining decade or more?
 
@@ -78,15 +76,15 @@ flow:
             title: |
               Achieve regulatory compliance with Linaro’s Experts 
             description: |
-              With regulations such as CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits and more.
+              With regulations such as CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits and more, companies are under pressure to ensure they have the infrastructure, know-how and process in place to meet these requirements.
             longDescription: |
               With regulations such as CRA making it compulsory to conduct cybersecurity risk assessments, continuously run security audits and more, companies are under pressure to ensure they have the infrastructure, know-how and process in place to meet these requirements.
 
-              Linaro specialises in continuous testing, having created LAVA and LKFT (Linaro Kernel Functional Test) which runs millions of tests per year to spot security vulnerabilities before they end up in finished products. We have now created a CRA dashboard to help customers prepare for CRA. Through this dashboard we can: 
+              Linaro specialises in continuous testing, having created LAVA and LKFT (Linaro Kernel Functional Test) which runs millions of tests per year to spot security vulnerabilities before they end up in finished products. We have now created a CRA dashboard to help customers prepare for CRA. Through this dashboard we can: 
                 - Generate a complete SBOM (Software Bill of Materials)
-                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored. 
+                - Scan each software package for CVE’s to determine whether vulnerabilities are patched, unpatched or ignored. 
                 - Analyse the provenance of each software package to highlight potential cybersecurity risks
-                - Continously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
+                - Continuously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
             image: |
               linaro-website/graphics/freepik__abstract-dynamic-image-showing-regulatory-complian__49850_1_eog0gn.png
   - row: container_row
@@ -100,7 +98,7 @@ flow:
           - type: text
             title: Leverage our Arm Software Expertise to enhance your Embedded Solution
             text_content: |
-              Linaro’s experience building and maintaining automated open source testing frameworks, make us the perfect partner for any company looking to truly harness the potential of Industry 4.0 while maintaining secure and compliant products. 
+              Linaro’s experience building and maintaining automated open source testing frameworks, make us the perfect partner for any company looking to truly harness the potential of Industry 4.0 while maintaining secure and compliant products. 
 
               Working with Linaro gives you access to some of the leading Arm Software Experts in the world whose experience working with the Linux kernel, OP-TEE and U-Boot is helping shape the future of industrial innovation on Arm.
             styles: lg:w-1/2 text-lg

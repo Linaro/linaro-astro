@@ -120,5 +120,6 @@ export default defineConfig({
     "/services/consulting": "/",
     "/solutions/iot-embedded": "/",
     "/projects/windows-on-arm": "/",
+    "/industries/enterprise": "/",
   },
 });
