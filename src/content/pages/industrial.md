@@ -50,7 +50,7 @@ flow:
             title: |
               Future-proofing your Linux-based product
             description: |
-              What happens when the kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements?
+              What happens when the Linux kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements? With regulations such as the EU CRA (Cyber Resilience Act) kicking in next year, it is essential that your product is leveraging open source software which aligns with these standards.
             longDescription: |
               What happens when the Linux kernel you built your product on no longer has access to the latest bug fixes and does not meet regulatory requirements? With regulations such as the EU CRA (Cyber Resilience Act) kicking in next year, it is essential that your product is leveraging open source software which aligns with these standards. 
 
