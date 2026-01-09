@@ -1,45 +1,36 @@
 nav_links:
-  - label: Products & Solutions
-    key: solutions
-    children:
-      - label: HPC
-        url: https://www.linaroforge.com
-      - label: IoT & Embedded Systems
-        url: /solutions/iot-embedded
-        children:
-          - label: CodeLinaro
-            url: /solutions/codelinaro
-          - label: ONELab
-            url: /solutions/onelab
-      - label: AI & Machine Learning
-        url: /solutions/ai-ml
-      - label: Automotive
-        url: /solutions/automotive
-      - label: Long Term Support
-        url: /solutions/lts
-  - label: Services & Support
+  - label: Services
     key: Services
     children:
       - label: Consulting
         url: /services/consulting
-      - label: Training & Learning
+      - label: BSP Development
+        url: /services/bsp-development
+      - label: Long Term Support
+        url: /services/lts
+      - label: Training
         url: /services/training
+      - label: Qualcomm Centre of Excellence
+        url: /projects/qualcomm-platform
       - label: NXP Platform Services
         url: /services/nxp-platform-services
-      - label: Qualcomm Platform Services
-        url: /projects/qualcomm-platform
-  - label: Ecosystem Projects
-    key: ecosystem
+  - label: Solutions
+    key: solutions
     children:
-      - label: Windows on Arm
-        url: /projects/windows-on-arm
-      - label: Automotive, IoT & Edge
-        url: /projects/automotive-iot-edge
-      - label: Cloud Computing & Servers
-        url: /projects/cloud-computing
-      - label: Ecosystem Dashboard
-        url: https://ecosystemdashboard.linaro.org
-  - label: Resource Center
+      - label: Linaro Forge
+        url: https://www.linaroforge.com
+      - label: ONELab
+        url: /solutions/onelab
+  - label: Industries
+    key: industries
+    children:
+      - label: Industrial
+        url: /industries/industrial
+      - label: Automotive
+        url: /industries/automotive
+      - label: Client Devices
+        url: /industries/client-devices
+  - label: Resources
     key: resources
     children:
       - label: Downloads
@@ -52,8 +43,6 @@ nav_links:
         url: /news
       - label: Events
         url: /events
-      - label: Connect 2025
-        url: /connect
   - label: Company
     key: company
     children:
@@ -61,6 +50,8 @@ nav_links:
         url: /about
       - label: Careers
         url: /careers
+      - label: Contact Us
+        url: /contact
 
 company_links:
   - label: Contact
