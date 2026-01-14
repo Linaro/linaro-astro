@@ -345,11 +345,11 @@ const { title, description, type = "website", image } = Astro.props;
 
         try {
           const response = await fetch(
-            "https://avqfk3gzg2.execute-api.us-east-1.amazonaws.com/prod/formSubmit",
+            "https://tfiwmhtln2.execute-api.us-east-1.amazonaws.com/formSubmit",
             {
               method: "POST",
               headers: {
-                "X-Api-Key": "ox9fSkYfRK16mxy5Gv6pM121H7iAubAQ6uzsDmoW",
+                "Content-Type": "application/json",
               },
               body: JSON.stringify(payload),
             },
