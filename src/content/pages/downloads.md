@@ -28,18 +28,15 @@ flow:
           container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           card: max-w-[60ch]
         cards:
-          - title: gnu gcc compiler download
+          - title: gnu gcc compiler
             text: |
               GNU Toolchain plays an essential role in the development of Linux. Created by the GNU Project, it is a group of programming tools used for developing software applications and operating systems.
               The official Arm releases of the pre-built GNU cross-toolchain for AArch64 and ARM 32-bit A-Profile cores are available on the [Arm Developer website.](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
-
-              Linaro also provides monthly [GNU Toolchain Integration Builds](https://snapshots.linaro.org/gnu-toolchain/?_gl=1*6okto9*_ga*NzMzMTExNTgyLjE3MTIxMzg2MTM.*_ga_E12E6FXFVK*MTcxMjc1MTQ1Mi43LjAuMTcxMjc1MTQ1Mi4wLjAuMA..) which offer users a snapshot of the upstream build. These builds allow developers to test features from a pre-built binary as soon as it is upstream.
           - title: LLVM Toolchain
             text: LLVM is a group of toolchain and compiler technologies.
               The official community releases of the pre-built LLVM native toolchain for AArch64 and ARM 32-bit A-Profile cores are built and tested by Linaro and are now available on [LLVM’s GitHub.](https://github.com/llvm/llvm-project/releases/)
 
               In addition to the usual Linux-hosted LLVM toolchain, Linaro is now providing [official LLVM Toolchain for Windows on Arm](https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/LLVM-12.0.0-woa64.exe) starting with LLVM 12.0.0 release.
-
 
               Interested in Cortex-R and Cortex-M bare-metal targeted toolchains for Arm embedded processors? We’re working with Arm to supply a new release every year (with quarterly updates). Releases are maintained for two years. You can get these directly from [the Arm website.](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
   - row: container_row
@@ -83,41 +80,4 @@ flow:
               [Click here to download SQUAD](https://pypi.org/project/squad-client/)
 
               [Click here to find out more about SQUAD](https://squad.readthedocs.io/en/latest/)
-  - row: container_row
-    title: Linaro Linux releases for Qualcomm™ Snapdragon® processors
-    styles:
-      outer: bg-transparent z-0
-    sections:
-      - component: cards
-        styles:
-          container: flex justify-center  gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
-          card: max-w-[80ch]
-        cards:
-          - title: LAVA - Linaro’s Automated Validation Architecture
-              Architecture
-            text: |
-              Linaro releases a set of Linux software builds for platforms based on Qualcomm Snapdragon processors, such as Dragonboard 410c, Qualcomm Robotics RB3 or RB5. The releases from Linaro are based on the Linux mainline kernel and rely upon open-source user space packages exclusively. Linaro provides Yocto Project and Debian based reference implementations. More information on the supported platforms can be found on the [96boards.org website.](https://www.96boards.org/documentation/consumer/dragonboard/)
-          - text: |
-              <table>
-              <thead style="text-align:left">
-                <tr>
-                  <th>Qualcomm</th>
-                  <th>Linux OS
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Dragonboard 410c</td>
-                  <td><a  href="https://releases.linaro.org/96boards/dragonboard845c/linaro/debian/21.12/">Debian</a><br><a  href="http://releases.linaro.org/96boards/dragonboard410c/linaro/openembedded/21.12/">OpenEmbedded</a></td>
-                </tr>
-                <tr>
-                  <td>Dragonboard 845c / RB3</td>
-                  <td><a  href="https://releases.linaro.org/96boards/dragonboard845c/linaro/debian/21.12/">Debian</a><br><a  href="http://releases.linaro.org/96boards/dragonboard410c/linaro/openembedded/21.12/">OpenEmbedded</a></td>
-                </tr>
-                <tr>
-                  <td>Robotics RB5 / QRB5165</td>
-                 <td><a  href="https://releases.linaro.org/96boards/dragonboard845c/linaro/debian/21.12/">Debian</a><br><a  href="http://releases.linaro.org/96boards/dragonboard410c/linaro/openembedded/21.12/">OpenEmbedded</a></td>
-                </tr>
-              </tbody>
-              </table>
 ---

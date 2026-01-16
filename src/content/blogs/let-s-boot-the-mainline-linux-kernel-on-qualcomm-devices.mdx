@@ -95,10 +95,6 @@ Now that we have built the kernel, modules and dtbs, we need to package it into 
 
 Typically in embedded programming, one would try to use a variant of [initramfs](https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html). We can build our own image using [buildroot](https://www.google.com/url?q=https://buildroot.org/\&sa=D\&source=docs\&ust=1635411319572000\&usg=AOvVaw2LC26nkb-H4FRXZ8f77ksZ) etc., but for this example, we are going to use a reference initramfs provided and maintained by Linaro that is released as a cpio image. The **latest** images from Linaro are available here:
 
-* For arm64: [https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm64/latest/](https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm64/latest/) especially: https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm64/latest/initramfs-test-image-qemuarm64-*.rootfs.cpio.gz*
-* *For 32-bit arm: [https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm/latest/](https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm/latest/),
-  especially: https://snapshots.linaro.org/member-builds/qcomlt/testimages/arm/latest/initramfs-test-image-qemuarm-*.rootfs.cpio.gz
-
 This reference initramfs also contains tiny images if one needs to keep the overall image size smaller.
 
 [A Linux initramfs](https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html) is a compressed (gzip) “[cpio](https://www.linuxjournal.com/article/1213)” format archive, which is extracted into a root filesystem when the kernel boots up. After extracting, the kernel checks to see if rootfs contains a file “init”, and if so it executes it as PID 1.

@@ -82,13 +82,6 @@ flow:
           card: w-[50ch] text-left
           card_title: text-2xl
         cards:
-          - title: Upstream reference builds
-            text: |
-              [https://releases.linaro.org/96boards/rb5/linaro/](https://releases.linaro.org/96boards/rb5/linaro/)
-
-              [https://releases.linaro.org/96boards/dragonboard845c/linaro/](https://releases.linaro.org/96boards/dragonboard845c/linaro/)
-
-              [https://releases.linaro.org/96boards/rb2/linaro/](https://releases.linaro.org/96boards/rb2/linaro/)
           - title: Upstream Releases
             text: |
               * Yocto Project Compatible meta-qcomBSPs layer
