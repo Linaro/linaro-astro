@@ -1,5 +1,4 @@
 ---
-# hidden - not needed
 layout: ../../layouts/Flow.astro
 slug: services/consulting
 title: Consulting

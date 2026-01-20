@@ -117,7 +117,6 @@ export default defineConfig({
     "/technologies/ai-ml": "/",
     "/projects/cloud-computing": "/",
     "/solutions/codelinaro": "/",
-    "/services/consulting": "/",
     "/solutions/iot-embedded": "/",
     "/projects/windows-on-arm": "/",
     "/industries/enterprise": "/",
