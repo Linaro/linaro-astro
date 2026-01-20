@@ -1,0 +1,59 @@
+---
+title: Linaro Transfers Kernel Building and Testing Tools to the KernelCI ProjecT
+description: "Linaro has transferred ownership of three key open-source
+  projects: Tuxmake, TuxRun, and TuxLava to the KernelCI project, hosted by The
+  Linux Foundation."
+date: 2026-01-20T10:30:00.000Z
+author: benjamin-copeland
+tags:
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1716389510/linaro-website/images/blog/electricity-1288717_1920.jpg
+related: []
+---
+### About These Tools
+
+Building and testing the Linux kernel across dozens of architectures, compilers, and configurations is complex. Linaro created a set of tools to make that process reproducible and accessible:
+
+\- **Tuxmake** simplifies kernel builds with a single command, handling cross-compilation toolchains and build configurations automatically
+
+\- **TuxRun** executes kernel boot and functional tests across multiple architectures using QEMU
+
+\- **TuxLava** integrates these capabilities with LAVA test infrastructure
+
+Together, they form the foundation of modern kernel CI workflows.
+
+### **What's Moving**
+
+The following repositories are now live under the KernelCl GitHub namespace:
+
+[\- https://github.com/kernelci/tuxmake](https://github.com/kernelci/tuxmake)
+
+[\- https://github.com/kernelci/tuxrun](https://github.com/kernelci/tuxrun)
+
+[\- https://github.com/kernelci/tuxlava](https://github.com/kernelci/tuxlava)
+
+The transition took effect on 19 December 2025.
+
+### Why This Move Makes Sense
+
+KernelCI is the Linux kernel's upstream testing and continuous integration ecosystem. The project already relies on Tuxmake and TuxRun to power its build and test pipelines. Moving these tools under the KernelCI namespace brings them into an active community that will help evolve them alongside the kernel itself.
+
+Linaro engineers will continue as co-maintainers and active contributors. All three projects retain their MIT License, so existing users and contributors will see no disruption.
+
+### What This Means for Users
+
+Functionality remains unchanged. Beyond continuity, this transition brings real benefits: tighter integration with KernelCI's testing infrastructure, a larger contributor base, and faster iteration driven by the combined community. Users can expect continued improvements to cross-compilation support and multi-architecture testing capabilities. We recommend updating your repository URLs to the new locations:
+
+**git remote set-url origin https://github.com/kernelci/tuxmake**
+
+For users of Tuxsuite, Linaro's commercial service built on these open-source tools, there is no impact. Tuxsuite continues to operate as before.
+
+### Looking Ahead
+
+This move reflects the maturity of these projects and the value they provide to the kernel development community. Tuxmake simplifies kernel builds to a single command, automatically handling cross-compilation toolchains across architectures; TuxRun executes boot and functional tests via QEMU; and TuxLava connects these capabilities to LAVA test farms. Together, they form the foundation of modern kernel CI workflows. 
+
+We look forward to collaborating with KernelCI and the broader community to continue improving Linux kernel build and test infrastructure. 
+
+We thank everyone who has contributed to Tuxmake, TuxRun, and TuxLava over the years, and we are excited to see these tools thrive in their new home.
+
+[](https://github.com/kernelci/tuxmake)
