@@ -60,9 +60,10 @@ const { columns, container_styles, bottom_fade } = Astro.props;
       {columns.map((column) => {
         if (column.type === "text") {
           const markdown = marked.parse(column.text_content);
+          const titleMd = column.title ? marked.parse(column.title) : undefined;
           return (
             <div class:list={[column.styles]}>
-              <h3 class="text-4xl my-5">{column.title}</h3>
+              <h3 class="text-4xl my-5" set:html={titleMd} />
               <p set:html={markdown} />
             </div>
           );

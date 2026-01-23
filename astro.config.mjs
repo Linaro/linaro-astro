@@ -119,6 +119,5 @@ export default defineConfig({
     "/solutions/codelinaro": "/",
     "/solutions/iot-embedded": "/",
     "/projects/windows-on-arm": "/",
-    "/industries/enterprise": "/",
   },
 });
