@@ -115,6 +115,7 @@ export default defineConfig({
     "/technologies/apache-big-top": "/",
     "/projects/automotive-iot-edge": "/",
     "/technologies/ai-ml": "/",
+    "/solutions/ai-ml": "/",
     "/projects/cloud-computing": "/",
     "/solutions/codelinaro": "/",
     "/solutions/iot-embedded": "/",
