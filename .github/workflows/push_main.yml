@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "20.x"
+  NODE_VERSION: "20"
 
 permissions:
   id-token: write
@@ -26,19 +26,19 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         id: cache
         with:
           path: |
             cache
             .sst
-          key: cache-main
+          key: cache-main-${{ hashFiles('**/yarn.lock') }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: "yarn"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -72,7 +72,7 @@ jobs:
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
           # Set up yarn
-          yarn install
+          yarn install --frozen-lockfile
           # Build & deploy
           if [ -d "dist" ]; then
             rm -rf dist
