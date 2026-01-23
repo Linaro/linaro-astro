@@ -481,7 +481,7 @@ export const expandingCardsSchema = z.object({
       z.object({
         id: z.number(),
         title: z.string(),
-        description: z.string(),
+        description: z.string().optional(),
         longDescription: z.string(),
         image: z.string(),
       }),

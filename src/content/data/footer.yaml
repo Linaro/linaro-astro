@@ -30,6 +30,8 @@ nav_links:
         url: /industries/automotive
       - label: Client Devices
         url: /industries/client-devices
+      - label: Enterprise
+        url: /industries/enterprise
   - label: Resources
     key: resources
     children:
