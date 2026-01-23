@@ -3801,9 +3801,9 @@
   integrity sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==
 
 "@fontsource/lato@^5.0.20":
-  version "5.0.20"
-  resolved "https://registry.npmjs.org/@fontsource/lato/-/lato-5.0.20.tgz"
-  integrity sha512-2ej7KDuTFoea6Q2hWjx3Png1+MdNcW4V6l7sw/vNauuxCv9xBIZCmpXnTz9eVdj/5Ui//jiWWiQk57mGwjCNwA==
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-5.2.7.tgz#665b6076908b85abc26a9db5d0f34451bdb6a2d6"
+  integrity sha512-k5mum1ADbDW5cTw1Ett1eQVWeoZ6gq0ct6SFBibEhB4LRxhniChJZTBgd6ph5yBxLkN1fcnsnmicBNA4S/3nbw==
 
 "@friendlycaptcha/sdk@^0.1.36":
   version "0.1.37"
