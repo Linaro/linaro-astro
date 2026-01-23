@@ -6,7 +6,7 @@ description: |
   Build secure and highly optimized Enterprise solutions on Arm with Linaro
 hero:
   title: >
-    Build secure and highly optimized Enterprise solutions with Linaro
+    Build secure and highly optimized Enterprise solutions on Arm with Linaro
   background_image: linaro-website/graphics/Enterprise_masthead_image_1_yriaat.png
   styles:
     text_container: max-w-2xl
@@ -39,7 +39,7 @@ flow:
               In today's enterprise landscape, innovation is driven by the need for robust security, seamless scalability, and efficient data management. Companies are sitting on a wealth of data, but scaling it securely and efficiently presents major obstacles. Are you struggling with inconsistent data access reliability? Is it a challenge to unify scattered data sources? Do you face roadblocks trying to protect your distributed environments and valuable data?
             styles: lg:w-1/2 text-lg
   - row: container_row
-    title: At Linaro, our deep expertise turns your challenges into competitive advantages.
+    title: At Linaro, our deep expertise turns your challenges into<br>competitive advantages.
     no_border: true
     styles:
       outer: purple-gradient-container
@@ -126,8 +126,6 @@ flow:
       - component: contact
         form_id: "7"
         formName: "solutions"
-        content: |
-          Partner with our Services team to take your Enterprise Solutions to the next level!
         description: |
           <p class="text-linaro-yellow text-2xl text-left">Partner with our Services team to take your Enterprise Solutions to the next level!</p>
         styles:
