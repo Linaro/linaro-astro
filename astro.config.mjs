@@ -112,6 +112,7 @@ export default defineConfig({
     "/connect/registration": "/",
     "/connect/schedule": "/",
     "/connect/sponsorship": "/",
+    "/connect/[...slug]": "/",
     "/technologies/apache-big-top": "/",
     "/projects/automotive-iot-edge": "/",
     "/technologies/ai-ml": "/",
