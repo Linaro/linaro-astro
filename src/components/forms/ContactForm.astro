@@ -3,14 +3,14 @@ const { form_id, formName, description, modal_id, styles } = Astro.props;
 
 const inputFields = [
   {
-    name: "customfield_13155",
+    name: "firstName",
     label: "First Name",
     type: "text",
   },
-  { name: "customfield_13156", label: "Last Name", type: "text" },
+  { name: "lastName", label: "Last Name", type: "text" },
   { name: "email", label: "Email", type: "email" },
-  { name: "customfield_13368", label: "Company Name", type: "text" },
-  { name: "telephone_number", label: "Telephone Number", type: "tel" },
+  { name: "company", label: "Company Name", type: "text" },
+  { name: "phone", label: "Telephone Number", type: "tel" },
 ];
 ---
 
@@ -56,7 +56,7 @@ const inputFields = [
       ))
     }
     <textarea
-      name="customfield_13365"
+      name="message"
       required
       placeholder="How can Linaro help you?"
       class="text-black pl-2 h-12 w-full h-24"></textarea>

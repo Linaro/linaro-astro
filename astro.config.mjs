@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
-import aws from "astro-sst";
+import node from "@astrojs/node";
+// import aws from "astro-sst";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";

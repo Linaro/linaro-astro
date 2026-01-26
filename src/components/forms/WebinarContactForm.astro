@@ -3,14 +3,15 @@ const { form_id, formName, description, modal_id, webinarDataId } = Astro.props;
 
 const inputFields = [
   {
-    name: "customfield_13480",
-    label: "Customer name",
+    name: "firstName",
+    label: "First Name",
     type: "text",
   },
-  { name: "customfield_13484", label: "Customer email", type: "email" },
-  { name: "customfield_13584", label: "Job title", type: "text" },
-  { name: "customfield_13368", label: "Company Name", type: "text" },
-  { name: "customfield_13171", label: "Country", type: "text" },
+  { name: "lastName", label: "Last Name", type: "text" },
+  { name: "email", label: "Customer email", type: "email" },
+  { name: "jobTitle", label: "Job title", type: "text" },
+  { name: "company", label: "Company Name", type: "text" },
+  { name: "country", label: "Country", type: "text" },
 ];
 ---
 
@@ -54,8 +55,8 @@ const inputFields = [
           <label class="inline-flex items-center">
             <input
               type="radio"
-              name="customfield_13586"
-              value="14039"
+              name="contactByExpert"
+              value="Yes"
               checked
               class="form-radio text-white"
             />
@@ -64,8 +65,8 @@ const inputFields = [
           <label class="inline-flex items-center">
             <input
               type="radio"
-              name="customfield_13586"
-              value="14040"
+              name="contactByExpert"
+              value="No"
               class="form-radio text-white"
             />
             <span class="ml-2 text-white">No</span>
@@ -80,8 +81,8 @@ const inputFields = [
           <label class="inline-flex items-center">
             <input
               type="radio"
-              name="customfield_13587"
-              value="14041"
+              name="newsletter"
+              value="Yes"
               checked
               class="form-radio text-blue-600"
             />
@@ -90,8 +91,8 @@ const inputFields = [
           <label class="inline-flex items-center">
             <input
               type="radio"
-              name="customfield_13587"
-              value="14042"
+              name="newsletter"
+              value="No"
               class="form-radio text-blue-600"
             />
             <span class="ml-2 text-white">No</span>
