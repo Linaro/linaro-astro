@@ -4,6 +4,8 @@ nav_links:
     children:
       - label: Consulting
         url: /services/consulting
+      - label: Upstreaming Linux kernel Services
+        url: /services/upstreaming-linux-kernel
       - label: BSP Development
         url: /services/bsp-development
       - label: Long Term Support
