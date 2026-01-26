@@ -28,12 +28,15 @@ jobs:
           path: cache
           key: cache-main
 
-      - name: Restore PR cache second
-        uses: actions/cache/restore@v3
+      - name: Restore PR cache
+        uses: actions/cache/restore@v4
         id: pr-cache
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            cache-${{ github.sha }}-
+            cache-main
 
       - name: Initialise status
         run: /srv/github-action-scripts/init-deploy-preview.sh
@@ -44,10 +47,10 @@ jobs:
         uses: linaro-its/merge-test-branch@v2.7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Build site
         run: |
@@ -66,7 +69,6 @@ jobs:
           # For pull requests, we set custom domain to the preview URL
           export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
-          rm -rf node_modules
           yarn install --ignore-engines
           # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
@@ -76,4 +78,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
