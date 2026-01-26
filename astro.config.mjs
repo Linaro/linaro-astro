@@ -1,10 +1,10 @@
 import { defineConfig } from "astro/config";
-import aws from "astro-sst";
+import node from "@astrojs/node";
+// import aws from "astro-sst";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";
 import pagefind from "./integrations/pagefind";
-import auth from "./integrations/auth";
 import { loadEnv } from "vite";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
@@ -19,50 +19,26 @@ const is_pre_build = PRE_BUILD === "true";
 
 // https://astro.build/config
 export default defineConfig({
-  ...(is_public
-    ? {
-        output: "static",
-        adapter: aws(),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-        ],
-      }
-    : {
-        output: PRE_BUILD ? "hybrid" : "server",
-        adapter: aws({
-          serverRoutes: ["/api/*"],
-        }),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-          auth({
-            injectEndpoints: true,
-          }),
-        ],
-      }),
+  output: "hybrid",
+  adapter: node({
+    mode: "standalone",
+  }),
+  integrations: [
+    sitemap(),
+    pagefind({
+      is_pre_build: is_pre_build,
+      is_public: is_public,
+    }),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    solidJs(),
+    icon({
+      iconDir: "src/assets/icons",
+    }),
+    mdx(),
+    // Conditional auth integration removed
+  ],
   site: `https://${CUSTOM_DOMAIN}`,
   cacheDir: "./cache",
   compressHTML: true,
