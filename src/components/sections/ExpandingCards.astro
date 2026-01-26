@@ -50,7 +50,9 @@ const gridColsClass = {
               <h2 class="text-lg md:text-2xl font-bold mb-4 mt-0">
                 {card.title}
               </h2>
-              <p class="text-xs md:text-lg">{card.description}</p>
+              {card.description && (
+                <p class="text-xs md:text-lg">{card.description}</p>
+              )}
             </div>
           </div>
           <button class="linaro-gradient-button transition learn-more lg:max-w-48">

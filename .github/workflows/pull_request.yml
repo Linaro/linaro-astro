@@ -10,14 +10,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "20.x"
+  NODE_VERSION: "20"
 
 jobs:
   process-pull-request:
     runs-on: self-hosted
     steps:
       - name: Fetch git repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.3.1
         with:
           fetch-depth: "0"
 
@@ -28,12 +28,15 @@ jobs:
           path: cache
           key: cache-main
 
-      - name: Restore PR cache second
-        uses: actions/cache/restore@v3
+      - name: Restore PR cache
+        uses: actions/cache/restore@v4
         id: pr-cache
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            cache-${{ github.sha }}-
+            cache-main
 
       - name: Initialise status
         run: /srv/github-action-scripts/init-deploy-preview.sh
@@ -66,6 +69,7 @@ jobs:
           # For pull requests, we set custom domain to the preview URL
           export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
+          yarn install --ignore-engines
           # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
         env:
@@ -74,4 +78,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
