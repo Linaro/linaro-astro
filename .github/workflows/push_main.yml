@@ -72,7 +72,7 @@ jobs:
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
           # Set up yarn
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile --ignore-engines
           # Build & deploy
           if [ -d "dist" ]; then
             rm -rf dist
