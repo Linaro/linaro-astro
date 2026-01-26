@@ -47,7 +47,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
 
       - name: Build site
         run: |
@@ -66,7 +65,6 @@ jobs:
           # For pull requests, we set custom domain to the preview URL
           export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
-          rm -rf node_modules
           yarn install --ignore-engines
           # Build script does yarn install and yarn build
           /srv/github-action-scripts/build-astro-site.sh
