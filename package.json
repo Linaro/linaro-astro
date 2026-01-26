@@ -32,7 +32,7 @@
     "@fontsource/lato": "^5.0.20",
     "@friendlycaptcha/sdk": "^0.1.36",
     "@iconify-json/mdi": "^1.1.64",
-    "@solid-primitives/scheduled": "^1.4.3",
+    "@solid-primitives/scheduled": "^1.5.2",
     "@tailwindcss/typography": "^0.5.12",
     "astro": "^4.5.16",
     "astro-cloudinary": "^1.1.0",

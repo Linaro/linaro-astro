@@ -6084,10 +6084,10 @@
     "@smithy/types" "^4.2.0"
     tslib "^2.6.2"
 
-"@solid-primitives/scheduled@^1.4.3":
-  version "1.4.3"
-  resolved "https://registry.npmjs.org/@solid-primitives/scheduled/-/scheduled-1.4.3.tgz"
-  integrity sha512-HfWN5w7b7FEc6VPLBKnnE302h90jsLMuR28Fcf7neRGGf8jBj6wm6/UFQ00VlKexHFMR6KQ2u4VBh5a1ZcqM8g==
+"@solid-primitives/scheduled@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/scheduled/-/scheduled-1.5.2.tgz#616def57b9250bc0e4415c604b31ab5a71465632"
+  integrity sha512-/j2igE0xyNaHhj6kMfcUQn5rAVSTLbAX+CDEBm25hSNBmNiHLu2lM7Usj2kJJ5j36D67bE8wR1hBNA8hjtvsQA==
 
 "@tailwindcss/aspect-ratio@^0.4.2":
   version "0.4.2"
