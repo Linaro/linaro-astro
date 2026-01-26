@@ -28,12 +28,15 @@ jobs:
           path: cache
           key: cache-main
 
-      - name: Restore PR cache second
-        uses: actions/cache/restore@v3
+      - name: Restore PR cache
+        uses: actions/cache/restore@v4
         id: pr-cache
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            cache-${{ github.sha }}-
+            cache-main
 
       - name: Initialise status
         run: /srv/github-action-scripts/init-deploy-preview.sh
@@ -75,4 +78,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: cache
-          key: cache-${{ github.sha }}
+          key: cache-${{ github.sha }}-${{ github.run_id }}
