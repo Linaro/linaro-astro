@@ -26,19 +26,19 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v3
         id: cache
         with:
           path: |
             cache
             .sst
-          key: cache-main-${{ hashFiles('**/yarn.lock') }}
+          key: cache-main
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

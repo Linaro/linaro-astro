@@ -44,9 +44,10 @@ jobs:
         uses: linaro-its/merge-test-branch@v2.7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
       - name: Build site
         run: |
