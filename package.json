@@ -63,6 +63,6 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.72.0",
     "tailwindcss-animated": "^1.0.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }
