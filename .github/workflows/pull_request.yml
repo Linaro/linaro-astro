@@ -65,20 +65,10 @@ jobs:
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export FRIENDLY_CAPTCHA_API_KEY=${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
-          export PIPELINE_CRM_API_KEY=${{ secrets.PIPELINE_CRM_API_KEY }}
           export PIPELINE_CRM_ENDPOINT=${{ vars.PIPELINE_CRM_ENDPOINT }}
           export PIPELINE_CRM_W2LID=${{ vars.PIPELINE_CRM_W2LID }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
           
-          # Auth0 and Spire vars
-          export AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
-          export AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-          export AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}
-          export AUTH0_ISSUER_BASE=${{ secrets.AUTH0_ISSUER_BASE }}
-          export AUTH_API_URL=${{ secrets.AUTH_API_URL }}
-          export SPIRE_WEBSITES_ID=${{ secrets.SPIRE_WEBSITES_ID }}
-          export PUBLIC_KEY_URL=${{ secrets.PUBLIC_KEY_URL }}
-
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
           yarn install --ignore-engines

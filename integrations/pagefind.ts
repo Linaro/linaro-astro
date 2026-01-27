@@ -9,7 +9,10 @@ export default function pagefind({is_pre_build, is_public}: {is_pre_build: boole
         name: "pagefind",
         hooks: {
             "astro:config:setup": ({ config, logger }) => {
-                outDir = is_public ? "./dist" : "./dist_prebuild/dist/client"
+                // In a Hybrid/SSR build with SST, static assets always live in dist/client.
+                // We simplify this to ensure Pagefind always indexes the folder SST uploads.
+                const target = "dist/client";
+                outDir = `./${target}`;
             },
             "astro:server:setup": ({ server, logger }) => {
                 if (!outDir) {

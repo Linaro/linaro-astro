@@ -3,6 +3,9 @@ import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
+export const prerender = false;
+
+/*
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages
@@ -18,20 +21,24 @@ export async function getStaticPaths() {
       };
     });
 }
+*/
+
 type Props = { page: CollectionEntry<"pages"> };
 const { slug } = Astro.params;
+
+/* This logic now runs on the Server Lambda */
 let page;
-if (import.meta.env.SSR) {
-  if (!slug) {
-    page = await getEntry("pages", "/");
-  } else {
-    page = await getEntry("pages", slug);
-  }
+if (!slug) {
+  page = await getEntry("pages", "homepage");
 } else {
-  page = Astro.props.page;
+  page = await getEntry("pages", slug);
 }
 
-const { Content } = page ? await page.render() : { Content: "Page not found" };
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await page.render();
 ---
 
 <Content />

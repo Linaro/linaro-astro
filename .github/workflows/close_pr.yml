@@ -33,13 +33,5 @@ jobs:
           PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           PUBLIC_FRIENDLY_CAPTCHA_SITEKEY: ${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           FRIENDLY_CAPTCHA_API_KEY: ${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
-          PIPELINE_CRM_API_KEY: ${{ secrets.PIPELINE_CRM_API_KEY }}
-          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-          AUTH0_ISSUER_BASE: ${{ secrets.AUTH0_ISSUER_BASE }}
-          AUTH_API_URL: ${{ secrets.AUTH_API_URL }}
-          SPIRE_WEBSITES_ID: ${{ secrets.SPIRE_WEBSITES_ID }}
-          PUBLIC_KEY_URL: ${{ secrets.PUBLIC_KEY_URL }}
           # Mock customs/others even if not used in remove, to satisfy config validation
           CUSTOM_DOMAIN: "linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"

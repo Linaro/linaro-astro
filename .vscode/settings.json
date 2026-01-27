@@ -1,3 +1,7 @@
 {
-  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua"
+  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
+  "files.watcherExclude": {
+    "**/dist/*": true,
+    "**/node_modules/*": true
+  }
 }
