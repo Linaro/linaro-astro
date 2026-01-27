@@ -7396,9 +7396,9 @@ astro-icon@^1.1.0:
     "@iconify/utils" "^2.1.30"
 
 astro-navbar@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/astro-navbar/-/astro-navbar-2.3.1.tgz"
-  integrity sha512-lLvhWS03Qc3heMU23adFwEnBUJFlL6gxYi0xPvIyX1atb2oCov4kOS/MaWOPGnvj2nK63szebUzlG+NdIoUZzQ==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/astro-navbar/-/astro-navbar-2.4.0.tgz#f7a679ac10afa1589c02fea05b3ce81ebab8dbd8"
+  integrity sha512-UhQnU8lz3a0NKL5gTBXFwYg1CVzP/DNlw1z6qW7f9Q1j33oMHdjwX/TmC2/xkJTKeq4a2RxgaqeJ+6CxCxRELg==
 
 astro-pagefind@^1.4.0:
   version "1.8.5"
