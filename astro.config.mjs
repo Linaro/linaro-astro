@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
-import node from "@astrojs/node";
-// import aws from "astro-sst";
+import sst from "astro-sst";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";
@@ -16,14 +15,12 @@ const { IS_PUBLIC, PRE_BUILD, CUSTOM_DOMAIN } = loadEnv(
 );
 const is_public = IS_PUBLIC === "true";
 const is_pre_build = PRE_BUILD === "true";
-const siteUrl = CUSTOM_DOMAIN
-  ? `https://${CUSTOM_DOMAIN}`
-  : "https://example.com";
+const siteUrl = CUSTOM_DOMAIN ? `https://${CUSTOM_DOMAIN}` : undefined;
 
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
-  adapter: aws(),
+  output: "hybrid",
+  adapter: sst(),
   integrations: [
     sitemap(),
     pagefind({
