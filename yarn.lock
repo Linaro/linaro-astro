@@ -236,16 +236,16 @@
   dependencies:
     yaml "^2.5.0"
 
-"@auth/core@^0.18.6":
-  version "0.18.6"
-  resolved "https://registry.npmjs.org/@auth/core/-/core-0.18.6.tgz"
-  integrity sha512-AI7tnyNOg5zVS2elA44O03MWS6jyp69S8habJts63IyiCIoSkhqcZX4EcEJ0287m0hxzOltPCV9Zq2aqXbrNSA==
+"@auth/core@^0.34.0":
+  version "0.34.3"
+  resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.34.3.tgz#b2177ea7e2eca295918e261cb9a643a83dd92554"
+  integrity sha512-jMjY/S0doZnWYNV90x0jmU3B+UcrsfGYnukxYrRbj0CVvGI/MX3JbHsxSrx2d4mbnXaUsqJmAcDfoQWA6r0lOw==
   dependencies:
     "@panva/hkdf" "^1.1.1"
     "@types/cookie" "0.6.0"
     cookie "0.6.0"
     jose "^5.1.3"
-    oauth4webapi "^2.4.0"
+    oauth4webapi "^2.10.4"
     preact "10.11.3"
     preact-render-to-string "5.2.3"
 
@@ -7396,9 +7396,9 @@ astro-icon@^1.1.0:
     "@iconify/utils" "^2.1.30"
 
 astro-navbar@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/astro-navbar/-/astro-navbar-2.3.1.tgz"
-  integrity sha512-lLvhWS03Qc3heMU23adFwEnBUJFlL6gxYi0xPvIyX1atb2oCov4kOS/MaWOPGnvj2nK63szebUzlG+NdIoUZzQ==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/astro-navbar/-/astro-navbar-2.4.0.tgz#f7a679ac10afa1589c02fea05b3ce81ebab8dbd8"
+  integrity sha512-UhQnU8lz3a0NKL5gTBXFwYg1CVzP/DNlw1z6qW7f9Q1j33oMHdjwX/TmC2/xkJTKeq4a2RxgaqeJ+6CxCxRELg==
 
 astro-pagefind@^1.4.0:
   version "1.8.5"
@@ -13957,10 +13957,10 @@ number-allocator@^1.0.9:
     debug "^4.3.1"
     js-sdsl "4.3.0"
 
-oauth4webapi@^2.4.0:
-  version "2.10.4"
-  resolved "https://registry.npmjs.org/oauth4webapi/-/oauth4webapi-2.10.4.tgz"
-  integrity sha512-DSoj8QoChzOCQlJkRmYxAJCIpnXFW32R0Uq7avyghIeB6iJq0XAblOD7pcq3mx4WEBDwMuKr0Y1qveCBleG2Xw==
+oauth4webapi@^2.10.4:
+  version "2.17.0"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-2.17.0.tgz#4af65bd4dac6761d8e4f2fb20848e82a879a6725"
+  integrity sha512-lbC0Z7uzAFNFyzEYRIC+pkSVvDHJTbEW+dYlSBAlCYDe6RxUkJ26bClhk8ocBZip1wfI9uKTe0fm4Ib4RHn6uQ==
 
 oauth@^0.9.15:
   version "0.9.15"
@@ -14680,12 +14680,7 @@ prettier-plugin-astro@^0.14.1:
     prettier "^3.0.0"
     sass-formatter "^0.7.6"
 
-prettier@^3.0.0, prettier@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.3.3.tgz"
-  integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
-
-prettier@^3.5.0:
+prettier@^3.0.0, prettier@^3.3.3, prettier@^3.5.0:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.1.tgz#edf48977cf991558f4fcbd8a3ba6015ba2a3a173"
   integrity sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==
@@ -16820,9 +16815,9 @@ table@*, table@^6.8.2:
     strip-ansi "^6.0.1"
 
 tailwindcss-animated@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/tailwindcss-animated/-/tailwindcss-animated-1.0.1.tgz"
-  integrity sha512-u5wusj89ZwP8I+s8WZlaAd7aZTWBN/XEG6QgMKpkIKmAf3xP1A6WYf7oYIKmGaB10UAQaSqWopi/i1ozzZEs8Q==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tailwindcss-animated/-/tailwindcss-animated-1.1.2.tgz#cc8aabe5b371abdf20a195809785b3dbf34adcd5"
+  integrity sha512-SI4owS5ojserhgEYIZA/uFVdNjU2GMB2P3sjtjmFA52VxoUi+Hht6oR5+RdT+CxrX9cNNYEa+vbTWHvN9zbj3w==
 
 tailwindcss@^3.4.19:
   version "3.4.19"
@@ -17272,9 +17267,9 @@ typescript@^3.9.10, typescript@^3.9.5, typescript@^3.9.7:
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
 typescript@^5.4.5:
-  version "5.4.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-5.4.5.tgz"
-  integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.9.3.tgz#5b4f59e15310ab17a216f5d6cf53ee476ede670f"
+  integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==
 
 ufo@^1.6.1:
   version "1.6.3"
