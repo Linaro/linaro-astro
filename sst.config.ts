@@ -74,9 +74,7 @@ export default $config({
     }
 
     return {
-      url: router.url,
-      server: server.url,
-      assets: assets.url,
+      url: site.url,
     };
   },
 });
