@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import sst from "astro-sst";
+import aws from "astro-sst";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";
@@ -22,7 +22,7 @@ const siteUrl = CUSTOM_DOMAIN
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  adapter: sst(),
+  adapter: aws(),
   integrations: [
     sitemap(),
     pagefind({
