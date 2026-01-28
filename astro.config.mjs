@@ -19,8 +19,13 @@ const siteUrl = CUSTOM_DOMAIN ? `https://${CUSTOM_DOMAIN}` : undefined;
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
-  adapter: sst(),
+  output: "static",
+  adapter: node({
+    mode: "standalone",
+  }),
+  legacy: {
+    collections: true,
+  },
   integrations: [
     sitemap(),
     pagefind({
@@ -45,12 +50,12 @@ export default defineConfig({
         protocol: "https",
       },
     ],
-    service: {
-      entrypoint: "astro/assets/services/sharp",
-      config: {
-        limitInputPixels: false,
-      },
-    },
+    // service: {
+    //   entrypoint: "astro/assets/services/sharp",
+    //   config: {
+    //     limitInputPixels: false,
+    //   },
+    // },
   },
   build: {
     rollupOptions: {
