@@ -24,19 +24,19 @@ export default {
       PIPELINE_CRM_W2LID: process.env.PIPELINE_CRM_W2LID!,
       PIPELINE_CRM_ENDPOINT: process.env.PIPELINE_CRM_ENDPOINT!,
     };
-
-    // 2. The Modern Astro Component (Replaces Function, StaticSite, and Router)
-    const site = new sst.aws.Astro("LinaroSite", {
-      environment,
-      domain: process.env.CUSTOM_DOMAIN
+    const domain =
+      $app.stage === "production" && process.env.CUSTOM_DOMAIN
         ? {
             name: process.env.CUSTOM_DOMAIN,
             aliases: process.env.CUSTOM_DOMAIN.startsWith("www.")
               ? [process.env.CUSTOM_DOMAIN.replace("www.", "")]
               : [],
           }
-        : undefined,
-      // This automatically handles /_astro, /_actions, and SSR routing
+        : undefined;
+
+    const site = new sst.aws.Astro("LinaroSite", {
+      environment,
+      domain,
     });
 
     return {

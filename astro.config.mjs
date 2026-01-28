@@ -23,7 +23,7 @@ const siteUrl = CUSTOM_DOMAIN
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  adapter: sst(),
+  adapter: aws(),
   integrations: [
     sitemap(),
     pagefind({
@@ -38,7 +38,6 @@ export default defineConfig({
       iconDir: "src/assets/icons",
     }),
     mdx(),
-    // Conditional auth integration removed
   ],
   site: siteUrl,
   cacheDir: "./cache",
