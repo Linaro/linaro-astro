@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Fetch git repository
         uses: actions/checkout@v4.3.1
-        
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -18,7 +18,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: yarn install --ignore-engines
+        run: npm install
 
       - name: Remove SST Stage
         run: |

@@ -70,13 +70,13 @@ jobs:
           export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
-          # Set up yarn
-          yarn install --frozen-lockfile --ignore-engines
+          # Set up npm
+          npm install
           # Build & deploy
           if [ -d "dist" ]; then
             rm -rf dist
           fi
-          yarn sst deploy --stage prod
+          npm sst deploy --stage prod
 
       - uses: actions/cache/save@v4
         with:

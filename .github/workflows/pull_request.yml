@@ -68,21 +68,21 @@ jobs:
           export PIPELINE_CRM_ENDPOINT=${{ vars.PIPELINE_CRM_ENDPOINT }}
           export PIPELINE_CRM_W2LID=${{ vars.PIPELINE_CRM_W2LID }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
-          
+
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
-          yarn install --ignore-engines
-          
+          npm install
+
           # Deploy and capture output
           # SST v3 prints outputs at the end. We capture stdout.
           OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1 | tee /dev/tty)
-          
+
           # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
           # Depends on exact sst output format. SST v3 usually outputs "url: https://..."
           URL=$(echo "$OUTPUT" | grep -o 'https://[^"]*' | head -n 1) # Fallback simple extraction
           # A safer way might be to look for the specific output key if possible, but let's try this.
           # If sst.config.ts returns { url: ... }, it prints it.
-          
+
           if [ -z "$URL" ]; then
             echo "Could not find deployment URL in output"
             # Optional: fail or continue?
