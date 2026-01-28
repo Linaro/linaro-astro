@@ -19,51 +19,30 @@ const is_pre_build = PRE_BUILD === "true";
 
 // https://astro.build/config
 export default defineConfig({
-  ...(is_public
-    ? {
-        output: "static",
-        adapter: aws(),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-        ],
-      }
-    : {
-        output: PRE_BUILD ? "hybrid" : "server",
-        adapter: aws({
-          serverRoutes: ["/api/*"],
-        }),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-          auth({
-            injectEndpoints: true,
-          }),
-        ],
-      }),
-  site: `https://${CUSTOM_DOMAIN}`,
+  output: "static",
+  adapter: node({
+    mode: "standalone",
+  }),
+  legacy: {
+    collections: true,
+  },
+  integrations: [
+    sitemap(),
+    pagefind({
+      is_pre_build: is_pre_build,
+      is_public: is_public,
+    }),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    solidJs(),
+    icon({
+      iconDir: "src/assets/icons",
+    }),
+    mdx(),
+    // Conditional auth integration removed
+  ],
+  site: siteUrl,
   cacheDir: "./cache",
   compressHTML: true,
   image: {
@@ -72,12 +51,12 @@ export default defineConfig({
         protocol: "https",
       },
     ],
-    service: {
-      entrypoint: "astro/assets/services/sharp",
-      config: {
-        limitInputPixels: false,
-      },
-    },
+    // service: {
+    //   entrypoint: "astro/assets/services/sharp",
+    //   config: {
+    //     limitInputPixels: false,
+    //   },
+    // },
   },
   build: {
     rollupOptions: {

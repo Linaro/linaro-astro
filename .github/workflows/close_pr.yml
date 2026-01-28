@@ -1,15 +1,27 @@
 name: ClosePullRequestAction
 
-on: 
+on:
   pull_request_target:
     types: [closed]
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   close:
     runs-on: self-hosted
     steps:
-      - name: close pull request
+      - name: Fetch git repository
+        uses: actions/checkout@v4.3.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove SST Stage
         run: |
           export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
           PR_NUMBER=$(jq -r ".pull_request.number" $GITHUB_EVENT_PATH)

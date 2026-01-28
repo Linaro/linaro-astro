@@ -65,15 +65,35 @@ jobs:
           export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
-          echo "DECAP_DOMAIN is $DECAP_DOMAIN"
-          # For pull requests, we set custom domain to the preview URL
-          export CUSTOM_DOMAIN="${{ vars.AWS_STATIC_SITE_URL }}-${{ github.event.number }}.ghactions.linaro.org"
-          export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
-          yarn install --ignore-engines
-          # Build script does yarn install and yarn build
-          /srv/github-action-scripts/build-astro-site.sh
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
+
+          npm install
+
+          # Deploy and capture output
+          # SST v3 prints outputs at the end. We capture stdout.
+          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1 | tee /dev/tty)
+
+          # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
+          # Depends on exact sst output format. SST v3 usually outputs "url: https://..."
+          URL=$(echo "$OUTPUT" | grep -o 'https://[^"]*' | head -n 1) # Fallback simple extraction
+          # A safer way might be to look for the specific output key if possible, but let's try this.
+          # If sst.config.ts returns { url: ... }, it prints it.
+
+          if [ -z "$URL" ]; then
+            echo "Could not find deployment URL in output"
+            # Optional: fail or continue?
+          else
+            echo "Deployment URL: $URL"
+            
+            # Report to GitHub
+            STATUSES_URL=$(jq -r ".pull_request.statuses_url // empty" $GITHUB_EVENT_PATH)
+            if [ -n "$STATUSES_URL" ]; then
+                DATA="{\"state\": \"success\", \"target_url\": \"$URL\", \"context\": \"Deploy preview\", \"description\": \"Deployment complete\"}"
+                curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL" >/dev/null
+                echo "Reported status to GitHub"
+            fi
+          fi
 
       - uses: actions/cache/save@v4
         with:
