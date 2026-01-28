@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: whitepapers
 title: Whitepapers
 description: |

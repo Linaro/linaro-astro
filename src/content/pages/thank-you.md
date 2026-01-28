@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: thank-you
 title: Thank you
 description: |

@@ -1,64 +1,92 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
-import {  getEntries } from "astro:content";
+import { getEntries } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Hero from "@/components/hero/Hero.astro";
 import ConnectHero from "@/components/hero/ConnectHero.astro";
-import { getEntryBySlug } from "astro:content";
 
-type Props = { frontmatter: CollectionEntry<"pages">};
+type Props = { frontmatter: CollectionEntry<"pages"> };
 
+const { frontmatter } = Astro.props;
+const { title, description, flow, hero, connectHero } = frontmatter.data;
 
-const {
-  frontmatter: { slug },
-} = Astro.props!;
-const page = await getEntryBySlug("pages", slug)
+const allComponents = import.meta.glob("../components/{sections,rows}/*.astro");
 
-const { title, description, flow, hero, connectHero } = page.data
-const allComponents = import.meta.glob("../components/{sections,rows}/*.astro") as Record<string, () => Promise<{default: AstroComponentFactory}>>
-const rowComponents = {} as Record<string, {default: AstroComponentFactory} >;
-const sectionComponents = {} as Record<
-  string,
-   {default: AstroComponentFactory }
->;
+const rowComponents: Record<string, { default: AstroComponentFactory }> = {};
+const sectionComponents: Record<string, { default: AstroComponentFactory }> =
+  {};
 
+if (flow && flow.length > 0) {
+  const rowsToFetch = flow.map((row: any) => row.row);
+  const fetchedRows = await getEntries(rowsToFetch);
 
-if (flow && flow?.length > 0) {
-  for (const rowData of await getEntries(flow.map((row: any) => row.row) as {collection: "rows", slug: CollectionEntry<"rows">["slug"]}[])) {
-    rowComponents[rowData.slug] = await allComponents[rowData.data.path.replace("@/components", "../components")]() as {default: AstroComponentFactory}
+  for (const rowData of fetchedRows) {
+    const path = rowData.data.path.replace("@/components", "../components");
+    if (allComponents[path]) {
+      const comp = await allComponents[path]();
+      rowComponents[rowData.id] = comp as any;
+      if (rowData.slug) rowComponents[rowData.slug] = comp as any;
+    }
   }
 
-for (const sectionData of await getEntries(flow.map((row: any) => row.sections!.map((section: any) => section.component)).flat() as {collection: "sections", slug: CollectionEntry<"sections">["slug"]}[]) ) {
-    sectionComponents[sectionData.slug] = await allComponents[sectionData.data.path.replace("@/components", "../components")]() as {default: AstroComponentFactory}
+  const sectionsToFetch = flow.flatMap(
+    (row: any) => row.sections?.map((s: any) => s.component) || [],
+  );
+  const fetchedSections = await getEntries(sectionsToFetch);
+
+  for (const sectionData of fetchedSections) {
+    const path = sectionData.data.path.replace("@/components", "../components");
+    if (allComponents[path]) {
+      const comp = await allComponents[path]();
+      sectionComponents[sectionData.id] = comp as any;
+      if (sectionData.slug) sectionComponents[sectionData.slug] = comp as any;
+    }
   }
 }
-
 ---
 
 <BaseLayout title={title} description={description}>
-    <main 
-      class="prose mx-0 max-w-full prose-invert marker:text-white " 
-      data-pagefind-body
-      data-pagefind-filter="type:page"
-    >
-      <span  data-pagefind-meta="title" class="hidden">{title}</span>
-      {hero && <Hero {...hero} />}
-      {connectHero && <ConnectHero {...connectHero} />}
-      {
-        flow?.map((row: any) => {
-          const { row: component, sections, ...rowProps } = row
-          const RowComp = rowComponents[component.slug].default;
-          return RowComp ? (
-            <RowComp {...rowProps}>
-              {sections ? sections.map((section: any) => {
-                const {component, ...sectionProps} = section
-                const SectionComp = sectionComponents[component.slug].default
-                return SectionComp ? <SectionComp {...sectionProps} ><slot /></SectionComp> : <div>Not implemented</div>
-              }) : <></>}
-            </RowComp>
-          ) : <div>Not implemented</div>;
-        })
-      }
-    </main>
+  <main class="prose mx-0 max-w-full prose-invert" data-pagefind-body>
+    <span data-pagefind-meta="title" class="hidden">{title}</span>
+    {hero && <Hero {...hero} />}
+    {connectHero && <ConnectHero {...connectHero} />}
+
+    {
+      flow?.map((row: any) => {
+        // Look for .slug (from your transform) or .id (from Astro)
+        const rowId = row.row?.slug || row.row?.id || row.row;
+        const RowComp = rowComponents[rowId]?.default;
+
+        return RowComp ? (
+          <RowComp {...row}>
+            {row.sections?.map((section: any) => {
+              // Access the slug inside the component object created by your transform
+              const sectionId =
+                section.component?.slug ||
+                section.component?.id ||
+                section.component;
+              const SectionComp = sectionComponents[sectionId]?.default;
+
+              return SectionComp ? (
+                <SectionComp {...section} />
+              ) : (
+                <div class="bg-red-900 text-white p-2">
+                  Section "{sectionId}" not found.
+                  {/* Optional: Add debug helper */}
+                  Available:{" "}
+                  {Object.keys(sectionComponents).slice(0, 5).join(", ")}
+                </div>
+              );
+            })}
+          </RowComp>
+        ) : (
+          <div class="bg-red-600 text-white p-4">
+            Debug: Row "{rowId}" not found. Available:{" "}
+            {Object.keys(rowComponents).join(", ")}
+          </div>
+        );
+      })
+    }
+  </main>
 </BaseLayout>

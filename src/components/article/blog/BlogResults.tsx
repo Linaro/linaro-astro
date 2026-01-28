@@ -64,7 +64,7 @@ const BlogResult = ({
           <li>
             <a href={`/blog?tags=${tag}`}>
               <div class="linaro-gradient-button">
-                {tags?.find(({ slug }) => slug === tag)?.data.name}
+                {tags?.find(({ id }) => id === tag)?.data.name}
               </div>
             </a>
           </li>

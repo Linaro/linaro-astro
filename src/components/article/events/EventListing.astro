@@ -9,7 +9,7 @@ import dayOfYear from "dayjs/plugin/dayOfYear";
 dayjs.extend(dayOfYear);
 
 type Props = CollectionEntry<"events">;
-const { slug, data: event, body } = Astro.props;
+const { id, data: event, body } = Astro.props;
 
 const content =
   String(
@@ -41,7 +41,7 @@ if (!(event.event_start instanceof Date)) {
   class="w-full sm:w-80 max-w-full border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between"
 >
   <a
-    href={`/events/${slug}`}
+    href={`/events/${id}`}
     class="w-full px-4 pt-8 pb-12 inline-block basis-full"
   >
     <CloudinaryImg

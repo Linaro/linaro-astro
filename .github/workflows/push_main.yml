@@ -76,7 +76,7 @@ jobs:
           if [ -d "dist" ]; then
             rm -rf dist
           fi
-          npm sst deploy --stage prod
+          npx sst deploy --stage prod
 
       - uses: actions/cache/save@v4
         with:

@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: "/"
 title: Linaro | Arm solutions at lightspeed
 description: |
