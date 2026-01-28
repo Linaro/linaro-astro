@@ -4,9 +4,6 @@ import { getCollection, getEntry, render } from "astro:content";
 
 // export const prerender = true;
 
-export const prerender = false;
-
-/*
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages
@@ -22,24 +19,20 @@ export async function getStaticPaths() {
       };
     });
 }
-*/
 
-type Props = { page: CollectionEntry<"pages"> };
 const { slug } = Astro.params;
+let page = Astro.props.page;
 
-/* This logic now runs on the Server Lambda */
-let page;
-if (!slug) {
-  page = await getEntry("pages", "homepage");
-} else {
-  page = await getEntry("pages", slug);
+if (!page) {
+  const lookupId = slug === undefined ? "homepage" : slug;
+  page = await getEntry("pages", lookupId);
 }
 
 if (!page) {
   return Astro.redirect("/404");
 }
 
-const { Content } = await page.render();
+const { Content } = await render(page);
 ---
 
 <Flow frontmatter={page}>

@@ -4,33 +4,14 @@ import sirv from "sirv";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 
-export default function pagefind({is_pre_build, is_public}: {is_pre_build: boolean, is_public: boolean}): AstroIntegration {
-    let outDir: string;
-    if (is_pre_build) return {name: "pagefind", hooks: {}};
-    return {
-        name: "pagefind",
-        hooks: {
-            "astro:config:setup": ({ config, logger }) => {
-                // In a Hybrid/SSR build with SST, static assets always live in dist/client.
-                // We simplify this to ensure Pagefind always indexes the folder SST uploads.
-                const target = "dist/client";
-                outDir = `./${target}`;
-            },
-            "astro:server:setup": ({ server, logger }) => {
-                if (!outDir) {
-                    logger.warn(
-                        "astro-pagefind couldn't reliably determine the output directory. Search assets will not be served.",
-                    );
-                    return;
-                }
-                logger.warn(outDir)
-                const serve = sirv(outDir, {
-                    dev: true,
-                    etag: true,
-                });
-                server.middlewares.use((req, res, next) => {
-                    if (req.url?.startsWith("/pagefind/")) {
-                        serve(req, res, next);
+export default function pagefind({
+  is_pre_build,
+  is_public,
+}: {
+  is_pre_build: boolean;
+  is_public: boolean;
+}): AstroIntegration {
+  let outDir: string;
 
   return {
     name: "pagefind",

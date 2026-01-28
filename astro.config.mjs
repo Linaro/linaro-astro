@@ -15,17 +15,14 @@ const { IS_PUBLIC, PRE_BUILD, CUSTOM_DOMAIN } = loadEnv(
 );
 const is_public = IS_PUBLIC === "true";
 const is_pre_build = PRE_BUILD === "true";
-const siteUrl = CUSTOM_DOMAIN ? `https://${CUSTOM_DOMAIN}` : undefined;
+const siteUrl = CUSTOM_DOMAIN
+  ? `https://${CUSTOM_DOMAIN}`
+  : "https://example.com";
 
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  adapter: node({
-    mode: "standalone",
-  }),
-  legacy: {
-    collections: true,
-  },
+  adapter: sst(),
   integrations: [
     sitemap(),
     pagefind({
@@ -50,12 +47,12 @@ export default defineConfig({
         protocol: "https",
       },
     ],
-    // service: {
-    //   entrypoint: "astro/assets/services/sharp",
-    //   config: {
-    //     limitInputPixels: false,
-    //   },
-    // },
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+      config: {
+        limitInputPixels: false,
+      },
+    },
   },
   build: {
     rollupOptions: {
