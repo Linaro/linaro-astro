@@ -31,78 +31,22 @@ export default $config({
       PIPELINE_CRM_ENDPOINT: process.env.PIPELINE_CRM_ENDPOINT!,
     };
 
-    // Look up the Managed-AllViewerExceptHostHeader policy programmatically to ensure the ID is valid
-    const policy = aws.cloudfront.getOriginRequestPolicyOutput({
-      name: "Managed-AllViewerExceptHostHeader",
-    });
-
-    // 2. The Server Function (Handles Actions & SSR for Astro v4)
-    const server = new sst.aws.Function("AstroServer", {
-      handler: "dist/server/entry.mjs",
-      bundle: "dist/server",
+    // 2. The Modern Astro Component (Replaces Function, StaticSite, and Router)
+    const site = new sst.aws.Astro("LinaroSite", {
       environment,
-      url: {
-        authorization: "none",
-        cors: true,
-      },
-    });
-
-    // 3. The Static Assets (S3 Bucket)
-    const assets = new sst.aws.StaticSite("LinaroAssets", {
-      path: "dist/client",
-    });
-
-    // 4. The Router
-    const router = new sst.aws.Router("LinaroRouter", {
       domain: process.env.CUSTOM_DOMAIN
         ? {
             name: process.env.CUSTOM_DOMAIN,
-            aliases:
-              process.env.CUSTOM_DOMAIN.replace("www.", "") !==
-              process.env.CUSTOM_DOMAIN
-                ? [process.env.CUSTOM_DOMAIN.replace("www.", "")]
-                : [],
+            aliases: process.env.CUSTOM_DOMAIN.startsWith("www.")
+              ? [process.env.CUSTOM_DOMAIN.replace("www.", "")]
+              : [],
           }
         : undefined,
-      routes: {
-        "/_astro/*": assets.url,
-        "/favicon.ico": assets.url,
-        "/pagefind/*": assets.url,
-        "/_actions/*": server.url,
-        "/*": server.url,
-      },
-      transform: {
-        cdn: (args) => {
-          args.transform = {
-            distribution: (dist) => {
-              // Apply the AllViewerExceptHostHeader policy to the default behavior (/*)
-              if (dist.defaultCacheBehavior) {
-                (dist.defaultCacheBehavior as any).originRequestPolicyId = policy.id;
-              }
-
-              // Apply it ONLY to the Lambda-backed routes (/* and /_actions/*)
-              // S3 origins (/_astro/*, /pagefind/*) do not support Origin Request Policies
-              dist.orderedCacheBehaviors = (dist.orderedCacheBehaviors as any)?.map(
-                (behavior: any) => {
-                  if (
-                    behavior.pathPattern === "/_actions/*" ||
-                    behavior.pathPattern === "/*"
-                  ) {
-                    behavior.originRequestPolicyId = policy.id;
-                  }
-                  return behavior;
-                }
-              );
-            },
-          };
-        },
-      },
+      // This automatically handles /_astro, /_actions, and SSR routing
     });
 
     return {
-      url: router.url,
-      server: server.url,
-      assets: assets.url,
+      url: site.url,
     };
   },
 });

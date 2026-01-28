@@ -1,18 +1,16 @@
 ---
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import BaseLayout from "./BaseLayout.astro";
-import { getImage, Image } from "astro:assets";
-import { getEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import { getEntry, getEntries, getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
-import { getEntries } from "astro:content";
 import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
 import { remark } from "remark";
 import stripMarkdown from "strip-markdown";
 import ArticleContent from "@/components/article/ArticleContent.astro";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import dayOfYear from "dayjs/plugin/dayOfYear";
-import { getCollection } from "astro:content";
 import EventListing from "@/components/article/events/EventListing.astro";
 import WebinarContactModal from "@/components/forms/WebinarContactModal.astro";
 dayjs.extend(advancedFormat);
@@ -22,22 +20,21 @@ type Props = {
   post: CollectionEntry<"events">;
 };
 
+const { post } = Astro.props;
+
 const {
-  post: {
-    data: {
-      title,
-      description,
-      image,
-      event_start,
-      event_end,
-      location,
-      button,
-      webinarContactButton,
-    },
-    body,
-    render,
+  data: {
+    title,
+    description,
+    image,
+    event_start,
+    event_end,
+    location,
+    button,
+    webinarContactButton,
   },
-} = Astro.props;
+  body = "",
+} = post;
 
 const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
 
@@ -51,7 +48,7 @@ const optimizedBackground = await getImage({
   format: "webp",
   inferSize: true,
 });
-const { Content, headings } = await render();
+const { Content, headings } = await render(post);
 
 const summary =
   String(

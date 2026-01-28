@@ -91,7 +91,7 @@ const BlogSearch = ({
     window.history.pushState(
       {},
       "",
-      window.location.origin + window.location.pathname
+      window.location.origin + window.location.pathname,
     );
   };
 
@@ -207,22 +207,22 @@ const BlogSearch = ({
         <Show when={isExpanded()}>
           <ul class="flex flex-wrap gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-8 py-8 justify-self-end">
             <For
-              each={tags.filter((tag) => results()?.filters.tags[tag.slug] > 0)}
+              each={tags.filter((tag) => results()?.filters.tags[tag.id] > 0)}
             >
               {(tag) => (
                 <li>
                   <button
-                    data-tag={tag.slug}
+                    data-tag={tag.id}
                     class="bg-grey px-6 py-2 rounded-full"
                     classList={{
                       "linaro-gradient-button": search().filters.tags.includes(
-                        tag.slug
+                        tag.id,
                       ),
                     }}
                     onClick={onClickTag}
                   >
                     {`${tag.data.name} (${
-                      results()?.filters.tags[tag.slug] ?? 0
+                      results()?.filters.tags[tag.id] ?? 0
                     })`}
                   </button>
                 </li>

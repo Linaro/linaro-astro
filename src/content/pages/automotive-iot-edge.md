@@ -1,6 +1,5 @@
 ---
 # hide - not used
-layout: ../../layouts/Flow.astro
 slug: projects/automotive-iot-edge
 title: Automotive, IoT & Edge
 description: |

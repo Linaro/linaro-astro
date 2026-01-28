@@ -8,7 +8,7 @@ import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 
 type Props = CollectionEntry<"blogs" | "news">;
-const { slug, data: blog, body, collection } = Astro.props;
+const { id, data: blog, body, collection } = Astro.props;
 
 const { data: author } = await getEntry(blog.author);
 
@@ -20,7 +20,7 @@ const content =
       .use(strip, {
         remove: ["heading"],
       })
-      .process(body)
+      .process(body),
   )
     .split(" ")
     .slice(0, 30)
@@ -32,7 +32,7 @@ const content =
   class="w-80 border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background f"
 >
   <a
-    href={`/${collection === "blogs" ? "blog" : collection}/${slug}`}
+    href={`/${collection === "blogs" ? "blog" : collection}/${id}`}
     class="w-full px-4 pt-8 pb-12 inline-block flex flex-col justify-between h-full"
   >
     <div class="basis-full">

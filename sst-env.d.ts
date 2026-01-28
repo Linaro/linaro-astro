@@ -6,19 +6,6 @@
 
 declare module "sst" {
   export interface Resource {
-    "AstroServer": {
-      "name": string
-      "type": "sst.aws.Function"
-      "url": string
-    }
-    "LinaroAssets": {
-      "type": "sst.aws.StaticSite"
-      "url": string
-    }
-    "LinaroRouter": {
-      "type": "sst.aws.Router"
-      "url": string
-    }
   }
 }
 /// <reference path="sst-env.d.ts" />

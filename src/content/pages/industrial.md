@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: industries/industrial
 title: Industrial
 description: |

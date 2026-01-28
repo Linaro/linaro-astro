@@ -26,7 +26,7 @@ export const containerRowSchema = z.object({
         collection: "sections",
         slug: val.component,
       },
-    }))
+    })),
   ),
 });
 

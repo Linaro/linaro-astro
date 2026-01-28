@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: industries/client-devices
 title: Client Devices
 description: |
