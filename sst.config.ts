@@ -39,6 +39,17 @@ export default {
       domain,
     });
 
+    // This is *TEMPORARILY* needed because of a bug between SST v3
+    // and Pulumi, missing out an additional permission required by AWS.
+    if (site?.nodes?.server) {
+      new aws.lambda.Permission("MyServiceInvokePermission", {
+        action: "lambda:InvokeFunction",
+        function: site.nodes.server.name,
+        principal: "*",
+        statementId: "FunctionURLInvokeAllowPublicAccess",
+      });
+    }
+
     return {
       url: site.url,
     };
