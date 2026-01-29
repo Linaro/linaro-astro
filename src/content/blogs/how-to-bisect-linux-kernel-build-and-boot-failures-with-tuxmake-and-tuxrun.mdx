@@ -1,0 +1,42 @@
+---
+title: How to bisect Linux Kernel build and boot failures with TuxMake and TuxRun
+description: >-
+  In our previous blog post we looked at why kernel bisection is tricky to
+  perform today.
+
+  The short version is simple.
+
+  If the environment changes while git walks through history, the bisect result cannot be trusted.
+
+
+  This post shows one way to keep the environment stable while bisecting.
+
+  The focus is not on speed or clever tricks.
+
+  It is about getting the same answer every time.
+author: anders-roxell
+tags:
+  - linux-kernel
+  - testing
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1769683895/linaro-website/images/blog/IMG_1978_sh2mtr.jpg
+related: []
+---
+## What this approach is trying to solve
+
+When a regression is reported by CI or an individual contributor, it usually comes with context, such as:
+
+* An architecture
+* A Compiler version 
+* A kernel configuration 
+* For boot or test regressions, a device 
+* Sometimes a specific test
+
+The information describes the environment where the regression was seen. The  problem is that this context is often incomplete or hard to reproduce locally.
+
+[TuxMake](https://tuxmake.org/) and [TuxRun](https://tuxrun.org/) are open source tools created by Linaro which are [part if the Kerncel CI project, ](https://www.linaro.org/blog/linaro-transfers-kernel-building-and-testing-tools-to-the-kernelci-project/)currently powering its build and test pipelines. The tools are used to build, boot, and test Linux kernels in a reproducible way. They help by making the build and test environment part of the command itself. 
+
+That command can then be used directly with git bisect run.
+
+## The basic idea
+
+##
