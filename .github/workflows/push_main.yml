@@ -26,7 +26,7 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v5
         id: cache
         with:
           path: |
@@ -78,7 +78,7 @@ jobs:
           fi
           yarn sst deploy --stage prod
 
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v5
         with:
           path: |
             cache
