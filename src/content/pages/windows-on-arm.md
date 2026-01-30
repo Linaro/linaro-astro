@@ -1,6 +1,5 @@
 ---
 # hidden - not needed
-layout: ../../layouts/Flow.astro
 slug: projects/windows-on-arm
 title: Windows on Arm
 description: |

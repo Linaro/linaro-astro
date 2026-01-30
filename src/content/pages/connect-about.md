@@ -1,6 +1,5 @@
 ---
 # hidden - not needed
-layout: ../../layouts/Flow.astro
 slug: connect/registration
 title: Connect
 description: Linaro Connect is a series of events that brings together the Arm Ecosystem. This is the ONLY place where developers, maintainers of both hardware and software can collaborate and discuss common problems

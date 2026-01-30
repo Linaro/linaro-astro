@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: services/nxp-platform-services
 title: NXP Platform Services
 description: |

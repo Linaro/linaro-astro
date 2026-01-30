@@ -120,7 +120,7 @@ const social_image = getCldOgImageUrl({
   </script>
  
 
-  {typeof GA_ID != "undefined" && GA_ID != "" ? <Cookies /> : ( <!-- No GA_ID -->)}
+  {GA_ID ? <Cookies /> : null}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -130,19 +130,19 @@ const social_image = getCldOgImageUrl({
     rel="alternate"
     type="application/rss+xml"
     title="Linaro.org"
-    href={new URL("rss/news.xml", Astro.site)}
+    href={new URL("/rss/news.xml", Astro.site)}
   />
   <link
     rel="alternate"
     type="application/rss+xml"
     title="Linaro.org"
-    href={new URL("rss/blog.xml", Astro.site)}
+    href={new URL("/rss/blog.xml", Astro.site)}
   />
   <link
     rel="alternate"
     type="application/rss+xml"
     title="Linaro.org"
-    href={new URL("feed.xml", Astro.site)}
+    href={new URL("/feed.xml", Astro.site)}
   />
   <meta name="msapplication-TileColor" content="#da532c" />
   <meta name="theme-color" content="#ffffff" />

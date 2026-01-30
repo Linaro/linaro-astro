@@ -7,28 +7,29 @@ export async function getStaticPaths() {
     .filter(
       (post) =>
         String(import.meta.env.IS_PREVIEW) === "true" ||
-        Date.now() > new Date(post.data.date).getTime()
+        Date.now() > new Date(post.data.date).getTime(),
     )
     .map((post) => {
+      const slug = post.id ? post.id.replace(/\.mdx?$/, "") : "unknown-post";
+
       return {
-        params: {
-          post: post.slug,
-        },
-        props: {
-          post,
-        },
+        params: { post: slug },
+        props: { post },
       };
     });
 }
 
-type Props = { post: CollectionEntry<"news"> };
-const { post } = Astro.params;
-let data;
-if (import.meta.env.SSR) {
-  data = await getEntry("news", post);
-} else {
-  data = Astro.props.post;
+const { post: postParam } = Astro.params;
+let data: CollectionEntry<"news"> | undefined = Astro.props.post;
+if (!data && postParam) {
+  data = await getEntry("news", postParam);
 }
+
+if (!data) {
+  return Astro.redirect("/404");
+}
+
+const finalPost = data as CollectionEntry<"news">;
 ---
 
-<NewsLayout post={data} />
+<NewsLayout post={finalPost} />

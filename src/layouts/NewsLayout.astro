@@ -2,38 +2,34 @@
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import BaseLayout from "./BaseLayout.astro";
 import { getImage, Image } from "astro:assets";
-import { getEntry } from "astro:content";
+import { getEntry, getEntries, getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
-import { getEntries } from "astro:content";
 import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
 import { remark } from "remark";
 import stripMarkdown from "strip-markdown";
 import ArticleContent from "@/components/article/ArticleContent.astro";
-import { getCollection } from "astro:content";
 import BlogListing from "@/components/article/blog/BlogListing.astro";
 
 type Props = {
   post: CollectionEntry<"news">;
 };
 
+const { post } = Astro.props;
 const {
-  post: {
-    collection,
-    slug,
-    data: {
-      title,
-      author: authorRef,
-      description,
-      date,
-      tags: tagList,
-      image,
-      related,
-    },
-    body,
-    render,
+  collection,
+  id,
+  data: {
+    title,
+    author: authorRef,
+    description,
+    date,
+    tags: tagList,
+    image,
+    related,
   },
-} = Astro.props;
+  body = "",
+} = post;
 
 const { data: author } = (await getEntry(
   authorRef,
@@ -53,7 +49,7 @@ const optimizedBackground = await getImage({
   format: "webp",
   inferSize: true,
 });
-const { Content, headings } = await render();
+const { Content, headings } = await render(post);
 
 const summary =
   String(
@@ -73,12 +69,12 @@ if (related.length > 0) {
   relatedPosts = await getEntries(related);
 } else {
   relatedPosts = (
-    await getCollection("news", ({ data, slug: thisSlug }) => {
+    await getCollection("news", ({ data, id: thisSlug }) => {
       return (
         (String(import.meta.env.IS_PREVIEW) === "true" ||
           Date.now() > new Date(data.date).getTime()) &&
-        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug)) &&
-        thisSlug !== slug
+        tags.some((tag) => data.tags.map((t: any) => t.id === tag.id)) &&
+        thisSlug !== id
       );
     })
   )
@@ -129,13 +125,18 @@ if (related.length > 0) {
       </p>
       <ul class="flex flex-wrap gap-4 my-8">
         {
-          tags.map(({ slug, data: { name } }) => (
-            <li data-pagefind-filter={`tags:${slug}`} data-pagefind-ignore>
-              <a href={`/news?tags=${slug}`}>
-                <button class="linaro-gradient-button">{name}</button>
-              </a>
-            </li>
-          ))
+          tags.map((tag) => {
+            const tagSlug = tag.data.slug_name || tag.id.replace(/\.mdx?$/, "");
+            return (
+              <li data-pagefind-filter={`tags:${tagSlug}`} data-pagefind-ignore>
+                <a href={`/news?tags=${tagSlug}`}>
+                  <button class="linaro-gradient-button">
+                    {tag.data.name}
+                  </button>
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
       <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore

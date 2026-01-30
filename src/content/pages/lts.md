@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: services/lts
 title: LTS
 description: |

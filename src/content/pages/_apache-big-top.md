@@ -1,6 +1,5 @@
 ---
 # hidden - not needed
-layout: ../../layouts/Flow.astro
 slug: technologies/apache-big-top
 title: Apache Bigtop
 description: |
@@ -21,7 +20,8 @@ hero:
 flow:
   - row: container_row
     title: Explore the World of Apache Bigtop
-    styles: purple-gradient-container
+    styles:
+      inner: purple-gradient-container
     sections:
       - component: text
         text_content: It’s not just a Big Data distribution; it’s the key to unlocking your data-driven future from initial planning to successful deployment.
@@ -55,5 +55,6 @@ flow:
           - Custom Component Additions to Suit Your Needs Seamless 
           - Creation of Bigtop Extensions through Mpack 
           - Apache Ambari Enhancements for Enhanced Monitoring and Deployment
-        styles: max-w-2xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-ul:text-xl prose-headings:leading-tight
+        styles:
+          card: max-w-2xl prose-em:linaro-gradient-text prose-em:not-italic prose-headings:text-5xl prose-ul:text-xl prose-headings:leading-tight
 ---
