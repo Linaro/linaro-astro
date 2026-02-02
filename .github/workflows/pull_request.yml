@@ -76,7 +76,7 @@ jobs:
 
           # Deploy and capture output
           # SST v3 prints outputs at the end. We capture stdout.
-          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1
+          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1)
           echo "$OUTPUT"
 
           # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
