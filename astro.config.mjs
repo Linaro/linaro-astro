@@ -4,7 +4,6 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";
 import pagefind from "./integrations/pagefind";
-import auth from "./integrations/auth";
 import { loadEnv } from "vite";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
