@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "20"
+  NODE_VERSION: "20.19.0"
 
 permissions:
   id-token: write
@@ -35,9 +35,10 @@ jobs:
           key: cache-main
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -70,8 +71,11 @@ jobs:
           export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
+
           # Set up npm
-          npm install
+          node -v
+          npm ci
+
           # Build & deploy
           if [ -d "dist" ]; then
             rm -rf dist
