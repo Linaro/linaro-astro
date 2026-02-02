@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: services/upstreaming-linux-kernel
 title: Upstreaming Linux On Arm
 description: |
