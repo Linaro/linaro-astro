@@ -22,7 +22,7 @@ const siteUrl = CUSTOM_DOMAIN
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: "static",
   adapter: aws(),
   integrations: [
     sitemap(),

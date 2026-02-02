@@ -2,11 +2,13 @@
 import Flow from "@/layouts/Flow.astro";
 import { getCollection, getEntry, render } from "astro:content";
 
+// export const prerender = true;
+
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages
     .filter((page) => page.id !== "404.md")
-    .filter((page) => page.id !== "contact")
+    .filter((page) => page.id !== "contact.md")
     .map((page) => {
       const slug =
         page.id === "homepage.md" ? undefined : page.id.replace(/\.mdx?$/, "");
