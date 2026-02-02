@@ -71,13 +71,21 @@ jobs:
 
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
+          echo "Installing dependencies..."
           node -v
           npm ci
 
+          echo "Starting deployment..."
           # Deploy and capture output
           # SST v3 prints outputs at the end. We capture stdout.
-          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1)
-          echo "$OUTPUT"
+          if OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1); then
+            echo "Deployment Success!"
+            echo "$OUTPUT"
+          else
+            echo "Deployment Failed!"
+            echo "$OUTPUT" # Print the error logs
+            exit 1 # Manually fail the step
+          fi
 
           # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
           # Depends on exact sst output format. SST v3 usually outputs "url: https://..."
