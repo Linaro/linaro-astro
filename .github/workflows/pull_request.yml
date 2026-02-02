@@ -47,7 +47,7 @@ jobs:
         uses: linaro-its/merge-test-branch@v2.7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
@@ -71,11 +71,13 @@ jobs:
 
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
-          npm install
+          node -v
+          npm ci
 
           # Deploy and capture output
           # SST v3 prints outputs at the end. We capture stdout.
-          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1 | tee /dev/tty)
+          OUTPUT=$(npx sst deploy --stage pr-${{ github.event.number }} 2>&1
+          echo "$OUTPUT"
 
           # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
           # Depends on exact sst output format. SST v3 usually outputs "url: https://..."
