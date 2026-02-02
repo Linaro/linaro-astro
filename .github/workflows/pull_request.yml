@@ -13,8 +13,10 @@ env:
   NODE_VERSION: "20.19.0"
 
 permissions:
-  id-token: write
   contents: read
+  statuses: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   process-pull-request:
@@ -45,8 +47,8 @@ jobs:
       - name: Initialise status
         run: |
           export STATUSES_URL=$(jq -r ".pull_request.statuses_url" $GITHUB_EVENT_PATH)
-          export DATA='{"state": "pending", "target_url": "\", "context": "Deploy preview", "description": "Waiting for site to build"}'
-          curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL" >/dev/null
+          export DATA='{"state": "pending", "target_url": "", "context": "Deploy preview", "description": "Waiting for site to build"}'
+          curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL"
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -109,16 +111,24 @@ jobs:
 
           if [ -z "$URL" ]; then
             echo "Could not find deployment URL in output"
-            # Optional: fail or continue?
           else
             echo "Deployment URL: $URL"
             
             # Report to GitHub
             STATUSES_URL=$(jq -r ".pull_request.statuses_url // empty" $GITHUB_EVENT_PATH)
             if [ -n "$STATUSES_URL" ]; then
-                DATA="{\"state\": \"success\", \"target_url\": \"$URL\", \"context\": \"Deploy preview\", \"description\": \"Deployment complete\"}"
-                curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL" >/dev/null
-                echo "Reported status to GitHub"
+                DATA=$(jq -n \
+                  --arg state "success" \
+                  --arg url "$URL" \
+                  --arg context "Deploy preview" \
+                  --arg desc "Deployment complete" \
+                  '{state: $state, target_url: $url, context: $context, description: $desc}')
+
+                echo "Posting status to GitHub..."
+                # Removed >/dev/null to debug failures
+                curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL"
+            else
+                echo "Error: STATUSES_URL not found."
             fi
           fi
 
