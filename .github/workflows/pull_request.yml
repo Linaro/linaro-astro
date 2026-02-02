@@ -59,6 +59,8 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy Preview
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Set up the environment variables
           export NODE_OPTIONS=--experimental-wasm-modules
