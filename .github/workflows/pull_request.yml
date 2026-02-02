@@ -99,7 +99,9 @@ jobs:
 
           # Extract URL (Simple regex for now, assuming standard sst output format 'url: https://...')
           # Depends on exact sst output format. SST v3 usually outputs "url: https://..."
-          URL=$(echo "$OUTPUT" | grep -o 'https://[^"]*' | head -n 1) # Fallback simple extraction
+
+          URL=$(echo "$OUTPUT" | grep "url: https://" | head -n 1 | awk '{print $2}')
+
           # A safer way might be to look for the specific output key if possible, but let's try this.
           # If sst.config.ts returns { url: ... }, it prints it.
 
