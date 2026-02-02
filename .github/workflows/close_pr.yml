@@ -1,23 +1,37 @@
-name: ClosePullRequestAction
+name: Close Pull Request
 
 on:
-  pull_request_target:
+  pull_request:
     types: [closed]
-    branches: [main]
 
 jobs:
-  close:
+  cleanup:
     runs-on: self-hosted
     steps:
-      - name: close pull request
+      - name: Fetch git repository
+        uses: actions/checkout@v4.3.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove SST Stage
         run: |
-          export AWS_STATIC_SITE_URL=${{ vars.AWS_STATIC_SITE_URL }}
-          PR_NUMBER=$(jq -r ".pull_request.number" $GITHUB_EVENT_PATH)
-          echo "Cleaning up after $PR_NUMBER has closed"
-          BUILDDIR="/srv/websitepreview/$AWS_STATIC_SITE_URL-$PR_NUMBER"
-          if [ -d "$BUILDDIR" ]; then
-              echo "Removing website review directory"
-              rm -rf "$BUILDDIR"
-          else
-              echo "No website review directory ($BUILDDIR) to remove"
-          fi
+          export AWS_PROFILE=${{ secrets.AWS_PROFILE }} # If needed or use default env vars
+          npx sst remove --stage pr-${{ github.event.number }}
+        env:
+          # Pass necessary env vars if sst remove needs them to load config (it typically does)
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          PUBLIC_FRIENDLY_CAPTCHA_SITEKEY: ${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
+          FRIENDLY_CAPTCHA_API_KEY: ${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
+          # Mock customs/others even if not used in remove, to satisfy config validation
+          CUSTOM_DOMAIN: "linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"

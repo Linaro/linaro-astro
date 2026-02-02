@@ -13,11 +13,7 @@
     "dev:public": "IS_PUBLIC=true astro dev",
     "preview:public": "IS_PUBLIC=true astro preview",
     "build:public": "IS_PUBLIC=true astro build",
-    "start:build": "IS_PUBLIC=true astro build && IS_PUBLIC=true astro dev",
-    "dev:auth": "IS_PUBLIC=false sst bind astro dev",
-    "start:auth": "IS_PUBLIC=false sst bind astro dev",
-    "prebuild:auth": "PRE_BUILD=true astro build --outDir ./dist_prebuild/",
-    "build:auth": "yarn prebuild:auth && astro build"
+    "start:build": "IS_PUBLIC=true astro build && IS_PUBLIC=true astro dev"
   },
   "dependencies": {
     "@astrojs/check": "^0.6.0",
@@ -28,8 +24,6 @@
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/solid-js": "^4.0.1",
     "@astrojs/tailwind": "^5.1.0",
-    "@auth/core": "^0.34.0",
-    "@biscuit-auth/biscuit-wasm": "^0.4.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@fontsource/lato": "^5.0.20",
     "@friendlycaptcha/sdk": "^0.1.36",
@@ -43,7 +37,6 @@
     "astro-pagefind": "^1.4.0",
     "astro-seo": "^0.8.3",
     "astro-sst": "^3.1.4",
-    "auth-astro": "^4.1.1",
     "dayjs": "^1.11.10",
     "decap-cms-app": "^3.8.3",
     "marked": "^12.0.1",
@@ -53,7 +46,7 @@
     "remark": "^15.0.1",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.16",
-    "sst": "2.48.5",
+    "sst": "^3.17.38",
     "strip-markdown": "^6.0.0",
     "tailwindcss": "^3.4.19",
     "tw-elements": "^2.0.0",
@@ -69,7 +62,7 @@
     "tailwindcss-animated": "^1.0.1",
     "typescript": "^5.4.5"
   },
-  "resolutions": {
+  "overrides": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "slate": "0.47.9"
