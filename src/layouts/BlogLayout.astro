@@ -1,16 +1,12 @@
 ---
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import BaseLayout from "./BaseLayout.astro";
-import { getImage, Image } from "astro:assets";
-import { getEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import { getEntry, getEntries, getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
-import { getEntries } from "astro:content";
 import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
-import { remark } from "remark";
-import stripMarkdown from "strip-markdown";
 import ArticleContent from "@/components/article/ArticleContent.astro";
-import { getCollection } from "astro:content";
 import BlogListing from "@/components/article/blog/BlogListing.astro";
 import SocialsSharing from "@/components/sections/SocialsSharing.astro";
 
@@ -18,28 +14,25 @@ type Props = {
   post: CollectionEntry<"blogs">;
 };
 
+const { post } = Astro.props;
 const {
-  post: {
-    collection,
-    slug,
-    data: {
-      title,
-      author: authorRef,
-      description,
-      date,
-      tags: tagList,
-      image,
-      related,
-    },
-    body,
-    render,
+  collection,
+  id,
+  data: {
+    title,
+    author: authorRef,
+    description,
+    date,
+    tags: tagList,
+    image,
+    related,
   },
-} = Astro.props;
+  body = "",
+} = post;
 
 const { data: author } = (await getEntry(
   authorRef,
 )) as CollectionEntry<"authors">;
-
 const tags = await getEntries(tagList);
 
 const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
@@ -55,19 +48,19 @@ const optimizedBackground = await getImage({
   width: 1724.55,
   height: 1182.9,
 });
-const { Content, headings } = await render();
+const { Content, headings } = await render(post);
 
 let relatedPosts;
-if (related.length > 0) {
+if (related && related.length > 0) {
   relatedPosts = await getEntries(related);
 } else {
   relatedPosts = (
-    await getCollection("blogs", ({ data, slug: thisSlug }) => {
+    await getCollection("blogs", ({ data, id: thisId }) => {
       return (
         (String(import.meta.env.IS_PREVIEW) === "true" ||
           Date.now() > new Date(data.date).getTime()) &&
-        tags.some((tag) => data.tags.map((t) => t.slug).includes(tag.slug)) &&
-        thisSlug !== slug
+        tags.some((tag) => data.tags.some((t: any) => t.id === tag.id)) &&
+        thisId !== id
       );
     })
   )
@@ -77,10 +70,7 @@ if (related.length > 0) {
 ---
 
 <BaseLayout title={title + " | Blog"} description={description} image={image}>
-  <main
-    data-pagefind-filter={`type:${collection}`}
-    class="z-0"
-  >
+  <main data-pagefind-filter={`type:${collection}`} class="z-0">
     <section
       class:list={[
         "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
@@ -125,21 +115,26 @@ if (related.length > 0) {
       </p>
       <ul class="flex flex-wrap gap-4 my-8">
         {
-          tags.map(({ slug, data: { name } }) => (
-            <li data-pagefind-filter={`tags:${slug}`} data-pagefind-ignore>
-              <a href={`/blog?tags=${slug}`}>
-                <div class="linaro-gradient-button">{name}</div>
-              </a>
-            </li>
-          ))
+          tags.map((tag) => {
+            const tagSlug = tag.id.replace(/\.mdx?$/, "");
+            return (
+              <li data-pagefind-filter={`tags:${tagSlug}`} data-pagefind-ignore>
+                <a href={`/blog?tags=${tagSlug}`}>
+                  <div class="linaro-gradient-button">{tag.data.name}</div>
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </section>
     <div style="visibility: hidden; position: absolute;">
-      <div data-pagefind-excerpt data-pagefind-meta="description">{description}</div>
+      <div data-pagefind-excerpt data-pagefind-meta="description">
+        {description}
+      </div>
     </div>
     <div data-pagefind-body>
-    <ArticleContent Content={Content} image={image} />
+      <ArticleContent Content={Content} image={image} />
     </div>
   </main>
   <aside

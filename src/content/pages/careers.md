@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: careers
 title: Careers
 description: |

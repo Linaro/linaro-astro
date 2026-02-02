@@ -16,54 +16,30 @@ const { IS_PUBLIC, PRE_BUILD, CUSTOM_DOMAIN } = loadEnv(
 );
 const is_public = IS_PUBLIC === "true";
 const is_pre_build = PRE_BUILD === "true";
+const siteUrl = CUSTOM_DOMAIN
+  ? `https://${CUSTOM_DOMAIN}`
+  : "https://example.com";
 
 // https://astro.build/config
 export default defineConfig({
-  ...(is_public
-    ? {
-        output: "static",
-        adapter: aws(),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-        ],
-      }
-    : {
-        output: PRE_BUILD ? "hybrid" : "server",
-        adapter: aws({
-          serverRoutes: ["/api/*"],
-        }),
-        integrations: [
-          sitemap(),
-          pagefind({
-            is_pre_build: is_pre_build,
-            is_public: is_public,
-          }),
-          tailwind({
-            applyBaseStyles: false,
-          }),
-          solidJs(),
-          icon({
-            iconDir: "src/assets/icons",
-          }),
-          mdx(),
-          auth({
-            injectEndpoints: true,
-          }),
-        ],
-      }),
-  site: `https://${CUSTOM_DOMAIN}`,
+  output: "static",
+  adapter: aws(),
+  integrations: [
+    sitemap(),
+    pagefind({
+      is_pre_build: is_pre_build,
+      is_public: is_public,
+    }),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    solidJs(),
+    icon({
+      iconDir: "src/assets/icons",
+    }),
+    mdx(),
+  ],
+  site: siteUrl,
   cacheDir: "./cache",
   compressHTML: true,
   image: {

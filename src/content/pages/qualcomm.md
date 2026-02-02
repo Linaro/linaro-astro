@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: services/qualcomm-platform
 title: Qualcomm Platform Services
 description: |

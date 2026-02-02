@@ -1,8 +1,9 @@
 import { z, defineCollection, reference } from "astro:content";
 import rowSchemas from "./schemas/rows";
+import { glob } from "astro/loaders";
 
 const pages = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/pages" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -60,14 +61,14 @@ const pages = defineCollection({
 });
 
 const rows = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/rows" }),
   schema: z.object({
     path: z.string(),
   }),
 });
 
 const sections = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/sections" }),
   schema: z.object({
     path: z.string(),
   }),
@@ -79,7 +80,7 @@ const data = defineCollection({
 });
 
 const blogs = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blogs" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -92,7 +93,7 @@ const blogs = defineCollection({
 });
 
 const news = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/news" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -105,7 +106,7 @@ const news = defineCollection({
 });
 
 const events = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/events" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -140,7 +141,7 @@ const events = defineCollection({
 });
 
 const authors = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/authors" }),
   schema: z.object({
     name: z.string(),
     first_name: z.string(),
@@ -152,7 +153,10 @@ const authors = defineCollection({
 });
 
 const team_members = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/team_members",
+  }),
   schema: z.object({
     name: z.string(),
     title: z.string(),
@@ -162,7 +166,7 @@ const team_members = defineCollection({
 });
 
 const tags = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/tags" }),
   schema: z.object({ name: z.string(), slug_name: z.string().optional() }),
 });
 

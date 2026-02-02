@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import { getEntry } from "astro:content";
+import Flow from "@/layouts/Flow.astro";
+
+const entry = await getEntry("pages", "contact");
+
+if (!entry) {
+  return Astro.redirect("/404");
+}
+---
+
+<Flow frontmatter={entry} />

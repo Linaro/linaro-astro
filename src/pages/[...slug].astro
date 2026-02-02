@@ -1,37 +1,40 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import Flow from "@/layouts/Flow.astro";
+import { getCollection, getEntry, render } from "astro:content";
+
+// export const prerender = true;
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages
     .filter((page) => page.id !== "404.md")
+    .filter((page) => page.id !== "contact.md")
     .map((page) => {
+      const slug =
+        page.id === "homepage.md" ? undefined : page.id.replace(/\.mdx?$/, "");
+
       return {
-        params: {
-          slug: page.slug || undefined,
-        },
-        props: {
-          page,
-        },
+        params: { slug },
+        props: { page },
       };
     });
 }
-type Props = { page: CollectionEntry<"pages"> };
+
 const { slug } = Astro.params;
-let page;
-if (import.meta.env.SSR) {
-  if (!slug) {
-    page = await getEntry("pages", "/");
-  } else {
-    page = await getEntry("pages", slug);
-  }
-} else {
-  page = Astro.props.page;
+let page = Astro.props.page;
+
+if (!page) {
+  const lookupId = slug === undefined ? "homepage" : slug;
+  page = await getEntry("pages", lookupId);
 }
 
-const { Content } = page ? await page.render() : { Content: "Page not found" };
+if (!page) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await render(page);
 ---
 
-<Content />
+<Flow frontmatter={page}>
+  <Content />
+</Flow>

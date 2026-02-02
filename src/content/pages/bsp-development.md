@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Flow.astro
 slug: services/bsp-development
 title: BSP Development
 description: |
