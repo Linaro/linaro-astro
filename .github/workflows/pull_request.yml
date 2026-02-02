@@ -22,7 +22,7 @@ jobs:
           fetch-depth: "0"
 
       - name: Restore main cache first
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         id: main-cache
         with:
           path: cache
@@ -39,18 +39,24 @@ jobs:
             cache-main
 
       - name: Initialise status
-        run: /srv/github-action-scripts/init-deploy-preview.sh
+        run: |
+          export STATUSES_URL=$(jq -r ".pull_request.statuses_url" $GITHUB_EVENT_PATH)
+          export DATA='{"state": "pending", "target_url": "\", "context": "Deploy preview", "description": "Waiting for site to build"}'
+          curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL" >/dev/null
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Merge test branch
-        uses: linaro-its/merge-test-branch@v2.7
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::691071635361:role/github-actions-oidc-role
+          aws-region: us-east-1
 
       - name: Deploy Preview
         run: |
