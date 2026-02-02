@@ -2499,10 +2499,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@biscuit-auth/biscuit-wasm@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@biscuit-auth/biscuit-wasm/-/biscuit-wasm-0.4.1.tgz#1ec08a69ba76268ba67620c765bdf2bf1f9474ec"
-  integrity sha512-imOoPeksArWvkypHGA087C/asj6Vm5MBXvYEwKvXCF3WKgiLj6BQ8Az88H1w8yCeI1CiD7sOSOjPWr/yGtQP6Q==
+"@biscuit-auth/biscuit-wasm@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@biscuit-auth/biscuit-wasm/-/biscuit-wasm-0.6.0.tgz#87464205aa1971f056fe88194dbf3dd1eff56507"
+  integrity sha512-QM4rZU+f/WI1tr2vPMCErrGXrJdfK4mTiY1m/JyR1eIiOIJOzoHUHf3Z+hE2a1+Dt9vm6wgGyJg89S871JN7BQ==
 
 "@capsizecss/unpack@^4.0.0":
   version "4.0.0"

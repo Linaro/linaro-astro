@@ -29,7 +29,7 @@
     "@astrojs/solid-js": "^4.0.1",
     "@astrojs/tailwind": "^5.1.0",
     "@auth/core": "^0.34.0",
-    "@biscuit-auth/biscuit-wasm": "^0.4.0",
+    "@biscuit-auth/biscuit-wasm": "^0.6.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@fontsource/lato": "^5.0.20",
     "@friendlycaptcha/sdk": "^0.1.36",
