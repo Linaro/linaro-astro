@@ -39,6 +39,8 @@ flow:
             styles: not-prose lg:w-1/2 h-auto object-contain
           - type: text
             text_content: |
+              **Future-proof you product with Linaro**
+
               The upstream Linux kernel enforces a quality standard for code which the community accepts and maintains. Meeting this standard is an objective quality measure that ensures low technical debt and, if the code is accepted into the upstream kernel, it enables a shared approach with the community to the burden of support. Close alignment with the upstream kernel pays off for faster update cycles, less time rebasing and testing bug and security fixes, and a kernel migration path for customers providing multiple options for long-term support. 
 
               Your customers and management can see the benefits of the improvement of code quality which comes from close alignment with the upstream kernel.
@@ -54,6 +56,8 @@ flow:
         columns:
           - type: text
             text_content: |
+              **Top contributors to the Linux kernel**
+
               Linaro specialises in upstreaming to the Linux kernel, having helped many customers over the years upstream their existing software contributions. We are consistently featured as a top ten contributor to the Linux kernel, with many of our engineers acting as maintainers of subsystems or architectures in the Linux kernel. Because of the active role we play in the open source community, we have the know-how and connections to accelerate your upstream development. 
 
               We strongly believe that the open source approach leads to the best technical implementation and are therefore committed to not only upstreaming code but also maintaining it.
@@ -93,6 +97,9 @@ flow:
             styles: not-prose lg:h-1/3 rounded-3xl h-auto object-contain
   - row: container_row
     sections:
+      - component: text
+        text_content: Speak to our Experts to learn how Upstreaming your Linux-based solutions can translate into accelerated time to market and better quality products.
+        style: text-center text-3xl max-w-[54ch] mx-auto font-bold mb-24
       - component: buttons
         buttons:
           - text: Contact Us
