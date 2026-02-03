@@ -47,7 +47,7 @@ export default $config({
     }
 
     const domain =
-      $app.stage === "production" && process.env.CUSTOM_DOMAIN
+      $app.stage === "prod" && process.env.CUSTOM_DOMAIN
         ? {
             name: process.env.CUSTOM_DOMAIN,
             aliases: process.env.CUSTOM_DOMAIN.startsWith("www.")
