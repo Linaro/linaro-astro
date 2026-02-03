@@ -4,14 +4,18 @@ nav_links:
     children:
       - label: Consulting
         url: /services/consulting
+      - label: Upstreaming Linux kernel Services
+        url: /services/upstreaming-linux-kernel
       - label: BSP Development
         url: /services/bsp-development
       - label: Long Term Support
         url: /services/lts
       - label: Training
         url: /services/training
+      - label: Software Supply Chain Management
+        url: /services/software-supply-chain-management
       - label: Qualcomm Centre of Excellence
-        url: /projects/qualcomm-platform
+        url: /services/qualcomm-platform
       - label: NXP Platform Services
         url: /services/nxp-platform-services
   - label: Solutions
