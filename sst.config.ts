@@ -30,6 +30,22 @@ export default $config({
       PIPELINE_CRM_W2LID: process.env.PIPELINE_CRM_W2LID!,
       PIPELINE_CRM_ENDPOINT: process.env.PIPELINE_CRM_ENDPOINT!,
     };
+
+    console.log("Checking Stage:", $app.stage);
+    console.log("Checking CUSTOM_DOMAIN env:", process.env.CUSTOM_DOMAIN);
+
+    const domainName = process.env.CUSTOM_DOMAIN;
+
+    if ($app.stage === "production" && !domainName) {
+      console.warn(
+        "⚠️ WARNING: Stage is production but CUSTOM_DOMAIN is undefined!",
+      );
+    }
+
+    if ($app.stage !== "production") {
+      console.warn("⚠️ WARNING: Stage is not called 'production'!");
+    }
+
     const domain =
       $app.stage === "production" && process.env.CUSTOM_DOMAIN
         ? {
