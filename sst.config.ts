@@ -53,9 +53,7 @@ export default $config({
             dns: sst.aws.dns({
               zone: "Z09046081VYR7RM3MIIG5", // Replace with your actual Route 53 Hosted Zone ID
             }),
-            aliases: process.env.CUSTOM_DOMAIN.startsWith("www.")
-              ? [process.env.CUSTOM_DOMAIN.replace("www.", "")]
-              : [],
+            aliases: [],
           }
         : undefined;
 
