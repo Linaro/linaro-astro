@@ -12,8 +12,10 @@ nav_links:
         url: /services/lts
       - label: Training
         url: /services/training
+      - label: Software Supply Chain Management
+        url: /services/software-supply-chain-management
       - label: Qualcomm Centre of Excellence
-        url: /projects/qualcomm-platform
+        url: /services/qualcomm-platform
       - label: NXP Platform Services
         url: /services/nxp-platform-services
   - label: Solutions
