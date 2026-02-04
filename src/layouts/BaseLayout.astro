@@ -338,7 +338,9 @@ const { title, description, type = "website", image } = Astro.props;
 
         try {
           // Using Astro Actions
+          console.log("Submitting to Action...");
           const { data, error } = await actions.contact(payload);
+          console.log("Action Response:", data, error);
 
           if (error) {
             if (error.code === "BAD_REQUEST") {
