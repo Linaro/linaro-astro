@@ -1,11 +1,16 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
 
-const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = import.meta.env
-  .PUBLIC_FRIENDLY_CAPTCHA_SITEKEY;
-const FRIENDLY_CAPTCHA_API_KEY = import.meta.env.FRIENDLY_CAPTCHA_API_KEY;
-const PIPELINE_CRM_ENDPOINT = import.meta.env.PIPELINE_CRM_ENDPOINT;
-const PIPELINE_CRM_W2LID = import.meta.env.PIPELINE_CRM_W2LID;
+const getEnv = (key: string) => {
+  return import.meta.env[key] || process.env[key];
+};
+
+const FRIENDLY_CAPTCHA_API_KEY = getEnv("FRIENDLY_CAPTCHA_API_KEY");
+const PIPELINE_CRM_ENDPOINT = getEnv("PIPELINE_CRM_ENDPOINT");
+const PIPELINE_CRM_W2LID = getEnv("PIPELINE_CRM_W2LID");
+const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = getEnv(
+  "PUBLIC_FRIENDLY_CAPTCHA_SITEKEY",
+);
 
 export const server = {
   contact: defineAction({
@@ -106,6 +111,8 @@ export const server = {
       const thankYouPage = `${siteOrigin}/contact/thank-you`;
 
       crmPayload["thank_you_page"] = thankYouPage;
+      crmPayload["developer_mode"] = true;
+      crmPayload["prevent_duplicates"] = true;
 
       // Source
       if (formName) {
