@@ -1,9 +1,11 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
 
-const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY =
-  process.env.PUBLIC_FRIENDLY_CAPTCHA_SITEKEY;
-const FRIENDLY_CAPTCHA_API_KEY = process.env.FRIENDLY_CAPTCHA_API_KEY;
+const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = import.meta.env
+  .PUBLIC_FRIENDLY_CAPTCHA_SITEKEY;
+const FRIENDLY_CAPTCHA_API_KEY = import.meta.env.FRIENDLY_CAPTCHA_API_KEY;
+const PIPELINE_CRM_ENDPOINT = import.meta.env.PIPELINE_CRM_ENDPOINT;
+const PIPELINE_CRM_W2LID = import.meta.env.PIPELINE_CRM_W2LID;
 
 export const server = {
   contact: defineAction({
@@ -31,21 +33,24 @@ export const server = {
         webinarDataId: z.string().optional(),
       })
       .passthrough(),
-    handler: async (input) => {
+    handler: async (input, context) => {
       const { formName, "frc-captcha-response": captchaResponse } = input;
 
       // 1. Verify Friendly Captcha
       if (captchaResponse) {
-        const verifyUrl = "https://api.friendlycaptcha.com/api/v1/siteverify";
+        const verifyUrl = "https://global.frcapi.com/api/v2/captcha/siteverify";
+
         const verifyBody = {
-          solution: captchaResponse,
-          secret: FRIENDLY_CAPTCHA_API_KEY,
+          response: captchaResponse,
           sitekey: PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
         };
 
         const verifyRes = await fetch(verifyUrl, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": FRIENDLY_CAPTCHA_API_KEY,
+          },
           body: JSON.stringify(verifyBody),
         });
 
@@ -90,12 +95,17 @@ export const server = {
 
       // Hidden Fields Injection
       // W2LID
-      const w2lid = process.env.PIPELINE_CRM_W2LID;
+      const w2lid = PIPELINE_CRM_W2LID;
       if (w2lid) {
         crmPayload["w2lid"] = w2lid;
       } else {
         console.warn("PIPELINE_CRM_W2LID is not set!");
       }
+
+      const siteOrigin = new URL(context.request.url).origin;
+      const thankYouPage = `${siteOrigin}/contact/thank-you`;
+
+      crmPayload["thank_you_page"] = thankYouPage;
 
       // Source
       if (formName) {
@@ -127,7 +137,7 @@ export const server = {
       }
 
       // 3. Submit to Pipeline CRM
-      const crmEndpoint = process.env.PIPELINE_CRM_ENDPOINT;
+      const crmEndpoint = PIPELINE_CRM_ENDPOINT;
 
       if (crmEndpoint) {
         try {
@@ -150,7 +160,10 @@ export const server = {
 
           const crmRes = await fetch(crmEndpoint, {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Referer: "https://www.linaro.org/contact",
+            },
             body: formData,
           });
 

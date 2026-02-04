@@ -301,7 +301,7 @@ const { title, description, type = "website", image } = Astro.props;
         data.forEach((value, key) => {
           // Allow all fields except internal ones or captcha response which is handled separately
           if (key !== "frc-captcha-response") {
-             payload[key] = value;
+            payload[key] = value;
           }
         });
 
@@ -312,8 +312,8 @@ const { title, description, type = "website", image } = Astro.props;
 
         // Use standard 'email' field or fallback if needed (though we should enforce standard names now)
         if (!payload.email) {
-             console.error("Email missing from payload");
-             return;
+          console.error("Email missing from payload");
+          return;
         }
 
         delete payload.agreed;
@@ -342,15 +342,15 @@ const { title, description, type = "website", image } = Astro.props;
 
           if (error) {
             if (error.code === "BAD_REQUEST") {
-               captchaWidget?.reset();
-               throw new Error(error.message);
+              captchaWidget?.reset();
+              throw new Error(error.message);
             }
             throw new Error(error.message || "Server error");
           }
-          
+
           const result = data;
           if (!result?.success) {
-              throw new Error("Submission failed");
+            throw new Error("Submission failed");
           }
 
           // -----------------------
@@ -363,6 +363,9 @@ const { title, description, type = "website", image } = Astro.props;
             await handleWebinarResponse(form, feedbackText);
           } else if (formName === "whitepaper_contact") {
             await handleWhitepaperResponse(form, feedbackText);
+          } else if (!error && data?.success) {
+            // Redirect the user to the thank you page
+            window.location.href = "/contact/thank-you";
           } else {
             feedbackText!.innerText = result.message;
           }
