@@ -111,6 +111,38 @@ title: This is a news post by Linaro
 
 `linaro` here references `src/content/authors/linaro.md`
 
+### Webinars with Passcode
+
+How to Add a New Webinar Recording
+To enable recording access for a new webinar, follow these steps:
+
+- Upload Credentials: Create a JSON file with the following structure and upload it to Amazon S3 → Buckets → static-linaro-org → webinar_credentials/.
+
+```JSON
+{
+  "url": "https://link-to-recording.com",
+  "passcode": "123456"
+}
+```
+
+Update API Route: In the API file:
+
+- Add the new S3 URL to the webinar_credentials object.
+
+- Add the new ID to the getStaticPaths function.
+
+- Update Webinar Frontmatter: In the relevant webinar Markdown file, replace the standard button data with the webinarContactButton object:
+
+```YAML
+webinarContactButton:
+  button_text: View Recording
+  form_id: "9"
+  modal_id: webinarContactForm
+  description: Request Recording
+  formName: webinar_contact
+  webinarDataId: your_new_id_here
+```
+
 ### Data
 
 The `src/content/data` folder contains various lists of one-off items used in the site, such as nav links, footer links or lists of logos for "trusted by" sections. Any items added to these lists will be reflected in the website.
@@ -156,17 +188,16 @@ IS_PREVIEW=true
 
 ### Local Development
 
-Running the site locally will require `Node.js` (>=18) and the `yarn` package manager.
+Running the site locally will require `Node.js` (>=18) and the `npm` package manager.
 
-First, install dependencies with `yarn install`.
+First, install dependencies with `npm install`.
 
 The following commands can then be used to build and run the site locally.
 
-| Command        | Description                                                                                                                                                                             |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `yarn build`   | Builds the site in the `dist` folder of the root directory.                                                                                                                             |
-| `yarn start`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved.                                                            |
-| `yarn preview` | Runs the most recent build files in a development server. Unlike `yarn dev` this won't have live updates, but will be a closer representation of the site as it would be in deployment. |
+| Command         | Description                                                                                                                  |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `npm run build` | Builds the site in the `dist` folder of the root directory.                                                                  |
+| `npm run dev`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved. |
 
 For local development, the `IS_PUBLIC` environment variable should be set to `true` in a `.env.local` file to avoid needing additional login configuration for the protected site.
 

@@ -17,6 +17,10 @@ const getEvents = async (results: any[]) => {
 };
 
 const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
+  const buttonLabel = () =>
+    event.meta.button_text ? event.meta.button_text.replace(/\.$/, "") : "";
+
+  console.log(event.meta);
   return (
     <li class="w-full sm:w-80 max-w-full border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between">
       <a
@@ -43,13 +47,15 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
         <p class="text-neutral-400 mb-2">{event.meta.dates ?? "Coming Soon"}</p>
         <p>{event.meta.summary}</p>
       </a>
-      <div class="px-4 py-8 justify-self-end">
-        <button class="linaro-gradient-button">
-          <a href={event.meta.button_url} target="_blank">
-            {event.meta.button_text}
-          </a>
-        </button>
-      </div>
+      {event.meta.button_text && (
+        <div class="px-4 py-8 justify-self-end">
+          <button class="linaro-gradient-button">
+            <a href={event.meta.button_url} target="_blank">
+              {buttonLabel()}
+            </a>
+          </button>
+        </div>
+      )}
     </li>
   );
 };

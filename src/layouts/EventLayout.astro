@@ -76,6 +76,10 @@ if (!(event_start instanceof Date)) {
   formattedDate = "Coming Soon";
 }
 
+const isUpcoming =
+  !(event_start instanceof Date) ||
+  dayjs(event_end).isAfter(dayjs().subtract(1, "day"));
+
 const upcomingEvents = (
   await getCollection(
     "events",
@@ -159,7 +163,7 @@ const upcomingEvents = (
         >{summary}</span
       >
     </section>
-    <ArticleContent Content={Content} image={image} />
+    <ArticleContent Content={Content} image={image} upcoming={isUpcoming} />
   </main>
   {
     upcomingEvents.length > 0 && (
