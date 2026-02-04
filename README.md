@@ -111,6 +111,38 @@ title: This is a news post by Linaro
 
 `linaro` here references `src/content/authors/linaro.md`
 
+### Webinars with Passcode
+
+How to Add a New Webinar Recording
+To enable recording access for a new webinar, follow these steps:
+
+- Upload Credentials: Create a JSON file with the following structure and upload it to Amazon S3 → Buckets → static-linaro-org → webinar_credentials/.
+
+```JSON
+{
+  "url": "https://link-to-recording.com",
+  "passcode": "123456"
+}
+```
+
+Update API Route: In the API file:
+
+- Add the new S3 URL to the webinar_credentials object.
+
+- Add the new ID to the getStaticPaths function.
+
+- Update Webinar Frontmatter: In the relevant webinar Markdown file, replace the standard button data with the webinarContactButton object:
+
+```YAML
+webinarContactButton:
+  button_text: View Recording
+  form_id: "9"
+  modal_id: webinarContactForm
+  description: Request Recording
+  formName: webinar_contact
+  webinarDataId: your_new_id_here
+```
+
 ### Data
 
 The `src/content/data` folder contains various lists of one-off items used in the site, such as nav links, footer links or lists of logos for "trusted by" sections. Any items added to these lists will be reflected in the website.
