@@ -59,7 +59,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.72.0",
-    "tailwindcss-animated": "^1.0.1",
+    "tailwindcss-animated": "^2.0.0",
     "typescript": "^5.4.5"
   },
   "overrides": {
