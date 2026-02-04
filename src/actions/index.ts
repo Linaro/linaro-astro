@@ -160,10 +160,19 @@ export const server = {
                        Wait, the user said "Setting up the form".
                        Usually web-to-lead is form-encoded.
                     */
+          console.log("**** | Full Payload | ****", crmPayload);
+
           const formData = new URLSearchParams();
           for (const key in crmPayload) {
             formData.append(key, crmPayload[key]);
           }
+
+          console.log("**** | formData String | ****", formData.toString());
+
+          console.log(
+            "**** | formData Object | ****",
+            Object.fromEntries(formData),
+          );
 
           const crmRes = await fetch(crmEndpoint, {
             method: "POST",
@@ -173,6 +182,8 @@ export const server = {
             },
             body: formData,
           });
+
+          console.log("*** | crm res | ***", crmRes);
 
           if (!crmRes.ok) {
             console.error(
