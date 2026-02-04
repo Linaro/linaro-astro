@@ -1,11 +1,35 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+
+type CloudinaryEffect =
+  | "grayscale"
+  | "blur"
+  | "sepia"
+  | "shadow"
+  | "colorize"
+  | "oilPaint"
+  | "cartoonify"
+  | "outline"
+  | "blackwhite"
+  | "makeTransparent"
+  | "vectorize"
+  | "gradientFade"
+  | "assistColorBlind"
+  | "removeBackground"
+  | "backgroundRemoval"
+  | "dropShadow";
+
 type Props = {
   Content: AstroComponentFactory;
   image: string;
+  upcoming: boolean;
 };
-const { Content, image } = Astro.props;
+const { Content, image, upcoming } = Astro.props;
+
+const imageEffects = upcoming
+  ? undefined
+  : (["grayscale"] as [CloudinaryEffect]);
 ---
 
 <section class="px-[10px] mt-4">
@@ -19,6 +43,7 @@ const { Content, image } = Astro.props;
       height={1000}
       class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
       data-pagefind-meta="image[src], image_alt[alt]"
+      effects={imageEffects}
     />
     <article
       class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-24 marker:text-white prose-code:before:hidden prose-code:after:hidden prose-code:bg-[#24292e] prose-code:p-3 prose-code:text-base prose-code:font-normal prose-code:rounded-sm"
