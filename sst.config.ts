@@ -33,6 +33,7 @@ export default $config({
 
     console.log("Checking Stage:", $app.stage);
     console.log("Checking CUSTOM_DOMAIN env:", process.env.CUSTOM_DOMAIN);
+    console.log("Checking W2LID env:", process.env.PIPELINE_CRM_W2LID);
 
     const domainName = process.env.CUSTOM_DOMAIN;
 

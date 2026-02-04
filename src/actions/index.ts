@@ -112,7 +112,7 @@ export const server = {
 
       crmPayload["thank_you_page"] = thankYouPage;
       crmPayload["developer_mode"] = true;
-      crmPayload["prevent_duplicates"] = true;
+      crmPayload["prevent_duplicates"] = false;
 
       // Source
       if (formName) {
