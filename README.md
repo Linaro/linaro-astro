@@ -188,17 +188,16 @@ IS_PREVIEW=true
 
 ### Local Development
 
-Running the site locally will require `Node.js` (>=18) and the `yarn` package manager.
+Running the site locally will require `Node.js` (>=18) and the `npm` package manager.
 
-First, install dependencies with `yarn install`.
+First, install dependencies with `npm install`.
 
 The following commands can then be used to build and run the site locally.
 
-| Command        | Description                                                                                                                                                                             |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `yarn build`   | Builds the site in the `dist` folder of the root directory.                                                                                                                             |
-| `yarn start`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved.                                                            |
-| `yarn preview` | Runs the most recent build files in a development server. Unlike `yarn dev` this won't have live updates, but will be a closer representation of the site as it would be in deployment. |
+| Command         | Description                                                                                                                  |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `npm run build` | Builds the site in the `dist` folder of the root directory.                                                                  |
+| `npm run dev`   | Runs the site in a development server, with hot module replacement to reflect updates to the code as soon as they are saved. |
 
 For local development, the `IS_PUBLIC` environment variable should be set to `true` in a `.env.local` file to avoid needing additional login configuration for the protected site.
 
