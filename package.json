@@ -65,7 +65,7 @@
   "overrides": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "slate": "0.47.9"
+    "slate": "0.123.0"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "*"
