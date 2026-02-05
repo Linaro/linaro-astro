@@ -7,7 +7,7 @@ on:
 
 # Cancel in-progress jobs or runs for the current workflow
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: deploy-main
   cancel-in-progress: true
 
 env:
