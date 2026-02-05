@@ -6,13 +6,13 @@
 
 declare module "sst" {
   export interface Resource {
-    "LinaroSite": {
-      "type": "sst.aws.Astro"
-      "url": string
-    }
+    LinaroSite: {
+      type: "sst.aws.Astro";
+      url: string;
+    };
   }
 }
 /// <reference path="sst-env.d.ts" />
 
-import "sst"
-export {}
+import "sst";
+export {};
