@@ -85,12 +85,12 @@ export const server = {
       const crmPayload: Record<string, any> = {};
 
       // Standard User Mappings
-      if (input.firstName) crmPayload["lead[first_name]"] = input.firstName;
-      if (input.lastName) crmPayload["leaf[last_name]"] = input.lastName;
+      if (input.firstName) crmPayload["contact[first_name]"] = input.firstName;
+      if (input.lastName) crmPayload["contact[last_name]"] = input.lastName;
       // Fallback for single name field if needed, but we prefer distinct first/last
-      if (input.email) crmPayload["leaf[email]"] = input.email;
-      if (input.phone) crmPayload["lead[phone]"] = input.phone;
-      if (input.company) crmPayload["lead[company_name]"] = input.company;
+      if (input.email) crmPayload["contact[email]"] = input.email;
+      if (input.phone) crmPayload["contact[phone]"] = input.phone;
+      if (input.company) crmPayload["contact[company_name]"] = input.company;
 
       // Notes / Message
       if (input.message) {
