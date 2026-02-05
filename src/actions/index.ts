@@ -111,8 +111,8 @@ export const server = {
       const thankYouPage = `${siteOrigin}/contact/thank-you`;
 
       crmPayload["thank_you_page"] = thankYouPage;
-      crmPayload["developer_mode"] = true;
-      crmPayload["prevent_duplicates"] = false;
+      // crmPayload["developer_mode"] = true;
+      // crmPayload["prevent_duplicates"] = false;
 
       // Source
       if (formName) {
