@@ -6,11 +6,42 @@ const getEnv = (key: string) => {
 };
 
 const FRIENDLY_CAPTCHA_API_KEY = getEnv("FRIENDLY_CAPTCHA_API_KEY");
-const PIPELINE_CRM_ENDPOINT = getEnv("PIPELINE_CRM_ENDPOINT");
-const PIPELINE_CRM_W2LID = getEnv("PIPELINE_CRM_W2LID");
 const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = getEnv(
   "PUBLIC_FRIENDLY_CAPTCHA_SITEKEY",
 );
+
+const PIPELINE_API_KEY = getEnv("PIPELINE_API_KEY");
+const PIPELINE_APP_KEY = getEnv("PIPELINE_APP_KEY");
+
+const BILL_FLETCHER_ID = 269524;
+
+const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
+  if (!PIPELINE_API_KEY) throw new Error("PIPELINE_API_KEY is missing");
+  if (!PIPELINE_APP_KEY) throw new Error("PIPELINE_APP_KEY is missing");
+
+  const baseUrl = "https://api.pipelinecrm.com/api/v3";
+  const url = `${baseUrl}${endpoint}`;
+
+  const separator = url.includes("?") ? "&" : "?";
+  const authUrl = `${url}${separator}api_key=${PIPELINE_API_KEY}&app_key=${PIPELINE_APP_KEY}`;
+
+  const res = await fetch(authUrl, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      ...options.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error(`Pipeline API Error [${endpoint}]:`, errorText);
+    throw new Error(`Pipeline API request failed: ${res.statusText}`);
+  }
+
+  return res.json();
+};
 
 export const server = {
   contact: defineAction({
@@ -19,44 +50,36 @@ export const server = {
       .object({
         formName: z.string(),
         "frc-captcha-response": z.string().optional(),
-        // Standard Fields
         firstName: z.string().optional(),
         lastName: z.string().optional(),
         email: z.string().email(),
         phone: z.string().optional(),
-        company: z.string().optional(),
+        company: z.string().optional(), // Company Name
         message: z.string().optional(),
-        // Checkboxes/Radios (Standardized)
-        contactByExpert: z.any().optional(), // Yes/No
-        newsletter: z.any().optional(), // Yes/No
-        agreed: z.literal("on").optional(),
-        form_id: z.string().optional(),
+        contactByExpert: z.any().optional(),
+        newsletter: z.any().optional(),
         jobTitle: z.string().optional(),
         country: z.string().optional(),
-        // Content IDs
         whitepaperId: z.string().optional(),
         webinarDataId: z.string().optional(),
       })
       .passthrough(),
-    handler: async (input, context) => {
+    handler: async (input) => {
       const { formName, "frc-captcha-response": captchaResponse } = input;
 
       // 1. Verify Friendly Captcha
       if (captchaResponse) {
         const verifyUrl = "https://global.frcapi.com/api/v2/captcha/siteverify";
-
-        const verifyBody = {
-          response: captchaResponse,
-          sitekey: PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
-        };
-
         const verifyRes = await fetch(verifyUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "X-API-KEY": FRIENDLY_CAPTCHA_API_KEY,
           },
-          body: JSON.stringify(verifyBody),
+          body: JSON.stringify({
+            response: captchaResponse,
+            sitekey: PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
+          }),
         });
 
         const verifyData = await verifyRes.json();
@@ -66,146 +89,129 @@ export const server = {
             message: "Captcha verification failed",
           });
         }
-      } else {
-        // Some forms might not have captcha? The plan implies adding it.
-        // Assuming specific forms require it.
-        if (
-          ["contact-form", "whitepaper_contact", "webinar_contact"].includes(
-            formName,
-          )
-        ) {
-          throw new ActionError({
-            code: "BAD_REQUEST",
-            message: "Captcha is required",
-          });
-        }
+      } else if (
+        ["contact-form", "whitepaper_contact", "webinar_contact"].includes(
+          formName,
+        )
+      ) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "Captcha is required",
+        });
       }
 
-      // 2. Map data for Pipeline CRM
-      const crmPayload: Record<string, any> = {};
+      // --- Start Pipeline CRM Logic ---
+      try {
+        let companyId: number | null = null;
+        let personId: number | null = null;
 
-      // Standard User Mappings
-      if (input.firstName) crmPayload["contact[first_name]"] = input.firstName;
-      if (input.lastName) crmPayload["contact[last_name]"] = input.lastName;
-      // Fallback for single name field if needed, but we prefer distinct first/last
-      if (input.email) crmPayload["contact[email]"] = input.email;
-      if (input.phone) crmPayload["contact[phone]"] = input.phone;
-      if (input.company) crmPayload["contact[company_name]"] = input.company;
-
-      // Notes / Message
-      if (input.message) {
-        crmPayload["note_title_1"] = "How can Linaro help you?";
-        crmPayload["note_1"] = input.message;
-      }
-
-      // Hidden Fields Injection
-      // W2LID
-      const w2lid = PIPELINE_CRM_W2LID;
-      if (w2lid) {
-        crmPayload["w2lid"] = w2lid;
-      } else {
-        console.warn("PIPELINE_CRM_W2LID is not set!");
-      }
-
-      const siteOrigin = new URL(context.request.url).origin;
-      const thankYouPage = `${siteOrigin}/contact/thank-you`;
-
-      crmPayload["thank_you_page"] = thankYouPage;
-      // crmPayload["developer_mode"] = true;
-      // crmPayload["prevent_duplicates"] = false;
-
-      // Source
-      if (formName) {
-        const sourceLine = `\nSource Form: ${formName}`;
-        if (crmPayload["note_1"]) {
-          crmPayload["note_1"] += sourceLine;
-        } else {
-          crmPayload["note_title_1"] = "Lead Source";
-          crmPayload["note_1"] = `Source Form: ${formName}`;
-        }
-      }
-
-      // Custom Fields (Job Title, Country, etc) - Appending to note for visibility
-      let extraInfo = "";
-      if (input.jobTitle) extraInfo += `\nJob Title: ${input.jobTitle}`;
-      if (input.country) extraInfo += `\nCountry: ${input.country}`;
-      if (input.contactByExpert)
-        extraInfo += `\nContact by Expert: ${input.contactByExpert}`;
-      if (input.newsletter) extraInfo += `\nNewsletter: ${input.newsletter}`;
-
-      if (extraInfo) {
-        if (crmPayload["note_1"]) {
-          crmPayload["note_1"] += "\n---" + extraInfo;
-        } else {
-          if (!crmPayload["note_title_1"])
-            crmPayload["note_title_1"] = "Additional Info";
-          crmPayload["note_1"] = extraInfo.trim();
-        }
-      }
-
-      // 3. Submit to Pipeline CRM
-      const crmEndpoint = PIPELINE_CRM_ENDPOINT;
-
-      if (crmEndpoint) {
-        try {
-          // Use URLSearchParams for x-www-form-urlencoded if strictly required by Pipeline,
-          // but most modern web-to-lead accept JSON or Multipart.
-          // Given the field names like 'person[first_name]', it strongly suggests form-data or urlencoded.
-          // I will try JSON first as it's standard, but fallback or switch if docs implied otherwise (docs link was 'api/docs', usually JSON).
-          // However, specific field names like person[x] are Rails/PHP style form params.
-          // Let's use URLSearchParams to be safe for a "web form" receiver.
-
-          /* 
-                       Refactoring to use URLSearchParams if it's a traditional POST handler.
-                       Wait, the user said "Setting up the form".
-                       Usually web-to-lead is form-encoded.
-                    */
-          console.log("**** | Full Payload | ****", crmPayload);
-
-          const formData = new URLSearchParams();
-          for (const key in crmPayload) {
-            formData.append(key, crmPayload[key]);
-          }
-
-          console.log("**** | formData String | ****", formData.toString());
-
-          console.log(
-            "**** | formData Object | ****",
-            Object.fromEntries(formData),
+        // A. Handle Company
+        if (input.company) {
+          // Check for exact match
+          const companySearch = await pipelineFetch(
+            `/companies?conditions[company_name_eq]=${encodeURIComponent(input.company)}`,
           );
 
-          const crmRes = await fetch(crmEndpoint, {
+          if (companySearch.entries && companySearch.entries.length > 0) {
+            // Found existing company
+            companyId = companySearch.entries[0].id;
+            console.log("company existis: ", companyId);
+          } else {
+            // Create new company
+            const newCompany = await pipelineFetch("/companies", {
+              method: "POST",
+              body: JSON.stringify({
+                company: {
+                  name: input.company,
+                  owner_id: BILL_FLETCHER_ID,
+                  // Optional: Add country/phone to company if desired
+                },
+              }),
+            });
+            console.log("company created:", newCompany);
+            companyId = newCompany.id;
+          }
+        }
+
+        console.log("searching person");
+
+        // B. Handle Person
+        const personSearch = await pipelineFetch(
+          `/people?conditions[person_email]=${encodeURIComponent(input.email)}`,
+        );
+
+        if (personSearch.entries && personSearch.entries.length > 0) {
+          personId = personSearch.entries[0].id;
+        } else {
+          const personPayload: any = {
+            first_name: input.firstName,
+            last_name: input.lastName,
+            email: input.email,
+            user_id: BILL_FLETCHER_ID, // Assigned to Bill
+          };
+          console.log("input", input);
+
+          if (input.phone) personPayload.phone = input.phone;
+          if (companyId) personPayload.company_id = companyId; // Link to Company
+          if (input.jobTitle) personPayload.position_title = input.jobTitle;
+          if (input.country) personPayload.country = input.country;
+          console.log("person", personPayload);
+          const newPerson = await pipelineFetch("/people", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Referer: "https://www.linaro.org/contact",
-            },
-            body: formData,
+            body: JSON.stringify({ person: personPayload }),
+          });
+          personId = newPerson.id;
+        }
+
+        // C. Create Activities (Notes)
+        if (personId) {
+          await pipelineFetch("/notes", {
+            method: "POST",
+            body: JSON.stringify({
+              note: {
+                person_id: personId,
+                content: `Source Form: ${formName}`,
+                title: "Lead Source",
+              },
+            }),
           });
 
-          console.log("*** | crm res | ***", crmRes);
+          let messageContent = input.message || "";
 
-          if (!crmRes.ok) {
-            console.error(
-              "Pipeline CRM submission failed",
-              await crmRes.text(),
-            );
+          const extraDetails = [];
+          if (input.contactByExpert)
+            extraDetails.push(`Contact by Expert: ${input.contactByExpert}`);
+          if (input.newsletter)
+            extraDetails.push(`Newsletter: ${input.newsletter}`);
+
+          if (extraDetails.length > 0) {
+            messageContent += `\n\n--- Additional Info ---\n${extraDetails.join("\n")}`;
           }
-        } catch (e) {
-          console.error("Pipeline CRM error", e);
+
+          if (messageContent.trim()) {
+            await pipelineFetch("/notes", {
+              method: "POST",
+              body: JSON.stringify({
+                note: {
+                  person_id: personId,
+                  content: messageContent,
+                  title: "How can Linaro help you?",
+                },
+              }),
+            });
+          }
         }
-      } else {
-        console.warn("PIPELINE_CRM_ENDPOINT not set. Skipping CRM submission.");
+      } catch (e) {
+        console.error("Pipeline CRM Integration Failed", e);
+        // We catch the error so the user still sees the "Thank you" message,
+        // effectively falling back to a soft fail (or you can re-throw if you want to block the UI).
       }
 
-      // 4. Return Data (Whitepaper/Webinar)
-      if (input.whitepaperId) {
+      // 4. Return Data
+      if (input.whitepaperId)
         return { success: true, type: "whitepaper", id: input.whitepaperId };
-      }
-
-      if (input.webinarDataId) {
+      if (input.webinarDataId)
         return { success: true, type: "webinar", id: input.webinarDataId };
-      }
 
       return { success: true, message: "Thank you for contacting us." };
     },
