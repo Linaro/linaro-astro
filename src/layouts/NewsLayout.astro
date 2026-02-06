@@ -155,14 +155,20 @@ if (related.length > 0) {
     </ul>
   </aside>
 </BaseLayout>
-<style
-  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
-  lang="scss"
->
+<style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
+  /* Ensure we can see global theme variables */
+  @reference "../styles/global.css";
+
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-    /* background-position: top right -50%; */
-    @apply bg-center bg-[top_left] lg:bg-[top_right_-50%]  pb-[36rem] mb-[-36rem];
+
+    /* Base Styles (Mobile) */
+    @apply bg-center bg-[position:top_left] pb-144 -mb-144;
+
+    /* Desktop Styles (replaces lg:bg-[...]) */
+    @media (min-width: theme(--breakpoint-lg)) {
+      @apply bg-position-[top_right_-50%];
+    }
   }
 </style>
