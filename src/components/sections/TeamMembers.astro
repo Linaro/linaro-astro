@@ -1,13 +1,16 @@
 ---
 import type { z } from "astro/zod";
-import type { teamSchema } from "@/content/schemas/sections";
+import { teamSchema } from "@/content/schemas/sections";
 import { getEntries } from "astro:content";
 import MemberCard from "../common/MemberCard.astro";
 
 type Props = z.infer<typeof teamSchema>;
 
 const { members, title, id } = Astro.props;
-const people = await getEntries(members);
+
+const people = members ? await getEntries(members as any) : [];
+
+console.log("people", people);
 ---
 
 {
@@ -15,9 +18,9 @@ const people = await getEntries(members);
     <div>
       {title && <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>}
       <ul class="not-prose grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
-        {people.map((x) => (
+        {people.map((x: any) => (
           <MemberCard
-            id={x.slug + Astro.props.id}
+            id={x.id + Astro.props.id}
             id2={id}
             name={x.data.name}
             title={x.data.title}
@@ -35,14 +38,14 @@ const people = await getEntries(members);
         class="gap-2 justify-center flex flex-wrap mx-auto"
         style="align-items: stretch;"
       >
-        {people.map((x) => {
+        {people.map((x: any) => {
           let displayTitle = x.data.title;
           if (id === "bod" || id === "exec") {
             displayTitle = displayTitle.replace(/\s+at Linaro$/i, "");
           }
           return (
             <MemberCard
-              id={x.slug + Astro.props.id}
+              id={x.id + Astro.props.id}
               name={x.data.name}
               title={displayTitle}
               image={x.data.image}

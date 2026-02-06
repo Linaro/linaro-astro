@@ -60,12 +60,6 @@ flow:
         members:
           - li_gong
           - rob_booth
-      - component: team
-        id: exec
-        title: The Executive Team
-        members:
-          - li_gong
-          - rob_booth
           - tim_benton
   - row: container_row
     sections:
