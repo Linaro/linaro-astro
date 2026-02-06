@@ -16,7 +16,7 @@
     "start:build": "IS_PUBLIC=true astro build && IS_PUBLIC=true astro dev"
   },
   "dependencies": {
-    "@astrojs/check": "^0.6.0",
+    "@astrojs/check": "^0.9.0",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/node": "^9.5.2",
     "@astrojs/react": "^4.4.2",
@@ -35,7 +35,7 @@
     "astro-icon": "^1.1.0",
     "astro-navbar": "^2.3.1",
     "astro-pagefind": "^1.4.0",
-    "astro-seo": "^0.8.3",
+    "astro-seo": "^1.0.0",
     "astro-sst": "^3.1.4",
     "dayjs": "^1.11.10",
     "decap-cms-app": "^3.8.3",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "dotenv-cli": "^10.0.0",
+    "dotenv-cli": "^11.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",

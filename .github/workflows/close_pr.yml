@@ -10,6 +10,10 @@ permissions:
   pull-requests: write
   id-token: write
 
+concurrency:
+  group: cleanup-${{ github.event.number }}
+  cancel-in-progress: true
+
 jobs:
   cleanup:
     runs-on: self-hosted
@@ -34,7 +38,6 @@ jobs:
 
       - name: Remove SST Stage
         run: |
-          export AWS_PROFILE=${{ secrets.AWS_PROFILE }} # If needed or use default env vars
           npx sst remove --stage pr-${{ github.event.number }}
         env:
           # Pass necessary env vars if sst remove needs them to load config (it typically does)
