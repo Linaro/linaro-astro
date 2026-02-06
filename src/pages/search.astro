@@ -19,24 +19,17 @@ const optimizedBackground = await getImage({
 ---
 
 <BaseLayout title="Blog" description="A list of blogs">
-  <div
-    class="purple-gradient-container absolute h-[50rem] w-full z-[-1] top-[30rem]"
-  >
+  <div class="purple-gradient-container absolute h-200 w-full z-[-1] top-120">
   </div>
   <main
-    class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
+    class="hero-banner-layout hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
   >
     <h1 class="text-5xl my-12 font-bold">Search</h1>
     <SiteSearch client:only="solid-js" tags={tags} />
   </main>
 </BaseLayout>
-<style
-  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
-  lang="scss"
->
+<style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
   .hero-background-image {
     background-image: var(--backgroundUrl);
-    background-repeat: no-repeat;
-    @apply bg-[top_right] xl:bg-[top_-1rem_right] bg-[size:100%] lg:bg-[size:50%] pb-[36rem] mb-[-36rem];
   }
 </style>
