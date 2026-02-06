@@ -5,7 +5,7 @@ description: |
   Linaro empowers rapid product deployment within the dynamic Arm ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of ARM-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
 hero:
   title: >
-    Arm Solutions at *Lightspeed*
+    Arm Solutions at <span class="linaro-gradient-text">Lightspeed</span>
   background_image: linaro-website/graphics/bg-logo-6
   description: Linaro empowers rapid product deployment within the dynamic Arm ecosystem. Our cutting-edge solutions and collaborative platform facilitate the swift development, testing, and delivery of Arm-based innovations, enabling businesses to stay ahead in today's competitive technology landscape.
   button:
