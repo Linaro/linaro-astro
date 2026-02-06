@@ -50,10 +50,7 @@ const pages = defineCollection({
         .array(
           rowSchemas.transform((val) => ({
             ...val,
-            row: {
-              collection: "rows",
-              slug: val.row,
-            },
+            row: { collection: "rows", slug: val.row },
           })),
         )
         .optional(),
@@ -62,22 +59,15 @@ const pages = defineCollection({
 
 const rows = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/rows" }),
-  schema: z.object({
-    path: z.string(),
-  }),
+  schema: z.object({ path: z.string() }),
 });
 
 const sections = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/sections" }),
-  schema: z.object({
-    path: z.string(),
-  }),
+  schema: z.object({ path: z.string() }),
 });
 
-const data = defineCollection({
-  type: "data",
-  schema: z.any(),
-});
+const data = defineCollection({ type: "data", schema: z.any() });
 
 const blogs = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blogs" }),
@@ -90,6 +80,11 @@ const blogs = defineCollection({
     author: reference("authors"),
     related: z.array(reference("blogs")),
   }),
+});
+
+const careers = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/careers" }),
+  schema: z.object({ title: z.string(), date: z.date() }),
 });
 
 const news = defineCollection({
@@ -116,12 +111,7 @@ const events = defineCollection({
     image: z.string(),
     type: z.enum(["webinar", "presenter", "attend", "tech_days", "sponsor"]),
     location: z.string(),
-    button: z
-      .object({
-        text: z.string(),
-        url: z.string(),
-      })
-      .optional(),
+    button: z.object({ text: z.string(), url: z.string() }).optional(),
     webinarContactButton: z
       .object({
         button_text: z.string(),
@@ -129,11 +119,7 @@ const events = defineCollection({
         modal_id: z.string(),
         description: z.string(),
         formName: z.string(),
-        styles: z
-          .object({
-            buttonStyles: z.string(),
-          })
-          .optional(),
+        styles: z.object({ buttonStyles: z.string() }).optional(),
         webinarDataId: z.string(),
       })
       .optional(),
@@ -176,6 +162,7 @@ export const collections: Record<string, any> = {
   sections,
   data,
   blogs,
+  careers,
   events,
   authors,
   tags,
