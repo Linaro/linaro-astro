@@ -20,7 +20,12 @@ const content =
       .use(strip, {
         remove: ["heading"],
       })
-      .process(body),
+      .process(
+        body?.replace(
+          /import CloudinaryImg from "\.\.\/\.\.\/components\/cloudinary\/CloudinaryImg\.astro";/g,
+          ""
+        )
+      ),
   )
     .split(" ")
     .slice(0, 30)

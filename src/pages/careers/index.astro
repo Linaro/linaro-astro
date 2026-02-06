@@ -1,0 +1,110 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/hero/Hero.astro";
+import ContainerRow from "@/components/rows/ContainerRow.astro";
+import Cards from "@/components/sections/CardGrid.astro";
+import { getCollection } from "astro:content";
+
+const careers = await getCollection("careers", ({ data }) => {
+  const isPreview = import.meta.env.IS_PREVIEW === "true";
+  const isPublished = Date.now() > new Date(data.date).getTime();
+  return isPreview || isPublished;
+});
+
+const sortedCareers = careers.sort(
+  (a:any, b:any) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout
+  title="Careers"
+  description="Careers at the cutting-edge of ARM technology"
+>
+  <Hero
+    title="Careers at the cutting-edge of ARM technology"
+    background_image="linaro-website/graphics/developer"
+    description={`You will work alongside some of the world's leading ARM software experts, working on new technologies across the entire industry. We bring industry leading companies and open source communities together to develop software on ARM-based technology. Our work advances the ARM ecosystem as a whole, enabling new markets on ARM Architecture. Ready to develop technology for the future? Check out our positions below:`}
+    styles={{
+      text_container: "max-w-2xl",
+      title: "max-w-2xl mb-12",
+      description: "max-w-xl text-xl",
+      background: "bg-right-top brightness-75",
+      background_container: "ml-[10%]",
+    }}
+  />
+
+  <!-- Open Vacancies Section -->
+  <ContainerRow title="Open Vacancies">
+    {sortedCareers.length > 0 ? (
+      <ul class="list-none flex flex-col gap-6">
+        {sortedCareers.map((career) => {
+          const slug = career.id.replace(/\.mdx?$/, "");
+          return (
+            <li class="border border-white/20 rounded-lg p-6 hover:bg-white/5 transition-colors">
+              <a href={`/careers/${slug}`} class="no-underline">
+                <h3 class="text-2xl font-bold text-white mb-2">{career.data.title}</h3>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    ) : (
+      <p class="text-white/70 text-xl text-center">No open positions at the moment. Please check back later.</p>
+    )}
+  </ContainerRow>
+
+  <!-- The aro Way Section -->
+  <ContainerRow
+    title="The Linaro Way"
+    styles={{
+      outer: "purple-gradient-container",
+    }}
+  >
+    <Cards
+      cards={[
+        {
+          title: "Collaboration",
+          icon: "diversity",
+          text: `**Stronger as a collective**<br><br>Linaro was created as a collaborative engineering forum. We believe that collaboration is key to driving innovation which benefits the greater good.`,
+        },
+        {
+          title: "Innovation",
+          icon: "bulb",
+          text: `**Technology for the future**<br><br>We develop technology for the future. We are proud of the role we play in enabling new markets on ARM architecture, technology which benefits the lives of so many.`,
+        },
+        {
+          title: "Enthusiasm",
+          icon: "enthusiasm",
+          text: `**Love what you do**<br><br>The people are what make Linaro special. It is really important to us that our employees feel motivated in their roles and enjoy a good work/life balance.`,
+        },
+      ]}
+      styles={{
+        container: "mx-auto flex justify-center lg:justify-between gap-8 flex-wrap",
+        card: "w-[40ch] px-8 rounded-[1.5rem]",
+        card_title: "text-4xl m-0",
+      }}
+    />
+  </ContainerRow>
+
+  <!-- Benefits Section -->
+  <ContainerRow no_border={true}>
+    <Cards
+      cards={[
+        {
+          title: "Remote, Agile and Flexible Working",
+          icon: "zoom_in_map",
+          text: "Linaro employees are all over the globe, representing 26 countries. 90% of our staff work from home and we do also offer remote, agile and flexible working for our office-based employees. We believe flexible working promotes a better work life balance - greater ability to focus with fewer distractions, more time for family and friends, cost and time savings and as a result, higher levels of motivation. The fact that the majority of our employees work from home also allows us to maintain a smaller carbon footprint.",
+        },
+        {
+          title: "Community and Engagement",
+          icon: "handshake",
+          text: "Linaro is committed to making a meaningful contribution to the communities where we work and live. As part of our corporate social responsibility, we have therefore implemented two paid voluntary days per year for each staff member to go and volunteer in his or her local area. We feel this improves employees' engagement and well-being, helps to develop individuals' soft skills and allow employees to feel they are giving something back to the community.",
+        },
+      ]}
+      styles={{
+        container: "mx-auto justify-around gap-x-28 gap-y-20 flex flex-wrap",
+        card: "w-[50ch]",
+      }}
+    />
+  </ContainerRow>
+</BaseLayout>

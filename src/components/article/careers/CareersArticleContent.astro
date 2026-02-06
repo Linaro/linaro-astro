@@ -1,0 +1,21 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import CloudinaryImg from "../../cloudinary/CloudinaryImg.astro";
+
+type Props = {
+  Content: AstroComponentFactory;
+};
+const { Content } = Astro.props;
+---
+
+<section class="px-[10px] mt-4">
+  <div
+    class="container rounded-[24px] linaro-gradient-border bg-dark mb-24 max-w-5xl mx-auto"
+  >
+    <article
+      class="prose prose-invert prose-xl mx-auto max-w-full px-8 prose-a:text-blue-200 py-8 marker:text-white prose-code:before:hidden prose-code:after:hidden prose-code:bg-[#24292e] prose-code:p-3 prose-code:text-base prose-code:font-normal prose-code:rounded-sm"
+    >
+      <Content components={{ img: CloudinaryImg }} />
+    </article>
+  </div>
+</section>
