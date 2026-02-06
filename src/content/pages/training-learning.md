@@ -1,16 +1,16 @@
 ---
 slug: services/training
-title: Training and Learning
+title: Linux and Open Source Engineering Training for Modern Systems
 description: |
-  With our expert knowledge of open source licenses, code reviews, and hands-on Linux training, we help companies eliminate risk, achieve compliance, and build strong relationships with open source communities. Our customized training courses cover a wide range of topics and can be tailored to meet the specific needs of your team. Gain the skills and expertise to embrace emerging technologies and best practices in the world of Linux and Arm technology.
+  Modern Linux-based and open source systems are built on fast-moving foundations. Teams that rely on ad-hoc learning, outdated material, or trial-and-error often pay for it later—in rework, fragile designs, and long-term maintenance cost. Linaro provides engineer-focused Linux and open source training to help teams make better technical decisions earlier, understand real trade-offs in the stack, and work more effectively with the ecosystems they depend on. Linaro brings deep experience in Arm-based systems, reflecting its long-standing role in advancing Linux and open source software across the Arm ecosystem—from embedded devices to servers.
 hero:
   title: >
-    Training & Learning
-  background_image: linaro-website/graphics/working-remotely
-  description: With our expert knowledge of open source licenses, code reviews, and hands-on Linux training, we help companies eliminate risk, achieve compliance, and build strong relationships with open source communities. Our customized training courses cover a wide range of topics and can be tailored to meet the specific needs of your team. Gain the skills and expertise to embrace emerging technologies and best practices in the world of Linux and Arm technology.
-  button:
-    text: Download our Catalogue
-    url: https://linaro.co/trainingcatalogue
+    Linux and Open Source Engineering Training for Modern Systems
+  background_image: linaro-website/graphics/young-elementary-school-girl-watching-online-education-class-coronavirus-covid-19-lockdown-education-concept_1_d4brxg.png
+  description: |
+    Modern Linux-based and open source systems are built on fast-moving foundations. Teams that rely on ad-hoc learning, outdated material, or trial-and-error often pay for it later—in rework, fragile designs, and long-term maintenance cost. 
+
+    Linaro provides engineer-focused Linux and open source training to help teams make better technical decisions earlier, understand real trade-offs in the stack, and work more effectively with the ecosystems they depend on. Linaro brings deep experience in Arm-based systems, reflecting its long-standing role in advancing Linux and open source software across the Arm ecosystem—from embedded devices to servers.
   styles:
     text_container: max-w-4xl
     title: max-w-md
@@ -18,54 +18,58 @@ hero:
     background: bg-right-top
 flow:
   - row: container_row
-    title: Most Popular Courses
     styles:
-      outer: purple-gradient-container
+      outer: purple-gradient-container !pt-0
+      inner: pt-0
+    no_border: false
     sections:
-      - component: cards
-        styles:
-          container: grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-16 mx-auto lg:justify-items-center marker:text-white
-          card: lg:max-w-[50ch]
-        cards:
-          - title: Introduction to Kernel Development
-            text: |
-              - Introduction to Devicetree
-              - Pragmatic Linux driver development - Part 1
-              - Pragmatic Linux driver development - Part 2
-              - Symbolic debugging for Linux kernel and userspace
-          - title: A Practical Introduction to OpenEmbedded/Yocto
-            text: |
-              - Introduction to Devicetree
-              - Pragmatic Linux driver development - Part 1
-              - Pragmatic Linux driver development - Part 2
-              - Symbolic debugging for Linux kernel and userspace
-          - title: Advanced Kernel Debugging
-            text: |
-              - Kernel debug stories
-              - Tracing with ftrace
-              - Debugging with eBPF
-              - Using perf on Arm platforms
-          - title: Trusted Firmware A for Armv8 systems
-            text: |
-              - ARMv8 exception model and boot
-              - Secure monitor and power management
-          - title: Building Custom Systems with OpenEmbedded/Yocto
-            text: |
-              - Introduction to OpenEmbedded and the Yocto Project
-              - OpenEmbedded main concepts
-              - Build workflow
-              - OpenEmbedded advanced concepts
-              - Debug the build
-              - Toolchain
+      - component: faded_line
+      - component: two_column
+        container_styles: flex align-center w-full mb-24 gap-24 mx-auto item-center justify-center pt-8
+        animation: none
+        columns:
+          - type: text
+            title: Upstream-Aware Linux Training
+            text_content: |
+              Many long-term problems in Linux systems stem from decisions made early—often without a clear understanding of upstream communities or long-term ownership cost.
 
+              Linaro training takes an upstream-aware approach:
+
+                - Why avoiding unnecessary forks usually reduces cost
+                - How upstream collaboration improves long-term maintainability
+                - Where customization helps—and where it quietly creates risk
+                - How to make changes that survive kernel and platform evolution
+
+              Upstream contribution is not required. But understanding how upstream works leads to better outcomes, even when contribution is not the immediate goal.
+            styles: lg:w-1/2 text-lg
+          - type: text
+            title: Linux, Firmware, and Open Source Training Areas
+            text_content: |
+              **Build systems & integration**
+
+              Toolchains, build workflows, reproducibility, and long-term maintainability
+
+              **Firmware & boot software**
+
+              Boot flows, early platform bring-up, and secure initialization
+
+              **Linux kernel & system software**
+
+              Kernel architecture, drivers, device trees, debugging, and upstream practices
+
+              **Security foundations**
+
+              Platform security concepts, trusted execution, and secure system design
+            styles: lg:w-1/2 text-lg
+      - component: faded_line
   - row: container_row
     sections:
       - component: text
-        text_content: We have trained many engineers across key areas such as OP-TEE, Energy Aware Scheduler, Arm Trusted Firmware, Power Management and Open Source development. Be the next.
+        text_content: To learn more about the courses we provide, head over to our [training catalogue](https://training.linaro.com/w/us/) where you can find more information on specific courses, schedules and delivery formats.
         style: text-center max-w-4xl mx-auto text-2xl
       - component: buttons
         buttons:
-          - text: Ask for training
-            url: /contact
+          - text: I want to learn more about Linaro Training
+            url: https://training.linaro.com/w/US
             style: linaro-gradient-button
 ---
