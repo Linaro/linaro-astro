@@ -156,7 +156,7 @@ const tags = defineCollection({
   schema: z.object({ name: z.string(), slug_name: z.string().optional() }),
 });
 
-export const collections = {
+export const collections: Record<string, any> = {
   pages,
   rows,
   sections,
