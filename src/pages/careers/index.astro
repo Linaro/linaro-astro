@@ -33,7 +33,6 @@ const sortedCareers = careers.sort(
     }}
   />
 
-  <!-- Open Vacancies Section -->
   <ContainerRow title="Open Vacancies">
     {sortedCareers.length > 0 ? (
       <ul class="list-none flex flex-col gap-6">
@@ -53,7 +52,6 @@ const sortedCareers = careers.sort(
     )}
   </ContainerRow>
 
-  <!-- The aro Way Section -->
   <ContainerRow
     title="The Linaro Way"
     styles={{
@@ -86,7 +84,6 @@ const sortedCareers = careers.sort(
     />
   </ContainerRow>
 
-  <!-- Benefits Section -->
   <ContainerRow no_border={true}>
     <Cards
       cards={[
