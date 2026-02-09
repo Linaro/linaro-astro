@@ -54,7 +54,7 @@ export const server = {
         lastName: z.string().optional(),
         email: z.string().email(),
         phone: z.string().optional(),
-        company: z.string().optional(), // Company Name
+        company: z.string().optional(),
         message: z.string().optional(),
         contactByExpert: z.any().optional(),
         newsletter: z.any().optional(),
@@ -128,12 +128,12 @@ export const server = {
                 },
               }),
             });
-            console.log("company created:", newCompany);
             companyId = newCompany.id;
+            console.log("company created:", companyId);
           }
         }
 
-        console.log("searching person");
+        console.log("searching person...");
 
         // B. Handle Person
         const personSearch = await pipelineFetch(
@@ -147,30 +147,27 @@ export const server = {
             first_name: input.firstName,
             last_name: input.lastName,
             email: input.email,
-            user_id: BILL_FLETCHER_ID, // Assigned to Bill
           };
-          console.log("input", input);
 
           if (input.phone) personPayload.phone = input.phone;
           if (companyId) personPayload.company_id = companyId; // Link to Company
           if (input.jobTitle) personPayload.position_title = input.jobTitle;
           if (input.country) personPayload.country = input.country;
-          console.log("person", personPayload);
           const newPerson = await pipelineFetch("/people", {
             method: "POST",
             body: JSON.stringify({ person: personPayload }),
           });
           personId = newPerson.id;
-          console.log("****** person create with id: ", personId);
+          console.log("person created with id: ", personId);
 
           if (newPerson.id) {
-            console.log("**** adding bills id");
+            console.log("adding bill's id...");
             //update person owner id
-            const res = await pipelineFetch(`/people/${newPerson.id}`, {
+            await pipelineFetch(`/people/${newPerson.id}`, {
               method: "PUT",
               body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
             });
-            console.log("Person assigned to bill", res);
+            console.log("Person assigned to bill");
           }
         }
 
