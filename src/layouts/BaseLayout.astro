@@ -150,7 +150,7 @@ const { title, description, type = "website", image } = Astro.props;
           )?.value ?? "unknown_webinar";
 
         try {
-          const res = await fetch(`/api/webinar-data/${webinarDataId}`);
+          const res = await fetch(`/api/webinar-data/${webinarDataId}.json`);
           if (!res.ok) {
             throw new Error("Failed to load webinar data");
           }
@@ -199,7 +199,7 @@ const { title, description, type = "website", image } = Astro.props;
             ?.value ?? "unknown_whitepaper";
 
         try {
-          const res = await fetch(`/api/whitepaper-data/${whitepaperId}`);
+          const res = await fetch(`/api/whitepaper-data/${whitepaperId}.json`);
           if (!res.ok) {
             throw new Error("Failed to load whitepaper data");
           }
