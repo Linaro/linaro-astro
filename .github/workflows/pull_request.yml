@@ -84,6 +84,8 @@ jobs:
           export FRIENDLY_CAPTCHA_API_KEY=${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
           export PIPELINE_CRM_ENDPOINT=${{ vars.PIPELINE_CRM_ENDPOINT }}
           export PIPELINE_CRM_W2LID=${{ vars.PIPELINE_CRM_W2LID }}
+          export PIPELINE_CRM_API_KEY=${{ vars.PIPELINE_CRM_API_KEY }}
+          export PIPELINE_CRM_APP_KEY=${{ vars.PIPELINE_CRM_APP_KEY }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
 
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
