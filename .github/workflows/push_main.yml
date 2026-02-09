@@ -71,6 +71,10 @@ jobs:
           export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           export CUSTOM_DOMAIN=${{ vars.MAIN_CUSTOM_DOMAIN }}
           export GA_ID=${{ vars.MAIN_GA_ID }}
+          export PIPELINE_CRM_API_KEY=${{ vars.PIPELINE_CRM_API_KEY }}
+          export PIPELINE_CRM_APP_KEY=${{ vars.PIPELINE_CRM_APP_KEY }}
+          export PIPELINE_CRM_ENDPOINT=${{ vars.PIPELINE_CRM_ENDPOINT }}
+          export PIPELINE_CRM_W2LID=${{ vars.PIPELINE_CRM_W2LID }}
 
           # Set up npm
           node -v
