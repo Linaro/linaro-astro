@@ -115,7 +115,7 @@ export const server = {
           if (companySearch.entries && companySearch.entries.length > 0) {
             // Found existing company
             companyId = companySearch.entries[0].id;
-            console.log("company existis: ", companyId);
+            console.log("company exists: ", companyId);
           } else {
             // Create new company
             const newCompany = await pipelineFetch("/companies", {
@@ -161,6 +161,17 @@ export const server = {
             body: JSON.stringify({ person: personPayload }),
           });
           personId = newPerson.id;
+          console.log("****** person create with id: ", personId);
+
+          if (newPerson.id) {
+            console.log("**** adding bills id");
+            //update person owner id
+            const res = await pipelineFetch(`/people/${newPerson.id}`, {
+              method: "PUT",
+              body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
+            });
+            console.log("Person assigned to bill", res);
+          }
         }
 
         // C. Create Activities (Notes)
@@ -175,6 +186,7 @@ export const server = {
               },
             }),
           });
+          console.log("Adding notes");
 
           let messageContent = input.message || "";
 
@@ -200,7 +212,9 @@ export const server = {
               }),
             });
           }
+          console.log("adding form content");
         }
+        console.log("Success");
       } catch (e) {
         console.error("Pipeline CRM Integration Failed", e);
         // We catch the error so the user still sees the "Thank you" message,
