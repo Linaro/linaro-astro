@@ -29,6 +29,8 @@ export default $config({
       FRIENDLY_CAPTCHA_API_KEY: process.env.FRIENDLY_CAPTCHA_API_KEY!,
       PIPELINE_CRM_W2LID: process.env.PIPELINE_CRM_W2LID!,
       PIPELINE_CRM_ENDPOINT: process.env.PIPELINE_CRM_ENDPOINT!,
+      PIPELINE_CRM_API_KEY: process.env.PIPELINE_CRM_API_KEY!,
+      PIPELINE_CRM_APP_KEY: process.env.PIPELINE_CRM_APP_KEY!,
     };
 
     console.log("Checking Stage:", $app.stage);

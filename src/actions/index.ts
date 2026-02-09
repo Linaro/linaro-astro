@@ -10,20 +10,20 @@ const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = getEnv(
   "PUBLIC_FRIENDLY_CAPTCHA_SITEKEY",
 );
 
-const PIPELINE_API_KEY = getEnv("PIPELINE_API_KEY");
-const PIPELINE_APP_KEY = getEnv("PIPELINE_APP_KEY");
+const PIPELINE_CRM_API_KEY = getEnv("PIPELINE_CRM_API_KEY");
+const PIPELINE_CRM_APP_KEY = getEnv("PIPELINE_CRM_APP_KEY");
 
 const BILL_FLETCHER_ID = 269524;
 
 const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
-  if (!PIPELINE_API_KEY) throw new Error("PIPELINE_API_KEY is missing");
-  if (!PIPELINE_APP_KEY) throw new Error("PIPELINE_APP_KEY is missing");
+  if (!PIPELINE_CRM_API_KEY) throw new Error("PIPELINE_CRM_API_KEY is missing");
+  if (!PIPELINE_CRM_APP_KEY) throw new Error("PIPELINE_CRM_APP_KEY is missing");
 
   const baseUrl = "https://api.pipelinecrm.com/api/v3";
   const url = `${baseUrl}${endpoint}`;
 
   const separator = url.includes("?") ? "&" : "?";
-  const authUrl = `${url}${separator}api_key=${PIPELINE_API_KEY}&app_key=${PIPELINE_APP_KEY}`;
+  const authUrl = `${url}${separator}api_key=${PIPELINE_CRM_API_KEY}&app_key=${PIPELINE_CRM_APP_KEY}`;
 
   const res = await fetch(authUrl, {
     ...options,
