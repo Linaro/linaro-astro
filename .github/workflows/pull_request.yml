@@ -87,7 +87,6 @@ jobs:
           export PIPELINE_CRM_API_KEY=${{ secrets.PIPELINE_CRM_API_KEY }}
           export PIPELINE_CRM_APP_KEY=${{ secrets.PIPELINE_CRM_APP_KEY }}
           export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
-
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
           echo "Installing dependencies..."

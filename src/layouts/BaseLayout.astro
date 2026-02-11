@@ -61,6 +61,7 @@ const { title, description, type = "website", image } = Astro.props;
       });
 
       import { FriendlyCaptchaSDK } from "@friendlycaptcha/sdk";
+      import { actions } from "astro:actions";
 
       // 1. Declare at the top of the script scope
       let captchaWidget: any = null;
@@ -149,7 +150,7 @@ const { title, description, type = "website", image } = Astro.props;
           )?.value ?? "unknown_webinar";
 
         try {
-          const res = await fetch(`/api/webinar-data/${webinarDataId}`);
+          const res = await fetch(`/api/webinar-data/${webinarDataId}.json`);
           if (!res.ok) {
             throw new Error("Failed to load webinar data");
           }
@@ -198,7 +199,7 @@ const { title, description, type = "website", image } = Astro.props;
             ?.value ?? "unknown_whitepaper";
 
         try {
-          const res = await fetch(`/api/whitepaper-data/${whitepaperId}`);
+          const res = await fetch(`/api/whitepaper-data/${whitepaperId}.json`);
           if (!res.ok) {
             throw new Error("Failed to load whitepaper data");
           }
@@ -274,9 +275,10 @@ const { title, description, type = "website", image } = Astro.props;
         // -----------------------
         // Telephone validation
         // -----------------------
-        const messageKey = "customfield_13365";
+        // Message key is now standard 'message'
+        const messageKey = "message";
         const phoneInput = form.querySelector(
-          'input[name="telephone_number"]',
+          'input[name="phone"]',
         ) as HTMLInputElement;
 
         const phoneNumber = phoneInput?.value || null;
@@ -297,34 +299,19 @@ const { title, description, type = "website", image } = Astro.props;
         let message = data.get(messageKey) as string | null;
 
         data.forEach((value, key) => {
-          if (
-            key === "form_id" ||
-            key === "email" ||
-            key.startsWith("customfield_") ||
-            key === "frc-captcha-response"
-          ) {
-            payload[key] =
-              key === "customfield_13586" || key === "customfield_13587"
-                ? { id: value }
-                : value;
+          // Allow all fields except internal ones or captcha response which is handled separately
+          if (key !== "frc-captcha-response") {
+            payload[key] = value;
           }
         });
 
-        if (phoneNumber) {
-          const phoneLine = `Telephone: ${phoneNumber}\n---\n`;
-          payload[messageKey] = message ? phoneLine + message : phoneLine;
-        }
-
+        // Use standard 'email' field or fallback if needed (though we should enforce standard names now)
         if (!payload.email) {
-          payload.email = data.get("customfield_13484");
-          if (!payload.email) {
-            console.error("Email missing from payload");
-            return;
-          }
+          console.error("Email missing from payload");
+          return;
         }
 
         delete payload.agreed;
-        delete payload.telephone_number;
 
         console.log(payload);
 
@@ -344,25 +331,22 @@ const { title, description, type = "website", image } = Astro.props;
         loader?.classList.remove("hidden");
 
         try {
-          const response = await fetch(
-            "https://tfiwmhtln2.execute-api.us-east-1.amazonaws.com/formSubmit",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            },
-          );
+          // Using Astro Actions
+          console.log("Submitting to Action...");
+          const { data, error } = await actions.contact(payload);
+          console.log("Action Response:", data, error);
 
-          const result = await response.json();
-
-          if (!response.ok) {
-            if (response.status === 400 || response.status === 403) {
+          if (error) {
+            if (error.code === "BAD_REQUEST") {
               captchaWidget?.reset();
-              throw new Error(result.message || "Captcha verification failed");
+              throw new Error(error.message);
             }
-            throw new Error("Server error");
+            throw new Error(error.message || "Server error");
+          }
+
+          const result = data;
+          if (!result?.success) {
+            throw new Error("Submission failed");
           }
 
           // -----------------------
@@ -375,6 +359,9 @@ const { title, description, type = "website", image } = Astro.props;
             await handleWebinarResponse(form, feedbackText);
           } else if (formName === "whitepaper_contact") {
             await handleWhitepaperResponse(form, feedbackText);
+          } else if (!error && data?.success) {
+            // Redirect the user to the thank you page
+            window.location.href = "/contact/thank-you";
           } else {
             feedbackText!.innerText = result.message;
           }
