@@ -159,25 +159,3 @@ collections:
         }
       # Main content
       - { label: "Body", name: "body", widget: "markdown" }
-
-    # Careers Collection
-  - name: "careers"
-    label: "Careers"
-    label_singular: "Post"
-    folder: "src/content/careers"
-    create: true
-    extension: "mdx"
-    format: "frontmatter"
-    slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
-    sortable_fields: ["date", "title"]
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - {
-          label: "Publish Date",
-          name: "date",
-          widget: "utc-datetime",
-          format: "YYYY-MM-DDTHH:mm:ss.SSSZ",
-        }
-      # Main content
-      - { label: "Body", name: "body", widget: "markdown" }
