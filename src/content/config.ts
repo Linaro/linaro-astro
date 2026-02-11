@@ -82,11 +82,6 @@ const blogs = defineCollection({
   }),
 });
 
-const careers = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/careers" }),
-  schema: z.object({ title: z.string(), date: z.date() }),
-});
-
 const news = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/news" }),
   schema: z.object({
@@ -162,7 +157,6 @@ export const collections: Record<string, any> = {
   sections,
   data,
   blogs,
-  careers,
   events,
   authors,
   tags,
