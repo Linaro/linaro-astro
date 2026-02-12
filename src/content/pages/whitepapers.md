@@ -30,7 +30,7 @@ flow:
         cards:
           - text: Software Supply Chain Management for Device Makers
             image:
-              src: linaro-website/graphics/freepik__no-text__88628_1_xw7ibl.png
+              src: linaro-website/graphics/freepik__dynamic-abstract-image-of-software-supply-chain-ma__79869_qioa95.png
               alt: ""
             button:
               text: Read more
