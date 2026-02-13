@@ -147,15 +147,6 @@ flow:
       outer: bg-center-bottom bg-no-repeat bg-[center_top_0%] bg-[length:200%] md:bg-[length:150%] lg:bg-[length:100%] xl:bg-[length:90%] pb-[8rem] mb-[-8rem]
     sections:
       - component: articles
-        posts:
-          - collection: news
-            post: linaro-to-join-forces-with-renesas-on-soafee-integration-lab-project
-          - collection: news
-            post: linaro-undergoes-transformation-introducing-the-new-brand
-          - collection: news
-            post: linaro-unveils-onelab-at-connect-revolutionizing-edge-compute-interoperability-testing
-          - collection: news
-            post: linaro-announces-qualcomm-as-the-new-member-of-the-linaro-edge-group-ledge
       - component: contact_buttons
         styles:
           card: max-w-[30ch]  mx-auto flex flex-col justify-center items-center

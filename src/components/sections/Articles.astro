@@ -1,33 +1,30 @@
 ---
 import type { z } from "astro/zod";
 import BlogListing from "../article/blog/BlogListing.astro";
-import EventListing from "../article/events/EventListing.astro";
 import type { articlesSchema } from "@/content/schemas/sections";
 import { getEntries } from "astro:content";
-import type { CollectionKey } from "astro:content";
-import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 type Props = z.infer<typeof articlesSchema>;
 
-const { title } = Astro.props;
+const { title } = Astro.props as Props;
 
-type GetEntriesType<T extends "blogs" | "events" | "news"> = {
-  collection: T;
-  slug: CollectionEntry<T>["slug"];
-};
+const entries = await getCollection("blogs");
 
-const posts = await getEntries(Astro.props.posts.map((post) => post.post));
+const isPreview = String(import.meta.env.IS_PREVIEW) === "true";
 
-// remove unpublished posts
-const filteredPosts = posts.filter((post) => {
-  if (String(import.meta.env.IS_PREVIEW) === "true") return true;
+const latestBlogs = entries
+  .filter((post) => {
+    if (post.collection !== "blogs") return false;
 
-  if (post.collection === "events") {
-    return Date.now() > new Date(post.data.date_published).getTime();
-  }
+    if (isPreview) return true;
 
-  return Date.now() > new Date(post.data.date).getTime();
-});
+    return Date.now() > new Date(post.data.date).getTime();
+  })
+  .sort((a, b) => {
+    return new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf();
+  })
+  .slice(0, 4);
 ---
 
 <div
@@ -40,14 +37,6 @@ const filteredPosts = posts.filter((post) => {
     )
   }
   <ul class="flex flex-wrap gap-8 justify-center">
-    {
-      filteredPosts?.map((post) => {
-        if (post.collection === "events") {
-          return <EventListing {...post} />;
-        } else {
-          return <BlogListing {...post} />;
-        }
-      })
-    }
+    {latestBlogs?.map((post) => <BlogListing {...post} />)}
   </ul>
 </div>
