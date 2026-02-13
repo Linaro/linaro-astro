@@ -1,0 +1,61 @@
+---
+title: What’s Really Inside Your Product? Navigating the Software Supply Chain
+  with Linaro
+description: For more than 15 years, Linaro has helped embedded device
+  manufacturers build secure, high-quality products at scale. Our engineering
+  teams work at the intersection of product development and upstream open
+  source, collaborating directly with the communities that provide a significant
+  portion of the software used in modern devices. As open source forms a
+  substantial part of most embedded software stacks, effective upstream
+  engagement is critical to managing risk, controlling long-term maintenance
+  costs, and supporting products over their full lifecycle.
+date: 2026-02-12T17:02:00.000Z
+author: joe-sandom
+tags:
+  - iot-embedded
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1770907663/linaro-website/IMG_2026_vai8fh.jpg
+related: []
+---
+For more than 15 years, Linaro has helped embedded device manufacturers build secure, high-quality products at scale. Our engineering teams work at the intersection of product development and upstream open source, collaborating directly with the communities that provide a significant portion of the software used in modern devices. As open source forms a substantial part of most embedded software stacks, effective upstream engagement is critical to managing risk, controlling long-term maintenance costs, and supporting products over their full lifecycle. This combination of technical depth and open source collaboration is central to Linaro’s DNA and underpins our approach to software supply chain management.
+
+Modern embedded devices are no longer built on a simple, self-contained codebase like they once were. If you look at a modern embedded device, whether it’s a smart surveillance camera, an industrial gateway, or an automotive ECU, you’re not just looking at a single piece of hardware. You are looking at a complex, interconnected web of software subsystems.
+
+To get that device to market, your team didn't just write code. You integrated a Linux kernel, pulled in a Board Support Package (BSP) from a silicon vendor, utilized a Wi-Fi firmware blob, and relied on hundreds of open-source libraries to handle everything from networking to image processing. Here is what you would typically expect to see in an embedded device, e.g., a camera system:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1770906600/linaro-website/IMG_2021_l0ugbn.jpg)
+
+This is the modern **software supply chain**. The use of third-party components allows us to develop at speed, but it also introduces a unique level of complexity that isn’t typically found in other types of software products. Multiple layers of vendor firmware, board support packages, and open source components come together in ways that are difficult to observe and even harder to track.
+
+For many device manufacturers, the huge volume and depth of upstream dependencies means they don't fully know what is running inside their own products. And in an era of increasing cyber threats and tightening regulations, lying on “implicit trust" in your supply chain is no longer a viable strategy.
+
+## The Shift from Voluntary to Mandatory
+
+For the last decade, managing your software supply chain - tracking upstream software components, monitoring CVEs, and generating Software Bills of Materials (SBOMs) was largely a best practice. 
+
+That landscape is changing fast. With the introduction of the **EU Cyber Resilience Act (CRA)**, what was once voluntary is becoming the law.
+
+The CRA will require manufacturers placing products on the EU market to demonstrate active vulnerability management throughout the product's lifecycle. As part of the CRA timeline, reporting obligations are set to kick in as early as **September 2026**. Having a handle on exactly what is inside your product allows you to clearly understand which components may be vulnerable and implement the appropriate mitigations. 
+
+But how do you track such a large web of components without slowing down your engineering team?
+
+## Introducing: Software Supply Chain Management for Device Makers
+
+To help device makers navigate this shift, we have released a new whitepaper: **Software Supply Chain Management for Device Makers**.
+
+In this detailed guide, we look at the practical reality of ensuring license compliance and security of an embedded product.
+
+What You’ll Learn:
+
+* **Tracking the Software Supply Chain:** We break down the anatomy of a modern device, from vendor firmware to user-space applications, and we explain how to track these components effectively using build-time analysis. 
+* **The importance of License Compliance:** We provide insights into the complex world of open-source licensing, explaining how to manage obligations when mixing proprietary code with Copyleft and Permissive components.
+* **Common Vulnerability Exploits (CVE’s):** A loon into CVE classification, managing vulnerabilities at scale, and achieving continuous monitoring. 
+* **The Regulatory Roadmap:** A pragmatic look at the importance of tracking the software supply chain with reference to upcoming regulations such as the EU Cyber Resilience Act (CRA).
+* **Linaro’s Phased Approach:** We outline the maturity model Linaro uses to build effective compliance programs, taking you from policy definition and training, all the way to implementation and continuous compliance. 
+
+## Moving from Chaos to Control 
+
+Implementing a compliance program from scratch can feel overwhelming, but you don't have to solve everything on day one. The key takeaway from our research is that compliance must be treated as a process, not a one-off event. By integrating the right tooling into your build pipelines, you can move from reactive "fire-fighting" to a proactive state in which every release is automatically audited for risks.
+
+**Download the Whitepaper**
+
+The software supply chain doesn’t have to be a mystery. With the right processes, tools, and partners, you can turn compliance from a bottleneck into a competitive advantage. [Download the full whitepaper now](https://static.linaro.org/assets/Linaro+White+Paper+-+Software+Supply+Chain+Management.pdf?_gl=1*zmoc7h*_ga*MTc4NDcyNDQxMC4xNzY0MjQ3ODk1*_ga_E12E6FXFVK*czE3NzA4OTMyNzEkbzE1NyRnMSR0MTc3MDg5NDY0OCRqNTkkbDAkaDA.) and reach out to us to learn how Linaro can help you automate your software supply chain tracking.
