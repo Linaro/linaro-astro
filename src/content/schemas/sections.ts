@@ -346,22 +346,6 @@ export const videoHeroSchema = z.object({
 export const articlesSchema = z.object({
   component: component("articles"),
   title: z.string().optional(),
-  posts: z.array(
-    z.discriminatedUnion("collection", [
-      z.object({
-        collection: z.literal("blogs"),
-        post: reference("blogs"),
-      }),
-      z.object({
-        collection: z.literal("events"),
-        post: reference("events"),
-      }),
-      z.object({
-        collection: z.literal("news"),
-        post: reference("news"),
-      }),
-    ]),
-  ),
 });
 
 export const tabsSchema = z.object({
