@@ -1,0 +1,52 @@
+---
+title: "Direct Kernel Access to Ethos-U65 NPU on i.MX9: benchmarks using latest
+  kernel and mesa support "
+description: Running machine learning workloads on an embedded SoC with a
+  mid-range CPU with good performance and power management is a challenge. Many
+  SoCs have included integrated NPUs (Neural Processing Units) to accelerate
+  on-device machine learning performance. Software support for NPUs is often
+  proprietary and open source support, when it exists, can be very limited.
+date: 2026-02-16T17:47:00.000Z
+author: bill-fletcher
+tags:
+  - ai-ml
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1767872853/linaro-website/graphics/freepik__abstract-dynamic-swooping-image-showing-software-e__49852_1_mswbvm.png
+related: []
+---
+Running machine learning workloads on an embedded SoC with a mid-range CPU with good performance and power management is a challenge. Many SoCs have included integrated NPUs (Neural Processing Units) to accelerate on-device machine learning performance. Software support for NPUs is often proprietary and open source support, when it exists, can be very limited.
+
+Arm's range of NPUs starting with the Ethos-U55 originally targeted microcontroller (Cortex-M) CPU acceleration. Its successor, the Ethos-U65, broadened this to being directly accessible to both Cortex-A and Cortex-R processors without passing through a Cortex-M intermediary ("Assisted Mode"). In this mode the NPU communicated with the Linux kernel on the host via remoteproc and the Cortex-M CPU.
+
+Recently patches were merged in the Linux kernel and mesa, allowing the NPU to be accessed directly by the Cortex-A host and integrated directly into TensorFlow Lite and the kernel.
+
+We wanted to answer a few simple questions based on this new direct kernel support.
+
+* Can the NPU be used on real hardware with an open-source stack?
+* Which models actually run on it?
+* And what kind of speedup do we see compared to CPU execution?
+
+This post will show what we found to be working, what does not yet work, and the performance numbers we measured on i.MX93.
+
+### Hardware Platform 
+
+All testing Was done on a [ADLINK I-Pi OSM IMX93 ](https://www.adlinktech.com.cn/products/computer_on_modules/OSM/I-Pi_OSM_IMX93?lang=en)development kit using the ADLINK OSM-IMX93 module. The system is based on the NXP i.MX93 SoC with dual Cortex-A55 cores, a Cortex-M33, and an Arm Ethos-U65 NPU.
+
+### 
+
+Kernel Choice 
+
+For this work, we used Linux kernel version 6.19-rc1 as the base. The kernel was built from the mainline kernel v6.19-rc1, which includes the [Ethos-U NPU support](https://lore.kernel.org/all/20251020-ethos-v6-0-ecebc383c4b7@kernel.org/) patches. These patches are required to expose the NPU device on i.MX93 as an accelerator.
+
+Inference uses TensorFlow Lite together with Mesa’s Teflon delegate in direct mode.This is currently the only supported way to run workloads on the Ethos-U65. Supported operators are routed through Mesa and executed on the Ethos-U65. Operators that are not supported fall back to CPU execution.
+
+### Model Constraints 
+
+The Ethos-U65 is strict about model quantization. Models must be quantized to INT8 or UINT8 and use per-tensor quantization. Per-channel quantized models often fall back to CPU. Float models do not run on the NPU.
+
+Because fallback happens silently, models need to be checked carefully to confirm that work is actually offloaded.
+
+### Performance results
+
+All measurements were done using real TensorFlow Lite models. We did not use synthetic benchmarks.
+
+### Image classification
