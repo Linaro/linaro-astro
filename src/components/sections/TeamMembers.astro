@@ -9,8 +9,6 @@ type Props = z.infer<typeof teamSchema>;
 const { members, title, id } = Astro.props;
 
 const people = members ? await getEntries(members as any) : [];
-
-console.log("people", people);
 ---
 
 {
@@ -34,10 +32,7 @@ console.log("people", people);
   ) : (
     <div class="w-full">
       {title && <h2 class="text-4xl text-white mb-16 text-center">{title}</h2>}
-      <ul
-        class="gap-2 justify-center flex flex-wrap mx-auto"
-        style="align-items: stretch;"
-      >
+      <ul class="flex flex-wrap justify-center gap-2 mx-auto pl-0 w-full">
         {people.map((x: any) => {
           let displayTitle = x.data.title;
           if (id === "bod" || id === "exec") {
