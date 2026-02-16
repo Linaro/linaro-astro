@@ -1,0 +1,202 @@
+---
+title: Reproducible Linux Kernel bisections
+description: >
+  Why kernel regressions are hard to track today?
+
+  Kernel regressions are not new, what has changed is how they appear and who has to deal with them. Today, many regressions are first seen in CI.
+
+  In this blog post, we look at how CI has changed this situation and why bisecting kernel code is hard in practice today.
+date: 2026-01-27T14:30:00.000Z
+author: anders-roxell
+tags:
+  - linux-kernel
+  - testing
+  - ci
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1769507380/linaro-website/images/blog/IMG_1962_kglakw.jpg
+related: []
+---
+## **Why kernel regressions are hard to track today**
+
+Kernel regressions are not new.
+
+What has changed is how they appear and who has to deal with them.
+
+Today, many regressions are first seen in CI.
+
+They show up:
+
+* On architectures you may not have 
+* With compiler versions you do not normally use 
+* With large configurations that were never meant to be built by hand
+
+When this happens, the expectation is simple.
+
+Someone needs to find the commit that caused the break.
+
+This usually means a bisect.
+
+In this blog post, we look at how CI has changed this situation and why bisecting kernel code is hard in practice today.
+
+## What git bisection is meant to do
+
+Kernel bisection is a way to search through history.
+
+You start with two points:
+
+* A commitment where the kernel worked
+* a commitment where it did not
+
+
+Using git bisect, git checks commits between those two points. For each commit, you answer a basic question.
+
+*Did this version work or not?*
+
+Based on your answers, git narrows the range until it points to the commit where the behaviour changed.
+
+
+In theory, this is simple and reliable. In practice, it often is not.
+
+## How bisection is usually done
+
+Many developers start by bisecting manually.
+
+They check out a commit.
+
+They build the kernel.
+
+They boot it or run a test.
+
+Then they mark the result as good or bad.
+
+This works, but it is slow.
+
+It is also easy to make mistakes.
+
+To speed things up, git provides git bisect run.
+
+Instead of answering manually, you give git a command to run.
+
+If the command exits with code 0, the commit is good.
+
+If it exists with a non zero code, the commit is bad.
+
+This can work very well.
+
+But only if the command gives the same answer every time.
+
+## The real problem is reproducibility
+
+Here is the part that causes most bisections to fail.
+
+The result of a build, boot, or test does not depend only on the kernel source code.
+
+It also depends on:
+
+* The compiler and its exact version 
+* Compiler defaults and flags 
+* The kernel configuration 
+* The runtime environment 
+* The userspace and root filesystem
+
+If any of these change during a bisect, the result becomes unreliable.
+
+The bisect still finishes. But the answer may not mean what you think it does, i.e., might be unreliable.
+
+## What this looks like in real work
+
+This situation is common today. The following example shows how this happens in real work.
+
+CI reports a boot failure on arm64.
+
+The report says it was built with gcc 13 and a large configuration.
+
+Locally, you build with gc 12.
+
+The kernel boots.
+
+You install gcc 13 and try again.
+
+Now the kernel fails, but only on some commits.
+
+Halfway through the bisect, the failure disappears.
+
+Later, it comes back.
+Nothing meaningful changed in the code.
+
+The environment did.
+
+At that point, it becomes hard to trust the bisect result.
+
+## Why CI changed the nature of the problem
+
+CI has improved kernel quality.
+
+It catches failures early and across many setups. But it also changed how regressions appear.
+
+Failures are now often:
+
+* architecture specific 
+* compiler specific 
+* configuration specific 
+* sensitive to runtime details 
+
+Reproducing these failures locally can require rebuilding a large part of the CI environment.
+
+If that environment is not captured precisely, bisection turns into guesswork.
+
+## Why scripts do not really solve this
+
+A common response is to write scripts.
+
+At first, this helps.
+
+You automate the build.
+
+You automate the boot or test.
+
+Over time , more scripts appear:
+
+* One per architecture 
+* One per compiler 
+* One per test setup 
+
+Eventually, these scripts depend heavily on the local machine. They rely on assumptions that are not written down.
+
+When something changes, the scripts still run. However, they behave differently.
+
+Instead of debugging the kernel, you end up debugging your tooling. That usually does not save time.
+
+## The hidden cost of unstable bisection
+
+An unreliable bisect wastes more than time. It creates doubt. If others cannot reproduce the result, reviewers hesitate. Maintainers ask for confirmation.
+
+The bisect gets repeated. In the worst case, the work is thrown away and starts again. This is frustrating, and slows down fixes.
+
+## The environment is part of the regression
+
+A kernel regression is not just a change in the source code. It is the interaction between:
+
+* Kernel 
+* Compiler 
+* Configuration 
+* Runtime and userspace 
+
+Treating the environment as background context no longer works. Today, the environment is part of the problem. That means it has to be part of the solution.
+
+## What we actually need today
+
+The goal is not a faster bisect. The goal is a stable one.
+
+We need a way to:
+
+* Keep the build environment fixed
+* Keep the runtime environment fixed 
+* Let git change only the source code
+
+If we can do that, bisection becomes predictable again. And if others can rerun the same steps and get the same results, the outcome becomes useful.
+
+## What comes next
+
+Our next blog post shows one practical way to approach this. It focuses on keeping the environment stable while git bisect walks through history. The goal is not to add more tools, but make bisection easy to run and reproduce.
+
+I am one of the organisers of the [Testing and Continuos Delivery](https://fosdem.org/2026/schedule/track/testing-and-continuous-delivery/) dev room at FOSDEM. If you want to discuss this in more detail, you are welcome to find me there.
