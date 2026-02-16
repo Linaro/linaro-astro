@@ -3,7 +3,7 @@ import Cookies from "./Cookies.astro";
 import GoogleAnalytics from "./GoogleAnalytics.astro";
 import { SEO } from "astro-seo";
 import "@fontsource/lato";
-import "../../styles/global.scss";
+import "../../styles/global.css";
 import { getCldOgImageUrl } from "astro-cloudinary/helpers";
 
 const GA_ID = import.meta.env.GA_ID;
@@ -118,7 +118,6 @@ const social_image = getCldOgImageUrl({
       f.parentNode.insertBefore(j, f);
     })(window, document, "script", "dataLayer", "GTM-5DLPJQ");
   </script>
- 
 
   {GA_ID ? <Cookies /> : null}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

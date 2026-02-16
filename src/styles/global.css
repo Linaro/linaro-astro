@@ -1,0 +1,197 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animated";
+@plugin "tw-elements/plugin.cjs";
+
+@source "../node_modules/tw-elements/dist/js/**/*.js";
+
+@theme {
+  --breakpoint-2xl: 1576px;
+
+  --font-sans: "sofia-pro", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Colors */
+  --color-linaro-yellow: #FFCE00;
+  --color-linaro-purple: #6715E8;
+  --color-grey: #6B6B6B;
+  --color-background: #222025;
+  --color-darker: #1B181C;
+  --color-dark: #222025;
+
+  /* Background Images (Gradients) */
+  --background-image-linaro-gradient: linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%);
+  --background-image-purple-gradient: linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #420D90 44%, #420D90 55%, rgba(58, 12, 130, 0.00) 100%);
+  --background-image-border-gradient: linear-gradient(90deg, rgba(0,0,0,0) 0%, #545454 49%, rgba(0,0,0,0) 100%);
+
+  /* Animations */
+  --animate-infinite-scroll: infinite-scroll 50s linear infinite;
+}
+
+/* 4. KEYFRAMES */
+/* Standard CSS keyframes work automatically with the --animate variable above */
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* 5. BASE LAYER */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    @apply bg-background text-white;
+
+    /* Typography Plugin Overrides 
+       Replaces: typography: (theme) => ({ DEFAULT: { css: { color: "white" } } }) 
+       We explicitly set prose variables to white. */
+    --tw-prose-body: white;
+    --tw-prose-headings: white;
+    --tw-prose-lead: white;
+    --tw-prose-links: white;
+    --tw-prose-bold: white;
+    --tw-prose-counters: white;
+    --tw-prose-bullets: white;
+    --tw-prose-hr: white;
+    --tw-prose-quotes: white;
+    --tw-prose-quote-borders: white;
+    --tw-prose-captions: white;
+    --tw-prose-code: white;
+    --tw-prose-th-borders: white;
+    --tw-prose-td-borders: white;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    
+    @media (min-width: theme(--breakpoint-sm)) { max-width: 640px; }
+    @media (min-width: theme(--breakpoint-md)) { max-width: 768px; padding-inline: 2rem; }
+    @media (min-width: theme(--breakpoint-lg)) { max-width: 1024px; }
+    @media (min-width: theme(--breakpoint-xl)) { max-width: 1280px; }
+    
+    /* Your custom 2xl constraint */
+    @media (min-width: theme(--breakpoint-2xl)) { 
+      max-width: 1576px; 
+    }
+  }
+}
+
+/* 6. UTILITIES LAYER */
+@layer utilities {
+  /* 1. Define the gradient text utility first */
+  .linaro-gradient-text {
+    @apply bg-linaro-gradient bg-clip-text text-transparent;
+  }
+
+  /* 2. Fix: Don't @apply linaro-gradient-text. 
+     Instead, use the underlying utilities directly. */
+  .nav-active {
+    @apply bg-linaro-gradient bg-clip-text text-transparent;
+  }
+
+  .nav-inactive {
+    @apply text-white;
+  }
+  
+  .nav-hover {
+    position: relative;
+    
+    &:before {
+      @apply w-0 lg:bg-linaro-yellow content-[""] bottom-0 h-1 block absolute left-[50%] duration-150;
+    }
+    
+    &:hover:before {
+      @apply w-full left-0;
+    }
+  }
+
+  /* Gradient Buttons */
+  .linaro-gradient-button {
+    @apply px-6 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
+  }
+
+  .linaro-gradient-button-small {
+    @apply px-4 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
+  }
+
+  /* Button Shine Effect */
+  .linaro-gradient-button::before, 
+  .linaro-gradient-button-small::before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    background-image: linear-gradient(
+        120deg,
+        rgba(255,255,255, 0) 30%,
+        rgba(255,255,255, 0.3),
+        rgba(255,255,255, 0) 70%
+    );
+    top: 0;
+    left: -150px;
+    transition: none;
+  }
+
+  .linaro-gradient-button:hover::before, 
+  .linaro-gradient-button-small:hover::before {
+    left: 100%;
+    transition: all 0.65s ease-out;
+  }
+
+  /* Gradient Border */
+  .linaro-gradient-border {
+    position: relative;
+    background-clip: padding-box; 
+  }
+
+  .linaro-gradient-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -10px;
+    border-radius: inherit;
+    box-sizing: border-box;
+    @apply bg-linaro-gradient;
+  }
+
+  .fade-border {
+    @apply w-full bg-border-gradient h-[2px];
+  }
+
+  .fade-border-bottom::after {
+    content: "";
+    display: inline-block;
+    /* FIX: replaced 'fade-border' with 'w-full bg-border-gradient h-[2px]' */
+    @apply absolute w-full bg-border-gradient h-[2px] bottom-0;
+  }
+
+  .purple-gradient-container {
+    @apply bg-purple-gradient py-24 pb-[12rem] mb-[-12rem];
+  }
+
+  .purple-gradient-container-no-padding {
+    @apply bg-purple-gradient;
+  }
+
+  .hero-background-image {
+    background-repeat: no-repeat;
+    
+    /* Base Mobile Styles */
+    @apply bg-[position:top_right] bg-[size:100%] pb-[36rem] -mb-[36rem];
+
+    /* Desktop Breakpoints */
+    @media (min-width: theme(--breakpoint-lg)) {
+      @apply bg-[size:50%];
+    }
+
+    @media (min-width: theme(--breakpoint-xl)) {
+      @apply bg-[position:top_-1rem_right];
+    }
+  }
+}

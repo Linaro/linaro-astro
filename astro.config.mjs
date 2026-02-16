@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import aws from "astro-sst";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import solidJs from "@astrojs/solid-js";
 import pagefind from "./integrations/pagefind";
 import { loadEnv } from "vite";
@@ -28,9 +28,6 @@ export default defineConfig({
     pagefind({
       is_pre_build: is_pre_build,
       is_public: is_public,
-    }),
-    tailwind({
-      applyBaseStyles: false,
     }),
     solidJs(),
     icon({
@@ -62,6 +59,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: { exclude: ["auth:config"] },
+    plugins: [tailwindcss()],
   },
   redirects: {
     "/lts": "/solutions/lts",

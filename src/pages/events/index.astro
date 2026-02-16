@@ -24,22 +24,14 @@ const isSsr = import.meta.env.DEV || !import.meta.env.IS_PUBLIC;
   >
   </div>
   <main
-    class="hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
+    class="hero-banner-layout hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
   >
     <h1 class="text-5xl my-12 font-bold">Events</h1>
-    <EventSearch
-      client:only="solid-js"
-      isSsr={isSsr}
-    />
+    <EventSearch client:only="solid-js" isSsr={isSsr} />
   </main>
 </BaseLayout>
-<style
-  define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
-  lang="scss"
->
+<style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
   .hero-background-image {
     background-image: var(--backgroundUrl);
-    background-repeat: no-repeat;
-    @apply bg-[top_right] xl:bg-[top_-1rem_right] bg-[size:100%] lg:bg-[size:50%] pb-[36rem] mb-[-36rem];
   }
 </style>
