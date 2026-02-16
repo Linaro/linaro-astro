@@ -1,0 +1,223 @@
+{
+  "showQuestionNumbers": "on",
+  "questionErrorLocation": "bottom",
+  "showNavigationButtons": true,
+  "showCompleteButton": true,
+  "completeText": "Submit",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q1",
+          "title": "Are you familiar with the EU Cyber Resilience Act (CRA)?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page2",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q2",
+          "title": "What industry does your business operate in?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Consumer Electronics"
+            },
+            {
+              "value": 1,
+              "text": "Industrial IoT"
+            },
+            {
+              "value": 1,
+              "text": "Medical"
+            },
+            {
+              "value": 1,
+              "text": "Aerospace & Aviation"
+            },
+            {
+              "value": 1,
+              "text": "Automotive"
+            },
+            {
+              "value": 1,
+              "text": "Other"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ],
+          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+        }
+      ]
+    },
+    {
+      "name": "page3",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q3",
+          "title": "How would you describe your product(s)?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Physical Device"
+            },
+            {
+              "value": 1,
+              "text": "Pure Software"
+            },
+            {
+              "value": 1,
+              "text": "Mobile App"
+            },
+            {
+              "value": 1,
+              "text": "Website"
+            },
+            {
+              "value": 1,
+              "text": "SaaS"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ],
+          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+        }
+      ]
+    },
+    {
+      "name": "page4",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q4",
+          "title": "What CRA category does your product belong to?",
+          "isRequired": true,
+          "weight": 2,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Default"
+            },
+            {
+              "value": 1,
+              "text": "Class I"
+            },
+            {
+              "value": 1,
+              "text": "Class II"
+            },
+            {
+              "value": 1,
+              "text": "Critical"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ],
+          "choiceTooltips": {
+            "Default": "Default category applies to products with standard cybersecurity requirements. Most software products fall into this category.",
+            "Class I": "Class I includes products with higher cybersecurity risks, such as certain industrial control systems or network equipment.",
+            "Class II": "Class II includes products with very high cybersecurity risks, such as critical infrastructure components or medical devices with network connectivity.",
+            "Critical": "Critical category applies to products that are essential for critical infrastructure, such as power systems, transportation, or financial services.",
+            "Not Sure": "Select this option if you're uncertain about your product's CRA category classification."
+          },
+          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+        }
+      ]
+    },
+    {
+      "name": "page5",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q5",
+          "title": "What stage of the product life cycle are you in?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Ideation/Concept"
+            },
+            {
+              "value": 1,
+              "text": "Design & Development"
+            },
+            {
+              "value": 1,
+              "text": "Testing/Validation"
+            },
+            {
+              "value": 1,
+              "text": "Production"
+            },
+            {
+              "value": 1,
+              "text": "Maintenance/Support"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ],
+          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+        }
+      ]
+    },
+    {
+      "name": "contact",
+      "title": "Contact details",
+      "elements": [
+        {
+          "type": "html",
+          "name": "scoreSummary",
+          "html": "<div class=\"cra-score-card\">\n  <div class=\"cra-score-row\">\n    <div class=\"cra-score-label\">Readiness score</div>\n    <div class=\"cra-score-bar\">\n      <div class=\"cra-score-fill\" style=\"width: {readinessPercentage}%\"></div>\n      <div class=\"cra-score-text\">{readinessPercentage}%</div>\n    </div>\n  </div>\n  <div class=\"cra-score-sub\">Score: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></div>\n</div>"
+        },
+        {
+          "type": "text",
+          "name": "company",
+          "title": "Company name",
+          "isRequired": true,
+          "showNumber": false
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "name": "totalScore",
+      "expression": "{q1}*1 + {q2}*1 + {q3}*1 + {q4}*2 + {q5}*1"
+    },
+    {
+      "name": "maxScore",
+      "expression": "6"
+    }
+  ],
+  "completedHtml": "<h3>Thanks!</h3><p>Your CRA readiness score is: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></p><p>Your readiness percentage is: <strong>{readinessPercentage}%</strong></p>"
+}

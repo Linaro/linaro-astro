@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CraSelfAssessmentComponent from "@/components/forms/CraSelfAssessment.tsx";
+import fs from "fs";
+import path from "path";
+import { Model } from "survey-core";
+import { Survey } from "survey-js-ui";
+import "survey-core/survey-core.min.css";
+
+// Load the survey JSON from public directory
+const surveyJsonPath = path.join(
+  process.cwd(),
+  "public",
+  "cra-self-assessment.json",
+);
+const surveyJsonContent = fs.readFileSync(surveyJsonPath, "utf-8");
+const surveyJson = JSON.parse(surveyJsonContent);
+---
+
+<BaseLayout
+  title="CRA Self-Assessment"
+  description="EU Cyber Resilience Act (CRA) Self-Assessment"
+>
+  <div
+    class="purple-gradient-container absolute h-[50rem] w-full z-[-1] top-[30rem]"
+  >
+  </div>
+  <main class="container mx-auto px-2 sm:px-4 md:px-8 z-0 py-12">
+    <h1 class="text-3xl my-12 font-bold">
+      EU Cyber Resilience Act (CRA) Self-Assessment
+    </h1>
+    <p>
+      Linaro's CRA self-assessment tool is designed to help companies assess
+      their current readiness level for the new regulation.
+    </p>
+    <p class="mb-8">
+      The CRA tool asks a series of questions and helps guide users on where
+      gaps may be present and what is required in order to make steps to
+      compliance.
+    </p>
+    <div class="max-w-4xl mx-auto">
+      <CraSelfAssessmentComponent surveyJson={surveyJson} client:load />
+    </div>
+  </main>
+</BaseLayout>

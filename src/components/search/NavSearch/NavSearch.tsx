@@ -10,8 +10,34 @@ import NavResults from "./NavResults";
 import { FaSolidXmark } from "solid-icons/fa";
 
 const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
-const pagefind = await import(/* @vite-ignore */ `${bundlePath}pagefind.js`);
-pagefind.preload("");
+let pagefind: any = null;
+
+// Only load pagefind in production or if files exist (skip in dev to avoid 404 errors)
+const loadPagefind = async () => {
+  // In development, pagefind files don't exist yet, so skip the import
+  if (import.meta.env.DEV) {
+    pagefind = {
+      debouncedSearch: async () => null,
+      preload: () => {},
+    };
+    return;
+  }
+  
+  // In production, try to load pagefind
+  try {
+    pagefind = await import(/* @vite-ignore */ `${bundlePath}pagefind.js`);
+    pagefind.preload("");
+  } catch (error) {
+    console.warn("Pagefind not available:", error);
+    pagefind = {
+      debouncedSearch: async () => null,
+      preload: () => {},
+    };
+  }
+};
+
+await loadPagefind();
+
 export type Filters = Record<string, string[]>;
 
 export type SearchQuery = { query: string | null } | null;
@@ -19,7 +45,7 @@ export type SearchQuery = { query: string | null } | null;
 const fetchResults: ResourceFetcher<SearchQuery, SearchQuery, boolean> = async (
   search
 ) => {
-  if (!search) return null;
+  if (!search || !pagefind) return null;
   return await pagefind.debouncedSearch(search.query, {
     // filters: { type: ["page"] },
   });

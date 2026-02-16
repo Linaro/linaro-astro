@@ -27,51 +27,47 @@
     @apply text-white;
   }
 
-  // gradient text 
+  // gradient text
   .linaro-gradient-text {
     @apply bg-linaro-gradient bg-clip-text text-transparent;
   }
 
   // gradient button
   .linaro-gradient-button {
-    @apply  px-6 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
-
+    @apply px-6 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
   }
 
   .linaro-gradient-button-small {
-    @apply  px-4 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
-
+    @apply px-4 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
   }
 
-  .linaro-gradient-button::before, .linaro-gradient-button-small::before {
-    content: '';
+  .linaro-gradient-button::before,
+  .linaro-gradient-button-small::before {
+    content: "";
     position: absolute;
     width: 150px;
     height: 100%;
     background-image: linear-gradient(
-        120deg,
-        rgba(255,255,255, 0) 30%,
-        rgba(255,255,255, 0.3),
-        rgba(255,255,255, 0) 70%
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0) 70%
     );
     top: 0;
     left: -150px;
-    transition: none
-    
+    transition: none;
   }
-  .linaro-gradient-button:hover::before, .linaro-gradient-button-small:hover::before {
+  .linaro-gradient-button:hover::before,
+  .linaro-gradient-button-small:hover::before {
     left: 100%;
-    transition: all 0.65s ease-out
-
+    transition: all 0.65s ease-out;
   }
 
   // gradient-border
   .linaro-gradient-border {
     position: relative;
-    background-clip: padding-box; 
-   
+    background-clip: padding-box;
   }
-
 
   .linaro-gradient-border::before {
     content: "";
@@ -104,10 +100,59 @@
   }
 
   .purple-gradient-container-no-padding {
-    @apply bg-purple-gradient ;
+    @apply bg-purple-gradient;
   }
 }
 
-// li {
-//   break-inside: avoid;
-// }
+.cra-score-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+.cra-score-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cra-score-label {
+  white-space: nowrap;
+}
+
+.cra-score-bar {
+  position: relative;
+  flex: 1; /* ✅ IMPORTANT: makes the bar take remaining width */
+  min-width: 0; /* ✅ prevents overflow issues in flex */
+  height: 16px;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.cra-score-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 200ms ease;
+  background: linear-gradient(90deg, #f59e0b, #a855f7);
+}
+
+.cra-score-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  pointer-events: none;
+}
+
+.cra-score-sub {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.7);
+}
