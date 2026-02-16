@@ -28,14 +28,14 @@ jobs:
           fetch-depth: "0"
 
       - name: Restore main cache first
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         id: main-cache
         with:
           path: cache
           key: cache-main
 
       - name: Restore PR cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         id: pr-cache
         with:
           path: cache
@@ -136,7 +136,7 @@ jobs:
             fi
           fi
 
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v5
         with:
           path: cache
           key: cache-${{ github.sha }}-${{ github.run_id }}
