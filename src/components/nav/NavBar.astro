@@ -39,7 +39,7 @@ const navData = await getEntry("data", "nav");
         ]}
       >
         <ul
-          class="flex flex-col lg:flex-row items-start lg:items-center lg:mx-auto max-w-2xl lg:mx-0 w-full lg:max-w-full relative gap-4 lg:gap-0 my-8 lg:my-0 has-[.open]:mb-4"
+          class="flex flex-col lg:flex-row items-start lg:items-center lg:mx-auto max-w-2xl lg:mx-0 w-full lg:max-w-full relative gap-4 lg:gap-0 my-8 lg:my-0"
         >
           {
             navData.data.map((item: any, index: number) =>
@@ -64,14 +64,12 @@ const navData = await getEntry("data", "nav");
                     </a>
                   </div>
                 </li>
-              )
+              ),
             )
           }
           <li class="ml-0 lg:ml-2 xl:ml-8 mt-[2px]">
             <a href="/contact">
-              <div class="linaro-gradient-button-small ">
-                Contact us
-              </div>
+              <div class="linaro-gradient-button-small">Contact us</div>
             </a>
           </li>
           <li class="grow mt-4 lg:mt-0">
@@ -115,12 +113,12 @@ const navData = await getEntry("data", "nav");
         const button = menu.querySelector("button");
         button &&
           button.addEventListener("click", (event) =>
-            toggleDropdownMenu(event, menu, dropdownMenus)
+            toggleDropdownMenu(event, menu, dropdownMenus),
           );
 
         // Handle Submenu Dropdowns
         const dropDownSubmenus = menu.querySelectorAll(
-          ".astronav-dropdown-submenu"
+          ".astronav-dropdown-submenu",
         );
 
         dropDownSubmenus.forEach((submenu) => {
@@ -174,11 +172,11 @@ const navData = await getEntry("data", "nav");
     function closeAllDropdowns(event) {
       const dropdownMenus = document.querySelectorAll(".dropdown-toggle");
       const dropdownParent = document.querySelectorAll(
-        ".astronav-dropdown, .astronav-dropdown-submenu"
+        ".astronav-dropdown, .astronav-dropdown-submenu",
       );
       const isButtonInsideDropdown = [
         ...document.querySelectorAll(
-          ".astronav-dropdown button, .astronav-dropdown-submenu button, #astronav-menu"
+          ".astronav-dropdown button, .astronav-dropdown-submenu button, #astronav-menu",
         ),
       ].some((button) => button.contains(event.target));
       if (!isButtonInsideDropdown) {
@@ -208,7 +206,7 @@ const navData = await getEntry("data", "nav");
       dropdownToggle.classList.toggle("hidden");
       dropdownToggle.setAttribute(
         "aria-expanded",
-        dropdownExpanded === "true" ? "false" : "true"
+        dropdownExpanded === "true" ? "false" : "true",
       );
     }
 
