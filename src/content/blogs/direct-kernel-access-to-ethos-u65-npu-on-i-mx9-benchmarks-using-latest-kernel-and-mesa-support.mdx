@@ -31,7 +31,7 @@ This post will show what we found to be working, what does not yet work, and the
 
 All testing Was done on a [ADLINK I-Pi OSM IMX93 ](https://www.adlinktech.com.cn/products/computer_on_modules/OSM/I-Pi_OSM_IMX93?lang=en)development kit using the ADLINK OSM-IMX93 module. The system is based on the NXP i.MX93 SoC with dual Cortex-A55 cores, a Cortex-M33, and an Arm Ethos-U65 NPU.
 
-### Kernel Choice 
+### Kernel Choice
 
 For this work, we used Linux kernel version 6.19-rc1 as the base. The kernel was built from the mainline kernel v6.19-rc1, which includes the [Ethos-U NPU support](https://lore.kernel.org/all/20251020-ethos-v6-0-ecebc383c4b7@kernel.org/) patches. These patches are required to expose the NPU device on i.MX93 as an accelerator.
 
@@ -49,7 +49,7 @@ All measurements were done using real TensorFlow Lite models. We did not use syn
 
 ### Image classification
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1771347970/linaro-website/IMG_2056_aa74ba.jpg)
 
 The diagram above highlights a clear pattern across the tested classification models.[ Inception V1 ](https://github.com/google-coral/test_data/blob/master/inception_v1_224_quant.tflite)shows the largest relative speed up when moving from CPU to NPU execution, while[ MobileNet V1 ](https://www.kaggle.com/models/tensorflow/mobilenet-v1)achieved the highest absolute frame rate on the NPU.
 
@@ -57,10 +57,9 @@ The diagram above highlights a clear pattern across the tested classification mo
 
 Taken together, the diagram shows that different models benefit from NPU offloading in different ways: Inception V1 maximizes relative speedup compared to CPU, while MobileNet V1 achieves the lowest absolute latency and highest frame rate on the NPU.
 
-### Object detection 
+### Object detection
 
-![]()
-
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1771347972/linaro-website/IMG_2057_ugkzre.jpg)
 
 SSD MobileNet V2 is the only object detection model that works reliably on the NPU and provides a clear performance benefit. SSD MobileNet V1 can execute on the NPU, but the results are misleading. Latency is close to CPU execution and the model produces incorrect detections, which makes it impractical to use in its current form.  This happens because MobileNet V1 falls back to the CPU a lot.
 
@@ -77,6 +76,5 @@ At this stage, Ethos-U65 execution on i.MX93 works and delivers speedups between
 ### Feedback and What’s next
 
 If you have a similar or different experience with running inference directly from the kernel using the U65 using the latest patches, we’d be happy to hear from you. [Please get in touch!](https://www.linaro.org/contact) In Linaro we care deeply about the status of the open source support for Arm hardware and we’re interested to hear from the community. We also offer consultancy on performance tuning for the Arm architecture and managing open source abstractions for hardware features.
-
 
 We plan a follow-up post that will document the full setup in more detail to reproduce these results on the same hardware.
