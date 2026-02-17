@@ -4,6 +4,8 @@
   "showNavigationButtons": true,
   "showCompleteButton": true,
   "completeText": "Submit",
+  "dataSavingText": "Submitting your assessment, please wait...",
+  "dataSavingErrorText": "There was a problem submitting. Please try again.",
   "pages": [
     {
       "name": "page1",
@@ -65,8 +67,7 @@
               "value": 0,
               "text": "Not Sure"
             }
-          ],
-          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+          ]
         }
       ]
     },
@@ -104,8 +105,7 @@
               "value": 0,
               "text": "Not Sure"
             }
-          ],
-          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+          ]
         }
       ]
     },
@@ -139,15 +139,7 @@
               "value": 0,
               "text": "Not Sure"
             }
-          ],
-          "choiceTooltips": {
-            "Default": "Default category applies to products with standard cybersecurity requirements. Most software products fall into this category.",
-            "Class I": "Class I includes products with higher cybersecurity risks, such as certain industrial control systems or network equipment.",
-            "Class II": "Class II includes products with very high cybersecurity risks, such as critical infrastructure components or medical devices with network connectivity.",
-            "Critical": "Critical category applies to products that are essential for critical infrastructure, such as power systems, transportation, or financial services.",
-            "Not Sure": "Select this option if you're uncertain about your product's CRA category classification."
-          },
-          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+          ]
         }
       ]
     },
@@ -185,8 +177,609 @@
               "value": 0,
               "text": "Not Sure"
             }
-          ],
-          "description": "Tip: If you're unsure, choose \"Not sure\" and we'll treat it as a lower-confidence answer."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page6",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q6",
+          "title": "Is your product already in market and being sold in Europe?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 1,
+              "text": "No"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page7",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q7",
+          "title": "Have you conducted a Cybersecurity Risk Assessment?",
+          "isRequired": true,
+          "weight": 5,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page8",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q8",
+          "title": "Do you have a detailed set of security requirements?",
+          "isRequired": true,
+          "weight": 5,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page9",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q9",
+          "title": "Are you actively tracking vulnerabilities in your software supply chain (e.g., vulnerabilities in 3rd party packages)?",
+          "isRequired": true,
+          "weight": 5,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page10",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q10",
+          "title": "Do you have mechanisms in place to continuously track vulnerabilities as they emerge over time?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page11",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q11",
+          "title": "Does your product have a secure-by-default configuration (e.g., no default passwords, physical ports closed off)?",
+          "isRequired": true,
+          "weight": 5,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page12",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q12",
+          "title": "Do you have mechanisms in place to provide security updates to your product?",
+          "isRequired": true,
+          "weight": 5,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page13",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q13",
+          "title": "Does your product protect the confidentiality of data at rest and in transit?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page14",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q14",
+          "title": "Does your product protect the integrity of data at rest and in transit?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page15",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q15",
+          "title": "Does your product defend against availability attacks (e.g., protection from denial of service attacks)?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page16",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q16",
+          "title": "Is your product designed to minimise attack surface (e.g., minimising external interfaces)?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page17",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q17",
+          "title": "Does your product collect and monitor security logs and relevant internal activity?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page18",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q18",
+          "title": "Does your product provide the ability to reset/factory wipe data in a secure manner?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page19",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q19",
+          "title": "Do you have a mechanism for customers to report vulnerabilities?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page20",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q20",
+          "title": "Do you have a mechanism to report vulnerabilities to customers and authorities?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page21",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q21",
+          "title": "Can you report actively exploited vulnerabilities within 24 hours?",
+          "isRequired": true,
+          "weight": 3,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page22",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q22",
+          "title": "Do you have an up-to-date software bill of materials (SBOM)?",
+          "isRequired": true,
+          "weight": 3,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page23",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q23",
+          "title": "Does documentation contain full instructions for all cybersecurity features?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0.5,
+              "text": "Partially"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page24",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q24",
+          "title": "Have you identified a conformity assessment body (CAB)?",
+          "isRequired": true,
+          "weight": 3,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page25",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q25",
+          "title": "Have you identified a set of harmonized standards for your product?",
+          "isRequired": true,
+          "weight": 3,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page26",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q26",
+          "title": "What operating system does your product currently use?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yocto Based"
+            },
+            {
+              "value": 1,
+              "text": "Android"
+            },
+            {
+              "value": 1,
+              "text": "Debian"
+            },
+            {
+              "value": 1,
+              "text": "RTOS"
+            },
+            {
+              "value": 1,
+              "text": "Commercial OS"
+            },
+            {
+              "value": 1,
+              "text": "Other"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page27",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q27",
+          "title": "What is the planned support period for your product?",
+          "isRequired": true,
+          "weight": 1,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Less than 5 Years"
+            },
+            {
+              "value": 1,
+              "text": "5 - 10 Years"
+            },
+            {
+              "value": 1,
+              "text": "10 Years +"
+            },
+            {
+              "value": 0,
+              "text": "Not Sure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "page28",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q28",
+          "title": "Does your business have adequate resources for a CRA compliance program?",
+          "isRequired": true,
+          "weight": 4,
+          "choices": [
+            {
+              "value": 1,
+              "text": "Yes"
+            },
+            {
+              "value": 0,
+              "text": "No"
+            }
+          ]
         }
       ]
     },
@@ -197,26 +790,27 @@
         {
           "type": "html",
           "name": "scoreSummary",
-          "html": "<div class=\"cra-score-card\">\n  <div class=\"cra-score-row\">\n    <div class=\"cra-score-label\">Readiness score</div>\n    <div class=\"cra-score-bar\">\n      <div class=\"cra-score-fill\" style=\"width: {readinessPercentage}%\"></div>\n      <div class=\"cra-score-text\">{readinessPercentage}%</div>\n    </div>\n  </div>\n  <div class=\"cra-score-sub\">Score: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></div>\n</div>"
+          "html": "<div class=\"cra-score-card\"><div class=\"cra-score-row\"><div class=\"cra-score-label\">Readiness score</div><div class=\"cra-score-bar\"><div class=\"cra-score-fill\" style=\"width: {readinessPercentage}%\"></div><div class=\"cra-score-text\">{readinessPercentage}%</div></div></div><div class=\"cra-score-sub\">Score: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></div></div>"
         },
         {
           "type": "text",
           "name": "company",
           "title": "Company name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "email",
+          "title": "Email address",
           "isRequired": true,
-          "showNumber": false
+          "inputType": "email"
+        },
+        {
+          "type": "html",
+          "name": "captcha",
+          "html": "<div id=\"friendly-captcha-widget\" class=\"frc-captcha\"></div>"
         }
       ]
-    }
-  ],
-  "variables": [
-    {
-      "name": "totalScore",
-      "expression": "{q1}*1 + {q2}*1 + {q3}*1 + {q4}*2 + {q5}*1"
-    },
-    {
-      "name": "maxScore",
-      "expression": "6"
     }
   ],
   "completedHtml": "<h3>Thanks!</h3><p>Your CRA readiness score is: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></p><p>Your readiness percentage is: <strong>{readinessPercentage}%</strong></p>"
