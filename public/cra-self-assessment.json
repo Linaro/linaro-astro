@@ -44,23 +44,23 @@
               "text": "Consumer Electronics"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "Industrial IoT"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "Medical"
             },
             {
-              "value": 1,
+              "value": 4,
               "text": "Aerospace & Aviation"
             },
             {
-              "value": 1,
+              "value": 5,
               "text": "Automotive"
             },
             {
-              "value": 1,
+              "value": 6,
               "text": "Other"
             },
             {
@@ -86,19 +86,19 @@
               "text": "Physical Device"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "Pure Software"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "Mobile App"
             },
             {
-              "value": 1,
+              "value": 4,
               "text": "Website"
             },
             {
-              "value": 1,
+              "value": 5,
               "text": "SaaS"
             },
             {
@@ -124,15 +124,15 @@
               "text": "Default"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "Class I"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "Class II"
             },
             {
-              "value": 1,
+              "value": 4,
               "text": "Critical"
             },
             {
@@ -158,19 +158,19 @@
               "text": "Ideation/Concept"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "Design & Development"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "Testing/Validation"
             },
             {
-              "value": 1,
+              "value": 4,
               "text": "Production"
             },
             {
-              "value": 1,
+              "value": 5,
               "text": "Maintenance/Support"
             },
             {
@@ -196,7 +196,7 @@
               "text": "Yes"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "No"
             },
             {
@@ -704,23 +704,23 @@
               "text": "Yocto Based"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "Android"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "Debian"
             },
             {
-              "value": 1,
+              "value": 4,
               "text": "RTOS"
             },
             {
-              "value": 1,
+              "value": 5,
               "text": "Commercial OS"
             },
             {
-              "value": 1,
+              "value": 6,
               "text": "Other"
             },
             {
@@ -746,11 +746,11 @@
               "text": "Less than 5 Years"
             },
             {
-              "value": 1,
+              "value": 2,
               "text": "5 - 10 Years"
             },
             {
-              "value": 1,
+              "value": 3,
               "text": "10 Years +"
             },
             {

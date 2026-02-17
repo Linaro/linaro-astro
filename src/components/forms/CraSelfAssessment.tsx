@@ -19,17 +19,29 @@ function isScoredQuestion(q: any): boolean {
 function computeScore(survey: any) {
   let totalScore = 0;
   let maxScore = 0;
+
   survey.getAllQuestions().forEach((q: any) => {
     if (!isScoredQuestion(q)) return;
+
     const weight = Number(q.weight ?? 1);
-    const value = Number(q.value ?? 0);
-    totalScore += value * weight;
-    const maxChoiceValue = Math.max(
+    const rawValue = Number(q.value ?? 0);
+
+    // This replaces: rawValue >= 1 ? 1 : rawValue;
+    const adjustedScore = Math.min(rawValue, 1);
+
+    totalScore += adjustedScore * weight;
+
+    // For Max Score, if any choice is >= 1, the max for this question is 1.
+    // Otherwise, find the highest decimal (like 0.5).
+    const maxValFound = Math.max(
       ...(q.choices ?? []).map((c: any) => Number(c.value ?? 0)),
       0,
     );
+    const maxChoiceValue = Math.min(maxValFound, 1);
+
     maxScore += maxChoiceValue * weight;
   });
+
   const readinessPercentage =
     maxScore > 0 ? Math.round((totalScore / maxScore) * 1000) / 10 : 0;
   return { totalScore, maxScore, readinessPercentage };
@@ -47,12 +59,11 @@ function buildAnswersText(sender: any): string {
   sender.getAllQuestions().forEach((q: any) => {
     if (!isScoredQuestion(q)) return;
 
-    // Extracts the number from the name property
     const qNumber = q.name.replace("q", "");
     const questionText = q.title || q.name;
     const answerText = q.displayValue ? String(q.displayValue) : "N/A";
 
-    lines.push(`${qNumber}. ${questionText}: ${answerText}`);
+    lines.push(`${qNumber}. ${questionText} ${answerText}`);
   });
   return lines.join("\n");
 }
@@ -150,6 +161,9 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
         <h3>Thanks!</h3>
         <p>Your CRA readiness score is: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></p>
         <p>Your readiness percentage is: <strong>{readinessPercentage}%</strong></p>
+        <br />
+          <p><strong>A support ticket has been created for you.</strong></p>
+          <p>One of our experts will be in touch shortly to discuss the findings and help you plan your next steps toward compliance.</p>
       `;
 
       surveyInstance = new Model(modifiedJson);
