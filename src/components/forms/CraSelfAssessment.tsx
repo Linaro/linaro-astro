@@ -12,6 +12,38 @@ interface Props {
 
 const Q_NAME_RE = /^q\d+$/;
 
+function getBanding(percentage: number) {
+  if (percentage <= 39) {
+    return {
+      level: "High Risk",
+      color: "#f87171", // Red
+      comment:
+        "Your responses indicate significant gaps against the requirements of the EU Cyber Resilience Act (CRA). Substantial re-work across risk management, secure design, and vulnerability handling is likely required before the product could be considered compliant. Immediate attention is recommended, particularly for mandatory CRA obligations.",
+    };
+  } else if (percentage <= 59) {
+    return {
+      level: "Emerging",
+      color: "#fb923c", // Orange
+      comment:
+        "Your product demonstrates early progress towards CRA readiness, but important requirements are only partially implemented or missing. Targeted remediation and formalisation of processes will be required to reduce the risk of non-compliance.",
+    };
+  } else if (percentage <= 79) {
+    return {
+      level: "Developing",
+      color: "#facc15", // Yellow/Gold
+      comment:
+        "Your product is broadly aligned with many CRA requirements, with several key controls already implemented. However, gaps remain that may prevent full compliance. Focused improvements and validation of existing processes are recommended.",
+    };
+  } else {
+    return {
+      level: "Strong",
+      color: "#4ade80", // Green
+      comment:
+        "Your product demonstrates strong alignment with the requirements of the EU Cyber Resilience Act. Based on the information provided, only minor enhancements or validation activities are likely required to achieve and maintain compliance.",
+    };
+  }
+}
+
 function isScoredQuestion(q: any): boolean {
   return typeof q?.name === "string" && Q_NAME_RE.test(q.name);
 }
@@ -24,17 +56,18 @@ function computeScore(survey: any) {
     if (!isScoredQuestion(q)) return;
 
     const weight = Number(q.weight ?? 1);
-    const rawValue = Number(q.value ?? 0);
 
-    // This replaces: rawValue >= 1 ? 1 : rawValue;
+    // 1. Ensure rawValue is at least 0
+    const rawValue = Math.max(0, Number(q.value ?? 0));
+
+    // Your existing logic: cap the question score at 1
     const adjustedScore = Math.min(rawValue, 1);
 
     totalScore += adjustedScore * weight;
 
-    // For Max Score, if any choice is >= 1, the max for this question is 1.
-    // Otherwise, find the highest decimal (like 0.5).
+    // 2. Ensure max score calculation also treats negative choices as 0
     const maxValFound = Math.max(
-      ...(q.choices ?? []).map((c: any) => Number(c.value ?? 0)),
+      ...(q.choices ?? []).map((c: any) => Math.max(0, Number(c.value ?? 0))),
       0,
     );
     const maxChoiceValue = Math.min(maxValFound, 1);
@@ -49,9 +82,16 @@ function computeScore(survey: any) {
 
 function setScoreVariables(sender: any) {
   const { totalScore, maxScore, readinessPercentage } = computeScore(sender);
+  const banding = getBanding(readinessPercentage);
+
   sender.setVariable("totalScore", totalScore);
   sender.setVariable("maxScore", maxScore);
   sender.setVariable("readinessPercentage", readinessPercentage);
+
+  // New banding variables
+  sender.setVariable("readinessLevel", banding.level);
+  sender.setVariable("readinessComment", banding.comment);
+  sender.setVariable("levelColor", banding.color);
 }
 
 function buildAnswersText(sender: any): string {
@@ -158,13 +198,36 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
 
       const modifiedJson = { ...props.surveyJson };
       modifiedJson.completedHtml = `
-        <h3>Thanks!</h3>
-        <p>Your CRA readiness score is: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></p>
-        <p>Your readiness percentage is: <strong>{readinessPercentage}%</strong></p>
-        <br />
-          <p><strong>A support ticket has been created for you.</strong></p>
-          <p>One of our experts will be in touch shortly to discuss the findings and help you plan your next steps toward compliance.</p>
-      `;
+  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; text-align: left; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #fff;">
+    <div style="background-color: {levelColor}; padding: 24px; text-align: center; color: #fff;">
+      <h3 style="margin: 0; font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em;">Readiness Level</h3>
+      <h2 style="margin: 10px 0 0 0; font-size: 2.5rem; font-weight: 800;">{readinessLevel}</h2>
+    </div>
+    
+    <div style="padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f3f4f6;">
+        <div>
+          <span style="color: #6b7280; font-size: 0.875rem;">Score</span>
+          <div style="font-size: 1.5rem; font-weight: 700; color: #111827;">{totalScore} / {maxScore}</div>
+        </div>
+        <div style="text-align: right;">
+          <span style="color: #6b7280; font-size: 0.875rem;">Percentage</span>
+          <div style="font-size: 1.5rem; font-weight: 700; color: {levelColor};">{readinessPercentage}%</div>
+        </div>
+      </div>
+
+      <div style="background: #f9fafb; padding: 20px; border-radius: 8px; border-left: 4px solid {levelColor};">
+        <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 1rem;">Assessment Summary</h4>
+        <p style="margin: 0; color: #4b5563; line-height: 1.6; font-size: 0.95rem;">{readinessComment}</p>
+      </div>
+
+      <div style="margin-top: 24px; text-align: center; color: #6b7280; font-size: 0.875rem;">
+        <p><strong>A support ticket has been created.</strong><br/>
+        Our experts will contact you shortly to discuss these findings.</p>
+      </div>
+    </div>
+  </div>
+`;
 
       surveyInstance = new Model(modifiedJson);
       wireSurveyEvents(surveyInstance);
