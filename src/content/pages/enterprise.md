@@ -47,9 +47,9 @@ flow:
         cards:
           - id: 1
             title: |
-              Keep your data secure and compliant with Linaro’s end-to-end solution supporting Confidential Computing on Arm
+              Keep your data secure and compliant with Linaro’s end-to-end Confidential Computing solution on Arm
             longDescription: |
-              Securing distributed data against sophisticated cyberattacks or the constant threat of ransomware and phishing is becoming increasingly more difficult and expensive. For enterprises who are governed by regulatory frameworks such as ISO 27001, there is the added challenge of continually maintaining and demonstrating compliance across vast volumes of sensitive data in distributed environments. 
+              Securing distributed data against sophisticated cyberattacks or the constant threat of ransomware is becoming increasingly more difficult and expensive. For enterprises who are governed by regulatory frameworks such as ISO 27001, there is the added challenge of continually maintaining and demonstrating compliance across vast volumes of sensitive data in distributed environments. 
 
               Confidential Computing helps secure your data in the cloud by using hardware-based Trusted Execution Environments (TEEs). TEEs create a secure, verifiable execution environment that keeps your workload and sensitive data away from prying eyes while preventing the loss of data integrity and theft of intellectual property. As a result, the attack surface is minimized and the likelihood of internal attacks reduced.
 
