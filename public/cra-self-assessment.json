@@ -854,19 +854,21 @@
         {
           "type": "html",
           "name": "scoreSummary",
-          "html": "<div class=\"cra-score-card\"><div class=\"cra-score-row\"><div class=\"cra-score-label\">Readiness score</div><div class=\"cra-score-bar\"><div class=\"cra-score-fill\" style=\"width: {readinessPercentage}%\"></div><div class=\"cra-score-text\">{readinessPercentage}%</div></div></div><div class=\"cra-score-sub\">Score: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></div></div>"
+          "html": "<div class=\"cra-score-card\" style=\"font-family: sans-serif; margin-bottom: 24px; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);\"><div style=\"background-color: {levelColor}; padding: 16px; text-align: center; color: #fff;\"><h3 style=\"margin: 0; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.9;\">Assessment Result</h3><h2 style=\"margin: 4px 0 0 0; font-size: 1.75rem; font-weight: 800;\">{readinessLevel}</h2></div><div style=\"padding: 20px;\"><div class=\"cra-score-row\" style=\"margin-bottom: 12px;\"><div class=\"cra-score-label\" style=\"font-size: 0.875rem; color: #4b5563; margin-bottom: 4px;\">Readiness score</div><div class=\"cra-score-bar\" style=\"position: relative; height: 24px; background: #f3f4f6; border-radius: 8px; overflow: hidden;\"><div class=\"cra-score-fill\" style=\"height: 100%; width: {readinessPercentage}%; background: {levelColor}; transition: width 0.3s;\"></div><div class=\"cra-score-text\" style=\"position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #111827;\">{readinessPercentage}%</div></div></div><div class=\"cra-score-sub\" style=\"font-size: 0.95rem; color: #4b5563; margin-bottom: 16px;\">Score: <strong>{totalScore}</strong> / <strong>{maxScore}</strong></div><div style=\"background: #f9fafb; padding: 15px; border-radius: 8px; border-left: 4px solid {levelColor};\"><p style=\"margin: 0; color: #4b5563; line-height: 1.5; font-size: 0.95rem;\">{readinessComment}</p></div></div></div>"
         },
         {
           "type": "text",
           "name": "company",
           "title": "Company name",
-          "isRequired": true
+          "isRequired": true,
+          "showNumber": false
         },
         {
           "type": "text",
           "name": "email",
           "title": "Email address",
           "isRequired": true,
+          "showNumber": false,
           "inputType": "email"
         },
         {
