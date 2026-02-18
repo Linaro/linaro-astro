@@ -102,6 +102,10 @@
               "text": "SaaS"
             },
             {
+              "value": 6,
+              "text": "Combination of above"
+            },
+            {
               "value": 0,
               "text": "Not Sure"
             }
@@ -714,6 +718,10 @@
             {
               "value": 0,
               "text": "No"
+            },
+            {
+              "value": 2,
+              "text": "Not applicable"
             }
           ]
         }
@@ -736,6 +744,10 @@
             {
               "value": 0,
               "text": "No"
+            },
+            {
+              "value": 2,
+              "text": "Not applicable"
             }
           ]
         }
