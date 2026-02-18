@@ -722,6 +722,10 @@
             {
               "value": 2,
               "text": "Not applicable"
+            },
+            {
+              "value": -1,
+              "text": "Not Sure"
             }
           ]
         }
@@ -748,6 +752,10 @@
             {
               "value": 2,
               "text": "Not applicable"
+            },
+            {
+              "value": -1,
+              "text": "Not Sure"
             }
           ]
         }
