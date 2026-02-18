@@ -61,8 +61,7 @@ flow:
                 - Android Automotive.
 
               Make well-informed design decisions based on data, not just vendor claims. Drive your ADAS/AD strategy with confidence and control.
-            image: |
-              linaro-website/graphics/electric-car-virtual-reality-graphic-road-fast-speed-ev-charging-station-green-energy-eco-power-produced-from-sustainable-source-supply-station-order-reduce-co2_1_tbb2fj.png
+            image: linaro-website/graphics/electric-car-virtual-reality-graphic-road-fast-speed-ev-charging-station-green-energy-eco-power-produced-from-sustainable-source-supply-station-order-reduce-co2_1_tbb2fj.png
           - id: 2
             title: |
               Achieving Performance and Efficiency through Compact Linux and MRAM
@@ -72,8 +71,7 @@ flow:
               Safety critical and time sensitive requirements in automotive systems demand an operating system that can satisfy hard real time constraints. Linaro has a long track record of working with the Linux kernel and as such, knows how best to leverage linux for automotive use cases where there are regulatory safety requirements. 
 
               We believe integrating Magnetoresistive random-access memory (MRAM) into the SoC is the most powerful way to enhance performance and energy efficiency (by establishing a near-memory computing structure in AUTOSAR’s classic or adaptive compute platforms). MRAM, as non-volatile memory, provides fast read and write speeds (comparable to SRAM in read operation), low power consumption and the ability to retain data even when power is lost.
-            image: |
-              linaro-website/graphics/blurred-motion-shiny-luxury-illuminated-night-drive-generative-ai_2_c8fund.png
+            image: linaro-website/graphics/blurred-motion-shiny-luxury-illuminated-night-drive-generative-ai_2_c8fund.png
           - id: 3
             title: |
               Cyber Security for Automotive: OS Long-Term Support for Compliance
@@ -93,8 +91,7 @@ flow:
                 - Access proactive CVE Monitoring to help them meet their regulatory obligations : Actively monitoring security databases for vulnerabilities relevant to the automaker's software stack.
                 - Validate Patches:  Develop, test, and provide high-quality patches for the LTS kernel and AAOS, leveraging Linaro’s world-class CI/CD highly scalable infrastructure (LAVA & ONELab) - ensuring that every update is robust and reliable. 
                 - Access Compliance Artifacts: Provide the documentation and evidence needed to demonstrate compliance with UNECE R155/R156 and the CRA."
-            image: |
-              linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_1_i4tdmh.png
+            image: linaro-website/graphics/smart-car-security-unlock-via-smartphone-digital-remix_1_i4tdmh.png
           - id: 4
             title: |
               Unlocking the True Power of Automotive HPC: Bridge Performance Gaps with OSS software Stacks on HPC
@@ -106,8 +103,7 @@ flow:
                 - Maximize Performance: Tune your software stack to extract every ounce of power from your silicon. 
                 - Run Mixed-Criticality Safely:  Efficiently and safely combine IVI infotainment and safety-critical functions (ASIL) on a single HPC or chiplet. 
                 - Guarantee Freedom From Interference(FFI): Implement robust, certifiable isolation using hypervisors, containers, or discrete safety islands to meet the strictest standards.
-            image: |
-              linaro-website/graphics/futuristic-vehicle-graphical-user-interface-intelligent-car-connected-car-internet-things_1_myz2il.png
+            image: linaro-website/graphics/futuristic-vehicle-graphical-user-interface-intelligent-car-connected-car-internet-things_1_myz2il.png
           - id: 5
             title: |
               Standardizing device access through Virtio
@@ -137,8 +133,7 @@ flow:
               Our lab actively contributes to various open-source projects and communities, collaborating with industry leaders, automakers, and technology providers to develop robust and secure automotive software stacks. By leveraging open-source technologies, we enable faster time-to-market, reduced development costs, and increased transparency in the automotive ecosystem.
 
               <a href="https://www.soafee.io/community/integration-lab/" class="text-linaro-yellow underline" target="_blank">GO TO SOAFEE LAB</a>
-            image: |
-              linaro-website/graphics/shield-security-protection-safety-technology-icon-symbol-cyberspace-checkmark-illustration_1_qjfkvy.png
+            image: linaro-website/graphics/shield-security-protection-safety-technology-icon-symbol-cyberspace-checkmark-illustration_1_qjfkvy.png
   - row: container_row
     styles:
       outer: bg-linaro-purple mb-12
