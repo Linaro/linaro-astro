@@ -136,7 +136,7 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
         });
       }
 
-      const modifiedJson = JSON.parse(JSON.stringify(props.surveyJson));
+      const modifiedJson = structuredClone(props.surveyJson);
 
       // Shared block HTML: banding (level + comment) + score + percentage
       // Uses SurveyJS variables: {levelColor}, {readinessLevel}, {readinessComment}, {totalScore}, {maxScore}, {readinessPercentage}
@@ -192,10 +192,18 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
           ],
         };
 
-        // Contact page: only form fields (company, email, captcha)
-        const formElements = contactElements.filter(
-          (e: any) =>
-            e.name === "company" || e.name === "email" || e.name === "captcha",
+        // Contact page: only form fields
+        const formElementNames = new Set([
+          "fullName",
+          "company",
+          "email",
+          "jobTitle",
+          "phone",
+          "additionalNotes",
+          "captcha",
+        ]);
+        const formElements = contactElements.filter((e: any) =>
+          formElementNames.has(e.name),
         );
         contactPage.elements = formElements;
         contactPage.title = "Contact details";
@@ -258,10 +266,22 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
         setViewState("loading");
 
         const { totalScore, readinessPercentage } = computeScore(sender);
+        const contactLines = [
+          `Full name: ${sender.data.fullName ?? ""}`,
+          `Company: ${sender.data.company ?? ""}`,
+          `Email: ${sender.data.email ?? ""}`,
+          sender.data.jobTitle ? `Job title: ${sender.data.jobTitle}` : null,
+          sender.data.phone ? `Phone: ${sender.data.phone}` : null,
+          sender.data.additionalNotes
+            ? `Additional notes: ${sender.data.additionalNotes}`
+            : null,
+        ]
+          .filter(Boolean)
+          .join("\n");
         const payload = {
           email: sender.data.email ?? "",
           summary: "CRA Self-assessment Results",
-          description: `Company: ${sender.data.company}\nScore: ${totalScore}\nReadiness: ${readinessPercentage}%\n\n${buildAnswersText(sender)}`,
+          description: `${contactLines}\n\nScore: ${totalScore}\nReadiness: ${readinessPercentage}%\n\n${buildAnswersText(sender)}`,
           form_id: "cra-self-assessment-results",
           "frc-captcha-response": captchaToken,
         };
