@@ -61,8 +61,7 @@ flow:
                 - Android Automotive.
 
               Make well-informed design decisions based on data, not just vendor claims. Drive your ADAS/AD strategy with confidence and control.
-            image: |
-              linaro-website/graphics/electric-car-virtual-reality-graphic-road-fast-speed-ev-charging-station-green-energy-eco-power-produced-from-sustainable-source-supply-station-order-reduce-co2_1_tbb2fj.png
+            image: linaro-website/graphics/electric-car-virtual-reality-graphic-road-fast-speed-ev-charging-station-green-energy-eco-power-produced-from-sustainable-source-supply-station-order-reduce-co2_1_tbb2fj.png
           - id: 2
             title: |
               Achieving Performance and Efficiency through Compact Linux and MRAM
