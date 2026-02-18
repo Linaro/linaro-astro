@@ -136,7 +136,7 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
         });
       }
 
-      const modifiedJson = structuredClone(props.surveyJson);
+      const modifiedJson = JSON.parse(JSON.stringify(props.surveyJson));
 
       // Shared block HTML: banding (level + comment) + score + percentage
       // Uses SurveyJS variables: {levelColor}, {readinessLevel}, {readinessComment}, {totalScore}, {maxScore}, {readinessPercentage}
