@@ -1,138 +1,130 @@
 ---
-// Import the v3 base styles first
 import "vanilla-cookieconsent/dist/cookieconsent.css";
-// Then import your custom SCSS overrides
-// import "../../styles/cookies.scss";
+import "../../styles/cookies.scss";
 ---
 
 <script>
   import * as CookieConsent from "vanilla-cookieconsent";
-  document.addEventListener("astro:page-load", () => {
-    CookieConsent.run({
-      // Enables the automatic blocking/enabling of text/plain scripts
-      manageScriptTags: true,
 
-      guiOptions: {
-        consentModal: {
-          layout: "cloud", // box/cloud/bar/popup
-          position: "bottom right", // bottom/middle/top + left/right/center
-          flipButtons: false, // Replaces swap_buttons
-        },
-        preferencesModal: {
-          layout: "box", // box/bar
-        },
+  CookieConsent.run({
+    manageScriptTags: true,
+
+    guiOptions: {
+      consentModal: {
+        layout: "cloud",
+        position: "bottom right",
+        flipButtons: false,
       },
-
-      categories: {
-        necessary: {
-          readOnly: true,
-          enabled: true,
-        },
-        analytics_cookies: {
-          readOnly: false,
-          enabled: true, // Note: Set to true based on your original config
-        },
-        marketing_cookies: {
-          readOnly: false,
-          enabled: true, // Note: Set to true based on your original config
-        },
+      preferencesModal: {
+        layout: "box",
       },
+    },
 
-      language: {
-        default: "en",
-        translations: {
-          en: {
-            consentModal: {
-              title: "Cookies & Privacy Policy",
-              description: `Enabling cookies allows you to use our website to its full extent and to personalize your experience on our sites. They tell us which parts of our websites people have visited, help us measure the effectiveness of ads and web searches and give us insights into user behavior so we can improve our communications with you. <a aria-label="Cookies Policy-Privacy Policy" href="https://www.linaro.org/cookies" target="_blank" class="cc-link">Cookies Policy-Privacy Policy</a>`,
-              acceptAllBtn: "Accept all Cookies",
-              showPreferencesBtn: "Customise Cookies",
-            },
-            preferencesModal: {
-              title: "Cookie settings",
-              savePreferencesBtn: "Save settings",
-              acceptAllBtn: "Accept all",
-              closeIconLabel: "Close",
-              sections: [
-                {
-                  title: "Cookie usage",
-                  description:
-                    'We use cookies to ensure the basic functionalities of the website and to enhance your online experience. You can choose for each category to opt-in/out whenever you want. For more details about cookies and how we use them, read the full <a href="https://www.linaro.org/cookies" class="cc-link" target="_blank">cookie policy</a>.',
-                },
-                {
-                  title: "Analytics cookies",
-                  description:
-                    "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.",
-                  linkedCategory: "analytics_cookies",
-                  cookieTable: {
-                    headers: {
-                      name: "Name",
-                      domain: "Domain",
-                      expiration: "Expiration",
-                      description: "Description",
-                      policy: "Privacy policy",
-                    },
-                    body: [
-                      {
-                        name: "_ga",
-                        domain: "google.com",
-                        expiration: "2 years",
-                        description:
-                          "Permanent cookie used to distinguish users.",
-                        policy:
-                          '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
-                      },
-                      {
-                        name: "_gat",
-                        domain: "google.com",
-                        expiration: "1 minute",
-                        description:
-                          "Permanent Cookie used to throttle request rate. If Google Analytics is deployed via Google Tag Manager, this cookie will be named _dc_gtm_<property-id>.",
-                        policy:
-                          '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
-                      },
-                      {
-                        name: "_gid",
-                        domain: "google.com",
-                        expiration: "1 day",
-                        description:
-                          "Permanent Cookie used to distinguish users.",
-                        policy:
-                          '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
-                      },
-                    ],
+    categories: {
+      necessary: {
+        readOnly: true,
+      },
+      analytics_cookies: {},
+      marketing_cookies: {},
+    },
+
+    language: {
+      default: "en",
+      translations: {
+        en: {
+          consentModal: {
+            title: "Cookies & Privacy Policy",
+            description:
+              'Enabling cookies allows you to use our website to its full extent and to personalize your experience on our sites. They tell us which parts of our websites people have visited, help us measure the effectiveness of ads and web searches and give us insights into user behavior so we can improve our communications with you. <a aria-label="Cookies Policy" href="https://www.linaro.org/cookies" target="_blank" class="cc-link">Cookies Policy-Privacy Policy</a>',
+            acceptAllBtn: "Accept all Cookies",
+            acceptNecessaryBtn: "Reject all", // V3 strongly prefers this button to exist
+            showPreferencesBtn: "Customise Cookies",
+          },
+          preferencesModal: {
+            title: "Cookie settings",
+            savePreferencesBtn: "Save settings",
+            acceptAllBtn: "Accept all",
+            acceptNecessaryBtn: "Reject all",
+            closeIconLabel: "Close",
+            sections: [
+              {
+                title: "Cookie usage",
+                description:
+                  'We use cookies to ensure the basic functionalities of the website and to enhance your online experience. You can choose for each category to opt-in/out whenever you want. For more details about cookies and how we use them, read the full <a href="https://www.linaro.org/cookies" class="cc-link" target="_blank">cookie policy</a>.',
+              },
+              {
+                title: "Analytics cookies",
+                description:
+                  "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.",
+                linkedCategory: "analytics_cookies",
+                cookieTable: {
+                  headers: {
+                    name: "Name",
+                    domain: "Domain",
+                    expiration: "Expiration",
+                    description: "Description",
+                    policy: "Privacy policy",
                   },
-                },
-                {
-                  title: "Marketing Cookies",
-                  description:
-                    "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.",
-                  linkedCategory: "marketing_cookies",
-                  cookieTable: {
-                    headers: {
-                      name: "Name",
-                      domain: "Domain",
-                      expiration: "Expiration",
-                      description: "Description",
-                      policy: "Privacy policy",
+                  body: [
+                    {
+                      name: "_ga",
+                      domain: "google.com",
+                      expiration: "2 years",
+                      description:
+                        "Permanent cookie used to distinguish users.",
+                      policy:
+                        '<a href="https://policies.google.com/privacy?hl=en-US">Privacy Policy</a>',
                     },
-                    body: [
-                      {
-                        name: "marketing cookies",
-                        domain: "linaro.org",
-                        expiration: "2 years",
-                        description: "Cookies used for marketing purposes.",
-                        policy:
-                          '<a href="https://policies.google.com/privacy?hl=en-US" style="word-break: break-all;">Privacy Policy</a>',
-                      },
-                    ],
-                  },
+                    {
+                      name: "_gat",
+                      domain: "google.com",
+                      expiration: "1 minute",
+                      description:
+                        "Permanent Cookie used to throttle request rate.",
+                      policy:
+                        '<a href="https://policies.google.com/privacy?hl=en-US">Privacy Policy</a>',
+                    },
+                    {
+                      name: "_gid",
+                      domain: "google.com",
+                      expiration: "1 day",
+                      description:
+                        "Permanent Cookie used to distinguish users.",
+                      policy:
+                        '<a href="https://policies.google.com/privacy?hl=en-US">Privacy Policy</a>',
+                    },
+                  ],
                 },
-              ],
-            },
+              },
+              {
+                title: "Marketing Cookies",
+                description:
+                  "These cookies collect information about how you use the website, which pages you visited and which links you clicked on.",
+                linkedCategory: "marketing_cookies",
+                cookieTable: {
+                  headers: {
+                    name: "Name",
+                    domain: "Domain",
+                    expiration: "Expiration",
+                    description: "Description",
+                    policy: "Privacy policy",
+                  },
+                  body: [
+                    {
+                      name: "marketing cookies",
+                      domain: "linaro.org",
+                      expiration: "2 years",
+                      description: "Cookies used for marketing purposes.",
+                      policy:
+                        '<a href="https://policies.google.com/privacy?hl=en-US">Privacy Policy</a>',
+                    },
+                  ],
+                },
+              },
+            ],
           },
         },
       },
-    });
+    },
   });
 </script>
