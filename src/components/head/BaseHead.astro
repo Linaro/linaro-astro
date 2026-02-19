@@ -105,8 +105,9 @@ const social_image = getCldOgImageUrl({
   <meta property="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta charset="utf-8" />
+  <Cookies />
 
-  <script type="text/javascript">
+  <script type="text/plain" category="analytics_cookies">
     (function (w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -118,9 +119,7 @@ const social_image = getCldOgImageUrl({
       f.parentNode.insertBefore(j, f);
     })(window, document, "script", "dataLayer", "GTM-5DLPJQ");
   </script>
- 
 
-  {GA_ID ? <Cookies /> : null}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
