@@ -30,7 +30,7 @@ flow:
         cards:
           - text: Preparing For The EU Cyber Resilience Act (CRA) with Linaro
             image:
-              src: linaro-website/graphics/freepik__dynamic-abstract-image-of-software-supply-chain-ma__79869_qioa95.png
+              src: linaro-website/graphics/IMG_2076_h5tjnn.png
               alt: ""
             button:
               text: Read more
