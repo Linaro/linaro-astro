@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: Preparing For The EU Cyber Resilience Act (CRA) with Linaro
+            image:
+              src: linaro-website/graphics/freepik__dynamic-abstract-image-of-software-supply-chain-ma__79869_qioa95.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/WP - Preparing For The EU Cyber Resilience Act (CRA) with Linaro_v6.pdf
           - text: Software Supply Chain Management for Device Makers
             image:
               src: linaro-website/graphics/freepik__dynamic-abstract-image-of-software-supply-chain-ma__79869_qioa95.png
