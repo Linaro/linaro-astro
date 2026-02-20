@@ -200,6 +200,7 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
           "jobTitle",
           "phone",
           "additionalNotes",
+          "agreedToPrivacy",
           "captcha",
         ]);
         const formElements = contactElements.filter((e: any) =>
@@ -244,6 +245,50 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
         setScoreVariables(sender),
       );
 
+      const PRIVACY_ERBOX_CLASS = "cra-privacy-erbox";
+
+      function clearPrivacyError() {
+        const wrapper = document.querySelector<HTMLElement>(
+          "[data-privacy-question]",
+        );
+        if (!wrapper) return;
+        wrapper.classList.remove("sd-question--error");
+        wrapper.querySelector(`.${PRIVACY_ERBOX_CLASS}`)?.remove();
+      }
+
+      function showPrivacyError() {
+        const wrapper = document.querySelector<HTMLElement>(
+          "[data-privacy-question]",
+        );
+        if (!wrapper) return;
+        wrapper.classList.add("sd-question--error");
+        if (wrapper.querySelector(`.${PRIVACY_ERBOX_CLASS}`)) return;
+        const erbox = document.createElement("div");
+        erbox.className = `sd-error sd-question__erbox--below-question ${PRIVACY_ERBOX_CLASS}`;
+        erbox.innerHTML =
+          '<span class="sd-error__item">Please read and accept the privacy policy to proceed.</span>';
+        wrapper.appendChild(erbox);
+      }
+
+      // Mark privacy question root and clear inline error when user checks the box
+      surveyInstance.onAfterRenderQuestion.add((sender, options) => {
+        if (
+          options.question?.name === "agreedToPrivacy" &&
+          options.htmlElement
+        ) {
+          const el = options.htmlElement;
+          const wrapper =
+            el.closest<HTMLElement>(".sd-question") || el.parentElement || el;
+          wrapper.dataset.privacyQuestion = "true";
+          const checkbox = wrapper.querySelector<HTMLInputElement>(
+            "#cra-agreedToPrivacy, input[name='agreedToPrivacy']",
+          );
+          checkbox?.addEventListener("change", () => {
+            if (checkbox.checked) clearPrivacyError();
+          });
+        }
+      });
+
       // Initialize captcha AFTER the contact page DOM is rendered (onCurrentPageChanged fires before DOM is ready)
       surveyInstance.onAfterRenderPage.add((sender, options) => {
         if (options.page?.name === "contact") {
@@ -254,6 +299,16 @@ export default function CraSelfAssessment(props: Readonly<Props>): JSX.Element {
 
       // Handle submit: use onCompleting so we run craSubmit BEFORE survey completes
       surveyInstance.onCompleting.add(async (sender, options) => {
+        clearPrivacyError();
+        const privacyCheckbox = document.querySelector<HTMLInputElement>(
+          "#cra-agreedToPrivacy, input[name='agreedToPrivacy']",
+        );
+        if (!privacyCheckbox?.checked) {
+          showPrivacyError();
+          options.allow = false;
+          return;
+        }
+
         const captchaToken = captchaWidget?.response;
 
         if (!captchaToken) {
