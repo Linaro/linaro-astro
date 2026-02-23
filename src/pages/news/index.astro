@@ -21,12 +21,10 @@ const isSsr = import.meta.env.DEV || !import.meta.env.IS_PUBLIC;
 ---
 
 <BaseLayout title="Newsroom" description="A list of blogs">
-  <div
-    class="purple-gradient-container absolute h-[50rem] w-full z-[-1] top-[30rem]"
-  >
+  <div class="purple-gradient-container absolute h-200 w-full z-[-1] top-120">
   </div>
   <main
-    class="hero-banner-layout hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0"
+    class="hero-banner-layout hero-background-image container mx-auto px-2 sm:px-4 md:px-8 z-0 bg-position-[top_right] xl:bg-position-[top_-1rem_right] bg-size-[100%] lg:bg-size-[50%] pb-144 -mb-144"
   >
     <h1 class="text-5xl my-12 font-bold">Newsroom</h1>
     <BlogSearch client:only="solid-js" tags={tags} type="news" isSsr={isSsr} />
@@ -35,5 +33,6 @@ const isSsr = import.meta.env.DEV || !import.meta.env.IS_PUBLIC;
 <style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
   .hero-background-image {
     background-image: var(--backgroundUrl);
+    background-repeat: no-repeat;
   }
 </style>

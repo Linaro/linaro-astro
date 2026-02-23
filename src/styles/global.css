@@ -33,16 +33,11 @@
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
 }
-
-/* 5. BASE LAYER */
 @layer base {
   html {
     font-family: var(--font-sans);
     @apply bg-background text-white;
 
-    /* Typography Plugin Overrides 
-       Replaces: typography: (theme) => ({ DEFAULT: { css: { color: "white" } } }) 
-       We explicitly set prose variables to white. */
     --tw-prose-body: white;
     --tw-prose-headings: white;
     --tw-prose-lead: white;
@@ -60,93 +55,122 @@
   }
 }
 
-@layer components {
-  .container {
+@utility container {
     width: 100%;
     margin-inline: auto;
     padding-inline: 1rem;
     
-    @media (min-width: theme(--breakpoint-sm)) { max-width: 640px; }
-    @media (min-width: theme(--breakpoint-md)) { max-width: 768px; padding-inline: 2rem; }
-    @media (min-width: theme(--breakpoint-lg)) { max-width: 1024px; }
-    @media (min-width: theme(--breakpoint-xl)) { max-width: 1280px; }
+    /* In v4, we use @variant instead of @media for breakpoints */
+    @variant sm { max-width: 640px; }
+    @variant md { max-width: 768px; padding-inline: 2rem; }
+    @variant lg { max-width: 1024px; }
+    @variant xl { max-width: 1280px; }
     
-    /* Your custom 2xl constraint */
-    @media (min-width: theme(--breakpoint-2xl)) { 
-      max-width: 1576px; 
+    /* This will automatically pull your custom 1576px from @theme */
+    @variant 2xl { max-width: 1576px; }
+  }
+
+
+@utility nav-hover {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 0.25rem;
+    transition-duration: 150ms;
+    
+    @variant lg {
+      @apply bg-linaro-yellow;
     }
+  }
+  
+  &:hover::before {
+    width: 100%;
+    left: 0;
   }
 }
 
-/* 6. UTILITIES LAYER */
-@layer utilities {
-  /* 1. Define the gradient text utility first */
-  .linaro-gradient-text {
-    @apply bg-linaro-gradient bg-clip-text text-transparent;
-  }
+@utility nav-active {
+  @apply linaro-gradient-text;
+}
 
-  /* 2. Fix: Don't @apply linaro-gradient-text. 
-     Instead, use the underlying utilities directly. */
-  .nav-active {
-    @apply bg-linaro-gradient bg-clip-text text-transparent;
-  }
+@utility nav-inactive {
+  @apply text-white;
+}
 
-  .nav-inactive {
-    @apply text-white;
-  }
-  
-  .nav-hover {
-    position: relative;
-    
-    &:before {
-      @apply w-0 lg:bg-linaro-yellow content-[""] bottom-0 h-1 block absolute left-[50%] duration-150;
-    }
-    
-    &:hover:before {
-      @apply w-full left-0;
-    }
-  }
+@utility linaro-gradient-text {
+  background-clip: text;
+  color: transparent;
+  @apply bg-linaro-gradient;
+}
 
-  /* Gradient Buttons */
-  .linaro-gradient-button {
-    @apply px-6 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
-  }
+@utility linaro-gradient-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  @apply bg-linaro-gradient text-white;
 
-  .linaro-gradient-button-small {
-    @apply px-4 py-2 bg-linaro-gradient text-white rounded-full relative overflow-hidden;
-  }
-
-  /* Button Shine Effect */
-  .linaro-gradient-button::before, 
-  .linaro-gradient-button-small::before {
-    content: '';
+  &::before {
+    content: "";
     position: absolute;
     width: 150px;
     height: 100%;
     background-image: linear-gradient(
-        120deg,
-        rgba(255,255,255, 0) 30%,
-        rgba(255,255,255, 0.3),
-        rgba(255,255,255, 0) 70%
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0) 70%
     );
     top: 0;
     left: -150px;
     transition: none;
   }
 
-  .linaro-gradient-button:hover::before, 
-  .linaro-gradient-button-small:hover::before {
+  &:hover::before {
     left: 100%;
     transition: all 0.65s ease-out;
   }
+}
 
-  /* Gradient Border */
-  .linaro-gradient-border {
-    position: relative;
-    background-clip: padding-box; 
+@utility linaro-gradient-button-small {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  @apply bg-linaro-gradient text-white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -150px;
+    transition: none;
   }
 
-  .linaro-gradient-border::before {
+  &:hover::before {
+    left: 100%;
+    transition: all 0.65s ease-out;
+  }
+}
+
+/* gradient-border */
+@utility linaro-gradient-border {
+  position: relative;
+  background-clip: padding-box;
+
+  &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -159,43 +183,41 @@
     box-sizing: border-box;
     @apply bg-linaro-gradient;
   }
+}
 
-  .fade-border {
-    @apply w-full bg-border-gradient h-[2px];
-  }
+/* fading section divider */
+@utility fade-border {
+  width: 100%;
+  height: 2px;
+  @apply bg-border-gradient;
+}
 
-  .fade-border-bottom::after {
+@utility fade-border-bottom {
+  &::after {
     content: "";
     display: inline-block;
-    /* FIX: replaced 'fade-border' with 'w-full bg-border-gradient h-[2px]' */
-    @apply absolute w-full bg-border-gradient h-[2px] bottom-0;
+    position: absolute;
+    bottom: 0;
+    @apply fade-border;
   }
+}
 
-  .purple-gradient-container {
-    @apply bg-purple-gradient py-24 pb-[12rem] mb-[-12rem];
-  }
+@utility purple-gradient-container {
+  padding-top: 6rem;
+  padding-bottom: 12rem;
+  margin-bottom: -12rem;
+  @apply bg-purple-gradient;
+}
 
-  .purple-gradient-container-no-padding {
-    @apply bg-purple-gradient;
-  }
+@utility purple-gradient-container-no-padding {
+  @apply bg-purple-gradient;
+}
 
-  .hero-background-image {
-    background-repeat: no-repeat;
-    
-    /* Base Mobile Styles */
-    @apply bg-[position:top_right] bg-[size:100%] pb-[36rem] -mb-[36rem];
+/* Standard CSS classes (like your score cards) can just live normally 
+  at the bottom of the file without being wrapped in layers in v4. 
+*/
 
-    /* Desktop Breakpoints */
-    @media (min-width: theme(--breakpoint-lg)) {
-      @apply bg-[size:50%];
-    }
-
-    @media (min-width: theme(--breakpoint-xl)) {
-      @apply bg-[position:top_-1rem_right];
-    }
-  }
-
-  .cra-score-card {
+.cra-score-card {
   padding: 16px;
   border-radius: 12px;
   background: white;
@@ -246,5 +268,4 @@
 .cra-score-sub {
   margin-top: 8px;
   color: rgba(0, 0, 0, 0.7);
-}
 }
