@@ -2,6 +2,7 @@
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animated";
 @plugin "tw-elements/plugin.cjs";
+@plugin "@tailwindcss/forms";
 
 @source "../node_modules/tw-elements/dist/js/**/*.js";
 
@@ -27,8 +28,6 @@
   --animate-infinite-scroll: infinite-scroll 50s linear infinite;
 }
 
-/* 4. KEYFRAMES */
-/* Standard CSS keyframes work automatically with the --animate variable above */
 @keyframes infinite-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
@@ -58,7 +57,8 @@
 @utility container {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: auto;
+    @media (width >= 320px) { max-width: 100%; }
     
     /* In v4, we use @variant instead of @media for breakpoints */
     @variant sm { max-width: 640px; }
@@ -269,3 +269,4 @@
   margin-top: 8px;
   color: rgba(0, 0, 0, 0.7);
 }
+
