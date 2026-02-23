@@ -907,6 +907,11 @@
           "type": "html",
           "name": "captcha",
           "html": "<div id=\"friendly-captcha-widget\" class=\"frc-captcha\"></div>"
+        },
+        {
+          "type": "html",
+          "name": "agreedToPrivacy",
+          "html": "<div class=\"cra-privacy-agreement\" style=\"display: flex; align-items: flex-start; gap: 8px; margin: 16px 0;\"><input type=\"checkbox\" id=\"cra-agreedToPrivacy\" name=\"agreedToPrivacy\" required style=\"margin-top: 4px;\" /><label for=\"cra-agreedToPrivacy\" style=\"cursor: pointer; font-size: 1rem;\">I've read and agreed to Linaro's <a href=\"/legal#privacy\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a>.</label></div>"
         }
       ]
     }
