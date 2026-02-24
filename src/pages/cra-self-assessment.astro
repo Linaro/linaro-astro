@@ -43,6 +43,7 @@ const surveyJson = JSON.parse(surveyJsonContent);
     </div>
   </main>
   <style is:global>
+    @reference "tailwindcss";
     /* Policy error: normal box, Tailwind-based */
     .cra-self-assessment-wrapper .sv-save-data_root.sv-save-data_error,
     .cra-self-assessment-wrapper
@@ -64,7 +65,9 @@ const surveyJson = JSON.parse(surveyJsonContent);
       @apply text-gray-700;
     }
     /* Privacy required error: same look as other required fields (light red background + red message) */
-    .cra-self-assessment-wrapper [data-privacy-question].sd-question--error .cra-privacy-agreement {
+    .cra-self-assessment-wrapper
+      [data-privacy-question].sd-question--error
+      .cra-privacy-agreement {
       background-color: var(--sjs-special-red-light, rgba(230, 10, 62, 0.1));
       border-radius: var(--sjs-corner-radius, 4px);
       padding: 12px;
