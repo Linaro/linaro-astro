@@ -41,7 +41,7 @@ if (background_image) {
           <div class="w-full text-center">
             <h2
               class:list={[
-                "text-white relative whitespace-prewrap my-0 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
+                "!my-0 not-prose text-white relative whitespace-prewrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
                 styles?.title ?? "md:min-w-[25ch]",
               ]}
               set:html={titleMarkdown}
@@ -52,7 +52,7 @@ if (background_image) {
             <div class="fade-border" />
             <h2
               class:list={[
-                "text-white relative whitespace-prewrap my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
                 styles?.title ?? "md:min-w-[25ch]",
               ]}
               set:html={titleMarkdown}
