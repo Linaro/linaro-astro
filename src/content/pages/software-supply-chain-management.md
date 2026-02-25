@@ -37,7 +37,7 @@ flow:
           # divider: true
         styles:
           container: mx-auto flex flex-col md:flex-row gap-4 md:gap-0 justify-evenly px-4 items-center
-          card: bg-[linear-gradient(90deg,#FFCE0033_0%,#FFCE0000_100%)] w-80 h-48 md:h-64 flex flex-col p-4 text-xs m-0
+          card: "bg-[linear-gradient(90deg,#FFCE0033_0%,#FFCE0000_100%)] w-80 h-48 md:h-64 flex flex-col p-4 text-xs !m-0"
           content: "!text-sm md:!text-lg"
           card_title: "text-lg md:text-xl text-linaro-yellow !my-0"
         cards:

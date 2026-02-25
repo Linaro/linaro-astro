@@ -56,8 +56,7 @@ flow:
               Linaro specializes in developing code to meet the demanding quality standards required for upstreaming to the Linux kernel and has supported many companies in contributing their software upstream. By ensuring that your software is updatable to the latest kernel—and by minimizing the amount of non-upstream code you use your products will benefit from the most up-to-date open-source software and a clear strategy to achieve compliance with new cybersecurity regulations. 
 
               Once your product aligns closely with the upstream mainline kernel,the cost, complexity and cycle time to update, including new features and security patches, is very significantly reduced. This enables you to focus on innovation instead of managing costly repeated porting of your out-of-tree code to achieve compatibility with every new kernel release.
-            image: |
-              linaro-website/graphics/freepik__abstract-dynamic-image-showing-leveraging-software__49848_1_pj1ujb.png
+            image: linaro-website/graphics/freepik__abstract-dynamic-image-showing-leveraging-software__49848_1_pj1ujb.png
           - id: 2
             title: |
               Lifetime support for secure and innovative industrial products
@@ -69,8 +68,7 @@ flow:
               Consult with Linaro to better understand the trade-offs for long-term support, vs the possibility of migrating kernel versions in the field for industrial devices, and how to provide the security and stability you need to keep innovating without the risk of disrupting your product. We have spent many years delivering, maintaining, and testing Long Term Support Linux kernels for Arm. We automatically deploy and test operating systems and software, catching regressions early so fixes can be submitted promptly. With the right approach to managing your kernel codebase and minimizing the out-of-tree support load, your customers will appreciate the benefits of a sustainable support model.
 
               Speak with Linaro to learn how our world-class open-source engineers can monitor and integrate the latest fixes and CVEs for projects such as the Linux kernel, OP-TEE, Trusted Firmware-A, and U-Boot.
-            image: |
-              linaro-website/graphics/freepik__abstract-dynamic-image-showing-leveraging-software__49849_1_i37mpp.png
+            image: linaro-website/graphics/freepik__abstract-dynamic-image-showing-leveraging-software__49849_1_i37mpp.png
           - id: 3
             title: |
               Achieve regulatory compliance with Linaro’s Experts 
@@ -88,8 +86,7 @@ flow:
                 - Analyse the provenance of each software package to highlight potential cybersecurity risks
                 
                 - Continuously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
-            image: |
-              linaro-website/graphics/freepik__abstract-dynamic-image-showing-regulatory-complian__49850_1_eog0gn.png
+            image: linaro-website/graphics/freepik__abstract-dynamic-image-showing-regulatory-complian__49850_1_eog0gn.png
   - row: container_row
     styles:
       outer: bg-linaro-purple mb-12

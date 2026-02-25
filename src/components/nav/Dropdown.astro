@@ -37,7 +37,10 @@ const { title, lastItem, children } = Astro.props;
     </div>
   </div>
 </menu>
-<style lang="scss">
+
+<style>
+  @reference "../../styles/global.css";
+
   .open {
     button {
       @apply bg-linaro-gradient bg-clip-text text-transparent;

@@ -32,16 +32,16 @@ const imageEffects = upcoming
   : (["grayscale"] as [CloudinaryEffect]);
 ---
 
-<section class="px-[10px] mt-4">
+<section class="px-2.5 mt-4">
   <div
-    class="container rounded-[24px] linaro-gradient-border bg-dark mb-24 max-w-5xl mx-auto"
+    class="container rounded-3xl linaro-gradient-border bg-dark mb-24 max-w-5xl mx-auto px-0"
   >
     <CloudinaryImg
       src={image}
       alt=""
       width={1000}
       height={1000}
-      class="w-full object-cover max-h-[30rem] rounded-t-[14px] p-0"
+      class="w-full object-cover max-h-120 rounded-t-[14px] p-0"
       data-pagefind-meta="image[src], image_alt[alt]"
       effects={imageEffects}
     />
