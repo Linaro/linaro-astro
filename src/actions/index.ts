@@ -43,6 +43,29 @@ const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
   return res.json();
 };
 
+export const craSubmit = defineAction({
+  accept: "json",
+  handler: async (input) => {
+    const res = await fetch(
+      "https://tfiwmhtln2.execute-api.us-east-1.amazonaws.com/formSubmit",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      },
+    );
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Backend error");
+    }
+
+    return await res.json();
+  },
+});
+
 export const server = {
   contact: defineAction({
     accept: "json",
@@ -227,4 +250,5 @@ export const server = {
       return { success: true, message: "Thank you for contacting us." };
     },
   }),
+  craSubmit,
 };

@@ -54,8 +54,7 @@ flow:
               Porting your software to run efficiently on Arm-based systems is more than just recompiling your code. Code will need optimising to be performant - both the high-level software and underlying systems libraries and tools. 
 
               Linaro’s track record in maintaining power management subsystems on the Linux kernel and maintaining toolchains such as GNU and LLVM is well known and as such, we are perfectly placed to work with you on optimizing your code to ensure your device efficiently uses storage, enjoys long battery life and more. We specialize in optimizing code for the Linux kernel, Arm Architecture, Compilers (gcc, LLVM, flang) and System c libraries (glibc).
-            image: |
-              linaro-website/graphics/freepik__abstract-dynamic-image-showing-embedded-solution-t__83188_1_jlwrzi.png
+            image: linaro-website/graphics/freepik__abstract-dynamic-image-showing-embedded-solution-t__83188_1_jlwrzi.png
           - id: 2
             title: |
               Protect your consumers’ devices with Long-Term Support
@@ -65,8 +64,7 @@ flow:
               Legally, manufacturers are required to provide OS and security updates for phones, tablets and laptops for anything between five to ten years. Yet the Linux Kernel on which many products are built is usually only supported for two to six years. This means that device makers must find a way to ensure their products remain supported long after upstream software maintenance ends. 
 
               In this scenario, there are two options: migrate to a newer kernel or take on long-term software maintenance in-house. Both approaches require significant expertise and experience. This is where Linaro can help. We provide long-term support for your device, ensuring it stays up to date with the latest security fixes and feature enhancements. We can maintain your software over its full lifecycle so that you have peace of mind and can focus on differentiating your product.
-            image: |
-              linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-compliance-on-__88629_1_kej04p.png
+            image: linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-compliance-on-__88629_1_kej04p.png
           - id: 3
             title: |
               Achieve regulatory compliance with Linaro's Experts
@@ -84,8 +82,7 @@ flow:
                 - Analyse the provenance of each software package to highlight potential cybersecurity risks
                 
                 - Continuously monitor and achieve compliance by integrating Linaro’s toolchain into your CI/CD pipeline
-            image: |
-              linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-secure-user-ex__88630_1_eg3oja.png
+            image: linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-secure-user-ex__88630_1_eg3oja.png
           - id: 4
             title: |
               Enabling Open Source Packages to run natively on Windows and Android on Arm
@@ -95,8 +92,7 @@ flow:
               Android on Arm and Windows on Arm would not be where they are today had Linaro not driven the work needed to advance these ecosystems. In both cases, Linaro worked with companies such as Google, HiSilicon, Qualcomm, Samsung, Microsoft, Arm and CIX to enable open source packages to run natively on Arm-based devices running Windows and/or Android. This work helped improve performance, reduce power consumption and ultimately deliver an exceptional user experience. 
 
               While Linaro does not drive these collaborations today, we still have the expertise to work with companies looking to enable open source packages to run natively on their device.
-            image: |
-              linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-optimised-user__88631_1_hngdqs.png
+            image: linaro-website/graphics/freepik__dramatic-and-abstract-image-showing-optimised-user__88631_1_hngdqs.png
   - row: container_row
     styles:
       outer: bg-linaro-purple mb-12
