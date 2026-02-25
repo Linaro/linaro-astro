@@ -21,7 +21,7 @@ const { title, lastItem, children } = Astro.props;
     aria-expanded="false"
   >
     <div class:list={[" lg:absolute w-full z-10 mt-1 lg:left-0"]}>
-      <div class="flex flex-col lg:flex-row w-full">
+      <div class="flex flex-col lg:flex-row w-full flex-wrap">
         {
           children.map((item: any) => (
             <a

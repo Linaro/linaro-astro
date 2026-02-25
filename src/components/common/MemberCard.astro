@@ -13,7 +13,7 @@ const { id, id2, name, title, image, info, company } = Astro.props;
 
 {
   id2 === "speakers" ? (
-    <li class="relative flex p-4 flex-col items-start rounded-2xl text-white border border-linaro-yellow aspect-square w-full max-w-[30ch] h-auto pb-16 min-h-[500px]">
+    <li class="relative flex p-4 flex-col items-start rounded-2xl text-white border border-linaro-yellow w-full max-w-[30ch] h-auto pb-16 min-h-[500px]">
       <div class="w-full aspect-[4/5] overflow-hidden rounded-2xl mb-4 flex">
         <CloudinaryImg
           src={image}
@@ -33,7 +33,7 @@ const { id, id2, name, title, image, info, company } = Astro.props;
       </div>
     </li>
   ) : (
-    <li class="flex px-4 flex-col items-start rounded-2xl text-white bg-black aspect-square px-1 w-full max-w-[30ch] h-auto">
+    <li class="flex flex-col items-start w-full max-w-[30ch] rounded-2xl bg-black text-white px-4 h-auto">
       <CloudinaryImg
         src={image}
         alt={name}
