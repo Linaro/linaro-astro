@@ -159,6 +159,7 @@ export const server = {
         console.log("searching person...");
 
         // B. Handle Person
+        let shouldAssignToBill = false;
         const personSearch = await pipelineFetch(
           `/people?conditions[person_email]=${encodeURIComponent(input.email)}`,
         );
@@ -184,13 +185,7 @@ export const server = {
           console.log("person created with id: ", personId);
 
           if (newPerson.id) {
-            console.log("adding bill's id...");
-            //update person owner id
-            await pipelineFetch(`/people/${newPerson.id}`, {
-              method: "PUT",
-              body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
-            });
-            console.log("Person assigned to bill");
+            shouldAssignToBill = true;
           }
         }
 
@@ -248,6 +243,18 @@ export const server = {
         } else {
           console.warn("[CRM-DEBUG] Skipping notes creation: No Person ID available.");
         }
+
+        // D. Assign to Bill (Moved to after notes creation to prevent permission lockout)
+        if (shouldAssignToBill && personId) {
+          console.log("adding bill's id...");
+          //update person owner id
+          await pipelineFetch(`/people/${personId}`, {
+            method: "PUT",
+            body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
+          });
+          console.log("Person assigned to bill");
+        }
+
         console.log("[CRM-DEBUG] Success");
       } catch (e) {
         console.error("Pipeline CRM Integration Failed", e);
