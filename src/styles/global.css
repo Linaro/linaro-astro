@@ -1,0 +1,272 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animated";
+@plugin "tw-elements/plugin.cjs";
+@plugin "@tailwindcss/forms";
+
+@source "../node_modules/tw-elements/dist/js/**/*.js";
+
+@theme {
+  --breakpoint-2xl: 1576px;
+
+  --font-sans: "sofia-pro", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Colors */
+  --color-linaro-yellow: #FFCE00;
+  --color-linaro-purple: #6715E8;
+  --color-grey: #6B6B6B;
+  --color-background: #222025;
+  --color-darker: #1B181C;
+  --color-dark: #222025;
+
+  /* Background Images (Gradients) */
+  --background-image-linaro-gradient: linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%);
+  --background-image-purple-gradient: linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #420D90 44%, #420D90 55%, rgba(58, 12, 130, 0.00) 100%);
+  --background-image-border-gradient: linear-gradient(90deg, rgba(0,0,0,0) 0%, #545454 49%, rgba(0,0,0,0) 100%);
+
+  /* Animations */
+  --animate-infinite-scroll: infinite-scroll 50s linear infinite;
+}
+
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    @apply bg-background text-white;
+
+    --tw-prose-body: white;
+    --tw-prose-headings: white;
+    --tw-prose-lead: white;
+    --tw-prose-links: white;
+    --tw-prose-bold: white;
+    --tw-prose-counters: white;
+    --tw-prose-bullets: white;
+    --tw-prose-hr: white;
+    --tw-prose-quotes: white;
+    --tw-prose-quote-borders: white;
+    --tw-prose-captions: white;
+    --tw-prose-code: white;
+    --tw-prose-th-borders: white;
+    --tw-prose-td-borders: white;
+  }
+}
+
+@utility container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: auto;
+    @media (width >= 320px) { max-width: 100%; }
+    
+    /* In v4, we use @variant instead of @media for breakpoints */
+    @variant sm { max-width: 640px; }
+    @variant md { max-width: 768px; padding-inline: 2rem; }
+    @variant lg { max-width: 1024px; }
+    @variant xl { max-width: 1280px; }
+    
+    /* This will automatically pull your custom 1576px from @theme */
+    @variant 2xl { max-width: 1576px; }
+  }
+
+
+@utility nav-hover {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 0.25rem;
+    transition-duration: 150ms;
+    
+    @variant lg {
+      @apply bg-linaro-yellow;
+    }
+  }
+  
+  &:hover::before {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@utility nav-active {
+  @apply linaro-gradient-text;
+}
+
+@utility nav-inactive {
+  @apply text-white;
+}
+
+@utility linaro-gradient-text {
+  background-clip: text;
+  color: transparent;
+  @apply bg-linaro-gradient;
+}
+
+@utility linaro-gradient-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  @apply bg-linaro-gradient text-white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -150px;
+    transition: none;
+  }
+
+  &:hover::before {
+    left: 100%;
+    transition: all 0.65s ease-out;
+  }
+}
+
+@utility linaro-gradient-button-small {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  @apply bg-linaro-gradient text-white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -150px;
+    transition: none;
+  }
+
+  &:hover::before {
+    left: 100%;
+    transition: all 0.65s ease-out;
+  }
+}
+
+/* gradient-border */
+@utility linaro-gradient-border {
+  position: relative;
+  background-clip: padding-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -10px;
+    border-radius: inherit;
+    box-sizing: border-box;
+    @apply bg-linaro-gradient;
+  }
+}
+
+/* fading section divider */
+@utility fade-border {
+  width: 100%;
+  height: 2px;
+  @apply bg-border-gradient;
+}
+
+@utility fade-border-bottom {
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    @apply fade-border;
+  }
+}
+
+@utility purple-gradient-container {
+  padding-top: 6rem;
+  padding-bottom: 12rem;
+  margin-bottom: -12rem;
+  @apply bg-purple-gradient;
+}
+
+@utility purple-gradient-container-no-padding {
+  @apply bg-purple-gradient;
+}
+
+/* Standard CSS classes (like your score cards) can just live normally 
+  at the bottom of the file without being wrapped in layers in v4. 
+*/
+
+.cra-score-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+.cra-score-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cra-score-label {
+  white-space: nowrap;
+}
+
+.cra-score-bar {
+  position: relative;
+  flex: 1; /* ✅ IMPORTANT: makes the bar take remaining width */
+  min-width: 0; /* ✅ prevents overflow issues in flex */
+  height: 16px;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.cra-score-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 200ms ease;
+  background: linear-gradient(90deg, #f59e0b, #a855f7);
+}
+
+.cra-score-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  pointer-events: none;
+}
+
+.cra-score-sub {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.7);
+}
+

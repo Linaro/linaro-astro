@@ -21,7 +21,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-p:text-2xl
+          container: flex justify-around gap-12 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-p:text-2xl pl-0
           card: max-w-[90ch]
           card_title: text-linaro-yellow
         cards:
@@ -41,7 +41,7 @@ flow:
               ### *Linaro is about*
         styles:
           card: prose-em:linaro-gradient-text prose-em:font-bold prose-em:not-italic prose-p:text-3xl prose-headings:text-5xl
-          container: flex justify-center
+          container: flex justify-center pl-0
       - component: graphic
         src: linaro-website/graphics/content/linaro-is-about
         alt: "Linaro is about joining together expertise, innovation, open standards and community"
@@ -65,7 +65,7 @@ flow:
     sections:
       - component: cards
         styles:
-          container: flex justify-center
+          container: flex justify-center pl-0
           card_title: text-linaro-yellow
           card: text-center
         cards:
@@ -75,5 +75,5 @@ flow:
         form_id: "7"
         formName: "sales_contact"
         styles:
-          card: flex justify-center
+          card: flex flex-col justify-center pl-0 w-full mx-auto
 ---
