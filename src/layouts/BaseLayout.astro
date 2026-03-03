@@ -158,9 +158,13 @@ const { title, description, type = "website", image } = Astro.props;
           const { passcode, url, type } = await res.json();
 
           if (type === "video") {
-            // Close the modal dialog
+            // Close the modal dialog and hide its trigger button
             const dialog = form.closest("dialog");
-            if (dialog) dialog.close();
+            if (dialog) {
+              dialog.close();
+              const triggerButton = document.getElementById(`${dialog.id}-trigger`);
+              if (triggerButton) triggerButton.classList.add("hidden");
+            }
 
             // Populate and reveal the on-page video player
             const videoContainer = document.getElementById("webinar-video-container");
