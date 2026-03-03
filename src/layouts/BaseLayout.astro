@@ -163,7 +163,7 @@ const { title, description, type = "website", image } = Astro.props;
             if (dialog) {
               dialog.close();
               const triggerButton = document.getElementById(`${dialog.id}-trigger`);
-              if (triggerButton) triggerButton.classList.add("hidden");
+              if (triggerButton) (triggerButton as HTMLElement).style.display = "none";
             }
 
             // Populate and reveal the on-page video player
