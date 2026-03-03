@@ -26,6 +26,7 @@ const {
 </style>
 
 <button
+  id={`${modal_id}-trigger`}
   class={`linaro-gradient-button ${styles.buttonStyles}`}
   onclick={`window.${modal_id}.showModal()`}>{button_text}</button
 >
@@ -33,7 +34,7 @@ const {
   <dialog
     data-contact-modal={modal_id}
     id={modal_id}
-    class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[10%] right-0 left-0 mb-4"
+    class="bg-transparent rounded-xl mx-auto fixed top-0 md:top-[5%] right-0 left-0 mb-4 max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto"
   >
     <div class="flex flex-col items-center max-w-max">
       <WebinarContactForm
