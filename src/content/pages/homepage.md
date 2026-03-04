@@ -9,7 +9,7 @@ hero:
   background_image: linaro-website/graphics/bg-logo-6
   styles:
     text_container: max-w-4xl
-    background: bg-right-top 2xl:bg-[length:1500px]
+    background: bg-right-top 2xl:bg-[length:1500px] opacity-70
     background_container: mr-[20%] xl:mr-[10%] mt-[-5%]
   carousel:
     slides:
@@ -18,12 +18,12 @@ hero:
           text: I want to know more about Linaro Training
           url: https://training.linaro.com/w/US
         image:
-          src: linaro-website/graphics/young-elementary-school-girl-watching-online-education-class-coronavirus-covid-19-lockdown-education-concept_1_f7in5z.png
+          src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772534784/linaro-website/graphics/young-elementary-school-girl-watching-online-education-class-coronavirus-covid-19-lockdown-education-concept_1_f7in5z.png
           alt: A Hands On Introduction to Rust - Linaro Training
       - title: "Testing & Automation Services - Ready to Scale your Validation Strategy?"
         button:
           text: Discover More
-          url: /contact
+          url: /services/testingandautomation
         image:
           src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772537707/linaro-website/graphics/testingandautomation-bg.png
           alt: Linaro Arm ecosystem
@@ -47,7 +47,7 @@ flow:
   - row: container_row
     title: '<span class="linaro-gradient-text">Start your journey now!</span>'
     styles:
-      outer: bg-background
+      outer: bg-background pt-12 xl:pt-20
       inner: "py-0"
     sections:
       - component: journey_process
@@ -76,11 +76,12 @@ flow:
     sections:
       - component: image_cards
         styles:
-          container: max-w-full mx-auto justify-around gap-2 xl:gap-8 flex flex-wrap
+          container: max-w-full mx-auto justify-around gap-2 xl:gap-8 flex flex-wrap [&_img]:mt-[2em] xl:[&_img]:mt-[3em]
           card: relative xl:h-[15rem] xl:w-[15rem] w-[10rem] h-[10rem]
           imageWrapper: absolute inset-0 w-full h-full
-          card_title: absolute inset-0 flex flex-col items-center justify-center text-center max-w-full px-4 text-xl xl:text-2xl py-0 m-0 z-10
-          image: absolute inset-0 w-full h-full object-contain
+          card_title: flex flex-col items-center justify-center h-full text-center max-w-full px-8 text-base xl:text-2xl py-0 m-0
+          image: absolute w-full h-full aspect-square top-0 left-0 right-0 bottom-0 mx-auto my-auto
+          # image: absolute inset-0 w-full h-full object-contain
         cards:
           - title: Test Automation
             image:

@@ -33,7 +33,11 @@ function getImageSrc(image: { src: string; alt: string }) {
   class:list={["hero-carousel relative w-full max-w-5xl mx-auto rounded-2xl hero-carousel-gradient-border", styles?.container]}
   data-slide-count={slides.length}
 >
-  <div class="relative flex rounded-[15px] overflow-hidden bg-[#2a2730]">
+  <div class="relative rounded-[15px] overflow-hidden bg-[#2a2730] h-[420px] md:h-[460px] lg:h-[500px]">
+    <div
+      class="hero-carousel-track flex h-full transition-transform duration-500 ease-out"
+      style={`width: ${slides.length * 100}%; --carousel-index: 0; --carousel-total: ${slides.length}`}
+    >
     {
       slides.map((slide, i) => {
         const bgUrl = getImageSrc(slide.image);
@@ -41,11 +45,10 @@ function getImageSrc(image: { src: string; alt: string }) {
         return (
           <article
             class:list={[
-              "hero-carousel-slide hero-carousel-slide-bg relative w-full flex-shrink-0 flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-[400px] md:h-[360px] bg-right bg-no-repeat",
-              i !== 0 && "hidden",
+              "hero-carousel-slide hero-carousel-slide-bg relative flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-full bg-right bg-no-repeat",
               styles?.slide,
             ]}
-            style={`background-image: url("${String(bgUrlCss).replace(/"/g, '\\"')}");`}
+            style={`flex: 0 0 ${100 / slides.length}%; min-width: ${100 / slides.length}%; background-image: url("${String(bgUrlCss).replace(/"/g, '\\"')}");`}
             data-index={i}
             aria-hidden={i !== 0}
           >
@@ -74,6 +77,7 @@ function getImageSrc(image: { src: string; alt: string }) {
         );
       })
     }
+    </div>
   </div>
 
   <button
@@ -109,6 +113,10 @@ function getImageSrc(image: { src: string; alt: string }) {
     background-position: right center;
   }
 
+  .hero-carousel-track {
+    transform: translateX(calc(-1 * var(--carousel-index) * (100% / var(--carousel-total))));
+  }
+
   .hero-carousel-overlay {
     background: linear-gradient(
       to right,
@@ -124,20 +132,22 @@ function getImageSrc(image: { src: string; alt: string }) {
 
 <script>
   function initHeroCarousel(container: HTMLElement) {
+    const track = container.querySelector<HTMLElement>(".hero-carousel-track");
     const slides = container.querySelectorAll<HTMLElement>(".hero-carousel-slide");
     const prevBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-prev");
     const nextBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-next");
     const total = slides.length;
-    if (total <= 1) {
+    if (total <= 1 || !track) {
       prevBtn?.setAttribute("aria-hidden", "true");
       nextBtn?.setAttribute("aria-hidden", "true");
       return;
     }
     let index = 0;
     function goTo(i: number) {
+      if (!track) return;
       index = ((i % total) + total) % total;
+      track.style.setProperty("--carousel-index", String(index));
       slides.forEach((el, j) => {
-        el.classList.toggle("hidden", j !== index);
         el.setAttribute("aria-hidden", String(j !== index));
       });
     }
