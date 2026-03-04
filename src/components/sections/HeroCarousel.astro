@@ -164,15 +164,9 @@ function getImageSrc(image: { src: string; alt: string }) {
 <script>
   function initHeroCarousel(container: HTMLElement) {
     const track = container.querySelector<HTMLElement>(".hero-carousel-track");
-    const slides = container.querySelectorAll<HTMLElement>(
-      ".hero-carousel-slide",
-    );
-    const prevBtn = container.querySelector<HTMLButtonElement>(
-      ".hero-carousel-prev",
-    );
-    const nextBtn = container.querySelector<HTMLButtonElement>(
-      ".hero-carousel-next",
-    );
+    const slides = container.querySelectorAll<HTMLElement>(".hero-carousel-slide");
+    const prevBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-prev");
+    const nextBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-next");
     const total = slides.length;
     if (total <= 1 || !track) {
       prevBtn?.setAttribute("aria-hidden", "true");
