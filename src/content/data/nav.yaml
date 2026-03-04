@@ -1,18 +1,18 @@
 - label: Services
   key: Services
   children:
-    - label: Deep Learning Linux Kernel Services
+    - label: Upstream Linux Kernel Services
       url: /services/upstreaming-linux-kernel
-    - label: R&P Development
+    - label: BSP Development
       url: /services/bsp-development
-    - label: CSA Open Source Supply Chain Management
+    - label: CRA & Software Supply Chain Management
       url: /services/software-supply-chain-management
     - label: Qualcomm Platform Services
       url: /services/qualcomm-platform
     - label: NXP Platform Services
       url: /services/nxp-platform-services
     - label: Test Automation
-      url: /services/training
+      url: /services/testingandautomation
 - label: Solutions
   key: solutions
   children:
@@ -59,13 +59,13 @@
   children:
     - label: Downloads
       url: /downloads
-    - label: Blog
+    - label: Blogs
       url: /blog
     - label: White Papers
       url: /whitepapers
     - label: Newsroom
       url: /news
-    - label: Events
+    - label: Events & Conferences
       url: /events
     - label: Training
       url: /training
