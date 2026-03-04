@@ -1,5 +1,5 @@
 import { z } from "astro/zod";
-import { reference, type CollectionEntry } from "astro:content";
+import { reference } from "astro:content";
 
 const component = (filename: string) => z.literal(filename);
 

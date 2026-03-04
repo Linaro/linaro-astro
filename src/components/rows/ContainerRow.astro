@@ -57,22 +57,25 @@ if (background_image) {
               />
             )}
           </div>
-        )
-      ) : (
-        <div class="flex items-center justify-center w-full">
-          <div class="fade-border" />
-          {title && (
-            <h2
-              class:list={[
-                "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
-                styles?.title ?? "md:min-w-[25ch]",
-              ]}
-              set:html={titleMarkdown}
-            />
-          )}
-          <div class="fade-border" />
-        </div>
-      )
+        ) : (
+          <div class="flex items-center justify-center w-full">
+            {title ? (
+              <>
+                <div class="fade-border" />
+                <h2
+                  class:list={[
+                    "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                    styles?.title ?? "md:min-w-[25ch]",
+                  ]}
+                  set:html={titleMarkdown}
+                />
+                <div class="fade-border" />
+              </>
+            ) : (
+              <div class="fade-border w-full" />
+            )}
+          </div>
+        ))
     }
 
     <div
