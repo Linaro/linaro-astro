@@ -1,0 +1,119 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+
+interface NeutrumEvidenceCtaProps {
+  diagram_image?: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+    image_class?: string;
+  };
+  items?: Array<{ title: string; description: string }>;
+  right_image?: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
+  container_height?: number | string;
+}
+const props = Astro.props as NeutrumEvidenceCtaProps;
+
+const hasRightColumn =
+  props.right_image || (props.items && props.items.length > 0);
+
+const hasDiagramAndItems = props.diagram_image && (props.items?.length ?? 0) > 0 && !props.right_image;
+const rowHeight =
+  props.container_height != null && hasDiagramAndItems
+    ? typeof props.container_height === "number"
+      ? `${props.container_height}px`
+      : props.container_height
+    : null;
+
+const diagramAspect =
+  props.diagram_image?.width != null && props.diagram_image?.height != null
+    ? `${props.diagram_image.width}/${props.diagram_image.height}`
+    : "580/620";
+
+function getDiagramImageSrc(diagram_image: { src: string; alt: string; width?: number; height?: number }) {
+  return diagram_image.src.startsWith("http://") || diagram_image.src.startsWith("https://")
+    ? diagram_image.src
+    : getCloudinarySrc({
+        src: diagram_image.src,
+        alt: diagram_image.alt,
+        width: diagram_image.width ?? 580,
+        height: diagram_image.height ?? 620,
+      });
+}
+---
+
+<div class="neutrum-evidence-cta w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pt-4 pb-8 sm:pb-12">
+  <h2 class="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center max-w-5xl mx-auto mb-4 sm:mb-6 lg:mb-10">
+    Neutrum is an open-source solution for confidential computing on Arm that manages everything from <span class="text-linaro-yellow">evidence generation</span> to <span class="text-linaro-yellow">independent verification</span>
+  </h2>
+
+  <div class="w-full rounded-xl  overflow-hidden lg:mb-16">
+    <div
+      class:list={["flex flex-col lg:flex-row lg:items-stretch neutrum-cta-row", rowHeight && "neutrum-cta-row-fixed"]}
+      style={rowHeight ? { "--neutrum-cta-height": rowHeight } : undefined}
+    >
+      {/* Left column: diagram image — plain img so Cloudinary full URLs and paths both display */}
+      {props.diagram_image && (
+        <div class="neutrum-cta-diagram w-full lg:w-1/2 min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          <div
+            class="neutrum-cta-diagram-inner w-full max-w-full max-h-full min-w-0 min-h-[200px]  rounded-lg mx-auto overflow-hidden flex items-center justify-center"
+            style={{ aspectRatio: diagramAspect }}
+          >
+            <img
+              src={getDiagramImageSrc(props.diagram_image)}
+              alt={props.diagram_image.alt}
+              width={props.diagram_image.width}
+              height={props.diagram_image.height}
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-contain object-center"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Right column: text in a container matching the diagram style (border, rounded) */}
+      {props.items && props.items.length > 0 && !props.right_image && (
+        <div class="neutrum-cta-text w-full lg:w-1/2 min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center p-4 sm:p-6 lg:p-8">
+          <div class="neutrum-cta-text-inner w-full  rounded-lg flex flex-col gap-4 px-4 sm:px-6 lg:px-8 py-4 lg:py-6 text-center lg:text-left min-h-0 overflow-hidden">
+            {props.items.map((item) => (
+              <div>
+                <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold linaro-gradient-text">{item.title}</h3>
+                <p class="text-white/90 text-sm sm:text-base leading-relaxed mt-1">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Desktop: fixed row height so both columns have equal vertical extent */
+  @media (min-width: 1024px) {
+    .neutrum-evidence-cta .neutrum-cta-row-fixed {
+      height: var(--neutrum-cta-height);
+    }
+  }
+  /* Left column: allow flex child to shrink so inner diagram box fits */
+  .neutrum-evidence-cta .neutrum-cta-diagram {
+    min-height: 0;
+  }
+  .neutrum-evidence-cta .neutrum-cta-diagram-inner {
+    flex-shrink: 1;
+  }
+  /* Right column: same behaviour so text container matches row height */
+  .neutrum-evidence-cta .neutrum-cta-text {
+    min-height: 0;
+  }
+  .neutrum-evidence-cta .neutrum-cta-text-inner {
+    flex-shrink: 1;
+  }
+</style>

@@ -1,17 +1,24 @@
 import { z } from "astro/zod";
 import { reference, type CollectionEntry } from "astro:content";
 
-const component = (filename: CollectionEntry<"sections">["slug"]) =>
-  z.literal(filename);
+const component = (filename: string) => z.literal(filename);
 
 export const buttonsSchema = z.object({
   component: component("buttons"),
   buttons: z.array(
-    z.object({
-      text: z.string(),
-      url: z.string(),
-      style: z.string(),
-    }),
+    z.union([
+      z.object({
+        text: z.string(),
+        url: z.string(),
+        style: z.string(),
+      }),
+      z.object({
+        type: z.literal("insight"),
+        button_text: z.string(),
+        formName: z.string(),
+        style: z.string().optional(),
+      }),
+    ]),
   ),
   style: z.string().optional(),
 });
@@ -19,6 +26,34 @@ export const buttonsSchema = z.object({
 export const fileCarouselSchema = z.object({
   component: component("file_carousel"),
   filename: reference("data"),
+});
+
+export const heroCarouselSchema = z.object({
+  component: component("hero_carousel"),
+  slides: z.array(
+    z.object({
+      title: z.string(),
+      button: z.object({ text: z.string(), url: z.string() }),
+      image: z.object({ src: z.string(), alt: z.string() }),
+    }),
+  ),
+  styles: z
+    .object({
+      container: z.string().optional(),
+      slide: z.string().optional(),
+      arrow: z.string().optional(),
+    })
+    .optional(),
+});
+
+export const journeyProcessSchema = z.object({
+  component: component("journey_process"),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string().optional(),
+  }),
 });
 
 export const teamSchema = z.object({
@@ -47,6 +82,7 @@ export const cardsSchema = z.object({
       title: z.string().optional(),
       text: z.string().optional(),
       icon: z.string().optional(),
+      number: z.number().optional(),
       style: z.string().optional(),
       button: z
         .object({
@@ -86,6 +122,7 @@ export const imageCardsSchema = z.object({
       container: z.string().optional(),
       card_title: z.string().optional(),
       image: z.string().optional(),
+      imageWrapper: z.string().optional(),
       text: z.string().optional(),
       textContainer: z.string().optional(),
     })
@@ -259,7 +296,18 @@ export const twoColumnSchema = z.object({
           width: z.number().optional(),
           height: z.number().optional(),
           svg: z.boolean().optional().default(false),
+          class: z.string().optional(),
         }),
+        styles: z.string().optional(),
+      }),
+      z.object({
+        type: z.literal("items"),
+        items: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+          }),
+        ),
         styles: z.string().optional(),
       }),
     ]),
@@ -447,6 +495,59 @@ export const iframeSchema = z.object({
   url: z.string(),
 });
 
+export const talkToExpertsSchema = z.object({
+  component: component("talk_to_experts"),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  embed_url: z.string().optional(),
+  button: z
+    .object({
+      text: z.string(),
+      url: z.string(),
+    })
+    .optional(),
+});
+
+export const neutrumEvidenceCtaSchema = z.object({
+  component: component("neutrum_evidence_cta"),
+  diagram_image: z
+    .object({
+      src: z.string(),
+      alt: z.string(),
+      width: z.number().optional(),
+      height: z.number().optional(),
+      image_class: z.string().optional(),
+    })
+    .optional(),
+  items: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+      }),
+    )
+    .optional(),
+  right_image: z
+    .object({
+      src: z.string(),
+      alt: z.string(),
+      width: z.number().optional(),
+      height: z.number().optional(),
+    })
+    .optional(),
+  container_height: z.union([z.number(), z.string()]).optional(),
+});
+
+export const ctaBlockSchema = z.object({
+  component: component("cta_block"),
+  heading: z.string(),
+  heading_highlight: z.string().optional(),
+  subtext: z.string(),
+  button_text: z.string(),
+  button_url: z.string(),
+  styles: z.object({ container: z.string().optional(), subtext: z.string().optional() }).optional(),
+});
+
 export const expandingCardsSchema = z.object({
   component: component("expandingcards"),
   styles: z
@@ -477,6 +578,8 @@ export const expandingCardsSchema = z.object({
 export default z.discriminatedUnion("component", [
   buttonsSchema,
   fileCarouselSchema,
+  heroCarouselSchema,
+  journeyProcessSchema,
   teamSchema,
   cardsSchema,
   imageCardsSchema,
@@ -505,5 +608,8 @@ export default z.discriminatedUnion("component", [
   connectContentSchema,
   titleSchema,
   iframeSchema,
+  talkToExpertsSchema,
+  neutrumEvidenceCtaSchema,
+  ctaBlockSchema,
   expandingCardsSchema,
 ]);

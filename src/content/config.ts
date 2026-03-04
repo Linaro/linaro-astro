@@ -25,6 +25,18 @@ const pages = defineCollection({
               description: z.string().optional(),
             })
             .optional(),
+          carousel: z
+            .object({
+              slides: z.array(
+                z.object({
+                  title: z.string(),
+                  button: z.object({ text: z.string(), url: z.string() }),
+                  image: z.object({ src: z.string(), alt: z.string() }),
+                }),
+              ),
+            })
+            .optional(),
+          tagline: z.string().optional(),
         })
         .optional(),
       connectHero: z

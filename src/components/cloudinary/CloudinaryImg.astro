@@ -16,16 +16,43 @@ interface Props extends CloudinaryProps {
   class?: string;
   svg?: boolean;
   id?: string;
+  width?: number;
+  height?: number;
 }
 
-const { src: initialSrc, ...props } = Astro.props;
+const { src: initialSrc, class: className, width, height, alt, id } = Astro.props;
 
 let src = initialSrc;
 if (!src.startsWith("https://")) {
-  src = getCloudinarySrc({ ...props, src: initialSrc });
+  src = getCloudinarySrc({ ...Astro.props, src: initialSrc });
 }
 
 const url = src;
+const isRemote = url.startsWith("http://") || url.startsWith("https://");
+// Ensure URL is safe for HTML src (e.g. Cloudinary URLs with & in query params)
+const srcAttr = isRemote ? url.replace(/&/g, "&amp;") : url;
 ---
 
-<Image src={url} loading="lazy" inferSize={true} {...props} />
+{isRemote ? (
+  <img
+    src={srcAttr}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    id={id}
+    loading="lazy"
+    decoding="async"
+  />
+) : (
+  <Image
+    src={url}
+    alt={alt}
+    loading="lazy"
+    inferSize={true}
+    width={width}
+    height={height}
+    class={className}
+    id={id}
+  />
+)}

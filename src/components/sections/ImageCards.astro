@@ -2,18 +2,31 @@
 import type { imageCardsSchema } from "@/content/schemas/sections";
 import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
+import { getCloudinarySrc } from "@/lib/cloudinary";
 import { marked } from "marked";
 
 type Props = z.infer<typeof imageCardsSchema>;
 const { cards, styles, button_cards } = Astro.props;
+
+function getImageSrc(image: { src: string; alt: string; width?: number; height?: number }) {
+  return image.src.startsWith("http://") || image.src.startsWith("https://")
+    ? image.src
+    : getCloudinarySrc({
+        src: image.src,
+        alt: image.alt,
+        width: image.width ?? 800,
+        height: image.height ?? 600,
+      });
+}
 ---
 
-<ul class:list={["list-none p-0", styles?.container]}>
+<ul class:list={["list-none p-0 ps-0", styles?.container]}>
   {
     cards.map(async ({ image, title, text, button, style, url }) => {
       const content = text ? await marked.parse(text) : null;
+      const titleHtml = title ? await marked.parseInline(title) : null;
       return (
-        <li class:list={[styles?.card, style]}>
+        <li class:list={[button_cards ? styles?.card : (styles?.card ?? "flex flex-col gap-3 w-full"), style]}>
           {button_cards ? (
             <>
               {image && (
@@ -64,16 +77,21 @@ const { cards, styles, button_cards } = Astro.props;
             </>
           ) : (
             <>
-              {image && (
-                <CloudinaryImg
-                  src={image.src}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  class:list={[styles?.image]}
-                />
+              {image && (() => {
+                const imageSrc = getImageSrc(image);
+                return (
+                  <img
+                    src={imageSrc}
+                    alt={image.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class:list={["block w-full", styles?.imageWrapper, styles?.image ?? "object-cover object-center"]}
+                  />
+                );
+              })()}
+              {titleHtml && (
+                <h3 class:list={[styles?.card_title]} set:html={titleHtml} />
               )}
-              <h3 class:list={[styles?.card_title]}>{title}</h3>
               {text && <div class:list={["text-xl z-20"]} set:html={content} />}
               {button && (
                 <a

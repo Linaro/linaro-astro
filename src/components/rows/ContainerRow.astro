@@ -3,12 +3,13 @@ import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
 import * as marked from "marked";
 
-const { styles, title, background_image, animation, no_border, full_width } =
+const { styles, title, background_image, animation, no_border, full_width, show_title_line } =
   Astro.props;
 let titleMarkdown;
 if (title) {
   titleMarkdown = await marked.parseInline(title);
 }
+const showLineBlock = title || show_title_line;
 
 let optimizedBackground = { src: "" };
 if (background_image) {
@@ -36,27 +37,33 @@ if (background_image) {
     class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
   >
     {
-      title &&
+      showLineBlock &&
         (no_border ? (
           <div class="w-full text-center">
-            <h2
-              class:list={[
-                "!my-0 not-prose text-white relative whitespace-prewrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
-                styles?.title ?? "md:min-w-[25ch]",
-              ]}
-              set:html={titleMarkdown}
-            />
+            {title && (
+              <h2
+                class:list={[
+                  "!my-0 not-prose text-white relative whitespace-prewrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
+                  styles?.title ?? "md:min-w-[25ch]",
+                ]}
+                set:html={titleMarkdown}
+              />
+            )}
           </div>
         ) : (
           <div class="flex items-center justify-center w-full">
             <div class="fade-border" />
-            <h2
-              class:list={[
-                "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
-                styles?.title ?? "md:min-w-[25ch]",
-              ]}
-              set:html={titleMarkdown}
-            />
+            {title ? (
+              <h2
+                class:list={[
+                  "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                  styles?.title ?? "md:min-w-[25ch]",
+                ]}
+                set:html={titleMarkdown}
+              />
+            ) : (
+              <span class="flex-shrink-0 w-0" aria-hidden="true" />
+            )}
             <div class="fade-border" />
           </div>
         ))
@@ -64,7 +71,7 @@ if (background_image) {
 
     <div
       class:list={[
-        "animate-delay-100",
+        "animate-delay-100 w-full flex flex-col items-center",
         styles?.inner ?? "py-24",
         animation !== "none" && "invisible",
       ]}

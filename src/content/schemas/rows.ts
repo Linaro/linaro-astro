@@ -10,6 +10,7 @@ export const containerRowSchema = z.object({
   no_border: z.boolean().optional(),
   full_width: z.boolean().optional(),
   title: z.string().optional(),
+  show_title_line: z.boolean().optional(),
   styles: z
     .object({
       outer: z.string().optional(),
