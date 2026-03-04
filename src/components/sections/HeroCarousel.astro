@@ -1,0 +1,156 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+
+interface Slide {
+  title: string;
+  button: { text: string; url: string };
+  image: { src: string; alt: string };
+}
+interface Props {
+  slides: Slide[];
+  styles?: { container?: string; slide?: string; arrow?: string };
+}
+const { slides, styles } = Astro.props as Props;
+
+function getImageSrc(image: { src: string; alt: string }) {
+  const url =
+    image.src.startsWith("http://") || image.src.startsWith("https://")
+      ? image.src
+      : getCloudinarySrc({
+          src: image.src,
+          alt: image.alt,
+          width: 608,
+          height: 505,
+        });
+  // Cloudinary URLs contain & in query params; escape for HTML src attribute
+  return typeof url === "string" && url.startsWith("http")
+    ? url.replace(/&/g, "&amp;")
+    : url;
+}
+---
+
+<div
+  class:list={["hero-carousel relative w-full max-w-5xl mx-auto rounded-2xl hero-carousel-gradient-border", styles?.container]}
+  data-slide-count={slides.length}
+>
+  <div class="relative flex rounded-[15px] overflow-hidden bg-[#2a2730]">
+    {
+      slides.map((slide, i) => {
+        const bgUrl = getImageSrc(slide.image);
+        const bgUrlCss = bgUrl.replace(/&amp;/g, "&");
+        return (
+          <article
+            class:list={[
+              "hero-carousel-slide hero-carousel-slide-bg relative w-full flex-shrink-0 flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-[400px] md:h-[360px] bg-right bg-no-repeat",
+              i !== 0 && "hidden",
+              styles?.slide,
+            ]}
+            style={`background-image: url("${String(bgUrlCss).replace(/"/g, '\\"')}");`}
+            data-index={i}
+            aria-hidden={i !== 0}
+          >
+            <img
+              src={bgUrl}
+              alt={slide.image.alt}
+              class="sr-only"
+              width={608}
+              height={505}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+            <div class="hero-carousel-overlay absolute inset-0 rounded-[15px]" aria-hidden="true" />
+            <div class="relative z-10 max-w-xl">
+              <h2 class="text-white text-xl md:text-2xl lg:text-3xl font-medium mb-6 leading-tight">
+                {slide.title}
+              </h2>
+              <a
+                href={slide.button.url}
+                class="linaro-gradient-button no-underline inline-flex items-center justify-center w-fit px-6 py-3 rounded-full text-background font-medium"
+              >
+                {slide.button.text}
+              </a>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  <button
+    type="button"
+    class="hero-carousel-prev absolute -left-14 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background/80 hover:bg-background text-white flex items-center justify-center border border-white/20 transition-colors"
+    aria-label="Previous slide"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="hero-carousel-next absolute -right-14 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background/80 hover:bg-background text-white flex items-center justify-center border border-white/20 transition-colors"
+    aria-label="Next slide"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>
+
+<style>
+  .hero-carousel-gradient-border {
+    border: 1px solid transparent;
+    background-image: linear-gradient(#2a2730, #2a2730), var(--background-image-linaro-gradient);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .hero-carousel-slide-bg {
+    background-size: 50%;
+    background-position: right center;
+  }
+
+  .hero-carousel-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(42, 39, 48, 0.97) 0%,
+      rgba(42, 39, 48, 0.88) 35%,
+      rgba(42, 39, 48, 0.5) 60%,
+      rgba(42, 39, 48, 0.15) 82%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  function initHeroCarousel(container: HTMLElement) {
+    const slides = container.querySelectorAll<HTMLElement>(".hero-carousel-slide");
+    const prevBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-prev");
+    const nextBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-next");
+    const total = slides.length;
+    if (total <= 1) {
+      prevBtn?.setAttribute("aria-hidden", "true");
+      nextBtn?.setAttribute("aria-hidden", "true");
+      return;
+    }
+    let index = 0;
+    function goTo(i: number) {
+      index = ((i % total) + total) % total;
+      slides.forEach((el, j) => {
+        el.classList.toggle("hidden", j !== index);
+        el.setAttribute("aria-hidden", String(j !== index));
+      });
+    }
+    prevBtn?.addEventListener("click", () => goTo(index - 1));
+    nextBtn?.addEventListener("click", () => goTo(index + 1));
+
+    const intervalId = setInterval(() => goTo(index + 1), 5000);
+
+    container.addEventListener(
+      "astro:before-swap",
+      () => clearInterval(intervalId),
+      { once: true }
+    );
+  }
+  document.querySelectorAll<HTMLElement>(".hero-carousel").forEach(initHeroCarousel);
+</script>

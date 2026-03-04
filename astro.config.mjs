@@ -94,5 +94,6 @@ export default defineConfig({
     "/solutions/codelinaro": "/",
     "/solutions/iot-embedded": "/",
     "/projects/windows-on-arm": "/",
+    "/confidential-computing": "/solutions/confidential-computing",
   },
 });

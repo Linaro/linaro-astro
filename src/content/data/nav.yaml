@@ -26,6 +26,8 @@
       url: /solutions/onelab
     - label: Unified Firmware Lifecycle
       url: /solutions/oneboot
+    - label: Confidential Computing
+      url: /solutions/confidential-computing
 - label: Industries
   key: industries
   children:

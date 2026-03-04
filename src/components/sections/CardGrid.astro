@@ -10,19 +10,55 @@ type Props = z.infer<typeof cardsSchema>;
 const { cards, styles, divider, gradient_border } = Astro.props;
 ---
 
-<ul class:list={["list-none flex flex-wrap", styles?.container]}>
+<ul class:list={["list-none flex flex-wrap ps-0", styles?.container]}>
   {
     cards.map(
       async (
-        { icon, title, text, button, style, image, contact_button, list },
+        {
+          icon,
+          title,
+          text,
+          button,
+          style,
+          image,
+          contact_button,
+          list,
+          number,
+        },
         index,
       ) => {
         const content = text ? await marked.parse(text) : null;
         const titleText = title ? await marked.parseInline(title) : null;
         const isLast = index === cards.length - 1;
+        const sectionUsesNumbers = cards.some((c) => c.number != null);
+        const showNumberBadge =
+          sectionUsesNumbers && (number != null || index < 3);
+        const badgeNumber = number != null ? number : index + 1;
         const cardContent = (
           <li class:list={[styles?.card, style]}>
-            {icon && <Icon name={icon} size={100} class="my-0" />}
+            {showNumberBadge && (
+              <div
+                class="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 shrink-0 mb-4 relative z-10"
+                style="padding: 2px; border-radius: 9999px; background: linear-gradient(180deg, #FFCE00 0%, #6715E8 100%);"
+                aria-hidden="true"
+              >
+                <div
+                  class="w-full h-full rounded-full flex items-center justify-center"
+                  style="background-color: #222025;"
+                >
+                  <span class="linaro-gradient-text text-2xl sm:text-3xl font-bold">
+                    {badgeNumber}
+                  </span>
+                </div>
+              </div>
+            )}
+            {icon && !showNumberBadge && (
+              <Icon
+                name={icon}
+                size={100}
+                class:list={["my-0", styles?.icon]}
+              />
+            )}
             {title && (
               <h3
                 class:list={["text-4xl !my-0 z-50", styles?.card_title]}
