@@ -23,7 +23,7 @@ hero:
       - title: "Testing & Automation Services - Ready to Scale your Validation Strategy?"
         button:
           text: Discover More
-          url: /contact
+          url: /services/testingandautomation
         image:
           src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772537707/linaro-website/graphics/testingandautomation-bg.png
           alt: Linaro Arm ecosystem
