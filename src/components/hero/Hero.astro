@@ -64,6 +64,12 @@ const descriptionMarkdown = description
       ]}
     >
     </div>
+    {background_image && (
+      <div
+        class="absolute inset-0 z-[11] pointer-events-none hero-dark-overlay"
+        aria-hidden="true"
+      />
+    )}
   </div>
   <div
     class:list={[
@@ -140,5 +146,9 @@ const descriptionMarkdown = description
 >
   .hero-background-image {
     background-image: var(--backgroundUrl);
+  }
+
+  .hero-dark-overlay {
+    background: rgba(34, 32, 37, 0.4);
   }
 </style>
