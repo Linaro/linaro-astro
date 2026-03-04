@@ -123,7 +123,7 @@ flow:
       - component: cards
         styles:
           container: mx-auto justify-around gap-10 max-w-6xl
-          card: w-[55ch]
+          card: md:w-[50ch]
         cards:
           - title: KernelCI
             style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
