@@ -14,7 +14,7 @@ const { cards, styles, divider, gradient_border } = Astro.props;
   {
     cards.map(
       async (
-        { icon, title, text, button, style, image, contact_button },
+        { icon, title, text, button, style, image, contact_button, list },
         index,
       ) => {
         const content = text ? await marked.parse(text) : null;
@@ -37,7 +37,13 @@ const { cards, styles, divider, gradient_border } = Astro.props;
               ]}
               set:html={content}
             />
-
+            {list && list.length > 0 && (
+              <ul class="list-disc pl-5 mt-2 space-y-1">
+                {list.map((item) => (
+                  <li class="text-white marker:text-white text-xl">{item}</li>
+                ))}
+              </ul>
+            )}
             {image && image.container && (
               <div class="w-full h-2/5 mt-auto bg-[#D9D9D910] rounded-lg mb-4 flex justify-center items-center">
                 <CloudinaryImg

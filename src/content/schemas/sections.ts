@@ -48,6 +48,7 @@ export const cardsSchema = z.object({
       text: z.string().optional(),
       icon: z.string().optional(),
       style: z.string().optional(),
+      list: z.array(z.string()).optional(),
       button: z
         .object({
           text: z.string(),
@@ -127,6 +128,16 @@ export const threeColumnSchema = z.object({
     z.object({
       text: z.string().optional(),
       style: z.string().optional(),
+      image: z.string().optional(),
+      image_style: z.string().optional(),
+      list: z
+        .array(
+          z.object({
+            text: z.string().optional(),
+            style: z.string().optional(),
+          }),
+        )
+        .optional(),
     }),
   ),
 });

@@ -36,8 +36,8 @@ if (background_image) {
     class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
   >
     {
-      title &&
-        (no_border ? (
+      no_border ? (
+        title && (
           <div class="w-full text-center">
             <h2
               class:list={[
@@ -47,9 +47,11 @@ if (background_image) {
               set:html={titleMarkdown}
             />
           </div>
-        ) : (
-          <div class="flex items-center justify-center w-full">
-            <div class="fade-border" />
+        )
+      ) : (
+        <div class="flex items-center justify-center w-full">
+          <div class="fade-border" />
+          {title && (
             <h2
               class:list={[
                 "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
@@ -57,9 +59,10 @@ if (background_image) {
               ]}
               set:html={titleMarkdown}
             />
-            <div class="fade-border" />
-          </div>
-        ))
+          )}
+          <div class="fade-border" />
+        </div>
+      )
     }
 
     <div
