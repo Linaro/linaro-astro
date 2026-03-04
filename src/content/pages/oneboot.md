@@ -27,7 +27,7 @@ flow:
     sections:
       - component: text
         text_content: |
-          <div class="flex flex-col lg:flex-row w-full max-w-5xl mx-auto py-auto gap-8 lg:gap-4 text-left">
+          <div class="flex flex-col lg:flex-row lg:w-[85ch] mx-auto py-auto gap-8 lg:gap-4 text-left">
             <div class="flex-1 flex flex-col gap-1">
               <div class="bg-[#6B6B6B] text-white font-bold p-4 text-2xl">
                 Traditional Firmware
@@ -47,31 +47,31 @@ flow:
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>Continuous Lifecycle Management</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>Secure out-of-the-box</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>Long-term Support</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>Integrated SBOM + VMS</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>Vendor-agnostic</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>OS Agnostic (interoperability)</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
               <div class="bg-linaro-gradient text-white p-4 flex justify-between items-center font-medium">
                 <span>CRA-aligned by design</span>
-                <svg class="w-10 h-10 mr-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-10 h-10 mr-10 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
               </div>
             </div>
           </div>
