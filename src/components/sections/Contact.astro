@@ -14,14 +14,20 @@ if (content) {
 }
 ---
 
-<div class:list={["items-center gap-12", styles?.card]}>
-  <article
-    set:html={markdownContent}
-    class:list={["text-white w-2/3", styles.content]}
-  />
+<div class:list={["flex flex-col items-center gap-2 md:gap-4 text-center w-full max-w-full", styles?.card]}>
+  <h2 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl linaro-gradient-text font-bold">
+    Contact Linaro
+  </h2>
+  {
+    content && (
+      <article
+        set:html={markdownContent}
+        class:list={["text-white text-base md:text-lg lg:text-xl max-w-2xl w-full px-2", styles?.content]}
+      />
+    )
+  }
   <ContactForm
     form_id={form_id}
-    description={description}
     formName={formName}
     styles={styles}
   />
