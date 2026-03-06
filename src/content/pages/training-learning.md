@@ -1,5 +1,5 @@
 ---
-slug: services/training
+slug: /training
 title: Linux and Open Source Engineering Training for Modern Systems
 description: |
   Modern Linux-based and open source systems are built on fast-moving foundations. Teams that rely on ad-hoc learning, outdated material, or trial-and-error often pay for it later—in rework, fragile designs, and long-term maintenance cost. Linaro provides engineer-focused Linux and open source training to help teams make better technical decisions earlier, understand real trade-offs in the stack, and work more effectively with the ecosystems they depend on. Linaro brings deep experience in Arm-based systems, reflecting its long-standing role in advancing Linux and open source software across the Arm ecosystem—from embedded devices to servers.

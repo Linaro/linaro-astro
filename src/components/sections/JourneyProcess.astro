@@ -1,0 +1,47 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+
+interface ImageRef {
+  src: string;
+  alt?: string;
+}
+interface Props {
+  title?: string;
+  subtitle?: string;
+  image: ImageRef;
+}
+const { title, subtitle, image } = Astro.props as Props;
+
+function getImageSrc(img: ImageRef) {
+  const url =
+    img.src.startsWith("http://") || img.src.startsWith("https://")
+      ? img.src
+      : getCloudinarySrc({ src: img.src, alt: img.alt ?? "" });
+  return typeof url === "string" && url.startsWith("http")
+    ? url.replace(/&/g, "&amp;")
+    : url;
+}
+---
+
+<section class="w-full bg-background py-16 lg:py-24">
+  <div class="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col items-center gap-6">
+    {title && (
+      <h2 class="text-center text-3xl lg:text-5xl font-semibold text-white m-0">
+        {title}
+      </h2>
+    )}
+    {subtitle && (
+      <p
+        class="text-center text-lg lg:text-xl text-white max-w-3xl mx-auto m-0"
+        set:html={subtitle}
+      />
+    )}
+    <img
+      src={getImageSrc(image)}
+      alt={image.alt ?? ""}
+      class="w-full max-w-6xl h-auto object-contain"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</section>

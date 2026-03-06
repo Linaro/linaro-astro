@@ -4,11 +4,13 @@ import type { GetImageResult } from "astro";
 import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import * as marked from "marked";
+import HeroCarousel from "@/components/sections/HeroCarousel.astro";
 
 type Props = CollectionEntry<"pages">["data"]["hero"];
 
-const { title, background_image, button, description, styles, bottom_fade } =
+const { title, background_image, button, description, styles, bottom_fade, carousel, tagline } =
   Astro.props!;
+const hasCarousel = carousel?.slides?.length;
 let optimizedBackground: GetImageResult | undefined;
 if (background_image) {
   optimizedBackground = await getImage({
@@ -31,15 +33,16 @@ const descriptionMarkdown = description
 
 <section
   class:list={[
-    // style,
-    `relative text-white  w-full max-w-screen overflow-hidden`,
-    styles?.main_container
-      ? styles.main_container
-      : "h-[calc(100vh)] min-h-[800px] max-h-[1200px]",
+    "relative text-white w-full max-w-screen overflow-hidden",
+    hasCarousel
+      ? "pt-12 pb-16 md:pt-16 md:pb-20"
+      : null,
+    !hasCarousel && (styles?.main_container ?? "h-[calc(100vh)] min-h-[800px] max-h-[1200px]"),
+    hasCarousel && styles?.main_container,
   ]}
 >
   {
-    bottom_fade && (
+    bottom_fade && !hasCarousel && (
       <div
         class="pointer-events-none absolute inset-x-0 bottom-0 h-[130px]
            bg-gradient-to-t from-white/15 to-white/0"
@@ -48,8 +51,9 @@ const descriptionMarkdown = description
   }
   <div
     class:list={[
-      "absolute w-full h-full max-w-[160rem] mx-auto pl-0 sm:pl-[20%] z-10 container",
-      styles?.background_container,
+      "absolute inset-0 max-w-[160rem] mx-auto z-10",
+      hasCarousel ? "pl-0" : "pl-0 sm:pl-[20%]",
+      !hasCarousel && styles?.background_container,
     ]}
   >
     <div
@@ -60,41 +64,69 @@ const descriptionMarkdown = description
       ]}
     >
     </div>
+    {background_image && (
+      <div
+        class="absolute inset-0 z-[11] pointer-events-none hero-dark-overlay"
+        aria-hidden="true"
+      />
+    )}
   </div>
   <div
     class:list={[
-      "relative container mx-auto flex flex-col justify-center h-full px-8 z-20",
+      "relative container mx-auto px-8 z-20",
+      hasCarousel
+        ? "flex flex-col items-center text-center pt-6 pb-4"
+        : "flex flex-col justify-center h-full",
     ]}
   >
-    <div class:list={["flex flex-col items-start", styles?.text_container]}>
-      <h1
-        class:list={[
-          "text-inherit text-4xl md:text-5xl text-left leading-tight lg:leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
-          styles?.title,
-        ]}
-        set:html={titleMarkdown}
-      />
+    <h1
+      class:list={[
+        "text-inherit text-4xl md:text-5xl lg:text-6xl leading-tight mb-0 prose prose-p:my-0 prose-em:linaro-gradient-text prose-em:not-italic",
+        hasCarousel ? "text-center max-w-4xl mx-auto mb-8 md:mb-10" : "text-left",
+        styles?.title,
+      ]}
+      set:html={titleMarkdown}
+    />
 
-      {
-        descriptionMarkdown && (
-          <div
-            class:list={["text-xl", styles?.description]}
-            set:html={descriptionMarkdown}
-          />
-        )
-      }
-      {
-        button && (
-          <a
-            href={button.url}
-            target={button.url.startsWith("https://") ? "_blank" : "self"}
-            class="mt-12 no-underline inline-block"
-          >
-            <div class="linaro-gradient-button">{button.text}</div>
-          </a>
-        )
-      }
-    </div>
+    {
+      hasCarousel ? (
+        <>
+          <div class="w-full max-w-5xl mx-auto">
+            <HeroCarousel slides={carousel.slides} />
+          </div>
+          {
+            tagline && (
+              <p
+                class="text-center max-w-4xl mx-auto text-lg md:text-xl text-white/90 mt-8 px-4"
+                set:html={tagline}
+              />
+            )
+          }
+        </>
+      ) : (
+        <div class:list={["flex flex-col items-start", styles?.text_container]}>
+          {
+            descriptionMarkdown && (
+              <div
+                class:list={["text-xl", styles?.description]}
+                set:html={descriptionMarkdown}
+              />
+            )
+          }
+          {
+            button && (
+              <a
+                href={button.url}
+                target={button.url.startsWith("https://") ? "_blank" : "self"}
+                class="mt-12 no-underline inline-block"
+              >
+                <div class="linaro-gradient-button">{button.text}</div>
+              </a>
+            )
+          }
+        </div>
+      )
+    }
     <span class="hidden" data-pagefind-meta={`summary`}>{description}</span>
     <span class="hidden" data-pagefind-meta={`heading`}>{title}</span>
     {
@@ -114,5 +146,9 @@ const descriptionMarkdown = description
 >
   .hero-background-image {
     background-image: var(--backgroundUrl);
+  }
+
+  .hero-dark-overlay {
+    background: rgba(34, 32, 37, 0.4);
   }
 </style>

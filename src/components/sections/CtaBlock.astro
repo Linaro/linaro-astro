@@ -1,0 +1,35 @@
+---
+interface Props {
+  heading: string;
+  heading_highlight?: string;
+  subtext: string;
+  button_text: string;
+  button_url: string;
+  styles?: { subtext?: string };
+}
+const { heading, heading_highlight, subtext, button_text, button_url, styles } = Astro.props;
+---
+
+<div class="text-center">
+  
+  <!-- <hr class="border-white/40 border-t w-full max-w-2xl mx-auto mb-8" aria-hidden="true" /> -->
+  <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4">
+    {heading_highlight && heading.includes(heading_highlight) ? (
+      <>
+        {heading.slice(0, heading.indexOf(heading_highlight))}
+        <span class="linaro-gradient-text">{heading_highlight}</span>
+        {heading.slice(heading.indexOf(heading_highlight) + heading_highlight.length)}
+      </>
+    ) : (
+      heading
+    )}
+  </h2>
+  <p class="text-lg mb-8 max-w-2xl mx-auto text-linaro-yellow">{subtext}</p>
+  <a
+    href={button_url}
+    class="linaro-gradient-button no-underline inline-block text-white font-medium px-8 py-3 rounded-full"
+    target={button_url.startsWith("https") ? "_blank" : "_self"}
+  >
+    {button_text}
+  </a>
+</div>

@@ -3,12 +3,22 @@ import { getCloudinarySrc } from "@/lib/cloudinary";
 import { getImage } from "astro:assets";
 import * as marked from "marked";
 
-const { styles, title, background_image, animation, no_border, full_width } =
-  Astro.props;
+const {
+  styles,
+  title,
+  background_image,
+  animation,
+  no_border,
+  full_width,
+  show_title_line,
+  blocks,
+  sectionComponents = {},
+} = Astro.props;
 let titleMarkdown;
 if (title) {
   titleMarkdown = await marked.parseInline(title);
 }
+const showLineBlock = title || show_title_line;
 
 let optimizedBackground = { src: "" };
 if (background_image) {
@@ -23,59 +33,123 @@ if (background_image) {
     inferSize: true,
   });
 }
+
 ---
 
-<section
-  class:list={[
-    "w-full",
-    background_image ? "container-background-image" : "",
-    styles?.outer,
-  ]}
->
-  <div
-    class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
+{blocks ? (
+  <section
+    class:list={["w-full", styles?.outer]}
   >
-    {
-      title &&
-        (no_border ? (
-          <div class="w-full text-center">
-            <h2
-              class:list={[
-                "!my-0 not-prose text-white relative whitespace-prewrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
-                styles?.title ?? "md:min-w-[25ch]",
-              ]}
-              set:html={titleMarkdown}
-            />
-          </div>
-        ) : (
-          <div class="flex items-center justify-center w-full">
-            <div class="fade-border" />
-            <h2
-              class:list={[
-                "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
-                styles?.title ?? "md:min-w-[25ch]",
-              ]}
-              set:html={titleMarkdown}
-            />
-            <div class="fade-border" />
-          </div>
-        ))
-    }
-
     <div
-      class:list={[
-        "animate-delay-100",
-        styles?.inner ?? "py-24",
-        animation !== "none" && "invisible",
-      ]}
-      data-animate={animation === "none"
-        ? null
-        : (animation ?? "animate-fade-down")}
+      class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
     >
-      <slot />
+      {(await Promise.all(
+        blocks.map(async (block: any) => {
+          const blockTitleMd = block.title
+            ? await marked.parseInline(block.title)
+            : "";
+          return { block, blockTitleMd };
+        }),
+      )).map(({ block, blockTitleMd }) => (
+        <div class:list={["w-full flex flex-col items-center", block.styles?.outer]}>
+          {block.title &&
+            (block.no_border ? (
+              <div class="w-full text-center">
+                <h2
+                  class="!my-0 not-prose text-white relative whitespace-prewrap lg:whitespace-nowrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block"
+                  set:html={blockTitleMd}
+                />
+              </div>
+            ) : (
+              <div class="flex items-center justify-center w-full">
+                <div class="fade-border" />
+                <h2
+                  class="text-white relative whitespace-prewrap lg:whitespace-nowrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center"
+                  set:html={blockTitleMd}
+                />
+                <div class="fade-border" />
+              </div>
+            ))}
+          <div
+            class:list={[
+              "animate-delay-100 w-full flex flex-col items-center",
+              block.styles?.inner ?? "py-12",
+            ]}
+          >
+            {block.sections?.map((section: any) => {
+              const sectionId =
+                section.component?.slug ||
+                section.component?.id ||
+                section.component;
+              const SectionComp = sectionComponents[sectionId]?.default;
+              return SectionComp ? <SectionComp {...section} /> : null;
+            })}
+          </div>
+        </div>
+      ))}
     </div>
-  </div>
-</section>
+  </section>
+) : (
+  <section
+    class:list={[
+      "w-full",
+      background_image ? "container-background-image" : "",
+      styles?.outer,
+    ]}
+  >
+    <div
+      class:list={full_width ? [] : ["container", "mx-auto", "px-4", "md:px-8"]}
+    >
+      {
+        showLineBlock &&
+          (no_border ? (
+            <div class="w-full text-center">
+              {title && (
+                <h2
+                  class:list={[
+                    "!my-0 not-prose text-white relative whitespace-prewrap my-0! text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic inline-block",
+                    styles?.title ?? "md:min-w-[25ch]",
+                  ]}
+                  set:html={titleMarkdown}
+                />
+              )}
+            </div>
+          ) : (
+          <div class="flex items-center justify-center w-full">
+              {title ? (
+                <>
+                  <div class="fade-border" />
+                  <h2
+                    class:list={[
+                      "text-white relative whitespace-prewrap !my-0 mx-8 text-3xl lg:text-5xl prose-em:linaro-gradient-text prose-em:not-italic text-center",
+                      styles?.title ?? "md:min-w-[25ch]",
+                    ]}
+                    set:html={titleMarkdown}
+                  />
+                  <div class="fade-border" />
+                </>
+              ) : (
+                <div class="fade-border w-full" />
+              )}
+            </div>
+          ))
+      }
+
+      <div
+        class:list={[
+          "animate-delay-100 w-full flex flex-col items-center",
+          styles?.inner ?? "py-24",
+          animation !== "none" && "invisible",
+        ]}
+        data-animate={animation === "none"
+          ? null
+          : (animation ?? "animate-fade-down")}
+      >
+        <slot />
+      </div>
+    </div>
+  </section>
+)}
 <style
   define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}
   lang="scss"

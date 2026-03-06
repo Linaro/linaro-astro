@@ -30,9 +30,14 @@ if (flow && flow.length > 0) {
     }
   }
 
-  const sectionsToFetch = flow.flatMap(
-    (row: any) => row.sections?.map((s: any) => s.component) || [],
-  );
+  const sectionsToFetch = flow.flatMap((row: any) => {
+    if (row.blocks) {
+      return row.blocks.flatMap(
+        (b: any) => b.sections?.map((s: any) => s.component) || [],
+      );
+    }
+    return row.sections?.map((s: any) => s.component) || [];
+  });
   const fetchedSections = await getEntries(sectionsToFetch);
 
   for (const sectionData of fetchedSections) {
@@ -59,8 +64,10 @@ if (flow && flow.length > 0) {
         const RowComp = rowComponents[rowId]?.default;
 
         return RowComp ? (
-          <RowComp {...row}>
-            {row.sections?.map((section: any) => {
+          <RowComp {...row} sectionComponents={sectionComponents}>
+            {row.blocks
+              ? null
+              : row.sections?.map((section: any) => {
               // Access the slug inside the component object created by your transform
               const sectionId =
                 section.component?.slug ||
