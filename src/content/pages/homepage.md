@@ -23,9 +23,9 @@ hero:
       - title: "Testing & Automation Services - Ready to Scale your Validation Strategy?"
         button:
           text: Discover More
-          url: /contact
+          url: /services/testingandautomation
         image:
-          src: linaro-website/graphics/freepik__remove-the-robotic-arm__92237_1_1_tkf72c.png
+          src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772537707/linaro-website/graphics/testingandautomation-bg.png
           alt: Linaro Arm ecosystem
       - title: The Secure, CRA-compliant BIOS for Arm Embedded Edge Platforms
         button:
@@ -172,7 +172,6 @@ flow:
             styles: {}
       - title: Don't miss any of our *latest updates*
         styles:
-          outer: "mt-24 lg:mt-32"
           inner: "pt-16 pb-8"
         sections:
           - component: buttons

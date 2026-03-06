@@ -12,7 +12,7 @@
     - label: NXP Platform Services
       url: /services/nxp-platform-services
     - label: Test Automation
-      url: /services/training
+      url: /services/testingandautomation
 - label: Solutions
   key: solutions
   children:
