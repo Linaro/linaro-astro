@@ -9,6 +9,9 @@ hero:
   background_image: linaro-website/graphics/testingandautomation-bg
   description: |
     At Linaro we design, deploy and manage test automation systems that scale from early silicon bring-up to global upstream validation programs.
+  button:
+    text: Let’s Build Your CI Strategy
+    url: /contact
   styles:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
@@ -21,12 +24,6 @@ flow:
       inner: py-24 md:px-24
       outer: mb-20
     sections:
-      - component: text
-        text_content: |
-          <h2 class="text-center text-[#FFCE00] text-5xl font-bold mb-20">Let’s Build Your CI Strategy</h2>
-        styles:
-          container: max-w-7xl mx-auto
-
       # Use a text component for the custom HTML layout of the numbered cards
       - component: text
         text_content: |
@@ -42,8 +39,8 @@ flow:
                   <li>Testing leveraging QEMU and FVP</li>
                   <li>Scalable compute without infrastructure burden</li>
                   <li>Easy integration from command line to CI pipelines</li>
-                </ul>
-                <img src="https://res.cloudinary.com/dl7c2wmhi/image/upload/v1/linaro-website/graphics/LAA" alt="LAA" class="mt-auto ml-auto w-72" />
+                </ul> 
+                <img src="https://res.cloudinary.com/dl7c2wmhi/image/upload/v1/linaro-website/graphics/tuxsuite" alt="LAA" class="mt-auto ml-auto w-72" />
               </div>
             </div>
 
@@ -58,7 +55,7 @@ flow:
                   <li>Plug and Test on your hardware</li>
                   <li>Supporting more than 400 different devices</li>
                 </ul>
-                <img src="https://res.cloudinary.com/dl7c2wmhi/image/upload/v1/linaro-website/graphics/tuxsuite" alt="Tuxsuite Logo" class="mt-auto ml-auto w-72" />
+                <img src="https://res.cloudinary.com/dl7c2wmhi/image/upload/v1/linaro-website/graphics/LAA" alt="Tuxsuite Logo" class="mt-auto ml-auto w-72" />
               </div>
             </div>
 
@@ -79,43 +76,34 @@ flow:
           </div>
   - row: container_row
     styles:
-      inner: md:px-24 flex flex-col text-center
-      outer: mb-20 purple-gradient-container-no-padding
+      inner: flex flex-col text-center m-0 p-0
+      outer: mb-10 purple-gradient-container-no-padding
     sections:
       - component: text
         text_content: SCALE. BUILD. TEST
         style: linaro-gradient-text text-6xl
       - component: text
-        text_content: Share hardware across global teams
-        style: text-white text-xl
-      - component: text
         text_content: |
-          <span class="shrink-0 text-sm">•</span>
-      - component: text
-        text_content: Access platforms remotely without reconnection
-        style: text-white text-xl
-      - component: text
-        text_content: |
-          <span class="shrink-0 text-sm">•</span>
-      - component: text
-        text_content: Avoid physical relocation of devices
-        style: text-white text-xl
-      - component: text
-        text_content: |
-          <span class="shrink-0 text-sm">•</span>
-      - component: text
-        text_content: Eliminate repeated lab reconfiguration
-        style: text-white text-xl
-      - component: text
-        text_content: |
-          <span class="shrink-0 text-sm">•</span>
-      - component: text
-        text_content: Integrate secure access and user permissions
-        style: text-white text-xl
+          <div class="flex flex-col items-center justify-center text-white font-semibold text-lg lg:text-xl max-w-3xl mx-auto py-8">
+            
+            <div class="py-1 px-4 text-center">Share hardware across global teams</div>
+            <div class="w-2 h-2 rounded-full bg-white my-1"></div>
+            
+            <div class="py-1 px-4 text-center">Access platforms remotely without reconnection</div>
+            <div class="w-2 h-2 rounded-full bg-white my-1"></div>
+            
+            <div class="py-1 px-4 text-center">Avoid physical relocation of devices</div>
+            <div class="w-2 h-2 rounded-full bg-white my-1"></div>
+            
+            <div class="py-1 px-4 text-center">Eliminate repeated lab reconfiguration</div>
+            <div class="w-2 h-2 rounded-full bg-white my-1"></div>
+            
+            <div class="py-1 px-4 text-center">Integrate secure access and user permissions</div>
+            
+          </div>
   - row: container_row
     styles:
-      inner: py-24 md:px-24
-      outer: mb-20
+      inner: py-10 md:px-24
     sections:
       - component: text
         text_content: Linaro’s Use Cases
@@ -158,6 +146,8 @@ flow:
               - Public or Private Labs supported
               - Daily reports and triaging of your test results
   - row: container_row
+    styles:
+      inner: p-0 m-0
     sections:
       - component: text
         text_content: Discover the Linaro service model that tailors to your needs

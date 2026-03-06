@@ -23,7 +23,6 @@ flow:
     title: Traditional Firmware Lifecycle Management is Broken
     styles:
       inner: py-24 md:px-24
-      outer: mb-20
     sections:
       - component: text
         text_content: |
@@ -76,11 +75,14 @@ flow:
             </div>
           </div>
   - row: container_row
-    title: Enter ONEBoot
     styles:
       title: text-yellow-500
       outer: purple-gradient-container
+      inner: p-0 m-0
     sections:
+      - component: text
+        text_content: Enter ONEBoot
+        style: text-yellow-500 text-5xl
       - component: three_column
         styles:
           container: justify-center
@@ -110,8 +112,10 @@ flow:
                 style: text-white text-base sm:text-xl
       - component: text
         text_content: It’s the first CRA Compliant Embedded BIOS Firmware Built for the Arm Edge & IOT Ecosystem
-        style: text-center text-yellow-500 text-3xl max-w-[45ch] mx-auto font-bold mb-24
+        style: text-center text-yellow-500 text-3xl max-w-[45ch] mx-auto font-bold
   - row: container_row
+    styles:
+      inner: p-0 m-0
     sections:
       - component: text
         text_content: Firmware is Infrastructure |  Infrastructure Must Be Secure, Compliant & Sustainable
