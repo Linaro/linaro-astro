@@ -3,7 +3,7 @@ title: U-Boot security improvements using Arm memory permissions
 description: Mapping application memory as read-write-execute (RWX) removes the
   security boundary between data and code, making it easier for attackers to run
   malicious code through common vulnerabilities. Proper memory permissions
-  reduce the attack surface and strengthen application security 👉 Read the blog
+  reduce the attack surface and strengthen application security. Read the blog
   to learn more.
 date: 2026-03-06T10:16:00.000Z
 author: ilias-apalodimas
@@ -30,13 +30,11 @@ For U-Boot we only care about **"Stage 1 VMSAv8-64 Block and Page descriptor fie
 * UXN: Unprivileged eXecute Never -- Prevents execution from unprivileged mode
 * RO: Read-only -- Prevents memory writes
 
-
 Which ones you have to set depends mainly on the translation regime. Running U-Boot in QEMU without virtualization ends up running U-Boot in EL1&0 translation regime and both PXN/UXN need to be set.
 
 ### Inspecting U-Boot
 
 Compiling qemu_arm64_lwip_defconfig (which now includes our **[patchset](https://lore.kernel.org/u-boot/20250301164922.397441-1-ilias.apalodimas@linaro.org/)**) and enabling **CMD_MEMINFO** && **CMD_CMD_MEMINFO_MAP**, allows us to inspect the memory maps. 
-
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772793662/linaro-website/IMG_2228_wsvrqs.jpg)
 
@@ -57,7 +55,6 @@ The patchset above adds another interesting flag CONFIG_MMU_PGROT which only app
 
 U-Boot has relocated to **\[0x0000023f6b9000 - 0x0000023f77d000] \[0x0000023f77e000 - 0x0000023f7c8000]** and **\[0x0000023f7c8000 - 0x0000023f7e0000]** which now have proper memory permissions!
 
-
 ### But we still see RWX mappings
 
 There are several reasons that the rest of the memory is left as RWX. One of them is EFI runtime services. 
@@ -76,51 +73,3 @@ The story isn’t complete as there are other aspects that need attention. Examp
 * Investigating how to apply proper mapping to EFI runtime services as well
 
 If your organisation is interested in further work in securing U-boot or you have questions about the above configuration changes, please [get in touch.](https://www.linaro.org/contact)
-
-[
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-](https://www.linaro.org/contact)
