@@ -30,7 +30,7 @@
     "@solid-primitives/scheduled": "^1.4.3",
     "@tailwindcss/typography": "^0.5.12",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.3",
+    "astro": "^5.18.0",
     "astro-cloudinary": "^1.1.0",
     "astro-icon": "^1.1.0",
     "astro-navbar": "^2.3.1",
