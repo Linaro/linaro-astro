@@ -20,6 +20,7 @@ hero:
     background_container: p-[5%] md:ml-[5%]
 flow:
   - row: container_row
+    show_title_line: true
     styles:
       inner: py-24 md:px-24
       outer: mb-20
@@ -75,6 +76,7 @@ flow:
 
           </div>
   - row: container_row
+    show_title_line: true
     styles:
       inner: flex flex-col text-center m-0 p-0
       outer: mb-10 purple-gradient-container-no-padding
@@ -102,6 +104,7 @@ flow:
             
           </div>
   - row: container_row
+    show_title_line: true
     styles:
       inner: py-10 md:px-24
     sections:
@@ -146,6 +149,7 @@ flow:
               - Public or Private Labs supported
               - Daily reports and triaging of your test results
   - row: container_row
+    show_title_line: true
     styles:
       inner: p-0 m-0
     sections:

@@ -75,6 +75,7 @@ flow:
             </div>
           </div>
   - row: container_row
+    show_title_line: true
     styles:
       title: text-yellow-500
       outer: purple-gradient-container
@@ -114,6 +115,7 @@ flow:
         text_content: It’s the first CRA Compliant Embedded BIOS Firmware Built for the Arm Edge & IOT Ecosystem
         style: text-center text-yellow-500 text-3xl max-w-[45ch] mx-auto font-bold
   - row: container_row
+    show_title_line: true
     styles:
       inner: p-0 m-0
     sections:
