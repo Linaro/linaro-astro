@@ -119,7 +119,7 @@ flow:
     sections:
       - component: text
         text_content: Firmware is Infrastructure |  Infrastructure Must Be Secure, Compliant & Sustainable
-        style: text-center text-3xl max-w-[54ch] mx-auto font-bold mb-24
+        style: text-center text-3xl max-w-[54ch] mx-auto font-bold
       - component: buttons
         buttons:
           - text: Read the press release with AMI and ADLink
