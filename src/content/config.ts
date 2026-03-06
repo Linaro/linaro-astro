@@ -32,6 +32,8 @@ const pages = defineCollection({
                   title: z.string(),
                   button: z.object({ text: z.string(), url: z.string() }),
                   image: z.object({ src: z.string(), alt: z.string() }),
+                  logo: z.object({ src: z.string(), alt: z.string() }).optional(),
+                  light_overlay: z.boolean().optional(),
                 }),
               ),
             })

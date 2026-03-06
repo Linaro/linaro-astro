@@ -5,6 +5,8 @@ interface Slide {
   title: string;
   button: { text: string; url: string };
   image: { src: string; alt: string };
+  logo?: { src: string; alt: string };
+  light_overlay?: boolean;
 }
 interface Props {
   slides: Slide[];
@@ -50,7 +52,8 @@ function getImageSrc(image: { src: string; alt: string }) {
           return (
             <article
               class:list={[
-                "hero-carousel-slide hero-carousel-slide-bg relative flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-full bg-right bg-no-repeat",
+                "hero-carousel-slide relative flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-full bg-no-repeat",
+                slide.light_overlay ? "hero-carousel-slide-full-bg" : "hero-carousel-slide-bg",
                 styles?.slide,
               ]}
               style={`flex: 0 0 ${100 / slides.length}%; min-width: ${100 / slides.length}%; background-image: url("${String(bgUrlCss).replace(/"/g, '\\"')}");`}
@@ -67,19 +70,35 @@ function getImageSrc(image: { src: string; alt: string }) {
                 decoding="async"
               />
               <div
-                class="hero-carousel-overlay absolute inset-0 rounded-[15px]"
+                class:list={[
+                  "absolute inset-0 rounded-[15px]",
+                  slide.light_overlay ? "hero-carousel-overlay-light" : "hero-carousel-overlay",
+                ]}
                 aria-hidden="true"
               />
-              <div class="relative z-10 max-w-xl">
-                <h2 class="text-white text-xl md:text-2xl lg:text-3xl font-medium mb-6 leading-tight">
-                  {slide.title}
-                </h2>
-                <a
-                  href={slide.button.url}
-                  class="linaro-gradient-button no-underline inline-flex items-center justify-center w-fit px-6 py-3 rounded-full text-background font-medium"
-                >
-                  {slide.button.text}
-                </a>
+              <div class="relative z-10 flex w-full flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+                <div class={slide.logo ? "flex-1 min-w-0 max-w-2xl" : "max-w-xl"}>
+                  <h2 class="text-white text-xl md:text-2xl lg:text-3xl font-medium mb-6 leading-tight">
+                    {slide.title}
+                  </h2>
+                  <a
+                    href={slide.button.url}
+                    class="linaro-gradient-button no-underline inline-flex items-center justify-center w-fit px-6 py-3 rounded-full text-background font-medium"
+                  >
+                    {slide.button.text}
+                  </a>
+                </div>
+                {slide.logo && (
+                  <div class="flex-shrink-0 flex items-center justify-center lg:min-w-[320px]">
+                    <img
+                      src={getImageSrc(slide.logo)}
+                      alt={slide.logo.alt}
+                      class="max-h-36 md:max-h-44 lg:max-h-56 w-auto object-contain"
+                      width={320}
+                      height={224}
+                    />
+                  </div>
+                )}
               </div>
             </article>
           );
@@ -140,6 +159,22 @@ function getImageSrc(image: { src: string; alt: string }) {
   .hero-carousel-slide-bg {
     background-size: 50%;
     background-position: right center;
+  }
+
+  .hero-carousel-slide-full-bg {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-carousel-overlay-light {
+    background: linear-gradient(
+      to right,
+      rgba(42, 39, 48, 0.85) 0%,
+      rgba(42, 39, 48, 0.4) 45%,
+      rgba(42, 39, 48, 0.1) 75%,
+      transparent 100%
+    );
+    pointer-events: none;
   }
 
   .hero-carousel-track {

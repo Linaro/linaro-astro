@@ -21,11 +21,13 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-let page = Astro.props.page;
+let page = Astro.props.page as typeof Astro.props.page | undefined;
 
 if (!page) {
   const lookupId = slug === undefined ? "homepage" : slug;
-  page = await getEntry("pages", lookupId);
+  const fetched = await getEntry("pages", lookupId);
+  if (!fetched) return Astro.redirect("/404");
+  page = fetched;
 }
 
 if (!page) {

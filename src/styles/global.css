@@ -45,6 +45,13 @@
     #ffce00 -0.43%,
     #6715e8 95.75%
   );
+  /* Black at top to purple at bottom (Contact / Don't miss block) */
+  --background-image-section-gradient: linear-gradient(
+    180deg,
+    #222025 0%,
+    #27222c 50%,
+    #2d2440 100%
+  );
 
   /* Animations */
   --animate-infinite-scroll: infinite-scroll 50s linear infinite;
@@ -249,6 +256,10 @@
 
 @utility purple-gradient-container-no-padding {
   @apply bg-purple-gradient;
+}
+
+@utility section-gradient-background {
+  background-image: var(--background-image-section-gradient);
 }
 
 /* Standard CSS classes (like your score cards) can just live normally 

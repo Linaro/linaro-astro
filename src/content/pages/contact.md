@@ -18,7 +18,7 @@ flow:
         content: We’d love to hear from you so please send us a message and one of our team will be in touch!
   - row: container_row
     styles:
-      inner: "!pt-8 py-12"
+      inner: "!pt-12 py-12"
     sections:
       - component: faded_line
       - component: cards

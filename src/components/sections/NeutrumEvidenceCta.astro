@@ -53,16 +53,16 @@ function getDiagramImageSrc(diagram_image: { src: string; alt: string; width?: n
     Neutrum is an open-source solution for confidential computing on Arm that manages everything from <span class="text-linaro-yellow">evidence generation</span> to <span class="text-linaro-yellow">independent verification</span>
   </h2>
 
-  <div class="w-full rounded-xl  overflow-hidden lg:mb-16">
+  <div class="w-full rounded-xl overflow-hidden lg:mb-16">
     <div
-      class:list={["flex flex-col lg:flex-row lg:items-stretch neutrum-cta-row", rowHeight && "neutrum-cta-row-fixed"]}
+      class:list={["flex flex-col lg:flex-row lg:items-stretch lg:gap-3 neutrum-cta-row", rowHeight && "neutrum-cta-row-fixed"]}
       style={rowHeight ? { "--neutrum-cta-height": rowHeight } : undefined}
     >
-      {/* Left column: diagram image — plain img so Cloudinary full URLs and paths both display */}
+      {/* Left column: diagram image — larger, minimal padding */}
       {props.diagram_image && (
-        <div class="neutrum-cta-diagram w-full lg:w-1/2 min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="neutrum-cta-diagram w-full lg:w-[56%] min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center justify-center p-4 sm:p-6 lg:pr-1 lg:pl-4">
           <div
-            class="neutrum-cta-diagram-inner w-full max-w-full max-h-full min-w-0 min-h-[200px]  rounded-lg mx-auto overflow-hidden flex items-center justify-center"
+            class="neutrum-cta-diagram-inner w-full max-w-full max-h-full min-w-0 min-h-[200px] rounded-lg mx-auto overflow-hidden flex items-center justify-center"
             style={{ aspectRatio: diagramAspect }}
           >
             <img
@@ -78,10 +78,10 @@ function getDiagramImageSrc(diagram_image: { src: string; alt: string; width?: n
         </div>
       )}
 
-      {/* Right column: text in a container matching the diagram style (border, rounded) */}
+      {/* Right column: text — tight spacing like Figma */}
       {props.items && props.items.length > 0 && !props.right_image && (
-        <div class="neutrum-cta-text w-full lg:w-1/2 min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center p-4 sm:p-6 lg:p-8">
-          <div class="neutrum-cta-text-inner w-full  rounded-lg flex flex-col gap-4 px-4 sm:px-6 lg:px-8 py-4 lg:py-6 text-center lg:text-left min-h-0 overflow-hidden">
+        <div class="neutrum-cta-text w-full lg:w-[44%] min-h-[280px] sm:min-h-[360px] lg:min-h-0 flex items-center p-4 sm:p-6 lg:pl-1 lg:pr-6">
+          <div class="neutrum-cta-text-inner w-full rounded-lg flex flex-col gap-3 lg:gap-4 px-2 sm:px-4 lg:px-0 py-4 lg:py-6 text-center lg:text-left min-h-0 overflow-hidden">
             {props.items.map((item) => (
               <div>
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold linaro-gradient-text">{item.title}</h3>

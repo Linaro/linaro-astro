@@ -14,17 +14,7 @@ const { cards, styles, divider, gradient_border } = Astro.props;
   {
     cards.map(
       async (
-        {
-          icon,
-          title,
-          text,
-          button,
-          style,
-          image,
-          contact_button,
-          list,
-          number,
-        },
+        { icon, title, text, button, style, image, contact_button, number, list },
         index,
       ) => {
         const content = text ? await marked.parse(text) : null;

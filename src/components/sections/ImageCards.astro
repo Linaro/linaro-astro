@@ -92,6 +92,13 @@ function getImageSrc(image: { src: string; alt: string; width?: number; height?:
               {titleHtml && (
                 <h3 class:list={[styles?.card_title]} set:html={titleHtml} />
               )}
+              {url && (
+                <a
+                  href={url}
+                  class="absolute inset-0 z-10 block"
+                  aria-label={title ? `Go to ${title}` : undefined}
+                />
+              )}
               {text && <div class:list={["text-xl z-20"]} set:html={content} />}
               {button && (
                 <a

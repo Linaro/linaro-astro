@@ -41,6 +41,17 @@ hero:
         image:
           src: linaro-website/graphics/freepik__dynamic-image-of-software-supply-chain-managementn__15216_1_lsycrd.png
           alt: Linaro collaboration
+      - title: Linaro Addresses the Demands of the Next Era of AI and Compute with New Model and Brings Open Collaboration to All
+        button:
+          text: Read the Press Release
+          url: /news/linaro-addresses-the-demands-of-the-next-era-of-ai-and-compute-with-new-model-and-brings-open-collaboration-to-all
+        image:
+          src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772787588/linaro-website/graphics/CC_PR_image_banner_copy_1_z9kp6c.png
+          alt: Confidential Computing
+        light_overlay: true
+        logo:
+          src: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772787588/linaro-website/graphics/Artboard_1_1_biawho.png
+          alt: Confidential Computing logo
   tagline: |
     We guide you through <span class="text-linaro-yellow">every step of your journey</span>, ensuring fast time to market, exceptional quality, security & cost-effective long-term maintenance.
 flow:
@@ -84,10 +95,12 @@ flow:
           # image: absolute inset-0 w-full h-full object-contain
         cards:
           - title: Test Automation
+            url: /services/testingandautomation
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Linux Kernel
+            url: /services/upstreaming-linux-kernel
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
@@ -100,63 +113,71 @@ flow:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Confidential Computing
+            url: /solutions/confidential-computing
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Unified Firmware Lifecycle Platform
+            url: /solutions/oneboot
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: IoT & Embedded
+            url: /solutions/onelab
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: CRA & Software Supply Chain Management
+            url: /services/software-supply-chain-management
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Qualcomm Platform Services
+            url: /services/qualcomm-platform
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
-          - title: NXP Platform Services
+          - title: "NXP<br />Platform<br />Services"
+            url: /services/nxp-platform-services
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Android Platform Services
+            url: /industries/client-devices
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: Windows Platform Services
+            url: /industries/client-devices
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
           - title: HPC
+            url: https://www.linaroforge.com
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
   - row: container_row
-    title: Talk to our Experts
     styles:
-      outer: bg-transparent z-0
-      inner: "pt-4 pb-8"
-    sections:
-      - component: talk_to_experts
-        subtitle: Book a time to talk with us
-        # Add calendar embed URL to show the booking widget (e.g. Calendly or Cal.com):
-        # embed_url: https://calendly.com/your-page
-        button:
-          text: Book a time to talk with us
-          url: /contact
-
-  - row: container_row
-    title: Don't miss any of our *latest updates*
-    styles:
-      outer: bg-center-bottom bg-no-repeat bg-[center_top_0%] bg-[length:200%] md:bg-[length:150%] lg:bg-[length:100%] xl:bg-[length:90%] pb-[8rem] mb-[-8rem]
-    sections:
-      - component: buttons
-        buttons:
-          - button_text: Subscribe to our newsletter
-            type: insight
-            formName: newsletter
+      outer: section-gradient-background z-0 pt-12 pb-16
+    blocks:
+      - title: '<span class="linaro-gradient-text">Contact Linaro</span>'
+        styles:
+          inner: "pt-12 pb-8"
+        sections:
+          - component: contact
+            form_id: "7"
+            formName: "sales_contact"
+            hideTitle: true
+            styles: {}
+      - title: Don't miss any of our *latest updates*
+        styles:
+          outer: "mt-24 lg:mt-32"
+          inner: "pt-16 pb-8"
+        sections:
+          - component: buttons
+            buttons:
+              - button_text: Subscribe to our newsletter
+                type: insight
+                formName: newsletter
 ---

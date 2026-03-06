@@ -17,14 +17,15 @@ hero:
 flow:
   - row: container_row
     no_border: true
+    full_width: true
     title: 'Why Choose Linaro for<br /><span class="linaro-gradient-text">Your Confidential Computing Needs?</span>'
     styles:
       outer: bg-background
-      inner: "py-16 lg:py-24"
+      inner: "py-16 lg:py-24 px-4 md:px-8"
     sections:
       - component: cards
         styles:
-          container: "flex flex-col gap-[17px] w-full min-w-0 max-w-4xl mx-auto justify-center items-center self-center"
+          container: "flex flex-col gap-[17px] w-full -mx-4 md:-mx-8 items-stretch"
           card: "w-full py-[35px] px-6 lg:px-12 flex flex-col items-center text-center"
           card_title: "text-xl font-bold text-white mb-2"
         cards:
@@ -33,20 +34,20 @@ flow:
             text: |
               With a legacy of innovation and Arm-based solutions, Linaro combines
               technical expertise with a commitment to open source.
-            style: "bg-[linear-gradient(180deg,rgba(34,32,37,0)_0%,#7425D3_100%)]"
+            style: "bg-[linear-gradient(180deg,#222025_0%,#222025_40%,#420d90_100%)]"
           - number: 2
             title: Simplified Development
             text: |
               We remove the complexity of researching and implementing
               confidential computing solutions, enabling rapid deployment.
-            style: "bg-[linear-gradient(180deg,rgba(34,32,37,0)_0%,#7425D3_100%)]"
+            style: "bg-[linear-gradient(180deg,#222025_0%,#222025_40%,#420d90_100%)]"
           - number: 3
             title: End-to-End Support
             text: |
               From hardware integration to software verification, Linaro provides
               comprehensive solutions to help you meet your confidential computing
               goals.
-            style: "bg-[linear-gradient(180deg,rgba(34,32,37,0)_0%,#7425D3_100%)]"
+            style: "bg-[linear-gradient(180deg,#222025_0%,#222025_40%,#420d90_100%)]"
   - row: container_row
     styles:
       outer: bg-background
@@ -74,7 +75,7 @@ flow:
       - component: image_cards
         styles:
           container: "grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto mt-12 px-6 lg:px-8 justify-items-center md:justify-items-stretch"
-          card_title: "text-lg font-semibold text-white/90 text-center mt-5 not-prose"
+          card_title: "text-xl lg:text-2xl font-semibold text-white/90 text-center mt-5 not-prose"
           imageWrapper: "aspect-[3/4] rounded-2xl overflow-hidden"
           image: "object-cover object-center"
         cards:
@@ -130,7 +131,7 @@ flow:
 
   - row: container_row
     styles:
-      outer: "purple-gradient-container !pb-8 lg:!pb-10"
+      outer: neutrum-gradient-background py-8 lg:py-12
       inner: "pt-4 pb-8 lg:pt-6 lg:pb-10"
     sections:
       - component: neutrum_evidence_cta
@@ -150,7 +151,7 @@ flow:
   - row: container_row
     show_title_line: true
     styles:
-      outer: purple-gradient-container
+      outer: bg-background
       inner: "pt-4 pb-12 lg:pt-6 lg:pb-16"
     sections:
       - component: cta_block

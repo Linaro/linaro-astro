@@ -35,6 +35,8 @@ export const heroCarouselSchema = z.object({
       title: z.string(),
       button: z.object({ text: z.string(), url: z.string() }),
       image: z.object({ src: z.string(), alt: z.string() }),
+      logo: z.object({ src: z.string(), alt: z.string() }).optional(),
+      light_overlay: z.boolean().optional(),
     }),
   ),
   styles: z
@@ -212,15 +214,18 @@ export const contactSchema = z.object({
   component: component("contact"),
   form_id: z.string(),
   formName: z.string().optional(),
+  hideTitle: z.boolean().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
-  styles: z.object({
-    card: z.string().optional(),
-    container: z.string().optional(),
-    form: z.string().optional(),
-    description: z.string().optional(),
-    content: z.string().optional(),
-  }),
+  styles: z
+    .object({
+      card: z.string().optional(),
+      container: z.string().optional(),
+      form: z.string().optional(),
+      description: z.string().optional(),
+      content: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const contactButtonsSchema = z.object({
