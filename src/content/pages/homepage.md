@@ -36,7 +36,7 @@ hero:
           alt: Linaro development
       - title: Software Supply Chain Management
         button:
-          text: Find out more abour CRA Compliance
+          text: Find out more about CRA Compliance
           url: /services/software-supply-chain-management
         image:
           src: linaro-website/graphics/freepik__dynamic-image-of-software-supply-chain-managementn__15216_1_lsycrd.png
