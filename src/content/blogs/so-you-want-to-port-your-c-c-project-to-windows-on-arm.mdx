@@ -89,7 +89,6 @@ Additionally, as ARM64EC is a different ABI to native ARM64, this means that any
 
 A good example of this particular issue is FFmpeg, a popular multimedia processing package. Many implementations of various video and audio codecs are written in hand-rolled assembly, as squeezing every drop of performance out of an implementation is critical for things like audio and video processing. In order to get a good level of performance for an ARM64EC version of ffmpeg, all the assembly needed to be rewritten to use the smaller number of registers. Ultimately, [this work was not merged ](https://github.com/microsoft/vcpkg/pull/48803#issuecomment-3648572123)into FFmpeg due to the maintenance and complexity overhead.
 
-
 This highlights the largest drawback of ARM64EC - support from libraries is just not there, and is unlikely to be merged upstream - this means major, often performance-critical parts of the app have to remain under emulation, therefore incurring power-efficiency losses, as discussed in the x64 section. This is why it may be a better choice to consider a native ARM64 binary.
 
 *Note: There is a very good in-depth series of blog articles on ARM64EC [here](http://www.emulators.com/docs/abc_arm64ec_explained.htm), if you prefer more technical depth.*
@@ -128,9 +127,7 @@ There does exist another option, which is to have a separate x64 (or ARM64EC) pr
 
 However, there are some libraries that cannot be used as native ARM64. This is usually either because they are closed-source, and the vendor has not yet released ARM64 binaries, or because there was an issue upstream in the case of OSS (such as CI, or maintenance overheads), and a contribution to fix the library was not accepted. Also, some OSS libraries just haven’t been ported yet, as they hadn’t come up.
 
-## 
 Part 3: Common pitfalls and issues in the porting process
-
 
 This section will cover several of the more common issues that were discovered in the process of porting many OSS apps. This is by no means a comprehensive list, or an indication that they will come up, and simply serves as an illustration of some potential issues.
 
@@ -156,7 +153,6 @@ It also has the added benefit of being cross-platform compatible with both macOS
 
 The most common intrinsic that trips projects up is the use of the __cpuid() call (for example, Lensfun). This is an Intel intrinsic that can get information about the CPU name, vendor, and capabilities. This specific intrinsic is not covered by sse2neon (it is, however in softintrin, for ARM64EC purposes), as it doesn’t really cleanly map.
 
-
 #### CPUID equivalent
 
 The “standard” approach on Windows on Arm is to query any such information from the registry, available at “HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0”. This sub-key contains relevant values that would typically be retrieved via CPUID, such as the processor name, vendor, and identifier.
@@ -181,7 +177,6 @@ It is important to note that **other than MIDR_EL1, these “CP” values are no
 
 But, why is doing it this way necessary?
 
-
 ### MRS Emulation
 
 On these devices, there is no emulation for MRS instructions when accessing something at a higher privilege level. This means that **the common approach taken by Linux ARM64 (MRS <register>, MIDR_EL1) to identify CPU capabilities is not valid**. When executed, the instruction generates an exception when accessed from user space (EL0).
@@ -192,110 +187,16 @@ This is because [the Linux Kernel catches this exception, and emulates the resul
 
 For reading other registers (for example, ARM64_CNTVCT) that would normally be accessed by MRS in Windows on Arm, you can use the intrinsic [_ReadStatusReg()](https://learn.microsoft.com/en-us/cpp/intrinsics/arm64-intrinsics).
 
+There is also another reason to use that intrinsic - MSVC does not support inline ASM, and many existing applications that support Arm have inline ASM as part of their code base (for example,[ Arm Compute Library)](https://github.com/ARM-software/ComputeLibrary).
 
+### ARM64 Assumptions in cross-platform projects
 
+As Arm has historically been a Linux ISA, there are lots of assumptions that are made about certain code paths (this is improving due to macOS now running on Arm meaning abstractions are being implemented), similar to how the default assumption on Windows is an x64 processor.
 
+One of the most common assumptions is that when a program is running on Arm, there must be support for inline assembly. Sadly, this is not the case when using MSVC, which does not support inline assembly for ARM64 or x64 targets.
 
+In many cases ( for example, [OpenUSD](https://github.com/PixarAnimationStudios/OpenUSD/pull/3430/changes#diff-69949053a7cf12567093d2270dd9690a9c1d7e7f6b23842cee9c72803c16a046R58)), this assembly can be replaced with intrinsics. In other cases - such as with the aforementioned Arm Compute Library - this means that MSVC as a compiler is not an option, and LLVM must be used (which does support inline assembly).
 
+Another assumption, which is actually the inverse of the Windows == x64 section above, is that if there’s an ARM64 processor, then it must be a macOS or Linux device, and the presence of things such as /proc/cpuinfo is assumed.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[
-
-
-
-](https://youtu.be/xVn8wQ3tKxA?t=1720)
+ARM64 code is also often guarded behind an #if defined(\_\_aarch64\_\_) block, which MSVC does not define, meaning the checks have to be amended to #if defined(\_\_aarch64\_\_) || defined(_M_ARM64). If you use LLVM’s clang-cl, the inverse is not true, as it defines _M_ARM64 on Windows.
