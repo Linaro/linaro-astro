@@ -1,0 +1,109 @@
+---
+title: "Enabling Standard Linux on Arm: How ONELab Accelerates Interoperability
+  and SystemReady Continuous Compliance"
+description: A faster path to booting standard Linux on Arm through automated
+  firmware validation and real-hardware testing.
+date: 2026-03-10T16:34:00.000Z
+author: alan-bennett
+tags:
+  - automotive
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773160515/linaro-website/IMG_2240_plchr1.png
+related: []
+---
+Most Arm embedded platforms still struggle to boot standard Linux distributions due to fragmented firmware implementations and non-standard boot flows. This fragmentation forces vendors and OEMs to rely on custom board support packages (BSPs), creating long validation cycles, higher maintenance costs, and limited OS compatibility.
+
+ONELab by Linaro addresses this challenge by providing a fully automated testing infrastructure that validates firmware compliance and operating system interoperability on real hardware platforms. By integrating automated test pipelines and continuous compliance verification aligned with Arm SystemReady requirements, ONELab reduces what traditionally required 12-24 weeks of manual validation to an automated 6-12 week compliance cycle.
+
+The result is faster enablement of standard Linux distributions on Arm embedded platforms, improved ecosystem interoperability, and a scalable approach to continuous compliance for silicon vendors, device manufacturers, and software providers.
+
+### The Core Problem: Standard Linux Can't Boot on Most Arm Embedded Platforms
+
+Booting a standard Linux distribution on an Arm embedded platform should be straightforward - but it isn't. Non-standard Basic Input/Output System (BIOS) interfaces, proprietary firmware features, and inconsistent boot configurations across vendors make it near impossible to run off-the-shelf Linux on most Arm devices without significant platform-specific work.
+
+This fragmentation has real consequences. Every silicon vendor and board manufacturer ends up maintaining custom boot flows, hand-tuned firmware, and bespoke test setups - duplicating effort across the ecosystem and slowing time-to-market.
+
+ONELab exists to fix this. By helping the ecosystem adopt a standard set of BIOS features and configurations, ONELab enables interoperability between Arm platforms and standard Linux distributions - and provides the automated testing infrastructure to prove it works.
+
+## **Why This Is Hard**:
+
+* **Non-standard firmware** across vendors (AMD, Qualcomm, Renesas, TI, NXP) - each implements BIOS interfaces differently, breaking assumptions that standard Linux distributions rely on
+* **Multiple operating systems** to validate (Fedora, Debian, Ubuntu, openSUSE, Yocto, Alpine, OpenEuler) - SystemReady continuous compliance requires demonstrating distro compatibility
+* **Standards compliance requirements** (Arm SystemReady Device Tree (DT), PSA Certified) - firmware AND OS must work together through standardized interfaces
+* **Continuous updates** - firmware changes, OS releases, and test suite updates all trigger re-validation
+* **Physical hardware testing** - can't rely on emulation for real-world compatibility
+
+This is the first article in a series on hardware testing automation with Linaro ONELab. The next article covers getting started - enabling your first device.
+
+## The Solution: ONELab Platform
+
+ONELab is Linaro's testing service for Arm platforms that focuses on verifying standards compliance and showing compatibility between platforms and various workloads. Built on modern cloud-native infrastructure, ONELab provides:
+
+### Key Features
+
+**Standards Compliance Testing**
+
+* Arm SystemReady Device Tree (DT) continuous compliance via the Arm Compliance Suite (ACS), which includes: Base System Architecture (BSA) tests, Firmware Test Suite (FWTS), Unified Extensible Firmware Interface (UEFI) Self-Certification Test (SCT), and Platform Firmware Device Interface (PFDI) validation
+* Extensible Firmware Interface (EFI) capsule update verification
+* Device Tree compliance (note: SystemReady for x86 tests Advanced Configuration and Power Interface (ACPI) compliance, but ONELab focuses on Device Tree for Arm)
+
+**OS Distribution Testing**
+
+* Automated installation for 7+ Linux distributions (Fedora, Debian, Ubuntu, openSUSE, Yocto, Alpine, OpenEuler)
+* Validates OS compatibility as required for SystemReady DT
+* Boot sequence and hardware compatibility verification
+
+**Cloud-Native Architecture**
+
+* Cloud-hosted, always-available testing service - no infrastructure to manage
+* Web dashboard for intuitive test management and results review
+* Scales elastically to handle concurrent testing across multiple platforms
+* Distributed architecture with Linaro Automation Appliances (LAAs) deployed as LAVA workers alongside your hardware
+
+### **Integration with LAVA**
+
+LAVA (Linaro Automated Validation Architecture) is an open-source continuous integration system that automates the deployment, booting, and testing of software on real physical devices. It provisions boards, flashes firmware, runs test suites, and captures structured results - enabling scalable validation on actual hardware rather than simulators.
+
+ONELab builds on LAVA to provide a managed testing experience:
+
+* **Device Control:** LAVA workers (LAAs) connect to physical Arm devices and manage power, serial console, and network boot
+* **Test orchestration**: ONELab translates compliance suite selections into pre-defined LAVA test jobs generated from curated templates - customers select from validated compliance suites rather than writing arbitrary LAVA jobs
+* **Result aggregation**: ONELab collects and organizes test results, logs, and artifacts into a unified dashboard
+
+In short, LAVA handles the low-level device control, while ONELab provides the high-level workflow, compliance logic, and result management.
+
+**Continuous Validation & Dashboard**
+
+* Automated testing can be triggered by firmware uploads, OS updates, or test suite changes (currently manual via UI, CI integration in development)
+* Private dashboard for managing Compliance Runs
+* Public Explore Boards for sharing compliance results
+* Self-compliance workflow for SystemReady continuous compliance
+
+**REST API & CI/CD Integration**
+
+Full programmatic control is available today via the ONELab REST API, enabling seamless integration into existing CI/CD pipelines:
+
+* Upload firmware builds via API
+* Trigger Compliance Runs programmatically
+* Retrieve test results for automated pass/fail decisions
+
+Purpose-built CI/CD pipeline integrations (such as GitLab pipeline templates for Yocto builds with OEQA tests) are in active development. Contact us if you're interested in early access for your workflows.
+
+How It Works
+
+*Figure 1: The ONELab high-level workflow from firmware upload to compliance evidence.*
+
+![]()
+
+**Simple Workflow**:
+
+* **Upload** your firmware build to ONELab (creates a Firmware Release Stream)—Note: This step is optional after the first upload; you can reuse existing firmware builds
+* **Schedule Compliance Run** by selecting:
+
+  * Which firmware build to test
+  * Which platform ( device ) to run on
+  * Which compliance suite ( payload): SystemReady ACS, Fedora, Debian, Ubuntu, etc.
+* **Onelab** automates the testing ( flashing firmware, running tests, collecting results)
+* **Review** detailed results and logs in your private dashboard
+* **Self-comply** (for SystemReady) or publish results to public Explore Boards
+
+ONELab handles the complexity of device management, test orchestration, and result collection, allowing your team to focus on fixing issues rather than managing infrastructure.
