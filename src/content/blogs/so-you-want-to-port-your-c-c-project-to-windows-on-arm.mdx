@@ -179,7 +179,7 @@ But, why is doing it this way necessary?
 
 ### MRS Emulation
 
-On these devices, there is no emulation for MRS instructions when accessing something at a higher privilege level. This means that **the common approach taken by Linux ARM64 (MRS <register>, MIDR_EL1) to identify CPU capabilities is not valid**. When executed, the instruction generates an exception when accessed from user space (EL0).
+On these devices, there is no emulation for MRS instructions when accessing something at a higher privilege level. This means that **the common approach taken by Linux ARM64 (MRS \*\*`<register>`\*\*, MIDR_EL1) to identify CPU capabilities is not valid**. When executed, the instruction generates an exception when accessed from user space (EL0).
 
 But why does it work on Linux, not Windows, or macOS?
 
