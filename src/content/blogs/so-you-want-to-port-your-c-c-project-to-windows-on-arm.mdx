@@ -50,7 +50,7 @@ Clang/LLVM, on the other hand, is usually the compiler of choice on macOS, and s
 
 On ARM64, the performance increase is typically more pronounced. When [Blender was switched ](https://projects.blender.org/blender/cycles/commit/90ec7c8e9a5119aa3b79d7ab5947425b5a31568b)from using MSVC to clang-cl in 2024, the “cycles” renderer experienced a [performance increase of 44%. ](https://youtu.be/xVn8wQ3tKxA?t=1720)As such, it is generally worthwhile to consider a switch to clang-cl for developers, especially when looking at Windows on Arm as a platform - it is, of course, better to investigate whether it does result in better performance for your app. There are some trade-offs in terms of code size, security features, etc to also consider, if your project is affected. In addition, if it is required to redistribute any parts of the toolchain, this is perfectly permissible with LLVM.
 
-As a rule, CMake usually defaults to MSVC on Windows, so a vast majority of projects will use that as their compiler - it is, however, fairly easy to switch compilers. For example, when using the “Ninja” generator, this is as simple as specifying CMAKE_C_COMPILER=”clang-cl” (assuming that clang-cl is on your path). For the Visual Studio generator, you can pass the -T”ClangCl” argument (assuming the built-in LLVM that ships with VS, external installs [require the path to explicitly be set](https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170#custom_llvm_location)).
+As a rule, CMake usually defaults to MSVC on Windows, so a vast majority of projects will use that as their compiler - it is, however, fairly easy to switch compilers. For example, when using the “Ninja” generator, this is as simple as specifying `CMAKE_C_COMPLIER=“clang-cl”` (assuming that clang-cl is on your path). For the Visual Studio generator, you can pass the `-T”ClangCl”` argument (assuming the built-in LLVM that ships with VS, external installs [require the path to explicitly be set](https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170#custom_llvm_location)).
 
 ## Part 2: Architectures/Targets and dependencies
 
@@ -132,13 +132,13 @@ This section will cover several of the more common issues that were discovered i
 
 ### SIMD, and the assumption that Windows == x64
 
-By far and away, the most common assumption in projects was that if the program is being compiled for Windows, then that means that the architecture must be x86, or x64. This results in assumptions of certain headers (such as immintrin.h) always being present on Windows, and that x64-style intrinsics can be used behind an “#if defined(_WIN32)” guard, rather than also having an “#if defined(_M_AMD64)” guard.
+By far and away, the most common assumption in projects was that if the program is being compiled for Windows, then that means that the architecture must be x86, or x64. This results in assumptions of certain headers (such as `immintrin.h`) always being present on Windows, and that x64-style intrinsics can be used behind an “`#if defined(_WIN32)`” guard, rather than also having an “`#if defined(_M_AMD64)`” guard.
 
 Given the inclusion of intrinsic headers, usually this means that SIMD code has been written with only x64 in mind. This poses a problem for ARM64, as intrinsics are not the same over differing architectures. To solve this, there are a couple of solutions, which are the two most common simple fixes:
 
 ### Soft Intrinsics
 
-This is a library provided by Microsoft as part of the SDK. By including softintrin.h, and linking against softintrin.lib, it should be possible for most x64 intrinsics to “just work”.  If you compile targeting ARM64EC, this is automatically included. There have historically been some compatibility issues with this, so it is possible mileage may vary when using this.
+This is a library provided by Microsoft as part of the SDK. By including `softintrin.h`, and linking against `softintrin.lib`, it should be possible for most x64 intrinsics to “just work”.  If you compile targeting ARM64EC, this is automatically included. There have historically been some compatibility issues with this, so it is possible mileage may vary when using this.
 
 There is, however, another (more cross-platform) alternative:
 
@@ -150,13 +150,13 @@ It also has the added benefit of being cross-platform compatible with both macOS
 
 ### CPUID calls, and MRS emulation
 
-The most common intrinsic that trips projects up is the use of the __cpuid() call (for example, Lensfun). This is an Intel intrinsic that can get information about the CPU name, vendor, and capabilities. This specific intrinsic is not covered by sse2neon (it is, however in softintrin, for ARM64EC purposes), as it doesn’t really cleanly map.
+The most common intrinsic that trips projects up is the use of the `__cpuid()` call (for example, Lensfun). This is an Intel intrinsic that can get information about the CPU name, vendor, and capabilities. This specific intrinsic is not covered by sse2neon (it is, however in `softintrin`, for ARM64EC purposes), as it doesn’t really cleanly map.
 
 #### CPUID equivalent
 
-The “standard” approach on Windows on Arm is to query any such information from the registry, available at “HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0”. This sub-key contains relevant values that would typically be retrieved via CPUID, such as the processor name, vendor, and identifier.
+The “standard” approach on Windows on Arm is to query any such information from the registry, available at “`HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0`”. This sub-key contains relevant values that would typically be retrieved via CPUID, such as the processor name, vendor, and identifier.
 
-This is similar to the approach taken in macOS with machdep.cpu.brand_string via sysctl, or Linux via /proc/cpuinfo.
+This is similar to the approach taken in macOS with `machdep.cpu.brand_string `via `sysctl`, or Linux via `/proc/cpuinfo`.
 
 As a small (but interesting) aside, it also contains other values, starting with “CP”:
 
@@ -164,7 +164,7 @@ As a small (but interesting) aside, it also contains other values, starting with
 
 These “CP” values are very poorly documented, but are essentially registers that would not otherwise be accessible - they map to the hexadecimal values of the registers they represent as per the Arm Architecture Reference Manual (the “Arm ARM”). The term “CP” comes from “coprocessor”, terminology that is a holdover from ARMv7.
 
-The hexadecimal mapping is calculated via the macro ARM64_SYSREG(op0, op1, crn, crm, op2) in the header winnt.h.
+The hexadecimal mapping is calculated via the macro` ARM64_SYSREG(op0, op1, crn, crm, op2)` in the header `winnt.h.`
 
 For example:
 
@@ -182,9 +182,9 @@ On these devices, there is no emulation for MRS instructions when accessing some
 
 But why does it work on Linux, not Windows, or macOS?
 
-This is because [the Linux Kernel catches this exception, and emulates the result. ](https://docs.kernel.org/arch/arm64/cpu-feature-registers.html)This approach is uniquely taken by Linux, however as most Arm devices are Linux-based, there is a tendency for some applications to default to that behaviour. On Windows, use [IsProcessorFeaturePresent ](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent)for MIDR_EL1 equivalents.
+This is because [the Linux Kernel catches this exception, and emulates the result. ](https://docs.kernel.org/arch/arm64/cpu-feature-registers.html)This approach is uniquely taken by Linux, however as most Arm devices are Linux-based, there is a tendency for some applications to default to that behaviour. On Windows, use [IsProcessorFeaturePresent ](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent)for `MIDR_EL1 `equivalents.
 
-For reading other registers (for example, ARM64_CNTVCT) that would normally be accessed by MRS in Windows on Arm, you can use the intrinsic [_ReadStatusReg()](https://learn.microsoft.com/en-us/cpp/intrinsics/arm64-intrinsics).
+For reading other registers (for example, `ARM64_CNTVCT`) that would normally be accessed by MRS in Windows on Arm, you can use the intrinsic [_ReadStatusReg()](https://learn.microsoft.com/en-us/cpp/intrinsics/arm64-intrinsics).
 
 There is also another reason to use that intrinsic - MSVC does not support inline ASM, and many existing applications that support Arm have inline ASM as part of their code base (for example,[ Arm Compute Library)](https://github.com/ARM-software/ComputeLibrary).
 
@@ -196,9 +196,9 @@ One of the most common assumptions is that when a program is running on Arm, the
 
 In many cases ( for example, [OpenUSD](https://github.com/PixarAnimationStudios/OpenUSD/pull/3430/changes#diff-69949053a7cf12567093d2270dd9690a9c1d7e7f6b23842cee9c72803c16a046R58)), this assembly can be replaced with intrinsics. In other cases - such as with the aforementioned Arm Compute Library - this means that MSVC as a compiler is not an option, and LLVM must be used (which does support inline assembly).
 
-Another assumption, which is actually the inverse of the Windows == x64 section above, is that if there’s an ARM64 processor, then it must be a macOS or Linux device, and the presence of things such as /proc/cpuinfo is assumed.
+Another assumption, which is actually the inverse of the Windows == x64 section above, is that if there’s an ARM64 processor, then it must be a macOS or Linux device, and the presence of things such as `/proc/cpuinfo` is assumed.
 
-ARM64 code is also often guarded behind an #if defined(\_\_aarch64\_\_) block, which MSVC does not define, meaning the checks have to be amended to #if defined(\_\_aarch64\_\_) || defined(_M_ARM64). If you use LLVM’s clang-cl, the inverse is not true, as it defines _M_ARM64 on Windows.
+ARM64 code is also often guarded behind an `#if defined(__aarch64__)` block, which MSVC does not define, meaning the checks have to be amended to` #if defined(__aarch64__) || defined(_M_ARM64)`. If you use LLVM’s clang-cl, the inverse is not true, as it defines` _M_ARM64 `on Windows.
 
 ### OpenGL graphics, and mesa
 
@@ -226,10 +226,9 @@ These are the underlying machines that power the Github actions workers.
 
 A number of projects have solved the issue of Windows on Arm machine availability by doubling up their Apple Silicon devices to have Windows Virtual Machines running on them through something like UTM, which uses QEMU underneath.
 
-### QEMU 
+### QEMU
 
 Windows on Arm can be [Virtualised in QEMU](https://linaro.atlassian.net/wiki/spaces/WOAR/pages/28914909194/windows-arm64+VM+using+qemu-system), on a variety of different hosts. For example, macOS as above via HVF (Hypervisor.framework), or alternatively a Linux host via KVM. As of QEMU 11.0 (slated for March 2026), Windows hosts using WHPX virtualisation will be possible too. This means that with access to an existing ARM64 machine with virtualisation capabilities, it is possible to run Windows on them. This may allow for running Windows on Arm in a datacenter, or other cloud provider (assuming they support nested virtualisation).
-
 
 ### Physical Windows on Arm machines
 
@@ -260,50 +259,6 @@ The author, Anthony, has been involved in Windows on Arm since 2017, when he wor
 ## Citations
 
 **0** Blender 5.0.1 with the "Classroom" scene, using the cycles render engine in CPU mode
-
-
-
-
-
-
-[
-
-
-
-
-
-
-](mailto:contact@linaro.org)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 [
 ](https://code.blender.org/2025/08/blender-for-windows-on-arm/)
