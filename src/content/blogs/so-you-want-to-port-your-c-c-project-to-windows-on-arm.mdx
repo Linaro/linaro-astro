@@ -1,10 +1,9 @@
 ---
 title: So, you want to port your C/C++ project to Windows on Arm?
-description: >
-  Looking for a quick answer? There are several approaches that can be taken to
-  get a project running on Windows on Arm devices. Each is discussed with some
-  context in this article, however, native ARM64 with LLVM is usually the
-  fastest choice for your application.
+description: Looking for a quick answer? There are several approaches that can
+  be taken to get a project running on Windows on Arm devices. Each is discussed
+  with some context in this article, however, native ARM64 with LLVM is usually
+  the fastest choice for your application.
 date: 2026-03-11T08:26:00.000Z
 author: anthony-roberts
 tags:
@@ -93,7 +92,7 @@ This highlights the largest drawback of ARM64EC - support from libraries is just
 
 *Note: There is a very good in-depth series of blog articles on ARM64EC [here](http://www.emulators.com/docs/abc_arm64ec_explained.htm), if you prefer more technical depth.*
 
-ARM64X
+### ARM64X
 
 [ARM64X](https://learn.microsoft.com/en-us/windows/arm/arm64x-pe) is an extension to the regular WinPE executable format that allows for a “hybrid” binary, consisting of x64/ARM64EC code, and native ARM64 code. This differs from the Apple-style “fat binary”, in that it does not contain a full distinct duplication of the code for each ISA - the code is essentially “mix-and-matched” with different bits of code making up the binary being different architectures.
 
@@ -127,7 +126,7 @@ There does exist another option, which is to have a separate x64 (or ARM64EC) pr
 
 However, there are some libraries that cannot be used as native ARM64. This is usually either because they are closed-source, and the vendor has not yet released ARM64 binaries, or because there was an issue upstream in the case of OSS (such as CI, or maintenance overheads), and a contribution to fix the library was not accepted. Also, some OSS libraries just haven’t been ported yet, as they hadn’t come up.
 
-Part 3: Common pitfalls and issues in the porting process
+## Part 3: Common pitfalls and issues in the porting process
 
 This section will cover several of the more common issues that were discovered in the process of porting many OSS apps. This is by no means a comprehensive list, or an indication that they will come up, and simply serves as an illustration of some potential issues.
 
@@ -161,7 +160,7 @@ This is similar to the approach taken in macOS with machdep.cpu.brand_string via
 
 As a small (but interesting) aside, it also contains other values, starting with “CP”:
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773232795/linaro-website/IMG_2252_sqhvtr.jpg)
 
 These “CP” values are very poorly documented, but are essentially registers that would not otherwise be accessible - they map to the hexadecimal values of the registers they represent as per the Arm Architecture Reference Manual (the “Arm ARM”). The term “CP” comes from “coprocessor”, terminology that is a holdover from ARMv7.
 
@@ -169,7 +168,7 @@ The hexadecimal mapping is calculated via the macro ARM64_SYSREG(op0, op1, crn, 
 
 For example:
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773231862/linaro-website/IMG_2245_p7b7ix.jpg)
 
 This process can be reversed, in order to calculate which register is represented by a hexadecimal value.
 
@@ -200,3 +199,111 @@ In many cases ( for example, [OpenUSD](https://github.com/PixarAnimationStudios/
 Another assumption, which is actually the inverse of the Windows == x64 section above, is that if there’s an ARM64 processor, then it must be a macOS or Linux device, and the presence of things such as /proc/cpuinfo is assumed.
 
 ARM64 code is also often guarded behind an #if defined(\_\_aarch64\_\_) block, which MSVC does not define, meaning the checks have to be amended to #if defined(\_\_aarch64\_\_) || defined(_M_ARM64). If you use LLVM’s clang-cl, the inverse is not true, as it defines _M_ARM64 on Windows.
+
+### OpenGL graphics, and mesa
+
+The last “major” sticking point on Snapdragon Windows on Arm devices is the implementation of OpenGL. The Adreno GPU drivers that ship with these machines only support DirectX, and as of the Snapdragon X Elite machines, Vulkan. This means that in order to implement OpenGL functionality, there has to be a translation layer.
+
+In this case, the translation layer is [mesa](https://mesa3d.org/), specifically the D3D12 Gallium driver, branded as the [Open CL, OpenGL, and Vulkan Compatibility Pack. ](https://apps.microsoft.com/store/detail/9NQPSL29BFFF)Articles are available online that explain how this works, or alternatively this was covered in a [talk at the Blender Conference 2024, and in a previous article. ](https://youtu.be/xVn8wQ3tKxA?t=1254)Essentially, OpenGL functionality is translated into D3D12 calls, and runs on the GPU that way.
+
+This approach comes with its own difficulties. No translation is 100% perfect, and the introduction of more layers can always introduce more bugs or incompatibilities. It is therefore strongly recommended, where possible, to use a D3D or Vulkan backend on these devices. In fact, it can [substantially increase performance. ](https://code.blender.org/2025/08/blender-for-windows-on-arm/)
+
+### CI, and releasing binaries
+
+On the 3rd of April 2025, GitHub Actions runners for Windows ARM64 finally became freely, publicly, available for projects to use. On the 28th of January 2026, they became freely available for private repositories too (as per standard GitHub allocations). If you use GitHub, this is the easiest option - the builds should easily integrate with your existing CI files, and allow you to build and release binaries for Windows ARM64. It is also possible to access the machines directly. via GitHub Actions for debugging purposes.
+
+Not everyone uses GitHub though, so it’s important to think about alternatives.
+
+*Note: There is no version of Windows Server for Windows on Arm at time of writing - only Windows 11 (with the exception of container images, which are not covered here).*
+
+### Azure Virtual Machines
+
+Azure has Windows on Arm Virtual Machines available for general use, in D sizes. The [v5 VMs ](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/dpsv5-series)use Ampere Altra processors, the [v6 VMs ](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/dpsv6-series)use Cobalt CPUs, and are configurable to use a variety of different quantities of RAM and CPU. You may find instructions on how to create one of these machines [here.](https://learn.microsoft.com/en-us/windows/arm/create-arm-vm)
+
+These are the underlying machines that power the Github actions workers.
+
+### macOS Virtual Machines
+
+A number of projects have solved the issue of Windows on Arm machine availability by doubling up their Apple Silicon devices to have Windows Virtual Machines running on them through something like UTM, which uses QEMU underneath.
+
+### QEMU 
+
+Windows on Arm can be [Virtualised in QEMU](https://linaro.atlassian.net/wiki/spaces/WOAR/pages/28914909194/windows-arm64+VM+using+qemu-system), on a variety of different hosts. For example, macOS as above via HVF (Hypervisor.framework), or alternatively a Linux host via KVM. As of QEMU 11.0 (slated for March 2026), Windows hosts using WHPX virtualisation will be possible too. This means that with access to an existing ARM64 machine with virtualisation capabilities, it is possible to run Windows on them. This may allow for running Windows on Arm in a datacenter, or other cloud provider (assuming they support nested virtualisation).
+
+
+### Physical Windows on Arm machines
+
+You may indeed run your own lab, with your own machines in it. You can, of course, just add physical Windows on Arm machines to your existing lab. These might be the best option if you have things like graphics workloads that you’d like to ensure run as accurately to end-user machines as possible, or have regulatory requirements to run your hardware locally.
+
+It is important to note that in these cases, the Snapdragon X Elite machines are only commercially available in a laptop form factor. This may make cooling difficult, and means extra checks for lab technicians to ensure things like batteries are not suffering in a warmer lab environment.
+
+***An example of how not to cool these machines in production, Credit: Blender***
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773231863/linaro-website/IMG_2250_fdakii.jpg)
+
+Outside of the standard “consumer” machines, it is possible to purchase an Ampere Altra Developer Platform machine from [Adlink ](https://www.ipi.wiki/products/ampere-altra-developer-platform)or [System76](https://system76.com/desktops/thelio-astra-a1.1-n1/configure) (note any GPU will not have drivers), and install Windows, however it should be noted that proper GPU workloads are not possible on these machines, and that they are not reflective of Windows on Arm consumer hardware.
+
+As mentioned above, Mac Minis are available as a middle-ground. They allow for virtualisation of Windows on Arm via software such as UTM, using their built-in hypervisor framework.
+
+## Conclusion
+
+Hopefully, after reading this article, you are more prepared for what to expect when porting a C/C++ project to Windows on Arm. This article is in no way comprehensive, and highlights only a few of the most common issues that could appear, as all software projects are different.
+
+It is, however, important to consider porting your app natively to Windows on Arm - these machines are growing in popularity, and provide clear benefits from their use. The platform offers great efficiency, and getting your application running natively is the best way to help users get the most out of their devices.
+
+If you find you are having porting issues with Windows on Arm, or would like to know more on how we can help, please reach out to us at [contact@linaro.org](mailto:contact@linaro.org)
+
+## About the Author
+
+The author, Anthony, has been involved in Windows on Arm since 2017, when he worked on pre-production devices at Arm. Since 2024, he has been the Windows on Arm maintainer for Blender. He is an engineer in Linaro's Windows on Arm working group, who specialise in software enablement for the platform
+
+## Citations
+
+**0** Blender 5.0.1 with the "Classroom" scene, using the cycles render engine in CPU mode
+
+
+
+
+
+
+[
+
+
+
+
+
+
+](mailto:contact@linaro.org)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[
+](https://code.blender.org/2025/08/blender-for-windows-on-arm/)
