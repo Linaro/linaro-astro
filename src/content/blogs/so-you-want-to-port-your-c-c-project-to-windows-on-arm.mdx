@@ -18,7 +18,7 @@ related: []
 
 The main focus of these machines has been power-efficiency - the idea of a laptop with multi-day battery has long been sought-after, and these machines - benefitting from the greater power efficiency of the Arm architecture - hit the mark. For example, the Lenovo Thinkpad T14s Gen6, a Qualcomm Snapdragon X Elite machine, was tested by notebookcheck as [lasting 22.5h ](https://www.notebookcheck.net/Lenovo-ThinkPad-T14s-Gen-6-laptop-review-Snapdragon-X-Elite-enables-epic-battery-life.868214.0.html)under normal browsing usage.
 
-Being newcomers, however, these devices had to ensure that they were compatible with the existing ecosystem of software, primarily consisting of x86/x64 software. This is done via emulation, using a technology named “[Prism](https://learn.microsoft.com/en-us/windows/arm/apps-on-arm-x86-emulation)”, and the vast majority of applications work out of the box. There is, however, an overhead when emulating these applications, which can eat into the raw efficiency of these processors. As such, applications can get substantial performance and efficiency increases by being ported to run natively (for a “heavy workload” example, a sample scene in Blender gave a 48% performance increase 0 - other apps may vary).
+Being newcomers, however, these devices had to ensure that they were compatible with the existing ecosystem of software, primarily consisting of x86/x64 software. This is done via emulation, using a technology named “[Prism](https://learn.microsoft.com/en-us/windows/arm/apps-on-arm-x86-emulation)”, and the vast majority of applications work out of the box. There is, however, an overhead when emulating these applications, which can eat into the raw efficiency of these processors. As such, applications can get substantial performance and efficiency increases by being ported to run natively (for a “heavy workload” example, a sample scene in Blender gave a [48% performance increase](#citation-1) - other apps may vary).
 
 Given performance improvement figures as high as that can be attained by removing the emulation overheads, it makes sense for developers to consider a native port when targeting these machines. This begs the question; how can they do it?
 
@@ -156,7 +156,7 @@ The most common intrinsic that trips projects up is the use of the `__cpuid()` c
 
 The “standard” approach on Windows on Arm is to query any such information from the registry, available at “`HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0`”. This sub-key contains relevant values that would typically be retrieved via CPUID, such as the processor name, vendor, and identifier.
 
-This is similar to the approach taken in macOS with `machdep.cpu.brand_string `via `sysctl`, or Linux via `/proc/cpuinfo`.
+This is similar to the approach taken in macOS with `machdep.cpu.brand_string`via `sysctl`, or Linux via `/proc/cpuinfo`.
 
 As a small (but interesting) aside, it also contains other values, starting with “CP”:
 
@@ -164,7 +164,7 @@ As a small (but interesting) aside, it also contains other values, starting with
 
 These “CP” values are very poorly documented, but are essentially registers that would not otherwise be accessible - they map to the hexadecimal values of the registers they represent as per the Arm Architecture Reference Manual (the “Arm ARM”). The term “CP” comes from “coprocessor”, terminology that is a holdover from ARMv7.
 
-The hexadecimal mapping is calculated via the macro` ARM64_SYSREG(op0, op1, crn, crm, op2)` in the header `winnt.h.`
+The hexadecimal mapping is calculated via the macro`ARM64_SYSREG(op0, op1, crn, crm, op2)` in the header `winnt.h.`
 
 For example:
 
@@ -182,7 +182,7 @@ On these devices, there is no emulation for MRS instructions when accessing some
 
 But why does it work on Linux, not Windows, or macOS?
 
-This is because [the Linux Kernel catches this exception, and emulates the result. ](https://docs.kernel.org/arch/arm64/cpu-feature-registers.html)This approach is uniquely taken by Linux, however as most Arm devices are Linux-based, there is a tendency for some applications to default to that behaviour. On Windows, use [IsProcessorFeaturePresent ](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent)for `MIDR_EL1 `equivalents.
+This is because [the Linux Kernel catches this exception, and emulates the result. ](https://docs.kernel.org/arch/arm64/cpu-feature-registers.html)This approach is uniquely taken by Linux, however as most Arm devices are Linux-based, there is a tendency for some applications to default to that behaviour. On Windows, use [IsProcessorFeaturePresent ](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent)for `MIDR_EL1`equivalents.
 
 For reading other registers (for example, `ARM64_CNTVCT`) that would normally be accessed by MRS in Windows on Arm, you can use the intrinsic [_ReadStatusReg()](https://learn.microsoft.com/en-us/cpp/intrinsics/arm64-intrinsics).
 
@@ -198,7 +198,7 @@ In many cases ( for example, [OpenUSD](https://github.com/PixarAnimationStudios/
 
 Another assumption, which is actually the inverse of the Windows == x64 section above, is that if there’s an ARM64 processor, then it must be a macOS or Linux device, and the presence of things such as `/proc/cpuinfo` is assumed.
 
-ARM64 code is also often guarded behind an `#if defined(__aarch64__)` block, which MSVC does not define, meaning the checks have to be amended to` #if defined(__aarch64__) || defined(_M_ARM64)`. If you use LLVM’s clang-cl, the inverse is not true, as it defines` _M_ARM64 `on Windows.
+ARM64 code is also often guarded behind an `#if defined(__aarch64__)` block, which MSVC does not define, meaning the checks have to be amended to`#if defined(__aarch64__) || defined(_M_ARM64)`. If you use LLVM’s clang-cl, the inverse is not true, as it defines`_M_ARM64`on Windows.
 
 ### OpenGL graphics, and mesa
 
@@ -258,7 +258,6 @@ The author, Anthony, has been involved in Windows on Arm since 2017, when he wor
 
 ## Citations
 
-**0** Blender 5.0.1 with the "Classroom" scene, using the cycles render engine in CPU mode
+<a id="citation-1"></a> Blender 5.0.1 with the "Classroom" scene, using the cycles render engine in CPU mode
 
-[
-](https://code.blender.org/2025/08/blender-for-windows-on-arm/)
+[](https://code.blender.org/2025/08/blender-for-windows-on-arm/)
