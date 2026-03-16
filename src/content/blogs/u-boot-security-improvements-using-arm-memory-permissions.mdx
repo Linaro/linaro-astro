@@ -1,0 +1,75 @@
+---
+title: U-Boot security improvements using Arm memory permissions
+description: Mapping application memory as read-write-execute (RWX) removes the
+  security boundary between data and code, making it easier for attackers to run
+  malicious code through common vulnerabilities. Proper memory permissions
+  reduce the attack surface and strengthen application security. Read the blog
+  to learn more.
+date: 2026-03-06T10:16:00.000Z
+author: ilias-apalodimas
+tags:
+  - u-boot
+  - security
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772793132/linaro-website/IMG_2221_jyiheh.png
+related: []
+---
+### Introduction
+
+Mapping application memory as (read-write-execute (RWX) is often considered dangerous as it removes a critical security boundary between data and code. When a memory region is both writable and executable, an attacker who finds *any* way to write into that region—such as through a buffer overflow, use-after-free, or injection bug etc —can immediately execute the injected data as code. Mapping memory properly greatly reduces the attack surface and makes vulnerabilities harder to exploit. 
+
+In U-Boot, memory was classified as either normal memory, which is mapped with read, write, and execute permissions, or device memory, which is mapped as read/write only. When U-Boot relocated itself to the top of DRAM, the memory permissions remained unchanged as RWX, resulting in an increased attack surface.
+
+### Arm Memory Configuration
+
+The Arm architecture has complex ways of configuring the Memory Management Unit (MMU) and it depends on the overall system configuration.
+
+For U-Boot we only care about **"Stage 1 VMSAv8-64 Block and Page descriptor fields"** found in D8-6492 of the [Arm(R) Architecture Reference Manual ](https://developer.arm.com/documentation/ddi0487/latest/)*version L*.a
+
+* XN: eXecute Never -- Prevents execution
+* PXN: Privileged eXecute Never -- Prevents execution from privileged mode
+* UXN: Unprivileged eXecute Never -- Prevents execution from unprivileged mode
+* RO: Read-only -- Prevents memory writes
+
+Which ones you have to set depends mainly on the translation regime. Running U-Boot in QEMU without virtualization ends up running U-Boot in EL1&0 translation regime and both PXN/UXN need to be set.
+
+### Inspecting U-Boot
+
+Compiling qemu_arm64_lwip_defconfig (which now includes our **[patchset](https://lore.kernel.org/u-boot/20250301164922.397441-1-ilias.apalodimas@linaro.org/)**) and enabling **CMD_MEMINFO** && **CMD_CMD_MEMINFO_MAP**, allows us to inspect the memory maps. 
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772793662/linaro-website/IMG_2228_wsvrqs.jpg)
+
+* PXN UXN: Read-Erite memory 
+* RWX: Read-Write-Execute memory 
+
+As you can see, only device mapped memory is not allowed to execute. The remaining memory regions are mapped as RWX
+
+Enable memory permissions
+
+The patchset above adds another interesting flag CONFIG_MMU_PGROT which only applies to arm64. Unfortunately we can't yet enable it by default for all arm64 boards, because bugs like [**this** ](https://lore.kernel.org/u-boot/20250129-rockchip-pinctrl-const-v1-0-450ccdadfa7e@cherry.de/)and **[this](https://lore.kernel.org/u-boot/20250130133646.2177194-1-andre.przywara@arm.com/)** will now lead to a crash.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772793660/linaro-website/IMG_2229_noy9rt.jpg)
+
+* **PXN UXN RO:** Read-only memory 
+* **PXN UXN:** Read-Write memory 
+* **RO:** Read-Execute memory
+
+U-Boot has relocated to **\[0x0000023f6b9000 - 0x0000023f77d000] \[0x0000023f77e000 - 0x0000023f7c8000]** and **\[0x0000023f7c8000 - 0x0000023f7e0000]** which now have proper memory permissions!
+
+### But we still see RWX mappings
+
+There are several reasons that the rest of the memory is left as RWX. One of them is EFI runtime services. 
+
+U-Boot doesn't separate between EFI RO, RW and RX sections, instead it bundles all of them in the .efi_runtime and places them right before .text. We end up mapping 64kb for runtime services, which includes all the EFI related sections and .text. The linker script will need a bigger rewrite to map EFI services properly.
+
+Another reason is the SetVirtualAddressMap which allows the OS to remap EFI runtime services in a VA of its choice. This is rarely called for the arm64 architecture (only when VA_BITS < 39) in Linux, but when it's needed we need to switch any RX (which will now hold the runtime services) to RWX to allow relocations.
+
+So for now certain pages are left as RWX.
+
+### Remaining Issues
+
+The story isn’t complete as there are other aspects that need attention. Examples include:
+
+* Reviewing linker scripts to potentially decouple EFI memory from .text
+* Investigating how to apply proper mapping to EFI runtime services as well
+
+If your organisation is interested in further work in securing U-boot or you have questions about the above configuration changes, please [get in touch.](https://www.linaro.org/contact)

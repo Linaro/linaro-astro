@@ -1,0 +1,234 @@
+---
+import { getCloudinarySrc } from "@/lib/cloudinary";
+
+interface Slide {
+  title: string;
+  button: { text: string; url: string };
+  image: { src: string; alt: string };
+  logo?: { src: string; alt: string };
+  light_overlay?: boolean;
+}
+interface Props {
+  slides: Slide[];
+  styles?: { container?: string; slide?: string; arrow?: string };
+}
+const { slides, styles } = Astro.props as Props;
+
+function getImageSrc(image: { src: string; alt: string }) {
+  const url =
+    image.src.startsWith("http://") || image.src.startsWith("https://")
+      ? image.src
+      : getCloudinarySrc({
+          src: image.src,
+          alt: image.alt,
+          width: 608,
+          height: 505,
+        });
+  // Cloudinary URLs contain & in query params; escape for HTML src attribute
+  return typeof url === "string" && url.startsWith("http")
+    ? url.replace(/&/g, "&amp;")
+    : url;
+}
+---
+
+<div
+  class:list={[
+    "hero-carousel relative w-full max-w-5xl mx-auto rounded-2xl hero-carousel-gradient-border",
+    styles?.container,
+  ]}
+  data-slide-count={slides.length}
+>
+  <div
+    class="relative rounded-[15px] overflow-hidden bg-[#2a2730] h-[420px] md:h-[460px] lg:h-[500px]"
+  >
+    <div
+      class="hero-carousel-track flex h-full transition-transform duration-500 ease-out"
+      style={`width: ${slides.length * 100}%; --carousel-index: 0; --carousel-total: ${slides.length}`}
+    >
+      {
+        slides.map((slide, i) => {
+          const bgUrl = getImageSrc(slide.image);
+          const bgUrlCss = bgUrl.replace(/&amp;/g, "&");
+          return (
+            <article
+              class:list={[
+                "hero-carousel-slide relative flex flex-col justify-center pl-8 lg:pl-12 pr-8 lg:pr-12 py-8 lg:py-12 h-full bg-no-repeat",
+                slide.light_overlay ? "hero-carousel-slide-full-bg" : "hero-carousel-slide-bg",
+                styles?.slide,
+              ]}
+              style={`flex: 0 0 ${100 / slides.length}%; min-width: ${100 / slides.length}%; background-image: url("${String(bgUrlCss).replace(/"/g, '\\"')}");`}
+              data-index={i}
+              aria-hidden={i !== 0}
+            >
+              <img
+                src={bgUrl}
+                alt={slide.image.alt}
+                class="sr-only"
+                width={608}
+                height={505}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
+              <div
+                class:list={[
+                  "absolute inset-0 rounded-[15px]",
+                  slide.light_overlay ? "hero-carousel-overlay-light" : "hero-carousel-overlay",
+                ]}
+                aria-hidden="true"
+              />
+              <div class="relative z-10 flex w-full flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+                <div class={slide.logo ? "flex-1 min-w-0 max-w-2xl" : "max-w-xl"}>
+                  <h2 class="text-white text-xl md:text-2xl lg:text-3xl font-medium mb-6 leading-tight">
+                    {slide.title}
+                  </h2>
+                  <a
+                    href={slide.button.url}
+                    class="linaro-gradient-button no-underline inline-flex items-center justify-center w-fit px-6 py-3 rounded-full text-background font-medium"
+                  >
+                    {slide.button.text}
+                  </a>
+                </div>
+                {slide.logo && (
+                  <div class="flex-shrink-0 flex items-center justify-center lg:min-w-[320px]">
+                    <img
+                      src={getImageSrc(slide.logo)}
+                      alt={slide.logo.alt}
+                      class="max-h-36 md:max-h-44 lg:max-h-56 w-auto object-contain"
+                      width={320}
+                      height={224}
+                    />
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="hero-carousel-prev absolute -left-14 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background/80 hover:bg-background text-white flex items-center justify-center border border-white/20 transition-colors"
+    aria-label="Previous slide"
+  >
+    <svg
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M15 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="hero-carousel-next absolute -right-14 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background/80 hover:bg-background text-white flex items-center justify-center border border-white/20 transition-colors"
+    aria-label="Next slide"
+  >
+    <svg
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .hero-carousel-gradient-border {
+    border: 1px solid transparent;
+    background-image:
+      linear-gradient(#2a2730, #2a2730), var(--background-image-linaro-gradient);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .hero-carousel-slide-bg {
+    background-size: 50%;
+    background-position: right center;
+  }
+
+  .hero-carousel-slide-full-bg {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-carousel-overlay-light {
+    background: linear-gradient(
+      to right,
+      rgba(42, 39, 48, 0.85) 0%,
+      rgba(42, 39, 48, 0.4) 45%,
+      rgba(42, 39, 48, 0.1) 75%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-carousel-track {
+    transform: translateX(
+      calc(-1 * var(--carousel-index) * (100% / var(--carousel-total)))
+    );
+  }
+
+  .hero-carousel-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(42, 39, 48, 0.97) 0%,
+      rgba(42, 39, 48, 0.88) 35%,
+      rgba(42, 39, 48, 0.5) 60%,
+      rgba(42, 39, 48, 0.15) 82%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  function initHeroCarousel(container: HTMLElement) {
+    const track = container.querySelector<HTMLElement>(".hero-carousel-track");
+    const slides = container.querySelectorAll<HTMLElement>(".hero-carousel-slide");
+    const prevBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-prev");
+    const nextBtn = container.querySelector<HTMLButtonElement>(".hero-carousel-next");
+    const total = slides.length;
+    if (total <= 1 || !track) {
+      prevBtn?.setAttribute("aria-hidden", "true");
+      nextBtn?.setAttribute("aria-hidden", "true");
+      return;
+    }
+    let index = 0;
+    function goTo(i: number) {
+      if (!track) return;
+      index = ((i % total) + total) % total;
+      track.style.setProperty("--carousel-index", String(index));
+      slides.forEach((el, j) => {
+        el.setAttribute("aria-hidden", String(j !== index));
+      });
+    }
+    prevBtn?.addEventListener("click", () => goTo(index - 1));
+    nextBtn?.addEventListener("click", () => goTo(index + 1));
+
+    const intervalId = setInterval(() => goTo(index + 1), 5000);
+
+    container.addEventListener(
+      "astro:before-swap",
+      () => clearInterval(intervalId),
+      { once: true },
+    );
+  }
+  document
+    .querySelectorAll<HTMLElement>(".hero-carousel")
+    .forEach(initHeroCarousel);
+</script>

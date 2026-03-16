@@ -1,22 +1,18 @@
 - label: Services
   key: Services
   children:
-    - label: Consulting
-      url: /services/consulting
-    - label: Upstreaming Linux kernel Services
+    - label: Upstream Linux Kernel Services
       url: /services/upstreaming-linux-kernel
     - label: BSP Development
       url: /services/bsp-development
-    - label: Long Term Support
-      url: /services/lts
-    - label: Training
-      url: /services/training
-    - label: Software Supply Chain Management
+    - label: CRA & Software Supply Chain Management
       url: /services/software-supply-chain-management
-    - label: Qualcomm Centre of Excellence
+    - label: Qualcomm Platform Services
       url: /services/qualcomm-platform
     - label: NXP Platform Services
       url: /services/nxp-platform-services
+    - label: Test Automation
+      url: /services/testingandautomation
 - label: Solutions
   key: solutions
   children:
@@ -24,9 +20,13 @@
       url: https://www.linaroforge.com
     - label: ONELab
       url: /solutions/onelab
+    - label: Unified Firmware Lifecycle
+      url: /solutions/oneboot
+    - label: Confidential Computing
+      url: /solutions/confidential-computing
 - label: Industries
   key: industries
-  children: 
+  children:
     - label: Industrial
       url: /industries/industrial
     - label: Automotive
@@ -38,22 +38,22 @@
 # - label: Technologies
 #   key: technologies
 #   children:
-    # - label: Firmware
-    #   url: /technologies/firmware
-    # - label: Security
-    #   url: /technologies/security
-    # - label: Linux kernel
-    #   url: /technologies/linux-kernel
-    # - label: Toolchain
-    #   url: /technologies/toolchain
-    # - label: Virtualization
-    #   url: /technologies/virtualization
-    # - label: Testing
-    #   url: /technologies/testing
-    # - label: Confidential Computing
-    #   url: /technologies/confidential-computing
-    # - label: AI & Machine Learning
-    #   url: /technologies/ai-ml
+# - label: Firmware
+#   url: /technologies/firmware
+# - label: Security
+#   url: /technologies/security
+# - label: Linux kernel
+#   url: /technologies/linux-kernel
+# - label: Toolchain
+#   url: /technologies/toolchain
+# - label: Virtualization
+#   url: /technologies/virtualization
+# - label: Testing
+#   url: /technologies/testing
+# - label: Confidential Computing
+#   url: /technologies/confidential-computing
+# - label: AI & Machine Learning
+#   url: /technologies/ai-ml
 - label: Resources
   key: resources
   children:
@@ -67,12 +67,8 @@
       url: /news
     - label: Events
       url: /events
+    - label: Training
+      url: /training
 - label: Company
   key: company
-  children:
-    - label: About
-      url: /about
-    - label: Careers
-      url: /careers
-    - label: Contact Us
-      url: /contact
+  url: /about

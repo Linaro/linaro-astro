@@ -26,6 +26,11 @@ if (!src.startsWith("https://")) {
 }
 
 const url = src;
+const isRemote = url.startsWith("http://") || url.startsWith("https://");
 ---
 
-<Image src={url} loading="lazy" inferSize={true} {...props} />
+{isRemote ? (
+  <img src={url} loading="lazy" decoding="async" {...props} />
+) : (
+  <Image src={url} loading="lazy" inferSize={true} {...props} />
+)}

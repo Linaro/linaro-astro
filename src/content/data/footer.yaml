@@ -10,14 +10,14 @@ nav_links:
         url: /services/bsp-development
       - label: Long Term Support
         url: /services/lts
-      - label: Training
-        url: /services/training
-      - label: Software Supply Chain Management
+      - label: CRA and Software Supply Chain Management
         url: /services/software-supply-chain-management
-      - label: Qualcomm Centre of Excellence
+      - label: Qualcomm Platform Services
         url: /services/qualcomm-platform
       - label: NXP Platform Services
         url: /services/nxp-platform-services
+      - label: Test Automation
+        url: /services/testingandautomation
   - label: Solutions
     key: solutions
     children:
@@ -25,6 +25,10 @@ nav_links:
         url: https://www.linaroforge.com
       - label: ONELab
         url: /solutions/onelab
+      - label: Unified Firmware Lifecycle
+        url: /solutions/oneboot
+      - label: Confidential Computing
+        url: /solutions/confidential-computing
   - label: Industries
     key: industries
     children:
@@ -49,6 +53,8 @@ nav_links:
         url: /news
       - label: Events
         url: /events
+      - label: Training
+        url: /training
   - label: Company
     key: company
     children:

@@ -163,6 +163,16 @@ const upcomingEvents = (
         >{summary}</span
       >
     </section>
+    {
+      webinarContactButton && (
+        <section
+          id="webinar-video-container"
+          class="container mx-auto max-w-5xl px-8 xl:px-0 hidden"
+        >
+          <div id="webinar-video-content" class="my-8" />
+        </section>
+      )
+    }
     <ArticleContent Content={Content} image={image} upcoming={isUpcoming} />
   </main>
   {

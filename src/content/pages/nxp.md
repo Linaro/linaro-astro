@@ -19,16 +19,16 @@ flow:
   - row: container_row
     title: Why Choose Linaro for NXP Development?
     styles:
-      inner: py24 px-24
+      inner: py24 md:px-24
       outer: mb-20
     sections:
       - component: text
         text_content: "Linaro combines industry-leading expertise in Arm ecosystem OSS stacks development and integration with focus on security, performance, and reliability, scalability helping your business to:"
-        style: text-center text-2xl mb-24 mx-24 mt-24
+        style: text-center text-2xl mb-24 md:mx-24 mt-24
       - component: cards
         styles:
           card: max-w-[20em]
-          container: justify-center gap-x-16 mx-24
+          container: justify-center gap-x-16 md:mx-24
           card_title: bg-linaro-gradient text-transparent bg-clip-text
         cards:
           - title: Develop Standard Compliant Secure Solutions End-2-End
@@ -58,10 +58,10 @@ flow:
     sections:
       - component: text
         text_content: Linaro’s engineers are experts in working with NXP’s i.MX series, offering comprehensive support across the lifecycle of your products.
-        style: text-center text-2xl mx-auto font-bold mb-16 mx-32
+        style: text-center text-2xl mx-auto font-bold mb-16 md:mx-32
       - component: large_card
         styles:
-          container: justify-center gap-x-16 mx-32
+          container: justify-center gap-x-16 md:mx-32
           card: max-w-[1/2]
           card_text: text-lg
           card_title: text-2xl w-full
@@ -145,7 +145,7 @@ flow:
       - component: cards
         styles:
           card: max-w-[40ch]
-          container: justify-center gap-x-16 mx-32
+          container: justify-center gap-x-16 mx-auto md:mx-32
           card_title: bg-linaro-gradient text-transparent bg-clip-text h-auto py-1
         cards:
           - title: Assessment

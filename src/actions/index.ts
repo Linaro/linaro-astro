@@ -159,6 +159,7 @@ export const server = {
         console.log("searching person...");
 
         // B. Handle Person
+        let shouldAssignToBill = false;
         const personSearch = await pipelineFetch(
           `/people?conditions[person_email]=${encodeURIComponent(input.email)}`,
         );
@@ -184,19 +185,15 @@ export const server = {
           console.log("person created with id: ", personId);
 
           if (newPerson.id) {
-            console.log("adding bill's id...");
-            //update person owner id
-            await pipelineFetch(`/people/${newPerson.id}`, {
-              method: "PUT",
-              body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
-            });
-            console.log("Person assigned to bill");
+            shouldAssignToBill = true;
           }
         }
 
         // C. Create Activities (Notes)
         if (personId) {
-          await pipelineFetch("/notes", {
+          console.log(`[CRM-DEBUG] Attempting to create notes for Person ID: ${personId}`);
+
+          const sourceNote = await pipelineFetch("/notes", {
             method: "POST",
             body: JSON.stringify({
               note: {
@@ -206,7 +203,12 @@ export const server = {
               },
             }),
           });
-          console.log("Adding notes");
+
+          if (!sourceNote || !sourceNote.id) {
+            console.error("[CRM-DEBUG] Failed to create 'Lead Source' note. Response:", sourceNote);
+          } else {
+            console.log("[CRM-DEBUG] Lead Source note created successfully:", sourceNote.id);
+          }
 
           let messageContent = input.message || "";
 
@@ -221,7 +223,7 @@ export const server = {
           }
 
           if (messageContent.trim()) {
-            await pipelineFetch("/notes", {
+            const contentNote = await pipelineFetch("/notes", {
               method: "POST",
               body: JSON.stringify({
                 note: {
@@ -231,10 +233,29 @@ export const server = {
                 },
               }),
             });
+
+            if (!contentNote || !contentNote.id) {
+              console.error("[CRM-DEBUG] Failed to create 'Content' note. Response:", contentNote);
+            } else {
+              console.log("[CRM-DEBUG] Content note created successfully:", contentNote.id);
+            }
           }
-          console.log("adding form content");
+        } else {
+          console.warn("[CRM-DEBUG] Skipping notes creation: No Person ID available.");
         }
-        console.log("Success");
+
+        // D. Assign to Bill (Moved to after notes creation to prevent permission lockout)
+        if (shouldAssignToBill && personId) {
+          console.log("adding bill's id...");
+          //update person owner id
+          await pipelineFetch(`/people/${personId}`, {
+            method: "PUT",
+            body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
+          });
+          console.log("Person assigned to bill");
+        }
+
+        console.log("[CRM-DEBUG] Success");
       } catch (e) {
         console.error("Pipeline CRM Integration Failed", e);
         // We catch the error so the user still sees the "Thank you" message,

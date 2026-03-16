@@ -80,6 +80,7 @@ collections:
         search_fields: ["name"]
         value_field: "slug_name"
         display_fields: ["name"]
+        options_length: 100
 
       - label: "Tags"
         name: "tags"
@@ -89,6 +90,7 @@ collections:
         value_field: "slug_name"
         display_fields: ["name"]
         multiple: true
+        options_length: 100
 
       - {
           label: "Featured Image",
