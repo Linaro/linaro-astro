@@ -1,0 +1,350 @@
+---
+title: 5 Common Mistakes When Enabling Your Arm Device in the Automated Test Lab
+description: A Real-World Debugging Story that reveals the most common mistakes
+  when bringing up a new device in an automated hardware test environment.
+date: 2026-03-16T11:47:00.000Z
+author: javier-tia
+tags:
+  - testing
+  - edge
+  - compliance
+  - open-source
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773661745/linaro-website/IMG_2283_govrdy.png
+related: []
+---
+Bringing up a new hardware platform in an automated test environment is rarely simple and smooth.
+
+For many engineers working with Arm development boards, the first experience with automated testing infrastructure quickly turns into a debugging session - silent serial consoles, misconfigured USB ports, unexpected voltage levels, and devices that refuse to boot.
+
+In this article, our protagonist Manuel, will follow a real-world debugging journey while enabling a new device on a Linaro Automation Appliance (LAA) - a device that manages power, serial console, and network boot for physical Arm hardware, used by ONELab, Linaro's automated testing service for Arm platforms as part of the [ONELab](< https://www.linaro.org/blog/onelab-at-embedded-world/>) platform.
+
+Lessons learned from Manuel to set up your first device in ONELab, saving hours (or days) of troubleshooting.
+
+In This Article: 
+
+* Manuel’s First Device: When Nothing Works
+* The Problem: No Serial Output 
+* The Breakthrough: USB Ports Were Off
+* The Lessons: What Manuel Learned 
+* How ONELab Makes This Easier
+* Understanding the Hardware: LAA and MIB 
+* Applying the Lessons: Physical Setup Tips
+* Getting your LAA Registered 
+* The first Health Check: Moment of Truth 
+* Running Your First Compliance Run 
+* What to Expect: Timeline and Complexity 
+* Ready to Try ONELab?
+
+## Manuel's First Device: When Nothing Works
+
+It was supposed to be simple. Manuel had just received a new Arm development board and a Linaro Automation Appliance (LAA). Connect a few cables, run a test, and you are done. Two hours, tops.
+
+Three days later, he was still staring at a blank serial console.
+
+*"So Manuel, what did you do last week?" his manager asked him at the stand-up.*
+
+*"Well..." Manuel gestured at the blank screen. Three days of commitment to a silent board.*
+
+"The board is fine," he muttered, checking the power Light-Emitting Diode (LED) for the hundredth time. "The cables are connected. Why isn't this working?".
+
+Enabling your first device on an LAA takes some initial setup, but once configured, it automates what would otherwise be hours of repetitive manual work. Manuel's debugging journey reveals valuable lessons that can save you time getting there.
+
+## The Problem: No Serial Output
+
+Manuel had connected everything according to the board documentation:
+
+✅ Power cable plugged in (barrel connector, 12V)
+✅ Ethernet cable connected to LAA
+✅ Serial cable connected via Flylead Mechanical Interface Board (MIB)
+✅ Board powered on (LED glowing)
+
+But the serial console showed nothing. No boot messages. No U-Boot prompt. Just silence.
+
+**The Investigation Begins**
+
+Manuel started with the basics. He grabbed his laptop and opened a terminal:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664627/linaro-website/Artboard_1_wvn7ae.png)
+
+ `laam` is a command-line tool for manually controlling LAA functions - Universal Serial Bus (USB) ports, power, serial console. It's essential for debugging device integration issues.
+
+The output showed the serial port was configured correctly. So why no output?
+
+## The Breakthrough: USB Ports Were Off
+
+Then Manuel remembered something from his notes: **LAA USB ports are off by default.**
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664627/linaro-website/Artboard_2_yygscy.png)
+
+Still nothing. 
+
+He checked the MIB. The Flylead MIB has a small jumper labeled "MIB_VIO" that sets the serial voltage level - 1.8V, 3.3V, or 5V. He had set it to 3.3V based on the board specs.
+
+But wait - the board documentation mentioned it could work with "1.8V to 3.3V." What if it actually needed 1.8V?
+
+Manuel powered down the board, moved the MIB_VIO jumper to 1.8V, and powered back on.
+
+Still nothing.
+
+Then he remembered: **you also need to enable the power rail itself!**
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664627/linaro-website/Artboard_3_wkjhl3.png)
+
+This is easily forgotten and will prevent serial output even if the jumper is set correctly!
+
+Suddenly, the serial console came alive:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664627/linaro-website/Artboard_4_quwgfr.png)
+
+**Success!** After three days of debugging, the issue was a tiny jumper setting.
+
+## The Lessons: What Manuel Learned
+
+Manuel's debugging journey revealed the five most common mistakes when enabling devices on LAAs:
+
+#### 1. Forgetting to Turn On USB Ports
+
+**The Problem**: LAA USB ports are off by default for safety. **The Fix**: Always run `laam laacli usb 2 on`(for USB port 2) before troubleshooting. **Why It Matters**: This is one of the most common causes of "device not working" issues.
+
+#### 2. Wrong Voltage Level (MIB_VIO Jumper)
+
+**The Problem**: MIB_VIO jumper sets serial voltage (1.8V, 3.3V, or 5V), and you must also enable the power rail with `laam laacli power`command. **The Fix**: Try both settings if documentation is unclear. **Why It Matters**: Wrong voltage = no serial output (or worse, damaged board).
+
+### 3. Cables Not Connected as Expected
+
+**The Problem**: Easy to mix up USB ports, serial connections, power cables. **The Fix**: Label everything immediately. Take photos of working setups. **Why It Matters**: Prevents most "it worked yesterday" issues.
+
+#### 4. Device Under Test (DUT) Not in Recovery Mode
+
+**The Problem**: Many boards need physical switches or button presses for flashing. **The Fix**: Document recovery procedure for each board. Test it before running jobs. **Why It Matters**: Firmware flashing fails silently if recovery mode isn't active.
+
+#### 5. Wrong Telnet Port Configuration
+
+**The Problem**: Device dictionary must specify correct telnet port for serial access. **The Fix**: Verify port number matches LAA configuration. **Why It Matters**: Wrong port = can't access serial console for debugging.
+
+**Manuel's Advice**: "Keep an LAA on your desk during enablement. Keep extra cables nearby. And always check the simple things first - USB ports, jumpers, cable connections. It's usually something obvious."
+
+#### Hardware Connection Checklist:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664854/linaro-website/IMG_2290_tcvyqb.jpg)
+
+## How ONELab Makes This Easier
+
+Manuel spent three days troubleshooting a single jumper setting. Now multiply that by every device in your lab, each with its own boot method, flash procedure, and cable layout. Doing this manually for every test run is error-prone and repetitive. ONELab addresses this with a **generic template system** that captures device-specific details once and automates everything else.
+
+#### **The Template Approach**:
+
+Instead of configuring every detail manually, ONELab uses YAML templates that handle common patterns. Here's what a simplified device template looks like:
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773664627/linaro-website/Artboard_5_yvbx7f.png)
+
+Each template extends a base configuration and only overrides what's device-specific:
+
+* **Flash Firmware:** Supports generic capsule update mechanism (most modern boards) or device-specific flashers
+* **Deploy Operating System (OS)**: Supports bootable disk images via USB for most devices
+* **Boot Device**: Power on and wait for OS to boot/install
+* **Execute Tests**: Run compliance suite tests automatically
+
+**Device-Specific Customization**: Each device only needs to define:
+
+* How firmware is flashed (capsule update or custom flasher)
+* How OS is booted (USB, network, SD card)
+
+Everything else is handled by the generic template.
+
+**Self-Service or Linaro-Assisted Integration**:
+
+You can integrate devices yourself using ONELab's template system and documentation. If you'd prefer Linaro to handle device integration (available as a paid service), provide these command-line instructions:
+
+* How to power on/off the device
+* How to flash firmware (recovery method)
+* How to boot the OS (USB recommended when available)
+* Serial console settings (baud rate, port)
+
+**What Linaro Does** (assisted integration):
+
+The Linaro team handles the Linaro Automated Validation Architecture (LAVA) configuration:
+
+* Creates device dictionary with your instructions
+* Configures power, serial, and flasher commands
+* Sets up recovery method and tests the setup
+* Deploys to ONELab for your use
+
+**Lessons from the Field**: We learned the hard way not to hack around test suites to make them pass on specific devices. Instead, we let tests fail and push for proper upstream fixes. This keeps the platform maintainable and benefits the entire ecosystem.
+
+## Understanding the Hardware: LAA and MIB
+
+**LAA (Linaro Automation Appliance)**:
+
+The LAA is an i.MX-based device that controls your DUT remotely. It provides:
+
+* Power control (turn device on/off)
+* Serial console access (for debugging)
+* USB emulation (USB Gadget Mass Storage for deploying OS images)
+* Network connectivity (Dynamic Host Configuration Protocol (DHCP), Trivial File Transfer Protocol (TFTP), network boot)
+
+**LAA Components**:
+
+The LAA is comprised of two components:
+
+* **SIB ( Standard Interface Board):** The main controller board
+* **MIB (Mechanical Interface Board)**: Adapter that physically connects to your DUT
+
+**Available MIB Types**:
+
+* **Flylead:** Most generic, uses wires for connections (what Manuel used)
+* **96-Raspi**: For 96Boards and Raspberry Pi
+* **KV260**: Specific to AMD Kria boards
+
+**MIB_VIO Jumper**: Sets serial voltage level (1.8V, 3.3V, or 5V) - this was Manuel's issue! Remember to also enable the power rail with `laam laacli power`command.
+
+**Custom MIBs**: You can design your own MIB for custom boards, following our publicly available designs [here](https://gitlab.com/Linaro/lava/appliance/hardware/mibs). 
+
+**Pro Tip**: USB-based connections are simpler than serial when available. Most modern boards support USB boot and recovery.
+
+## Applying the Lessons: Physical Setup Tips
+
+Building on the five common mistakes above, here are practical details to keep in mind when setting up your LAA and device:
+
+**Check the Simple Things First**:
+
+* **USB ports**: Always verify they're enabled (`laam laacli usb 2 on` for USB port 2)
+* **MIB_VIO jumper**: Try different voltage settings (1.8V, 3.3V, 5V) if unsure, and remember to enable the power rail
+* **Cable connections**: Label everything, take photos
+* **Recovery mode**: Test it works before running jobs
+
+**Use the Right Tools**:
+
+* `laam` for manual LAA control (USB, power, serial)
+* Serial terminal for testing console output
+* Multimeter for verifying voltage levels (if needed)
+
+**Start Simple**:
+
+* USB-based boards are easier than serial-based
+* Short cables (50cm) prevent connection issues
+* Test one thing at a time (power, then serial, then network)
+
+**Document Everything**:
+
+* Power on/off commands
+* Recovery procedures
+* Cable connections (photos help!)
+* Voltage settings and jumper positions
+
+## Getting Your LAA Registered
+
+**Critical Requirement**: Every LAA must be associated with a **Subscription** (project) to work. You need to be part of that subscription to access the LAA. Missing this association is the #1 registration error!
+
+**Registration Process**:
+
+* LAA arrives pre-registered in LAVA Managed Services (LMS) by Linaro team
+* Your Linaro account manager associates the LAA with your project's subscription
+* LMS creates the device in LAVA
+* Device dictionary template assigned (customized in next step)
+
+**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/onelab). 
+
+## The First Health Check: Moment of Truth
+
+**What Health Check Tests**:
+
+* Flasher works correctly
+* USB Gadget Mass Storage (USBG-MS) connection
+* Private network connection between LAA and DUT
+* U-Boot boots successfully
+* Small OS can boot
+
+**Running Health Check**:
+
+* LAVA automatically runs health check when device is added
+* Monitor results in LAVA web interface
+* Check logs for any failures
+* Debug issues based on which test failed
+
+**Common Failures**:
+
+* USB ports not turned on (mistake #1!)
+* DUT not in recovery mode (mistake #2!)
+* Cables not properly connected (Mistake #3!)
+* MIB_VIO jumper not set (mistake #4!)
+* Wrong telnet port (mistake #5!)
+
+**Debugging Workflow**:
+
+* Health check indicates what's not working
+* Check physical connections first
+* Verify LAA configuration (USB ports on, correct telnet port)
+* Test serial console manually
+* Check power cycling works
+* Review device dictionary configuration
+
+**Success Criteria**: Health check regularly passes (99%+ success rate).
+
+## Running Your First Compliance Run
+
+Once health check passes, run your first real test:
+
+**Via ONELab Frontend**:
+
+* Navigate to "Compliance Runs" → "Request Compliance Run"
+* Select your firmware build
+* Select your platform (device)
+* Choose compliance suite (start with an OS like "fedora@v42")
+* Click "Request Compliance Run"
+* Monitor progress in real-time
+
+**What the Test Does**:
+
+* Flashes firmware to DUT (via capsule update or device-specific flasher)
+* Deploys OS image (bootable ISO via USB for most devices)
+* Boots device and waits for OS installation/boot
+* Executes compliance suite tests
+* Duration: 30 minutes - 2 hours depending on suite
+
+**Success Indicators**:
+
+✅ Compliance Run status: Passed
+✅ Device boots correctly
+✅ No error messages in logs
+
+**ONELab Benefits** (vs. manual LAVA):
+
+* Run specific payloads with few clicks (no complex job setup)
+* Firmware securely protected (not publicly available)
+* Test results available in your private dashboard automatically (public sharing is opt-in via Explore Boards)
+* No need to write LAVA job definitions manually
+
+## What to Expect: Timeline and Complexity
+
+Here's what to expect when enabling your first device:
+
+**Simple Boards** (Raspberry Pi, some NXP):
+
+* USB-based power and recovery
+* Few days to enable
+
+**Complex Boards** (Qualcomm, Renesas):
+
+* Serial with wires and logic converters
+* Power via barrel connector with specific voltage
+* Wires for recovery switches
+* 1-2 weeks to enable
+
+**Average**: 1 week for your first device. Subsequent devices: 30 minutes to a few hours.
+
+**Manuel's Takeaway**: "The first device is always the hardest. Once you understand the LAA, MIB, and laam tool, subsequent devices go much faster. And always check USB ports first!"
+
+## Ready to Try ONELab?
+
+Enabling your first device on an LAA takes time and patience, but ONELab makes the testing part simple.
+
+**Contact us**: To learn more or see [ONELab](https://www.linaro.org/onelab) in action with your devices.
+
+**Linaro Products and Solutions** builds testing and validation services for the Arm ecosystem, helping silicon vendors and device makers accelerate time-to-market through automated compliance and interoperability testing.
+
+About This Series
+
+This is Article 2 in our series on hardware testing automation. Previous and next:
+
+* **[Article 1](https://www.linaro.org/blog/enabling-standard-linux-on-arm-how-onelab-accelerates-interoperability-and-systemready-continuous-compliance/):** Enabling Standard Linux on Arm: How ONELab Accelerates Interoperability and SystemReady Continuous Compliance.
