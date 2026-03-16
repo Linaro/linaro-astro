@@ -155,9 +155,37 @@ const { title, description, type = "website", image } = Astro.props;
             throw new Error("Failed to load webinar data");
           }
 
-          const { passcode, url } = await res.json();
+          const { passcode, url, type } = await res.json();
 
-          feedbackText.innerHTML = `
+          if (type === "video") {
+            // Close the modal dialog and hide its trigger button
+            const dialog = form.closest("dialog");
+            if (dialog) {
+              dialog.close();
+              const triggerButton = document.getElementById(`${dialog.id}-trigger`);
+              if (triggerButton) (triggerButton as HTMLElement).style.display = "none";
+            }
+
+            // Populate and reveal the on-page video player
+            const videoContainer = document.getElementById("webinar-video-container");
+            const videoContent = document.getElementById("webinar-video-content");
+            if (videoContainer && videoContent) {
+              videoContent.innerHTML = `
+                <p class="text-lg mb-4">Thank you! Enjoy the recording.</p>
+                <video
+                  src="${url}"
+                  controls
+                  controlslist="nodownload"
+                  class="w-full rounded-lg"
+                >
+                  Your browser does not support video playback.
+                </video>
+              `;
+              videoContainer.classList.remove("hidden");
+              videoContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          } else {
+            feedbackText.innerHTML = `
       <div class="space-y-4 text-center">
         <p class="text-base">
           Thank you! Please use the passcode below to access the webinar.
@@ -180,6 +208,7 @@ const { title, description, type = "website", image } = Astro.props;
         </div>
       </div>
     `;
+          }
         } catch (err) {
           console.error("Webinar fetch error:", err);
           feedbackText.innerHTML = `

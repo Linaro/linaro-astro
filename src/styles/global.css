@@ -9,28 +9,61 @@
 @theme {
   --breakpoint-2xl: 1576px;
 
-  --font-sans: "sofia-pro", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    "sofia-pro", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   /* Colors */
-  --color-linaro-yellow: #FFCE00;
-  --color-linaro-purple: #6715E8;
-  --color-grey: #6B6B6B;
+  --color-linaro-yellow: #ffce00;
+  --color-linaro-purple: #6715e8;
+  --color-grey: #6b6b6b;
   --color-background: #222025;
-  --color-darker: #1B181C;
+  --color-darker: #1b181c;
   --color-dark: #222025;
 
   /* Background Images (Gradients) */
-  --background-image-linaro-gradient: linear-gradient(102deg, #FFCE00 -0.43%, #6715E8 95.75%);
-  --background-image-purple-gradient: linear-gradient(180deg, rgba(103, 21, 232, 0.00) 0%, #420D90 44%, #420D90 55%, rgba(58, 12, 130, 0.00) 100%);
-  --background-image-border-gradient: linear-gradient(90deg, rgba(0,0,0,0) 0%, #545454 49%, rgba(0,0,0,0) 100%);
+  --background-image-linaro-gradient: linear-gradient(
+    102deg,
+    #ffce00 -0.43%,
+    #6715e8 95.75%
+  );
+  --background-image-purple-gradient: linear-gradient(
+    180deg,
+    rgba(103, 21, 232, 0) 0%,
+    #420d90 44%,
+    #420d90 55%,
+    rgba(58, 12, 130, 0) 100%
+  );
+  --background-image-border-gradient: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    #545454 49%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  --background-image-linaro-gradient-vertical: linear-gradient(
+    0deg,
+    #ffce00 -0.43%,
+    #6715e8 95.75%
+  );
+  /* Black at top to purple at bottom (Contact / Don't miss block) */
+  --background-image-section-gradient: linear-gradient(
+    180deg,
+    #222025 0%,
+    #27222c 50%,
+    #2d2440 100%
+  );
 
   /* Animations */
   --animate-infinite-scroll: infinite-scroll 50s linear infinite;
 }
 
 @keyframes infinite-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 @layer base {
   html {
@@ -55,21 +88,33 @@
 }
 
 @utility container {
-    width: 100%;
-    margin-inline: auto;
-    padding-inline: auto;
-    @media (width >= 320px) { max-width: 100%; }
-    
-    /* In v4, we use @variant instead of @media for breakpoints */
-    @variant sm { max-width: 640px; }
-    @variant md { max-width: 768px; padding-inline: 2rem; }
-    @variant lg { max-width: 1024px; }
-    @variant xl { max-width: 1280px; }
-    
-    /* This will automatically pull your custom 1576px from @theme */
-    @variant 2xl { max-width: 1576px; }
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: auto;
+  @media (width >= 320px) {
+    max-width: 100%;
   }
 
+  /* In v4, we use @variant instead of @media for breakpoints */
+  @variant sm {
+    max-width: 640px;
+  }
+  @variant md {
+    max-width: 768px;
+    padding-inline: 2rem;
+  }
+  @variant lg {
+    max-width: 1024px;
+  }
+  @variant xl {
+    max-width: 1280px;
+  }
+
+  /* This will automatically pull your custom 1576px from @theme */
+  @variant 2xl {
+    max-width: 1576px;
+  }
+}
 
 @utility nav-hover {
   &::before {
@@ -81,12 +126,12 @@
     width: 0;
     height: 0.25rem;
     transition-duration: 150ms;
-    
+
     @variant lg {
       @apply bg-linaro-yellow;
     }
   }
-  
+
   &:hover::before {
     width: 100%;
     left: 0;
@@ -213,6 +258,10 @@
   @apply bg-purple-gradient;
 }
 
+@utility section-gradient-background {
+  background-image: var(--background-image-section-gradient);
+}
+
 /* Standard CSS classes (like your score cards) can just live normally 
   at the bottom of the file without being wrapped in layers in v4. 
 */
@@ -269,4 +318,3 @@
   margin-top: 8px;
   color: rgba(0, 0, 0, 0.7);
 }
-

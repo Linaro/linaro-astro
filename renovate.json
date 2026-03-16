@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    }
+  ],
+  "dependencyDashboard": true,
+  "rebaseConflictedPrs": true,
+  "rebaseStrategy": "behind-base-branch",
+  "schedule": ["on sunday"]
 }

@@ -47,6 +47,13 @@ interface Props extends CloudinaryProps {
   svg?: boolean;
 }
 
+// Cloudinary public_id does not include file extension; strip it so the lookup matches stored assets.
+const IMAGE_EXT_REGEX = /\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?$/i;
+function toCloudinaryPublicId(src: string): string {
+  if (src.startsWith("https://") || src.startsWith("http://")) return src;
+  return src.replace(IMAGE_EXT_REGEX, "");
+}
+
 export const getCloudinarySrc = ({ src, ...props }: Props) => {
   if (cloudName === undefined || cloudName === null || cloudName === "") {
     throw new Error("Cloudinary cloud name is not defined");
@@ -60,9 +67,10 @@ export const getCloudinarySrc = ({ src, ...props }: Props) => {
     },
   });
 
-  const imageSource = src.startsWith("https://")
-    ? cloudinaryMedia.image(src).setDeliveryType("fetch")
-    : cloudinaryMedia.image(src);
+  const publicId = toCloudinaryPublicId(src);
+  const imageSource = publicId.startsWith("https://")
+    ? cloudinaryMedia.image(publicId).setDeliveryType("fetch")
+    : cloudinaryMedia.image(publicId);
 
   if (props.effects !== undefined && props.effects !== null) {
     for (const effect of props.effects) {

@@ -5,6 +5,8 @@ const webinar_credentials: Record<string, string> = {
     "https://static.linaro.org/webinar_credentials/scaling-interoperability-testing-with-onelab-webinar-credentials.json",
   linux_snapdragon:
     "https://static.linaro.org/webinar_credentials/inside-linux-on-snapdragon-webinar-credentials-2.json",
+  cra_compliance_journey:
+    "https://static.linaro.org/webinar_credentials/cra-compliance-journey-webinar-credentials.json",
 };
 export const GET: APIRoute = async ({ params, request }) => {
   const id = params.webinarDataId;
@@ -53,5 +55,6 @@ export function getStaticPaths() {
   return [
     { params: { webinarDataId: "linux_snapdragon" } },
     { params: { webinarDataId: "onelab_scaling" } },
+    { params: { webinarDataId: "cra_compliance_journey" } },
   ];
 }

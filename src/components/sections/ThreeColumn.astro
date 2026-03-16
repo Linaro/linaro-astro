@@ -14,18 +14,42 @@ const { cards, styles, background_image } = Astro.props;
     ]}
   >
     {
-      cards.map(({ text, style }, index) => (
+      cards.map(({ text, style, list, image, image_style }, index) => (
         <li class:list={["relative", styles?.card]}>
           {background_image && index === 1 && (
             <CloudinaryImg
               src={background_image}
-              class="absolute h-[250%] w-auto top-[-100%] left-0 right-0  z-[-1] opacity-[50%]"
+              class="absolute h-[250%] w-auto top-[-100%] left-0 right-0 z-[-1] opacity-[50%]"
               alt=""
               width={1000}
               height={1000}
             />
           )}
-          <p class={` ${style ? style : "text-lg"}`}>{text}</p>
+          {image && (
+            <CloudinaryImg
+              src={image}
+              class={image_style ?? "w-full h-auto"}
+              alt=""
+              width={800}
+              height={800}
+            />
+          )}
+          <p class={`${style ? style : "text-lg"}`}>{text}</p>
+          {list && list.length > 0 && (
+            <ul class="list-none text-center lg:text-left">
+              {list.map(({ text, style }) => (
+                <li
+                  class:list={[
+                    "flex items-center gap-2 leading-snug py-0.5",
+                    style,
+                  ]}
+                >
+                  <span class="shrink-0 text-sm">•</span>
+                  {text}
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))
     }

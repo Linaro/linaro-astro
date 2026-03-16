@@ -1,0 +1,95 @@
+---
+title: "Simplifying Industrial Arm Systems: A Standardized Approach to Virtual
+  Machine Communication"
+description: Software virtualisation is becoming increasingly common in robotics
+  and industrial control as a way of enabling multiple software domains to share
+  the same underlying hardware. In this article we look at how to simplify your
+  industrial Arm systems through virtio-msg - a standardized solution developed
+  by Linaro, Google, AMD and Arm for heteregeneous hardware communication.
+date: 2026-03-09T10:26:00.000Z
+author: bill-fletcher
+tags:
+  - open-source
+  - virtualization
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773051792/linaro-website/Code_Background_SMALL_pbdljk.png
+related: []
+---
+## Introduction
+
+Increasing software virtualisation is a major trend in robotics and industrial control as a way to allow multiple software domains to share the same underlying hardware. 
+
+This article explores the trend of software virtualisation in industrial ARM ecosystems and introduces virtio-msg as a standardized solution developed by Linaro, Google, AMD and Arm for heterogeneous hardware communication. 
+
+Linaro can provide expert advice on virtualisation strategies for industrial applications using open source and open standards and develop specific implementations for hardware access in heterogeneous compute systems such as AI accelerators and secure enclaves. 
+
+## Addressing Increasing Complexity in the Industrial Space
+
+Industrial software domains can include some or all of:
+
+* Android instances for product UI or multi-tenant applications, 
+* Linux for networking and other peripheral connectivity, 
+* RT Linux or RTOS (real-time operating system) for time-critical control and/or safety functions
+
+More processors are being added to industrial applications to manage specific subsystems like vision-based-AI or next-generation connectivity. BOM (Bill of Material) cost and power consumption are increasing and the proliferation of compute subsystems are creating a headache for build, maintenance and long term support. 
+
+Applications using virtualisation typically are leveraging it to achieve goals related to managing complexity, efficient mapping to resources, partitioning of functions for reliability, safety and security requirements, and to simplify maintenance.
+
+For example:
+
+* Hardware abstraction - allows the platform features to be exposed in a way that makes sense to the running software environments, rather than being driven by the specific low level programming of a specific hardware interface.
+* Efficient and scalable use of limited resources - Instead of dedicating an entire physical device to a single workload, virtualisation allows multiple independent workloads to share the same underlying hardware safely and efficiently.
+* Reliability, safety and security 
+* Long term support - abstractions can be significantly simplified versus the underlying hardware, for both ease of maintenance and portability
+
+## Virtio - a standardized approach to efficient abstraction
+
+Virtualisating software domains is obviously useful for allowing them to coexist in an abstracted environment, but think what happens when those domains need to interact with the underlying hardware in a real-world industrial situation, or even compete for access to the same peripheral. Doesn’t this burst the virtualisation bubble?
+
+VirtIO is a standardized interface which allows virtual machines access to simplified "virtual" devices, such as block devices, network adapters and consoles. Accessing devices through VirtIO on a guest VM improves performance over more traditional "emulated" devices, as VirtIO devices require only the bare minimum setup and configuration needed to send and receive data, while the host machine handles the majority of the setup and maintenance of the actual physical hardware.
+
+The benefits of virtio interfaces are:
+
+* Sharing devices across execution environments
+* Simplifying virtual devices, making them more extensible and more recognizable
+* A straightforward, efficient, standard, and extensible mechanism
+* An Industry standard for cloud computing, automotive, embedded systems etc
+* Ratified by the OASIS Technical committee
+
+Linaro’s contributions to virtio include virtio-gpu,  virtio-sound, virtio-gpio, virtio-iommu, virtio-msg
+
+## Virtio-msg - Multiple Software Domains Accessing Heterogeneous Hardware
+
+Virtio-msg is a new message-based transport to standardize interactions for a range of bus and transport protocols. It’s a new virtio standard developed in conjunction with Linaro, Google, AMD and Arm. Virtio-msg allows virtualised application domains to communicate with closely-coupled hardware subsystems such as accelerators, real-time subsystems, intelligent peripherals and secure/safety environments.
+
+Virtio-msg offers:
+
+* Device discovery and message passing avoids trap and emulate
+* VM-to-VM across system boundaries even over remote protocols
+* Reliable, efficient and portable
+* Industry wide collaboration for a single solution to solve problems for various domains
+
+With virtio-msg, VMs on heterogeneous systems can communicate. For example on the AMD Versal SoC which features (X86 + Cortex-A), virtio-msg can be leveraged for abstracted communication between the on-SoC processors. 
+
+Virto-msg can also manage VM to secure execution environment communication. For example, in Android (16+), Trusty - the Trusted Execution Environment can leverage virtio-msg for FFA (Firmware Framework for Arm) communication in Android. This allows access to secure devices from Android VMs including managed memory sharing and bi-directional communication.
+
+\[ Android Guest ]  \[ Linux Guest ]  \[ RTOS Guest ]
+
+\|               |                |
+
+\[---------------- Virtio-msg ----------------]
+
+\|
+
+\[  Accelerators  |  Real-time I/O  |  Security ]
+
+Figure 1: Architectural overview of Virtio-msg enabling communication between diverse software domains and hardware subsystems
+
+## Leverage the Latest Extensions to Virtio for Your Industrial Application
+
+Abstracting hardware interfaces with virtio is a well-recognised approach to rationalising access to hardware in virtualised environments.
+
+Virtio-msg can significantly simplify the architecture of virtualised industrial systems with a standardised approach to messaging between VMs and other CPUs even in a heterogeneous compute environment. It is also applicable to communication between VMs and secure execution environments. The resulting architecture approach pays off in development time, portability and maintenance.
+
+## Ready to simplify your industrial software architecture?
+
+Linaro can advise on, port, implement and extend open source virtualisation interfaces such as virtio-msg to support your application. If you have a complex industrial problem that could benefit from the latest Arm architecture virtualisation features, coupled with use of virtio and virtio-msg, explore [our Virtio-msg implementations on GitHub](https://github.com/Linaro/virtio-msg-spec) or contact our engineering team to schedule a technical architecture review
