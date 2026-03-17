@@ -1,0 +1,64 @@
+---
+title: "Scaling Linux Kernel Quality: Automating Bisection in KernelCI"
+description: In this blog post, we explain why bisection matters and how you can
+  get involved in shaping what it should look like within KernelCI.
+date: 2026-03-17T13:35:00.000Z
+author: benjamin-copeland
+tags:
+  - testing
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773750961/linaro-website/freepik__remove-text__47969_a7nu3y.jpg
+related: []
+---
+How automated bisection in KernelCI accelerates regression detection and improves Linux kernel testing at scale. [Join the meeting and learn more](https://kernelci.org/calendar/).
+
+When a kernel regression appears, the critical question is always: which commit broke it? Git bisection is the standard answer, but doing it manually across the thousands of commits flowing through the Linux kernel every cycle is simply not scalable. That is why we are kickstarting work on automated bisection for KernelCI.
+
+Earlier this year, [Linaro transferred its kernel building and testing tools ](https://www.linaro.org/blog/linaro-transfers-kernel-building-and-testing-tools-to-the-kernelci-project/)— TuxMake, TuxRun, and TuxBuild — to the KernelCI project. With those tools now part of the KernelCI ecosystem, the next logical step is tackling automated bisection. In this post, we explain why bisection matters and how you can get involved in shaping what it should look like within KernelCI.
+
+## Why bisection matters
+
+KernelCI already monitors kernel builds and boot tests across a wide range of hardware and configurations. When a test starts failing, maintainers need to know which change caused the regression — and they need to know quickly. Automated bisection closes that loop, turning a "something broke" notification into an actionable "this commit broke it" report, delivered straight to the relevant mailing list.
+
+## The Business Case
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773751208/linaro-website/Business_Case_Flow_Chart_-_Bisection_zolprt.png "The automated KernelCI bisection workflow ")
+
+
+Figure 1: The automated KernelCI bisection workflow from regression detection to mailing list notification.
+
+Beyond the engineering benefits, automated bisection directly addresses key concerns for organisations relying on the Linux kernel:
+
+* **Risk Mitigation** — Preventing broken kernels from reaching production by catching regressions early and pinpointing the cause.
+* **Return on Investment (ROI)** — Saving expensive engineering hours currently spent on manual debugging, freeing developers to focus on feature work.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773751574/linaro-website/Manual_vs_automated_bisection_xo2njr.png "Manual versus Automated Bisection")
+
+## What we are planning
+
+On **Thursday, 19 March at 15:00 UTC**, we are holding an open meeting to shape what bisection in KernelCI should look like. The agenda includes:
+
+* **Defining the approach** — What should automated bisection look like within the KernelCI ecosystem?
+* **Computational efficiency** — Bisection is expensive. How do we keep costs manageable while still delivering fast, reliable results?
+* **Automation options** — What tooling and workflows can we leverage or build?
+* **Integration with KernelCI v2** — Bisection must fit naturally into the current architecture: Kubernetes, kci-dev, and the Maestro pipeline.
+* **Reporting** — Delivering bisected results to the Maestro mailing list and beyond.
+
+We have learnt valuable lessons from past bisection efforts, and this is our opportunity to apply them to build something robust and sustainable.
+
+## Get involved
+
+Ready to contribute? Join the discussion on the [KernelCI Mailing List](https://lore.kernel.org/kernelci/CAL0q8a7ABpLDWzw1m0tshcfgx2tzcDC4dLjpPG4kKjbfK6AQFQ@mail.gmail.com/T/#m3579c73fad58440e11f920b8d4ed8b7f754cbaf1) or check out the [KernelCI documentation](https://docs.kernelci.org/) to see how bisection fits into the Maestro pipeline.
+
+For organisations looking to improve their kernel testing efficiency, [contact our engineering team](https://www.linaro.org/contact/) to learn more about our collaborative projects.
+
+Let's make finding regressions faster for everyone
+
+BIO
+
+Ben Copeland 
+
+TSC Chair KCI
+
+Senior Automation CI/CD Engineer Linaro leading the  KernelCI team at Linaro that works to ensure the long-term stability of the Linux kernel
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1773752542/linaro-website/KernelCI_Bisection_CTA_button_kd6cqz.png)
