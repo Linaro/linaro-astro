@@ -1,6 +1,6 @@
 ---
 name: Tim Benton
-title: VP of Engineering
+title: Chief Technology Officer
 image: linaro-website/team/Tim_Benton_Linaro_gg1hui.jpg
 ---
 
