@@ -50,7 +50,7 @@
     "strip-markdown": "^6.0.0",
     "survey-core": "^2.5.10",
     "survey-js-ui": "^2.5.15",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.2.2",
     "tw-elements": "^2.0.0",
     "vanilla-cookieconsent": "^3.1.0"
   },
