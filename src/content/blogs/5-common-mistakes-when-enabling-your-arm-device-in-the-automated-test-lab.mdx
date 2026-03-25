@@ -16,7 +16,11 @@ Bringing up a new hardware platform in an automated test environment is rarely s
 
 For many engineers working with Arm development boards, the first experience with automated testing infrastructure quickly turns into a debugging session - silent serial consoles, misconfigured USB ports, unexpected voltage levels, and devices that refuse to boot.
 
+<<<<<<< cms/blog/5-common-mistakes-when-enabling-your-arm-device-in-the-automated-test-lab
+In this article, our protagonist Manuel, will follow a real-world debugging journey while enabling a new device on a Linaro Automation Appliance (LAA) - a device that manages power, serial console, and network boot for physical Arm hardware, used by ONELab, Linaro's automated testing service for Arm platforms as part of the [ONELab](https://www.linaro.org/solutions/onelab) platform.
+=======
 In this article, our protagonist Manuel, will follow a real-world debugging journey while enabling a new device on a Linaro Automation Appliance (LAA) - a device that manages power, serial console, and network boot for physical Arm hardware, used by ONELab, Linaro's automated testing service for Arm platforms as part of the [ONELab](<https://www.linaro.org/blog/onelab-at-embedded-world/>) platform.
+>>>>>>> main
 
 Lessons learned from Manuel to set up your first device in ONELab, saving hours (or days) of troubleshooting.
 
@@ -53,10 +57,10 @@ Enabling your first device on an LAA takes some initial setup, but once configur
 
 Manuel had connected everything according to the board documentation:
 
-✅ Power cable plugged in (barrel connector, 12V)
-✅ Ethernet cable connected to LAA
-✅ Serial cable connected via Flylead Mechanical Interface Board (MIB)
-✅ Board powered on (LED glowing)
+* ✅ Power cable plugged in (barrel connector, 12V)
+* ✅ Ethernet cable connected to LAA
+* ✅ Serial cable connected via Flylead Mechanical Interface Board (MIB)
+* ✅ Board powered on (LED glowing)
 
 But the serial console showed nothing. No boot messages. No U-Boot prompt. Just silence.
 
@@ -110,7 +114,7 @@ Manuel's debugging journey revealed the five most common mistakes when enabling 
 
 **The Problem**: MIB_VIO jumper sets serial voltage (1.8V, 3.3V, or 5V), and you must also enable the power rail with `laam laacli power`command. **The Fix**: Try both settings if documentation is unclear. **Why It Matters**: Wrong voltage = no serial output (or worse, damaged board).
 
-### 3. Cables Not Connected as Expected
+#### 3. Cables Not Connected as Expected
 
 **The Problem**: Easy to mix up USB ports, serial connections, power cables. **The Fix**: Label everything immediately. Take photos of working setups. **Why It Matters**: Prevents most "it worked yesterday" issues.
 
@@ -243,7 +247,7 @@ Building on the five common mistakes above, here are practical details to keep i
 * LMS creates the device in LAVA
 * Device dictionary template assigned (customized in next step)
 
-**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/onelab). 
+**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/contact). 
 
 ## The First Health Check: Moment of Truth
 
@@ -304,9 +308,9 @@ Once health check passes, run your first real test:
 
 **Success Indicators**:
 
-✅ Compliance Run status: Passed
-✅ Device boots correctly
-✅ No error messages in logs
+* ✅ Compliance Run status: Passed
+* ✅ Device boots correctly
+* ✅ No error messages in logs
 
 **ONELab Benefits** (vs. manual LAVA):
 
@@ -339,7 +343,7 @@ Here's what to expect when enabling your first device:
 
 Enabling your first device on an LAA takes time and patience, but ONELab makes the testing part simple.
 
-**Contact us**: To learn more or see [ONELab](https://www.linaro.org/onelab) in action with your devices.
+**Contact us**: To learn more or see [ONELab](https://www.linaro.org/solutions/onelab) in action with your devices.
 
 **Linaro Products and Solutions** builds testing and validation services for the Arm ecosystem, helping silicon vendors and device makers accelerate time-to-market through automated compliance and interoperability testing.
 
