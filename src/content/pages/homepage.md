@@ -170,7 +170,7 @@ flow:
             formName: "sales_contact"
             hideTitle: true
             styles: {}
-      - title: Don't miss any of our *latest updates*
+      - title: 'Don''t miss any of<br class="sm:hidden" /> our *latest updates*'
         styles:
           inner: "pt-16 pb-8"
         sections:
