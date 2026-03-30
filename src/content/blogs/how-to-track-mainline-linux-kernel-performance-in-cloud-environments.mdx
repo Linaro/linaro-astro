@@ -1,0 +1,90 @@
+---
+title: How to track Mainline Linux Kernel Performance in Cloud Environments
+description: In this blog post, we show why even single-digit performance
+  regressions in the Linux kernel become capacity headaches in public clouds,
+  and we outline practical ways to detect and triage those regressions in noisy
+  environments.
+date: 2026-03-30T13:33:00.000Z
+author: konstantin-belov
+tags:
+  - linux-kernel
+  - testing
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1774877905/linaro-website/programmer-colleague-office-training-machine-learning-algorithms_bwqhte.jpg
+related: []
+---
+## **Introduction**
+
+In this blog post, we show why even single-digit performance regressions in the Linux kernel become capacity headaches in public clouds, and we outline practical ways to detect and triage those regressions in noisy environments.
+
+Linux is one of the primary operating systems for cloud servers and data centre infrastructure, so even small performance regressions in the kernel can scale across thousands or millions of machines; at that scale, single-digit slowdowns routinely translate into “more resources for the same work”, which we discuss later in the post.
+
+A performance regression occurs when an update or configuration change causes the system to run more slowly or consume more resources for the same task than before. These regressions might appear minor in isolation (e.g. a few percent slower on a specific operation), but become significant at cloud scale.
+
+Kernel performance regressions are harder to handle than [functional](https://www.linaro.org/blog/reproducible-linux-kernel-bisection/) ones because the signal is often small and the measurements are noisy. In both public and private cloud environments, run-to-run variance exists even for the same instance type, so confirming a regression requires repeated measurement and careful methodology rather than a single A/B run. The kernel context adds sensitivity to runtime and build configurations, so detection and even bisection only work if the benchmark setup is reproducible across many steps.
+
+Slower kernel operations force cloud applications to consume more CPU time, memory, or other resources to do the same work. The result is higher resource consumption, larger infrastructure footprints, and increased complexity (through scaling) to meet demand – and ultimately, higher costs. Tracking and fixing Linux kernel performance regressions is a capacity and cost issue, not just a technical one.
+
+Cloud providers and enterprises closely monitor performance because inefficiencies translate directly into additional dollars spent on infrastructure. [Brendan Gregg notes ](https://www.brendangregg.com/blog/2025-08-04/when-to-hire-a-computer-performance-engineering-team-2025-part1.html)that many large companies target around *5–10% per year in infrastructure cost savings* through performance tuning. If performance declines instead, costs rise. For CPU-bound services, every additional CPU cycle burned due to a regression translates into real money through more servers needed, more power consumed, and more cooling required in data centres. [The Next Platform makes an assumption ](https://www.nextplatform.com/2018/01/08/cost-spectre-meltdown-server-taxes/#:~:text=We%20have%20to%20make%20some,maybe%20even%20six%20cores%20out)that a modest 10% slowdown broadly across servers worldwide could equate to about $6 billion of computing value lost per year. For example, if a company spends $60 million per year on infrastructure, then a 5% performance loss implies roughly $3 million of additional cost for the same delivered work (and fixing it would avoid that spend). These numbers underscore that seemingly small regressions can carry multi-million dollar price tags when scaled to cloud environments.
+
+## **Impact of Kernel Regressions on Cloud Infrastructure and Cost**
+
+In cloud services, performance equals capacity. If the Linux kernel on cloud instances becomes less efficient, each server can handle fewer requests or transactions per second. To maintain the same level of service to users, organizations may need to scale out – deploying additional servers or cloud instances to compensate for the lost performance. Typically, this is performed automatically to serve the dynamic demand. This scaling out has compounding effects:
+
+* More servers and instances: A performance regression of just a few percent might force a cloud operator to deploy a few percent more machines to handle peak load. For a fleet of 10,000 servers, a 5% regression means roughly 500 extra servers must be running to achieve the previous throughput. Those extra machines incur substantial costs in hardware, instance rental, networking, and maintenance.
+* Higher energy and cooling consumption: More active servers consume more electrical power and generate more heat, increasing power and cooling demand for the same amount of delivered work. In practice, the most direct operational effect of a CPU-bound regression is a need for additional capacity: For example, 5% regression typically requires about 5% more capacity. In cloud environments, that typically means more or larger instances, which also increase power and cooling requirements.
+* Larger infrastructure footprint: Beyond direct costs, adding infrastructure to counteract regressions introduces complexity. More servers mean more racks, more network switches, more points of failure, and higher management overhead. Engineering teams must spend effort scaling distributed systems, handling additional capacity, and dealing with the operational complexity of a larger fleet. All of this is because the software is not running as efficiently as it should.
+
+These impacts are not theoretical: at hyperscale, even tiny regressions translate into real capacity loss. [ServiceLab reports](https://www.usenix.org/system/files/osdi24-chow.pdf#:~:text=Detect%20small%20regressions,outlier%20patterns%20of%20these%20services) using a threshold as strict as 0.01% CPU-usage regression for a critical platform, because the service consumes more than half a million machines, and 0.01% corresponds to more than 50 machines.
+
+This is why regression detection in cloud environments needs repeated measurement, statistical controls, and a workflow that prioritizes small-but-real signals.
+
+## **Why Regressions are Hard to Detect in Cloud Environments**
+
+Detecting regressions in cloud environments is not simply a matter of running a benchmark twice (baseline and current measurements) and comparing averages. In cloud environments, the measured metric includes not only the change in kernel and/or configuration but also environmental variance (“noise”) induced by multi-tenancy, background activity, and run-to-run differences even on machines of the same instance type.
+
+This matters because kernel regressions are often small relative to that variance - the regression signal can be obscured by fluctuations or fluctuation can resemble a regression.
+
+ Reliable detection therefore requires:
+
+* repeated measurements, not single runs;
+* statistical methods robust to non-normal distributions;
+* multiple testing control - large benchmark suites produce many simultaneous hypotheses;
+* careful scoping of comparisons to avoid mixing results across different configurations.
+
+## **Why Classification Matters**
+
+A detection pipeline that produces only “delta tables” is not enough for operational use. Teams need to answer:
+
+* Is the signal stable or dominated by variance?
+* Is the effect size meaningful?
+* Is the regression worth investigating now?
+
+Without prioritization the outcome is predictable - too many low-quality findings waste time and will be ignored. Because teams run many benchmarks and cloud variance can be high, a pipeline must triage results to avoid wasting engineering time on noise. To reliably detect such small regressions, one needs statistical methods that robustly identify them in the presence of variance and the operational reality of dealing with many diverse workloads.
+
+Classification is the bridge from measurement to action: it filters and ranks findings using magnitude, consistency/stability, and practical impact, turning “interesting numbers” into an actionable regression list that engineers can work with.
+
+## **Trust and Transparency**
+
+Performance regression tracking requires trust in the results: the same conclusion should be reproducible from the same data and the same analysis logic. In practice, that trust depends on capturing and preserving sufficient metadata to make comparisons meaningful, as well as on a clear methodology. 
+
+The kernel’s[ issue-reporting guidance ](https://docs.kernel.org/admin-guide/reporting-issues.html)advises reports include the kernel version used for reproducing, the Linux distribution, and clear reproduction notes. It further recommends making the kernel build configuration and the output from *dmesg* available, and including other relevant system information (for example, *lspci* output) when applicable.
+
+Kernel [regression reporting guidance](https://docs.kernel.org/admin-guide/reporting-regressions.html) also notes that a regression comparison is only meaningful when the newer kernel is built using a similar configuration, which makes configuration capture essential for valid comparisons.
+
+In modern environments, assembling context typically involves collecting multiple artifacts produced at different stages (build parameters such as toolchain and *kconfig*, runtime parameters such as kernel command line, plus software and hardware info, benchmarks launch parameters). Without structured capture, these details are easy to omit, and omissions can invalidate conclusions - comparing kernels built with practically different configs or tested under different environments.
+
+At the same time, organizations often keep performance data internal because it is workload-dependent, configuration-sensitive, and sometimes commercially sensitive. This creates a tension: companies may not publish raw performance data publicly, but they still need internal transparency - traceable measurements, versioned analysis, and reproducible reports - so performance conclusions remain verifiable rather than subjective.
+
+[Internal testing can still lead to upstream fixes ](https://automattic.com/2024/03/14/systems-report-linux-performance-regression)when the report contains sufficient context to reproduce the regression.
+
+## **Meaning of Numbers**
+
+Benchmark outputs are not self-explanatory. A single number (e.g. “op/sec” or “p99 latency”) is only meaningful with proper context, clear methodology and an understanding of what the benchmark is actually measuring. Moreover, in cloud environments, interpretation is complicated by inherent run-to-run and host-to-host [variances even on instances of the same type. ](https://www.usenix.org/system/files/osdi24-chow.pdf)
+
+Large benchmark matrices add another failure mode - running many comparisons increases the chance of false positives unless the methodology explicitly controls it. Finally, metric kinds matter - “higher-is-better” and “lower-is-better” metrics must be handled consistently, or improvements will be misclassified as regressions and vice versa. 
+
+Practical difference is about impact, not just detectability: instead of stopping at “is this change real?”, the question is whether it is large and consistent enough to affect capacity, latency, or cost. In practice, that means reporting the percent change together with an effect size and a basic stability/consistency signal, because effect size complements statistical significance by indicating how meaningful the difference is in practice.
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Given the challenges above - variance, multiple testing, and the need for trust - an effective kernel performance tracking system must produce valid comparisons, robust statistics, and actionable classification, while keeping analysis logic transparent and reproducible. In our next blog post, we will look at a practical implementation that targets these requirements.
