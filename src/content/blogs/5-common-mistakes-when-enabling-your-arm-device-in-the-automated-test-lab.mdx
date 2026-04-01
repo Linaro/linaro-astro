@@ -20,16 +20,16 @@ In this article, our protagonist Manuel, will follow a real-world debugging jour
 
 Lessons learned from Manuel to set up your first device in ONELab, saving hours (or days) of troubleshooting.
 
-In This Article: 
+In This Article:
 
 * Manuel’s First Device: When Nothing Works
-* The Problem: No Serial Output 
+* The Problem: No Serial Output
 * The Breakthrough: USB Ports Were Off
-* The Lessons: What Manuel Learned 
+* The Lessons: What Manuel Learned
 * How ONELab Makes This Easier
-* Understanding the Hardware: LAA and MIB 
+* Understanding the Hardware: LAA and MIB
 * Applying the Lessons: Physical Setup Tips
-* Getting your LAA Registered 
+* Getting your LAA Registered
 * The first Health Check: Moment of Truth 
 * Running Your First Compliance Run 
 * What to Expect: Timeline and Complexity 
@@ -37,7 +37,7 @@ In This Article:
 
 ## Manuel's First Device: When Nothing Works
 
-It was supposed to be simple. Manuel had just received a new Arm development board and a Linaro Automation Appliance (LAA). Connect a few cables, run a test, and you are done. Two hours, tops.
+It was supposed to be simple. Manuel had just received a new Arm development board and a [Linaro Automation Appliance (LAA)](<https://hub.linaro.com/library/laa/laa>). Connect a few cables, run a test, and you are done. Two hours, tops.
 
 Three days later, he was still staring at a blank serial console.
 
@@ -55,7 +55,7 @@ Manuel had connected everything according to the board documentation:
 
 ✅ Power cable plugged in (barrel connector, 12V)
 ✅ Ethernet cable connected to LAA
-✅ Serial cable connected via Flylead Mechanical Interface Board (MIB)
+✅ Serial cable connected via [Flylead Mechanical Interface Board (MIB)](<https://hub.linaro.com/library/laa/hardware/mibs/flylead>)
 ✅ Board powered on (LED glowing)
 
 But the serial console showed nothing. No boot messages. No U-Boot prompt. Just silence.
@@ -176,7 +176,7 @@ The Linaro team handles the Linaro Automated Validation Architecture (LAVA) conf
 
 **LAA (Linaro Automation Appliance)**:
 
-The LAA is an i.MX-based device that controls your DUT remotely. It provides:
+The [LAA](https://hub.linaro.com/library/laa/laa) is an i.MX-based device that controls your DUT remotely. It provides:
 
 * Power control (turn device on/off)
 * Serial console access (for debugging)
@@ -243,7 +243,7 @@ Building on the five common mistakes above, here are practical details to keep i
 * LMS creates the device in LAVA
 * Device dictionary template assigned (customized in next step)
 
-**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/onelab). 
+**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/solutions/onelab). 
 
 ## The First Health Check: Moment of Truth
 
@@ -339,7 +339,7 @@ Here's what to expect when enabling your first device:
 
 Enabling your first device on an LAA takes time and patience, but ONELab makes the testing part simple.
 
-**Contact us**: To learn more or see [ONELab](https://www.linaro.org/onelab) in action with your devices.
+**Contact us**: To learn more or see [ONELab](https://www.linaro.org/solutions/onelab) in action with your devices.
 
 **Linaro Products and Solutions** builds testing and validation services for the Arm ecosystem, helping silicon vendors and device makers accelerate time-to-market through automated compliance and interoperability testing.
 
