@@ -53,10 +53,10 @@ Enabling your first device on an LAA takes some initial setup, but once configur
 
 Manuel had connected everything according to the board documentation:
 
-✅ Power cable plugged in (barrel connector, 12V)
-✅ Ethernet cable connected to LAA
-✅ Serial cable connected via [Flylead Mechanical Interface Board (MIB)](<https://hub.linaro.com/library/laa/hardware/mibs/flylead>)
-✅ Board powered on (LED glowing)
+* ✅ Power cable plugged in (barrel connector, 12V)
+* ✅ Ethernet cable connected to LAA
+* ✅ Serial cable connected via [Flylead Mechanical Interface Board (MIB)](<https://hub.linaro.com/library/laa/hardware/mibs/flylead>)
+* ✅ Board powered on (LED glowing)
 
 But the serial console showed nothing. No boot messages. No U-Boot prompt. Just silence.
 
@@ -110,7 +110,7 @@ Manuel's debugging journey revealed the five most common mistakes when enabling 
 
 **The Problem**: MIB_VIO jumper sets serial voltage (1.8V, 3.3V, or 5V), and you must also enable the power rail with `laam laacli power`command. **The Fix**: Try both settings if documentation is unclear. **Why It Matters**: Wrong voltage = no serial output (or worse, damaged board).
 
-### 3. Cables Not Connected as Expected
+#### 3. Cables Not Connected as Expected
 
 **The Problem**: Easy to mix up USB ports, serial connections, power cables. **The Fix**: Label everything immediately. Take photos of working setups. **Why It Matters**: Prevents most "it worked yesterday" issues.
 
@@ -243,7 +243,7 @@ Building on the five common mistakes above, here are practical details to keep i
 * LMS creates the device in LAVA
 * Device dictionary template assigned (customized in next step)
 
-**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaroaccount manager or contact us [here](https://www.linaro.org/solutions/onelab). 
+**Note: Linaro handles LAA registration and project association internally.** If you can’t access your LAA, reach out to your Linaro account manager or contact us [here](https://www.linaro.org/contact).
 
 ## The First Health Check: Moment of Truth
 
@@ -304,9 +304,9 @@ Once health check passes, run your first real test:
 
 **Success Indicators**:
 
-✅ Compliance Run status: Passed
-✅ Device boots correctly
-✅ No error messages in logs
+* ✅ Compliance Run status: Passed
+* ✅ Device boots correctly
+* ✅ No error messages in logs
 
 **ONELab Benefits** (vs. manual LAVA):
 
