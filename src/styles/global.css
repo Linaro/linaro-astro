@@ -53,6 +53,14 @@
     #2d2440 100%
   );
 
+  /* Same as bg-background at top, fades to rgba(51, 50, 54) at bottom */
+  --background-image-section-gradient-neutral: linear-gradient(
+    180deg,
+    var(--color-background) 0%,
+    var(--color-background) 50%,
+    rgba(51, 50, 54) 100%
+  );
+
   /* Animations */
   --animate-infinite-scroll: infinite-scroll 50s linear infinite;
 }
@@ -260,6 +268,10 @@
 
 @utility section-gradient-background {
   background-image: var(--background-image-section-gradient);
+}
+
+@utility section-gradient-neutral {
+  background-image: var(--background-image-section-gradient-neutral);
 }
 
 /* Standard CSS classes (like your score cards) can just live normally 
