@@ -7,9 +7,10 @@ hero:
   title: >
     Upstreaming Linux On Arm
   description: |
-    Product software quality issues feed into longer software update cycles, higher software support costs and now an increasing regulatory burden. An increased support load can further impact development resourcing leading to a spiral of technical debt to be maintained. 
-
-    Yet it can be hard to explain to business decision makers how the organisation can escape this spiral of support cost and delay in fixes and updates especially to driver and BSP code.
+    Linux on Arm-based platforms are about long-term sustainability, ecosystem alignment, security updates and commercial viability.
+  button:
+    text: Reach out to our Experts
+    url: /contact
   bottom_fade: true
   background_image: linaro-website/graphics/freepik__computer-code-dramatic-layered-brackets-and-symbol__58091_1_wajxcr.png
   styles:
@@ -22,84 +23,75 @@ hero:
 flow:
   - row: container_row
     animation: none
+    no_border: true
     styles:
-      inner: py-0
-      outer: purple-gradient-container
-    sections:
-      - component: two_column
-        container_styles: flex align-center w-full mb-24 gap-24 mx-auto item-center justify-center
-        animation: none
-        columns:
-          - type: image
-            image:
-              src: linaro-website/graphics/freepik__software-upstreaming-abstract-dramatic-landscape__70812_1_u2y77j.png
-              alt: |
-                abstract-image-of-leveraging-software
-              inferSize: true
-            styles: not-prose lg:w-1/2 h-auto object-contain
-          - type: text
-            text_content: |
-              **Future-proof you product with Linaro**
-
-              The upstream Linux kernel enforces a quality standard for code which the community accepts and maintains. Meeting this standard is an objective quality measure that ensures low technical debt and, if the code is accepted into the upstream kernel, it enables a shared approach with the community to the burden of support. Close alignment with the upstream kernel pays off for faster update cycles, less time rebasing and testing bug and security fixes, and a kernel migration path for customers providing multiple options for long-term support. 
-
-              Your customers and management can see the benefits of the improvement of code quality which comes from close alignment with the upstream kernel.
-
-            styles: lg:w-1/2 text-lg
-  - row: container_row
-    styles:
-      outer: bg-linaro-purple mb-12
-    sections:
-      - component: two_column
-        container_styles: flex align-center w-full gap-24 mx-auto item-center justify-center
-        animation: none
-        columns:
-          - type: text
-            text_content: |
-              **Top contributors to the Linux kernel**
-
-              Linaro specialises in upstreaming to the Linux kernel, having helped many customers over the years upstream their existing software contributions. We are consistently featured as a top ten contributor to the Linux kernel, with many of our engineers acting as maintainers of subsystems or architectures in the Linux kernel. Because of the active role we play in the open source community, we have the know-how and connections to accelerate your upstream development. 
-
-              We strongly believe that the open source approach leads to the best technical implementation and are therefore committed to not only upstreaming code but also maintaining it.
-
-              In addition to upstreaming to the Linux kernel, Linaro also specialises in upstreaming to U-Boot, OP-TEE and Yocto.
-
-            styles: lg:w-1/2 text-lg
-          - type: image
-            image:
-              src: linaro-website/graphics/Firefly_Gemini_Flash_rotate_the_image_into_perspective_and_add_depth_of_field_853366_1_vbfnib.png
-              alt: |
-                abstract-image-of-keeping-data-secure
-              inferSize: true
-            styles: not-prose lg:w-1/2 rounded-3xl h-auto object-contain
-  - row: container_row
-    sections:
-      - component: two_column
-        container_styles: flex align-center w-full gap-24 mx-auto item-center justify-center items-center border-grey border-[0.25px] rounded-xl px-2 sm:px-8
-        animation: none
-        columns:
-          - type: text
-            title: <span class="linaro-gradient-text">Testimonial</span>
-            text_content: |
-              “At Square, we face the challenge of maintaining our Terminal and Register hardware products, which are based on short-support-cycle mobile technology, in an industry that requires long lifespans and up-to-date security patching. After the Qualcomm SD615 processor (2014) powering our devices went end-of-life in 2018, Square chose to engage with the Arm Linux specialists at Linaro for upstream-based extended life. Having seen their previous work on the DragonBoard 410c, we were confident that upstreaming was the right path and Linaro was the right partner to deliver a new Linux kernel paired with an up-to-date Android release.
-
-              The team dispatched from Linaro Developer Services was highly experienced in how to accomplish this without compromising on productization-level stability, battery life, or performance. As a result of this collaboration, Square is able to continue providing regular OS and kernel upgrades to our Terminal and Register customers for 5-10 more years. In particular, Linaro's expertise and assistance in bringing SoCs and boards into mainline ensures upstream support doesn't decay over time & provides a platform for the community to continue contributing to and benefiting from the work, reducing long term software burden. ”
-
-              <span class="text-linaro-yellow">Benjamin J. Li, Hardware, Square</span>
-
-            styles: lg:w-1/2 text-lg
-          - type: image
-            image:
-              src: linaro-website/graphics/Group_193_p6de3r.png
-              alt: |
-                Square logo
-              inferSize: true
-            styles: not-prose lg:h-1/3 rounded-3xl h-auto object-contain
-  - row: container_row
+      inner: py-12 md:py-16
+      outer: bg-background pt-16 md:pt-24
     sections:
       - component: text
-        text_content: Speak to our Experts to learn how Upstreaming your Linux-based solutions can translate into accelerated time to market and better quality products.
-        style: text-center text-3xl max-w-[54ch] mx-auto font-bold mb-24
+        text_content: Built it right - Keep it Upstream
+        style: text-center not-prose text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-tight font-bold max-w-[52rem] mx-auto px-4 !text-linaro-yellow mb-10 md:mb-14
+      - component: cards
+        styles:
+          container: flex flex-row flex-wrap justify-center gap-5 md:gap-6 lg:gap-7 w-full max-w-7xl mx-auto px-2 md:px-4
+          card: not-prose flex flex-col items-center justify-start gap-4 rounded-lg bg-[#D9D9D9] px-4 py-8 md:py-10 min-h-[13rem] sm:min-h-[14.5rem] md:min-h-[16rem] w-44 sm:w-48 md:w-52 shrink-0 border-0 shadow-none
+          icon: "!w-14 !h-14 shrink-0 text-[#6715E8]"
+          content: text-center text-base sm:text-lg leading-snug font-medium !text-black [&_p]:!text-black !my-0 max-w-[13.5rem] mx-auto
+        cards:
+          - icon: zoom_in_map
+            text: Included in Mainline Linux
+          - icon: zoom_out_map
+            text: Maintained for future releases
+          - icon: thumb_up
+            text: Recognized by major maintainers
+          - icon: gamepad
+            text: Aligned with Open Source best practices
+          - icon: done_outline
+            text: Ready for Long-Term Stability and Success
+  - row: container_row
+    show_title_line: true
+    animation: none
+    styles:
+      inner: py-16 md:py-24
+      outer: bg-background
+    sections:
+      - component: text
+        text_content: |
+          We Bring Decades of Hands-On Experience Working Directly in the Linux Kernel and Arm Ecosystem
+        style: text-center not-prose text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-tight font-bold max-w-[52rem] mx-auto px-4 !text-white mb-10 md:mb-14
+      - component: stat_grid
+        stats:
+          - value: 41969
+            label: of contributions to the linux kernel release
+          - value: 68
+            label: of open source sw maintainers
+          - value: 47000
+            label: of patches submitted to upstream projects in the past 2 years
+  - row: container_row
+    show_title_line: true
+    animation: none
+    styles:
+      inner: py-16 md:py-20
+      outer: section-gradient-neutral z-0
+    sections:
+      - component: text
+        text_content: We Help You Move From
+        style: text-center not-prose text-2xl md:text-3xl lg:text-4xl font-bold !text-linaro-yellow mb-10 md:mb-14 px-4
+      - component: large_image
+        src: linaro-website/graphics/We_help_you_move_from_1_jzqr27
+        alt: |
+          Flow from vendor fork through upstream development, subsystem alignment, upstream submission, to long-term maintenance strategy
+        style: w-full max-w-6xl mx-auto px-4 h-auto object-contain
+
+  - row: container_row
+    styles:
+      outer: bg-background
+    sections:
+      - component: text
+        text_content: |
+          Upstreaming is NOT a Cost<br />
+          <span class="linaro-gradient-text not-italic">It's a Cost-Reduction Strategy</span>
+        style: text-center not-prose text-3xl max-w-[54ch] mx-auto font-bold mb-24
       - component: buttons
         buttons:
           - text: Contact Us
