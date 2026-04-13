@@ -30,6 +30,23 @@ const isSsr = import.meta.env.DEV || !import.meta.env.IS_PUBLIC;
     <BlogSearch client:only="solid-js" tags={tags} type="blogs" isSsr={isSsr} />
   </main>
 </BaseLayout>
+<script is:inline define:vars={{ allTagsJson: tags.map(t => ({ id: t.id, name: t.data.name })) }}>
+  window.dataLayer = window.dataLayer || [];
+  const url = new URL(window.location.href);
+  const activeTagIds = url.searchParams.get('tags')?.split(',').filter(Boolean) ?? [];
+  const activeTagNames = activeTagIds.map(id => {
+    const found = allTagsJson.find(t => t.id === id);
+    return found ? found.name : id;
+  });
+  window.dataLayer.push({
+    'blog': {
+      'title': 'Blog Homepage',
+      'tag_count': activeTagNames.length,
+      'tags': activeTagNames
+    }
+  });
+</script>
+
 <style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
   .hero-background-image {
     background-image: var(--backgroundUrl);

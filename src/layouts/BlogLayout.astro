@@ -148,6 +148,17 @@ if (related && related.length > 0) {
   </aside>
 </BaseLayout>
 
+<script is:inline define:vars={{ dlTitle: title, dlTags: tags.map(t => t.data.name) }}>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    'blog': {
+      'title': dlTitle,
+      'tag_count': dlTags.length,
+      'tags': dlTags
+    }
+  });
+</script>
+
 <style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
   /* Ensure we can see global theme variables */
   @reference "../styles/global.css";
