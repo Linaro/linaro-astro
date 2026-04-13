@@ -34,11 +34,14 @@ const content =
 ---
 
 <li
-  class="w-80 border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background f"
+  class="w-80 border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between"
+  data-blog-card
+  data-blog-title={blog.title}
+  data-blog-tags={JSON.stringify(tags.map(t => t.data.name))}
 >
   <a
     href={`/${collection === "blogs" ? "blog" : collection}/${id}`}
-    class="w-full px-4 pt-8 pb-12 inline-block flex flex-col justify-between h-full"
+    class="w-full px-4 pt-8 pb-12 inline-block flex flex-col basis-full"
   >
     <div class="basis-full">
       <CloudinaryImg
@@ -69,14 +72,57 @@ const content =
       </p>
       <p>{content}</p>
     </div>
-    <ul class="flex flex-wrap gap-x-4 gap-y-8 justify-self-end mt-8">
-      {
-        tags.map((tag) => (
-          <li>
-            <button class="linaro-gradient-button">{tag.data.name}</button>
-          </li>
-        ))
-      }
-    </ul>
   </a>
+  <ul class="flex flex-wrap gap-x-4 gap-y-8 px-4 py-8 justify-self-end">
+    {
+      tags.map((tag) => {
+        const tagSlug = tag.id.replace(/\.mdx?$/, "");
+        return (
+          <li>
+            <a
+              href={`/blog?tags=${tagSlug}`}
+              class="linaro-gradient-button"
+              data-blog-tag={tag.data.name}
+            >{tag.data.name}</a>
+          </li>
+        );
+      })
+    }
+  </ul>
 </li>
+
+<script>
+  document.querySelectorAll('[data-blog-card]').forEach((card) => {
+    const el = card as HTMLElement;
+    const cardTitle = el.dataset.blogTitle ?? '';
+    const cardTags = JSON.parse(el.dataset.blogTags ?? '[]') as string[];
+
+    el.querySelector('a:first-of-type')?.addEventListener('click', () => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event': 'blog_card_click',
+        'navigation': { 'type': 'Card' },
+        'blog': {
+          'title': cardTitle,
+          'tag_count': cardTags.length,
+          'tags': cardTags
+        }
+      });
+    });
+
+    el.querySelectorAll('[data-blog-tag]').forEach((tagEl) => {
+      tagEl.addEventListener('click', () => {
+        const tagName = (tagEl as HTMLElement).dataset.blogTag ?? '';
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'blog_tag_click',
+          'navigation': {
+            'tag': tagName,
+            'type': 'Tag',
+            'action': 'Select'
+          }
+        });
+      });
+    });
+  });
+</script>
