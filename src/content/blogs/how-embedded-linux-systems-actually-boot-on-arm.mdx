@@ -19,7 +19,7 @@ The boot sequence on Arm-based embedded systems is nuanced and complex, and has 
 
 While many silicon vendors and board integrators continue to implement their own “secret sauce” when it comes to firmware and bootloaders, the industry has gradually been moving closer to more generic, unified solutions, primarily to greatly improve reuse, reliability and reduce maintenance burden. This article will focus on booting on an **Armv9** SoC, using the Trusted-Firmware A project for secure monitor firmware, U-Boot as the bootloader and Linux as the OS.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1776340059/linaro-website/IMG_2487_kgp93b.jpg)
 
 Powering Up…
 
@@ -46,11 +46,11 @@ One of these 2 approaches is used depending on build options, and the appropriat
 
 ## What is EBBR anyway?
 
-Now we are in the bootloader, looking to boot the OS, we need to understand what the OS expects. Arm defines a set of “recipes” for what they call “Base Boot Requirements” (BBR). These define the boot procedure and services that the OS/hypervisor can expect to be available. There are currently 2 SystemReady bands, “SystemReady” and “SystemReady DeviceTree”. For our embedded use-case, we will concentrate on the latter, which mandates use of the “Embedded Base Boot Requirements” recipe. U-Boot provides a minimal UEFI implementation capable of loading an EFI executable, provided by `CONFIG_EFI_LOADER`. A common misconception is that booting using UEFI mandates ACPI. In fact, with EBBR, continuing to pass a DeviceTree to the EFI payload is still by far the most common choice. When booting the EFI payload, which may be loaded as usual by any of U-Boot’s block device commands, U-Boot installs a special `EFI_DTB_TABLE_GUID `entry into the EFI Configuration Table, describing where the DTB lives. Downstream bootloaders, such as GRUB, systemd-boot or the Linux EFI stub itself then finds the DeviceTree by scanning the System Table. 
+Now we are in the bootloader, looking to boot the OS, we need to understand what the OS expects. Arm defines a set of “recipes” for what they call “Base Boot Requirements” (BBR). These define the boot procedure and services that the OS/hypervisor can expect to be available. There are currently 2 SystemReady bands, “SystemReady” and “SystemReady DeviceTree”. For our embedded use-case, we will concentrate on the latter, which mandates use of the “Embedded Base Boot Requirements” recipe. U-Boot provides a minimal UEFI implementation capable of loading an EFI executable, provided by `CONFIG_EFI_LOADER`. A common misconception is that booting using UEFI mandates ACPI. In fact, with EBBR, continuing to pass a DeviceTree to the EFI payload is still by far the most common choice. When booting the EFI payload, which may be loaded as usual by any of U-Boot’s block device commands, U-Boot installs a special `EFI_DTB_TABLE_GUID`entry into the EFI Configuration Table, describing where the DTB lives. Downstream bootloaders, such as GRUB, systemd-boot or the Linux EFI stub itself then finds the DeviceTree by scanning the System Table. 
 
 ## Inside the Linux kernel
 
-Fun fact: The Linux kernel can masquerade as a PE/COFF executable and therefore can be treated as an EFI binary. So, it is called (either directly from U-Boot, or from another bootloader stage) using the standard (`ImageHandle, SystemTable`) argument pair in `x0, x1.` Linux then navigates the Configuration Table as before. The EFI stub then performs the final handoff, allocates a new FDT with EFI reserved memory described, calls `ExitBootServices` to nullify the boot services pointer and switch to post-boot runtime services, before calling into regular `primary_entry `with the aforementioned FDT pointer. The kernel then has to do quite a bit of initialisation (setup scheduler, init driver model, etc.) before it is time to bring the secondary cores online (up) using PSCI in `smp_init(). `
+Fun fact: The Linux kernel can masquerade as a PE/COFF executable and therefore can be treated as an EFI binary. So, it is called (either directly from U-Boot, or from another bootloader stage) using the standard (`ImageHandle, SystemTable`) argument pair in `x0, x1.` Linux then navigates the Configuration Table as before. The EFI stub then performs the final handoff, allocates a new FDT with EFI reserved memory described, calls `ExitBootServices` to nullify the boot services pointer and switch to post-boot runtime services, before calling into regular `primary_entry`with the aforementioned FDT pointer. The kernel then has to do quite a bit of initialisation (setup scheduler, init driver model, etc.) before it is time to bring the secondary cores online (up) using PSCI in `smp_init().`
 
 ## Further Reading and Follow-up
 
@@ -61,7 +61,6 @@ That was a whistlestop tour of booting an embedded Arm system. I have skipped ma
 * Introduction to Trusted Firmware-A
 * Introduction to OP-TEE
 
-
 Also, consider reading our other great blog posts for information on Confidential Compute Architecture (CCA) and Realm management.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1776340066/linaro-website/IMG_2486_lmpjme.png)
