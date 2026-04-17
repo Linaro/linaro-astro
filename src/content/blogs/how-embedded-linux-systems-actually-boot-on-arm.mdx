@@ -21,7 +21,7 @@ While many silicon vendors and board integrators continue to implement their own
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1776340059/linaro-website/IMG_2487_kgp93b.jpg)
 
-Powering Up…
+## Powering Up…
 
 Once board power is applied, and the System Control Processor (SCP) or simpler platform-specific PMIC is ready to power and clock a cluster, it will be released from reset. At this point, all powered cores will begin executing from the address described by RVBAR_EL3, typically static and set by the hardware. All but one will branch into some form of “holding pen” where they will spin (or wait for interrupt) until firmware decides to admit them into the boot process. This is where we enter Trusted Firmware’s **BL1** binary, resident in trusted, immutable storage. This is typically stored in literal mask ROM in the SoC itself, in one-time programmable ROM or some trusted area of NOR flash.
 
