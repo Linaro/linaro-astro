@@ -40,7 +40,7 @@ Once all images are loaded by BL2, it makes a secure monitor call (SMC) back to 
 Firmware handoff has been a topic of investigation within Linaro’s LEDGE group over the last couple of years. There are currently 2 options:
 
 * Simply passing the base address of the DTB (DeviceTree) in either register x0 or x1, similar to what Linux expects.
-* Using a Transfer List, a structure that was designed to be easier to process than DeviceTree, specifically for the firmware handoff use-case. You can read more about Transfer Lists at Raymond Mao’s excellent blog post.  The TL Is a structure that persists in memory and provides data not only for BL33 but for other boot stages, too. Notably, BL31 needs to move the TL to non-secure memory so that U-Boot can read it, before hand-off. In this case, U-Boot receives a magic number in x1 so it can identify it has been handed a TL, as well as the base address and length of the TL. Within the TL, and entry contains the address of the DTB in memory. 
+* Using a Transfer List, a structure that was designed to be easier to process than DeviceTree, specifically for the firmware handoff use-case. You can read more about Transfer Lists at [Raymond Mao’s excellent blog post.](https://www.linaro.org/blog/passing-information-across-bootloader-components/)  The TL Is a structure that persists in memory and provides data not only for BL33 but for other boot stages, too. Notably, BL31 needs to move the TL to non-secure memory so that U-Boot can read it, before hand-off. In this case, U-Boot receives a magic number in x1 so it can identify it has been handed a TL, as well as the base address and length of the TL. Within the TL, and entry contains the address of the DTB in memory. 
 
 One of these 2 approaches is used depending on build options, and the appropriate context and world switch is performed to enter BL33 at (typically) NS-EL2.
 
@@ -63,4 +63,4 @@ That was a whistlestop tour of booting an embedded Arm system. I have skipped ma
 
 Also, consider reading our other great blog posts for information on Confidential Compute Architecture (CCA) and Realm management.
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1776340066/linaro-website/IMG_2486_lmpjme.png)
+*Register for the next training course [here](https://bit.ly/4sKMnoO).*
