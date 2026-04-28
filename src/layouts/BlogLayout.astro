@@ -119,7 +119,7 @@ if (related && related.length > 0) {
             const tagSlug = tag.id.replace(/\.mdx?$/, "");
             return (
               <li data-pagefind-filter={`tags:${tagSlug}`} data-pagefind-ignore>
-                <a href={`/blog?tags=${tagSlug}`}>
+                <a href={`/blog?tags=${tagSlug}`} data-blog-tag={tag.data.name}>
                   <div class="linaro-gradient-button">{tag.data.name}</div>
                 </a>
               </li>
@@ -156,6 +156,23 @@ if (related && related.length > 0) {
       'tag_count': dlTags.length,
       'tags': dlTags
     }
+  });
+</script>
+
+<script>
+  document.querySelectorAll('ul > li[data-pagefind-filter] a[data-blog-tag]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const tagName = (el as HTMLElement).dataset.blogTag ?? '';
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event': 'blog_tag_click',
+        'navigation': {
+          'tag': tagName,
+          'type': 'Tag',
+          'action': 'Select'
+        }
+      });
+    });
   });
 </script>
 
