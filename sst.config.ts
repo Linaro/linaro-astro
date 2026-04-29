@@ -63,6 +63,9 @@ export default $config({
     const site = new sst.aws.Astro("LinaroSite", {
       environment,
       domain,
+      server: {
+        runtime: "nodejs22.x",
+      },
     });
 
     // This is *TEMPORARILY* needed because of a bug between SST v3
