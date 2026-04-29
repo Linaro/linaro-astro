@@ -27,6 +27,9 @@ jobs:
         with:
           fetch-depth: "0"
 
+      - name: Create local main branch
+        run: git fetch origin main:main || true
+
       - name: Restore main cache first
         uses: actions/cache/restore@v5
         id: main-cache
