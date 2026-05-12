@@ -15,7 +15,7 @@ hero:
   background_image: linaro-website/graphics/freepik__computer-code-dramatic-layered-brackets-and-symbol__58091_1_wajxcr.png
   styles:
     text_container: max-w-2xl
-    title: max-w-2xl mb-12
+    title: mb-12 max-w-2xl sm:max-w-none sm:whitespace-nowrap
     description: max-w-xl text-xl
     background: bg-right-top xl:bg-right
     background_container: md:ml-[5%]
