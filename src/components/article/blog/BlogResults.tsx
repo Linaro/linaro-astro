@@ -33,6 +33,21 @@ const BlogResult = ({
       <a
         href={article()?.url}
         class="w-full px-4 pt-8 pb-12 inline-block basis-full"
+        onClick={() => {
+          const tagNames = (article()?.filters.tags ?? []).map(
+            (tag: string) => tags?.find(({ id }) => id === tag)?.data.name ?? tag
+          );
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            'event': 'blog_card_click',
+            'navigation': { 'type': 'Card' },
+            'blog': {
+              'title': article()?.meta.title ?? '',
+              'tag_count': tagNames.length,
+              'tags': tagNames
+            }
+          });
+        }}
       >
         <img
           src={isSsr ? "/placeholder.jpg" : article()?.meta.image}
@@ -62,7 +77,22 @@ const BlogResult = ({
       <ul class="flex flex-wrap gap-x-4 gap-y-8 px-4 py-8 justify-self-end">
         {article()?.filters.tags.map((tag: string) => (
           <li>
-            <a href={`/blog?tags=${tag}`}>
+            <a
+              href={`/blog?tags=${tag}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                const tagName = tags?.find(({ id }) => id === tag)?.data.name ?? tag;
+                (window as any).dataLayer = (window as any).dataLayer || [];
+                (window as any).dataLayer.push({
+                  'event': 'blog_tag_click',
+                  'navigation': {
+                    'tag': tagName,
+                    'type': 'Tag',
+                    'action': 'Select'
+                  }
+                });
+              }}
+            >
               <div class="linaro-gradient-button">
                 {tags?.find(({ id }) => id === tag)?.data.name}
               </div>
