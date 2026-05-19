@@ -15,7 +15,7 @@ related: []
 ---
 ### Introduction
 
-Mapping application memory as (read-write-execute (RWX) is often considered dangerous as it removes a critical security boundary between data and code. When a memory region is both writable and executable, an attacker who finds *any* way to write into that region—such as through a buffer overflow, use-after-free, or injection bug etc —can immediately execute the injected data as code. Mapping memory properly greatly reduces the attack surface and makes vulnerabilities harder to exploit. 
+Mapping application memory as read-write-execute (RWX) is often considered dangerous as it removes a critical security boundary between data and code. When a memory region is both writable and executable, an attacker who finds *any* way to write into that region—such as through a buffer overflow, use-after-free, or injection bug etc —can immediately execute the injected data as code. Mapping memory properly greatly reduces the attack surface and makes vulnerabilities harder to exploit. 
 
 In U-Boot, memory was classified as either normal memory, which is mapped with read, write, and execute permissions, or device memory, which is mapped as read/write only. When U-Boot relocated itself to the top of DRAM, the memory permissions remained unchanged as RWX, resulting in an increased attack surface.
 
@@ -43,9 +43,9 @@ Compiling qemu_arm64_lwip_defconfig (which now includes our **[patchset](https:/
 
 As you can see, only device mapped memory is not allowed to execute. The remaining memory regions are mapped as RWX
 
-Enable memory permissions
+### Enable memory permissions
 
-The patchset above adds another interesting flag CONFIG_MMU_PGROT which only applies to arm64. Unfortunately we can't yet enable it by default for all arm64 boards, because bugs like [**this** ](https://lore.kernel.org/u-boot/20250129-rockchip-pinctrl-const-v1-0-450ccdadfa7e@cherry.de/)and **[this](https://lore.kernel.org/u-boot/20250130133646.2177194-1-andre.przywara@arm.com/)** will now lead to a crash.
+The patchset above adds another interesting flag **CONFIG_MMU_PGROT** which only applies to arm64. Unfortunately we can't yet enable it by default for all arm64 boards, because bugs like [**this** ](https://lore.kernel.org/u-boot/20250129-rockchip-pinctrl-const-v1-0-450ccdadfa7e@cherry.de/)and **[this](https://lore.kernel.org/u-boot/20250130133646.2177194-1-andre.przywara@arm.com/)** will now lead to a crash.
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1772793660/linaro-website/IMG_2229_noy9rt.jpg)
 
