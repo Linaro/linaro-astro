@@ -64,13 +64,11 @@ flow:
             text: |
               The Linaro Automated Validation Architecture (LAVA) is a test and continuous integration framework that Linaro uses to validate its releases. The source is open so that Linaro member companies and others can create their own instantiations and run proprietary tests within this standard framework.
 
-              The two recommended ways to install Lava is either via DEB or Docker\:
+              [Install LAVA](https://lava.readthedocs.io/en/latest/admin/basic-tutorials/instance/install.html#install-lava)
 
-              [Recommended Debian Architectures](https://lava.readthedocs.io/en/latest/admin/basic-tutorials/instance/install/#debian)
+              [Find out more about LAVA](https://www.lavasoftware.org/)
 
-              [Administering LAVA using Docker — LAVA documentation](https://lava.readthedocs.io/en/latest/admin/basic-tutorials/instance/install/#docker)
-
-              [Click here to find out more about LAVA.](https://validation.linaro.org/?_gl=1*145svnc*_ga*NzMzMTExNTgyLjE3MTIxMzg2MTM.*_ga_E12E6FXFVK*MTcxMjc1NDc3Ny44LjEuMTcxMjc1NTY4OS4wLjAuMA..)
+              [LAVA project source](https://gitlab.com/lava)
           - title: SQUAD - Linaro’s Reporting Tool
             text: |
               SQUAD is a web based reporting tool. It was created by Linaro to cover basic test result reporting for Linaro teams. It can collect pass/fail results and benchmarks from direct submissions or from testing tools like LAVA.
