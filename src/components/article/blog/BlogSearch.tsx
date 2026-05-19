@@ -121,6 +121,9 @@ const BlogSearch = ({
 
       const currentTags = search().filters.tags;
 
+      const clickedTagName = tags.find(t => t.id === clickedTag)?.data.name ?? clickedTag;
+      const action = currentTags.includes(clickedTag) ? 'Deselect' : 'Select';
+
       let newTags;
       if (currentTags.includes(clickedTag)) {
         newTags = [...currentTags.filter((tag) => tag !== clickedTag)];
@@ -137,6 +140,28 @@ const BlogSearch = ({
       };
 
       updateSearch(newSearch);
+
+      // blog_tag_click — fires for any tag toggle in the filter section
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        'event': 'blog_tag_click',
+        'navigation': {
+          'tag': clickedTagName,
+          'type': 'Tag',
+          'action': action
+        }
+      });
+
+      // blog_filter_applied — only fires from the Tags filter section on the blog homepage
+      const newTagNames = newTags.map(id => tags.find(t => t.id === id)?.data.name ?? id);
+      (window as any).dataLayer.push({
+        'event': 'blog_filter_applied',
+        'blog': {
+          'title': 'Blog Homepage',
+          'tag_count': newTags.length,
+          'tags': newTagNames
+        }
+      });
     };
 
   const [results] = createResource(search, fetchResults);

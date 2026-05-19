@@ -9,7 +9,7 @@ export async function GET(context) {
       title: item.data.title,
       pubDate: item.data.date,
       description: item.data.description,
-      link: `/blog/${item.slug}`,
+      link: `/blog/${item.id.replace(/\.mdx?$/, "")}`,
     })),
   ].sort((a, b) => {
     return b.pubDate - a.pubDate;
