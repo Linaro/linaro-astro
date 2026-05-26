@@ -1,0 +1,88 @@
+---
+title: What is Confidential Computing?
+description: As cyber threats and AI-driven attacks grow, protecting data is
+  more critical than ever. While encryption secures data at rest and in transit,
+  confidential computing protects data in use, keeping sensitive workloads
+  secure during processing.
+date: 2026-05-26T12:10:00.000Z
+author: benjamin-mordaunt
+tags:
+  - security
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1779806131/linaro-website/young-adult-programmer-typing-away-computer-generated-by-ai_yyijiw.jpg
+related: []
+---
+## What is Confidential Computing?
+
+The security of computer systems has been a subject of fierce scrutiny and regulation since even before devices were let loose onto the public internet. Notably, security vulnerabilities in popular software projects have been frequenting news outlets over the past 6 months especially, thanks to advances in automating “bug hunting” and the AI boom. For security-critical industries and those vulnerable to supply-chain attacks, these trends are worrying. All organisations with a digital estate have data to protect, and we need the tools to demonstrably provide protection at all stages of the data lifecycle.
+
+Mainly, research in this area has focussed on two pillars: *data at rest* (think disk encryption) and *data in transit* (think TLS and other transport-layer protocols). At first glance, it looks as though that might cover everything - after all, data is either moving or staying still! But there is a hidden third pillar which rears its head in (primarily) multi-tenanted systems - *data in use*.
+
+## Data in Use? What is that exactly?
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1779805800/linaro-website/IMG_3118_wjrefs.jpg)
+
+Put simply, *data in use* is a term used to describe data that is actively flowing around the memory buses, being worked on by the CPU, being number-crunched by the GPU, or otherwise not just sitting on a disk. It’s easy to think that this data is tucked cozily away in the confines of our local machine, but there is a notable risk in the cloud computing environment:
+
+If we are using a cloud provider, and our application is running in a virtual machine (VM), how sure can we be that the environment our precious data is operating in is *truly* sandboxed from other users of that machine? What if their hypervisor software, which is in charge of our VM and has full access to its memory, is dependent on a hijacked ecosystem package polluted with secret exfiltration routines? Alternatively, imagine you are company A, wishing to store credit card information in a database in the cloud. How do you know that company B, whose software also runs in a VM adjacent to your database, cannot snoop the memory from your database? The simple answer is that without *serious* hardware and software consideration, we can’t be sure. This has huge implications on security auditability and traceability, if we can’t prove we are in a safe environment. This is what the larger body of work defining a “Confidential Compute Architecture” concerns itself with.
+
+## So what’s being done to help?
+
+Established in 2019, major players across hardware vendors, cloud providers, developers and open source and security experts joined forces under the Confidential Computing Consortium. Now under the umbrella of the Linux Foundation, key members include Arm, AMD, Intel, Google, Microsoft, IBM and many others. Their stated definition of Confidential Computing is:
+
+***“The protection of data in use by performing computation in a hardware-based, attested Trusted Executing Environment.”***
+
+Let’s unpack that list.
+
+“Hardware-Based”
+
+It was identified early on that the isolation guarantees must be rooted in hardware. A software-only isolation mechanism, such as a sandbox or virtual machine boundary enforced purely by the hypervisor is only as trustworthy as the software enforcing it. A hardware-based boundary, by contrast, is enforced by the CPU’s memory management and access control hardware which, theoretically, software cannot bypass.
+
+This means confidential computing requires CPU support, with consideration in many parts of the microarchitecture, memory controller, and so on.
+
+### “Attested”
+
+Isolation is all well and good, but it is not sufficient. If you cannot verify what is running inside the isolated environment, you cannot trust it. Attestation is the mechanism by which the trusted execution environment (henceforth referred to as a TEE), uses a trusted 3rd party verification service to prove the TEE’s identity, integrity and security claims. Without attestation, a malicious host could present a software emulator that *looks* like a TEE but provides no actual security.
+
+Attestation also makes confidential computing composable: you can build systems where multiple disparate parties contribute sensitive data to a joint computation, each independently verifying that the computation environment is genuine and has not been tampered with. TEEs can therefore act as a trusted “shared playground” where data may be exchanged and worked on.
+
+### “Trusted Execution Environment”
+
+A TEE is an isolated execution context - it could be a process, a virtual machine, or an entire operating system instance - where code and data are protected from observation or modification by software outside the TEE. The term covers a wide range of implementations such as Intel’s SGX, AMD SEV, and may even be a little confusing in some contexts. For example, in Arm’s case, there is the “traditional” 2-world split, where a TEE can operate in the Secure world and more recently, the VM-level isolation provided by Realms (the 4-world split). When we discuss the Arm CCA architecture later, we will mainly focus on “TEEs as Realms.” They are *not* mutually exclusive.
+
+## Fundamental Properties of a TEE
+
+We will delve more deeply into CCA architecture on Arm platforms in a follow-up post, but for now, we should familiarise ourselves with some core properties that uphold those guarantees we stated in our definition.
+
+### Confidentiality
+
+Data inside the TEE cannot be read by software outside it, even by the most privileged software on the platform (specifically what is sometimes called the “rich OS/hypervisor”). This is enforced by the CPU’s access control hardware and possibly even memory encryption, where DRAM itself is encrypted with a key that is generated inside the CPU and never exposed to software. A bus snoop/probe or cold-boot attack would only retrieve ciphertext. Then there are secure storage areas, replay-protected eMMC blocks and dedicated flash areas in secure peripherals that are only mapped for access by the TEE.
+
+### Integrity
+
+If we can’t detect tampering or corruption of state or memory, we cannot make any other guarantees. Integrity dictates that we should be able to catch any and all malicious attempts to access privileged memory or devices. This may apply e.g. at the point we load/page signed pages of memory from/to disk, or it may be more comprehensive such as with Intel’s Memory Encryption Engine (MEE), which applies a Merkle tree of message authentication codes (MACs) over cache lines, stores a trusted root hash in trusted SRAM and recomputes hashes as each cache line is evicted (crosses the CPU-memory boundary). You can see that security tolerance, performance requirements and system architecture decisions affect the eventual implementation. 
+
+### Measurability and Attestation
+
+A TEE must be measurable: it must be possible to produce a cryptographic hash of the code and configuration that was loaded into it, and to bind that hash to a signature from hardware-rooted keys. This measurement forms the basis of attestation. Without it, there is no way to distinguish a genuine TEE from a software emulator. If you are familiar with PCR-style extensions from TPM design, measurements here work in a similar fashion; where the final value is a function of both content *and* load order. We will explore measurement, claims, attestation tokens (EATs), the CBOR structure and more in a later blog.
+
+### Minimal Trusted Computing Base (TCB)
+
+A well-designed TEE minimises the amount of code and hardware that must be trusted. The Trusted Computing Base (TCB) is everything that, if compromised, would undermine the security guarantee. A smaller TCB has a smaller attack surface and is easier to audit, both by inspection by a human and with tools. This is a key design goal in Arm CCA, where the TCB for a Realm VM is limited to the hardware itself, the Realm Management Monitor (RMM), and the secure firmware - explicitly excluding the hypervisor. We will explore the role of the RMM in a later post.
+
+## Conclusion
+
+Confidential computing addresses a fundamental gap in the security landscape of modern computing: the protection of data while it is being processed, on increasingly complex hardware/software deployments. By rooting security guarantees in hardware and by combining strong isolation with cryptographic attestation, it enables a trust model in which the platform owner is explicitly excluded from the trust boundary.
+
+Linaro plays a pivotal role in the architectural evolution and implementation of Arm CCA, sitting at the heart of the ecosystem and contributing to software projects such as QEMU, KVM and TF-A, while also offering training the next generation of engineers who will build on these foundations (hey, it could be you!). Our engineers are actively tackling interesting problems, such as Device Assignment (DA), allowing accelerators such as GPUs to be securely allocated to a specific Realm.
+
+Confidential computing is not a distant future, it is being deployed today. While Armv9 silicon is still hard to come by, Linaro is helping to ensure hardware vendors and cloud providers have an open, interoperable and trustworthy set of software projects ready to support the current- and next-gen hardware.
+
+**Want to go deeper?** Look out for continuations in this series! Also, we offer engineering services, training courses and support. Visit our training portal [here](https://bit.ly/4sKMnoO).
+
+## Author
+
+Benjamin Mordaunt is a Senior Engineer at Linaro, where he produces and delivers training materials on a variety of topics, as well as contributes to several software projects across the firmware space.
+
+He trained as an electronic engineer as an apprentice with Arm, and has spent almost a decade in the automotive and robotics industry, ensuring software can leverage the cutting-edge of Arm CPU/GPU features (SIMD, GPU partitioning and virtualisation) in a safety-critical environment.
+
+He is a contributor to TF-A and several compiler toolchains, and has consistently worked with the Linux kernel, RTOS’s and bootloader/firmware projects such as EDKII and U-Boot.
