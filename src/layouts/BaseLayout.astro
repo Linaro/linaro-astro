@@ -188,13 +188,17 @@ const { title, description, type = "website", image } = Astro.props;
             feedbackText.innerHTML = `
       <div class="space-y-4 text-center">
         <p class="text-base">
-          Thank you! Please use the passcode below to access the webinar.
+          Thank you! Please use the link below to access the webinar.
         </p>
 
-        <div class="text-lg font-semibold text-blue-600">
+        ${
+          passcode
+            ? `<div class="text-lg font-semibold text-blue-600">
           Passcode:
           <div class="text-2xl font-bold text-blue-700">${passcode}</div>
-        </div>
+        </div>`
+            : ""
+        }
 
         <div>
           <a
