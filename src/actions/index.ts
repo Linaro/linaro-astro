@@ -193,12 +193,20 @@ export const server = {
         if (personId) {
           console.log(`[CRM-DEBUG] Attempting to create notes for Person ID: ${personId}`);
 
+          let sourceContent = `Source Form: ${formName}`;
+          if (input.webinarDataId) {
+            sourceContent += `\nWebinar: ${input.webinarDataId.replace(/_/g, " ")}`;
+          }
+          if (input.whitepaperId) {
+            sourceContent += `\nWhitepaper: ${input.whitepaperId.replace(/_/g, " ")}`;
+          }
+
           const sourceNote = await pipelineFetch("/notes", {
             method: "POST",
             body: JSON.stringify({
               note: {
                 person_id: personId,
-                content: `Source Form: ${formName}`,
+                content: sourceContent,
                 title: "Lead Source",
               },
             }),
