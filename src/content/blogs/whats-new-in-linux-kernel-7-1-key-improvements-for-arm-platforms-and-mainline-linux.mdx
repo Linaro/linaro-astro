@@ -1,0 +1,104 @@
+---
+title: What's new in Linux Kernel 7.1? Key Improvements for Arm Platforms and
+  Mainline Linux
+description: From scheduler performance to platform standardization, Linaro’s contributions to Linux 7.1 help make Arm-based systems easier to maintain, observe, and scale over time.
+date: 2026-06-17T14:33:00.000Z
+author: vincent-guittot
+tags:
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1781706948/linaro-website/images/blog-hero-images/image_ohc5yp.webp
+related: []
+---
+The Linux 7.1 release includes contributions from Linaro engineers across platform standardization, scheduler performance, power management, hardware enablement, and kernel quality. While the individual changes address very different technical challenges, they share a common goal: helping organizations build and maintain Linux-based Arm platforms with less platform-specific code, better observability, and a lower long-term maintenance burden.
+
+For teams building products on Linux, one of the biggest challenges is not adding features—it is sustaining them. Every downstream patch, vendor-specific interface, and unreleased fix becomes technical debt that must be maintained across future kernel releases. By solving these challenges upstream, improvements become part of the Linux ecosystem itself, benefiting both current and future platforms.
+
+Linux 7.1 provides several examples of this approach in action.
+
+## Standardizing Platform Interfaces with SCMI GPIO
+
+One of the most significant infrastructure improvements merged in Linux 7.1 is support for GPIO on top of the generic pinctrl framework, with an initial focus on the SCMI (System Control and Management Interface) protocol.
+
+While this may appear to be a narrow kernel feature, it addresses a broader challenge faced by many platform teams: reducing dependence on platform-specific interfaces and custom board support package (BSP) code. Standardized interfaces make it easier to support multiple hardware generations while reducing maintenance costs over the lifetime of a product.
+
+This work was the result of extensive discussion and collaboration within the upstream community before finally being accepted. That process is often as important as the code itself. Successfully upstreaming complex infrastructure changes requires technical expertise, consensus building, and a design that works for the wider Linux ecosystem.
+
+For organizations seeking to reduce downstream maintenance and move closer to mainline Linux, this type of work provides long-term benefits far beyond the immediate feature.
+
+## Improving Scheduler Responsiveness
+
+Linux 7.1 also includes the first pieces of ongoing scheduler work aimed at improving latency for short-running tasks while preserving system fairness.
+
+Modern Arm-based systems increasingly combine interactive applications, multimedia pipelines, AI workloads, and background services. Maintaining responsiveness while ensuring efficient use of system resources is one of the kernel's most challenging balancing acts.
+
+The merged changes improve how quickly short-running tasks receive CPU time without sacrificing fairness across the system. Additional improvements are expected in future kernel releases as this work continues.
+
+For developers building mobile, embedded, automotive, and edge systems, scheduler behavior has a direct impact on user experience, performance, and energy efficiency.
+
+Optimizing these paths helps teams ensure consistent system performance, which is critical for reducing UI stutter in mobile devices and maintaining deterministic behavior in some automotive applications. This minimizes frame drops, ensuring a smoother user experience.
+
+## Expanding Hardware Enablement
+
+Hardware enablement remains a core part of upstream Linux development, and Linux 7.1 includes several contributions in this area.
+
+The Omnivision OG01A1B camera sensor driver gained support for 8-bit mode and was updated to use a newer, more generic CCI API. While camera support can appear straightforward from the outside, it often requires coordination across image sensors, multimedia frameworks, firmware interfaces, and platform-specific integration.
+
+Platform enablement work also continued across Google Pixel devices and Qualcomm-based systems, helping ensure that new capabilities are available in mainline Linux rather than remaining isolated in downstream vendor trees.
+
+Upstream enablement reduces the cost of adopting future kernel releases and allows organizations to benefit from improvements made across the broader ecosystem.
+
+## Better Visibility into Power Management
+
+Power optimization begins with understanding system behavior.
+
+Linux 7.1 extends the statistics exposed by the Generic Power Domain (GenPD) framework, adding latency, residency, and Suspend-to-Idle information through debugfs.
+
+This allows teams to debug power regressions in the lab, identifying inefficient driver behavior before it impacts battery life on a production device.
+
+For engineers optimizing power consumption, visibility is often as important as the underlying mechanisms themselves. Better observability makes it easier to identify inefficiencies, validate optimization efforts, and understand how systems behave under real workloads.
+
+This is particularly relevant for battery-powered devices, edge systems, automotive platforms, and other environments where power efficiency is a primary design constraint.
+
+## Finding Problems Before They Reach Products
+
+Some of the most valuable work in Linux 7.1 is also the least visible.
+
+Build testing performed as part of SoC tree maintenance identified dozens of regressions and pre-existing issues throughout the kernel, resulting in 48 fixes spanning compiler warnings, Kconfig dependencies, excessive stack usage, and build failures.
+
+These fixes may never appear in release highlights, but they improve the reliability of the Linux ecosystem for everyone. Finding problems early reduces integration risk, improves toolchain compatibility, and helps ensure that future kernel releases remain maintainable across a wide range of platforms.
+
+This kind of engineering discipline is increasingly important as organizations face growing requirements around software quality, validation, and long-term maintenance.
+
+## Improving Cross-Platform Validation
+
+Linux 7.1 also introduces the ability to build-test UAPI headers while cross-compiling.
+
+For teams developing software across multiple architectures, validating user-space interfaces is an important part of maintaining compatibility and preventing regressions. By improving cross-compilation workflows and validation capabilities, developers can identify issues earlier and gain greater confidence in their software stacks.
+
+While small in scope, improvements like these contribute to a healthier and more maintainable development ecosystem.
+
+## Ongoing Platform Stewardship
+
+Beyond major features, Linaro engineers contributed fixes, cleanups, and improvements across a wide range of subsystems, including Arm PMU, cpufreq, multimedia, firmware interfaces, and platform support.
+
+Individually, many of these changes are small. Collectively, they represent an important aspect of open source development: continuous stewardship. Sustainable platforms are built not only through new features, but through ongoing investment in quality, maintainability, and long-term health.
+
+## By the Numbers
+
+Linux 7.1 includes:
+
+* 141 authored commits from Linaro engineers
+* 21 contributors
+* 207 Reviewed-by or Acked-by contributions
+
+The SoC tree also saw a particularly active merge window, with more than 1,000 patches merged from 88 individual maintainer branches and support added for numerous new SoCs and platforms across the Arm ecosystem.
+
+## Looking Ahead
+
+The contributions in Linux 7.1 span performance, power management, platform standardization, hardware enablement, validation, and maintainership. While the individual changes solve specific technical challenges, together they reflect a broader goal: reducing technical debt by solving platform problems upstream.
+
+For organizations building Linux-based Arm products, upstream development is often the most sustainable path to long-term maintainability, reduced integration costs, and faster adoption of future innovations.
+
+If your organization is facing similar challenges—whether upstreaming platform support, reducing BSP maintenance, improving performance or power efficiency, or validating Linux across a growing hardware portfolio—Linaro's engineering teams can help.
+
+Contact Linaro at [sales@linaro.org](mailto:sales@linaro.org) or visit [https://www.linaro.org/contact](https://www.linaro.org/contact) to learn more.
