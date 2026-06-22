@@ -82,7 +82,6 @@ Similarly, the **GPU Kernels** tab identifies exactly which NCCL kernel variants
 
 ##### Baseline GPU Kernels
 
-
 # Key Observations
 
 The MAP NCCL metrics timeline reveals a well-balanced baseline configuration. Each AllReduce collective completes within an average of 18.7 ms, with a consistent band of NCCL op durations across the run, indicating no obvious rank imbalances after an initial set up period. NCCL Sent and received metrics are symmetric at 35.9 GB/s, with an aggregate NCCL collectives throughput of 71.8 GB/s. NCCL ops and NCCL collectives are identical at 33.4 /s, confirming that 100% of operations are NCCL collectives with no unexpected point-to-point communication. This is as expected for `all_reduce_perf`.
@@ -123,13 +122,13 @@ This blog demonstrated that NCCL's auto-selected algorithm and protocol are not 
 
 The performance gains can be summarised with Performance Reports, where we can compare the baseline with the optimised experiment C results.
 
-## Baseline 
+## Baseline
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138876/linaro-website/IMG_3411_davz6j.png)
 
-##### Baseline performance report 
+##### Baseline performance report
 
-### Experiment C 
+### Experiment C
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138876/linaro-website/IMG_3412_fywpan.png)
 
@@ -144,4 +143,21 @@ We can see that we have improved the I/0 of the application, alongside the NCCL 
 
 ## Final Thoughts
 
-If you are training at scale and want visibility into your communication patterns, we would love to hear from you. Please contact the Linaro Forge team at **[forge-support@linaro.org ](<< a href="mailto:john@example.com">>)**and we will be happy to help you get started.
+If you are training at scale and want visibility into your communication patterns, we would love to hear from you. Please contact the Linaro Forge team at forge-suport@linaro.org and we will be happy to help you get started.
+
+## About the Author 
+
+Name: Rudy Shand
+
+Job Title: Principal Field Application Engineer
+
+Email address: rudy.shand@linaro.org
+
+Bio:
+Rudy Shand is a leading expert in high-performance computing (HPC) debugging and profiling, currently serving as a Principal FAE at Linaro. With over 14 years of experience in the field, Rudy specializes in optimizing, debugging, and porting complex HPC codes to ensure maximum program correctness and scalability.
+
+
+His career includes a decade-long tenure at Arm, where he focused on the development and quality of Arm-based debuggers and profilers. Since joining the Linaro Forge team in 2022, Rudy has transitioned into a pivotal role driving technical debugging and profiling expertise across  HPC and AI/ML communities.
+
+
+An accomplished speaker and educator, Rudy has delivered key technical talks and training workshops at major industry events, including SOS’27, CUG, ATPESC, and ISC. He holds a degree in Cybernetics and Electronic Engineering from the University of Reading. Rudy is dedicated to empowering developers to conquer the challenges of modern parallel programming, from single-node systems to the world’s largest supercomputers
