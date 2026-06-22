@@ -12,15 +12,15 @@ tags:
 image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782137280/linaro-website/datacentre_h1ioyh.jpg
 related: []
 ---
-## Introduction
+# Introduction
 
 We're excited to announce the release of [Linaro Forge 26.0. ](https://www.linaroforge.com/download-documentation)The headline feature of this release is the ability to profile NCCL collectives with Linaro MAP and Performance Reports, which now tracks the time spent in NCCL ops so far, the number of bytes that NCCL ops operate on per second and NCCL point-to-point/collective ops per second. Performance Reports now includes a dedicated NCCL section that report NCCL transfer rate and the time of underlying kernels, with a breakdown by NCCL op type.
 
-Alongside our headline NCCL profiling feature, we have also made several improvements within the product. Most notably, We have extended the GDB multiplexing architecture to DDT, delivering up to 80% reduction in DDT memory usage. We have also added dedicated support for the Flux job scheduler, bringing Linaro Forge to the next-generation job scheduler that is being adopted across major HPC facilities. Finally, we have simplified debugging and profiling of non-MPI parallel jobs by adding in the command-line option `--start-at-main ` for MAP, DDT and Performance Reports.
+Alongside our headline NCCL profiling feature, we have also made several improvements within the product. Most notably, We have extended the GDB multiplexing architecture to DDT, delivering up to 80% reduction in DDT memory usage. We have also added dedicated support for the Flux job scheduler, bringing Linaro Forge to the next-generation job scheduler that is being adopted across major HPC facilities. Finally, we have simplified debugging and profiling of non-MPI parallel jobs by adding in the command-line option `--start-at-main` for MAP, DDT and Performance Reports.
 
 For more details on each of these features, please see the Linaro Forge [user guide. ](https://docs.linaroforge.com/26.0/html/forge/forge/index.html)
 
-## NCCL Collectives profiling with Linaro MAP
+# NCCL Collectives profiling with Linaro MAP
 
 As distributed ML training scales across larger GPU clusters, the question that keeps coming up is: *where is my training time actually going?* The answer is increasingly within the GPU-to-GPU communication layer. Until now, that communication layer has been difficult to observe holistically at large scale.
 
@@ -30,18 +30,17 @@ Linaro MAP collects dedicated GPU-side communication metrics across all ranks. T
 
 The goal of this blog is to demonstrate how to identify communication overhead between nodes, and optimise GPU utilisation in a multi-node, multi-GPU environment. By the end of this blog, you will have a practical understanding of how to profile distributed GPU workloads and the tools and techniques needed to get the most out of your multi-node setup.
 
-## Tuning nccl-tests with Linaro MAP
+# Tuning nccl-tests with Linaro MAP
 
 Let's walk through a tuning exercise using NVIDIA's `nccl-tests` suite — the standard benchmark that NCCL engineers use to establish baselines and validate tuning changes.
 
-### 
-Step 1: Build nccl-tests
+## Step 1: Build nccl-tests
 
 ```
 
 ```
 
-### Step 2: Establish a Baseline
+## Step 2: Establish a Baseline
 
 First, see what NCCL auto-selects by running with `NCCL_DEBUG=INFO`:
 
@@ -73,17 +72,18 @@ Similarly, the **GPU Kernels** tab identifies exactly which NCCL kernel variants
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782137962/linaro-website/IMG_3404_hzhu3y.png)
 
-Baseline NCCL Metrics
-
+##### Baseline NCCL Metrics
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138034/linaro-website/IMG_3405_trapgk.png)
 
-
-Baseline Energy Metrics
+##### Baseline Energy Metrics
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138123/linaro-website/IMG_3406_zq4qy4.png)
 
-### Key Observations
+##### Baseline GPU Kernels
+
+
+# Key Observations
 
 The MAP NCCL metrics timeline reveals a well-balanced baseline configuration. Each AllReduce collective completes within an average of 18.7 ms, with a consistent band of NCCL op durations across the run, indicating no obvious rank imbalances after an initial set up period. NCCL Sent and received metrics are symmetric at 35.9 GB/s, with an aggregate NCCL collectives throughput of 71.8 GB/s. NCCL ops and NCCL collectives are identical at 33.4 /s, confirming that 100% of operations are NCCL collectives with no unexpected point-to-point communication. This is as expected for `all_reduce_perf`.
 
@@ -91,11 +91,11 @@ The visible drop in NCCL metrics in the middle of the profile corresponds to an 
 
 The GPU Kernels tab confirms that all collective communication uses AllReduce operations with the Ring algorithm, with 2.1 minutes of cumulative GPU kernel time spent executing `ncclDevKernel_AllReduce_Sum_f32_RING_LL` across all ranks. This confirms that NCCL auto-selected the Ring algorithm with the LL protocol.
 
-### Step 4: Experiment with Algorithm and Protocol Overrides
+## Step 4: Experiment with Algorithm and Protocol Overrides
 
 Now the interesting part. Force different algorithms and re-profile to see what changes:
 
-**Algorithm tuning (experiment A)**
+##### **Algorithm tuning (experiment A)**
 
 ```
 
@@ -103,10 +103,45 @@ Now the interesting part. Force different algorithms and re-profile to see what 
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138273/linaro-website/IMG_3407_bpxguq.png)
 
-Experiment C NCCL Metrics
+##### Experiment C NCCL Metrics
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138273/linaro-website/IMG_3408_jwmsh9.png)
 
-Experiment C Energy Metrics
+##### Experiment C Energy Metrics
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138272/linaro-website/IMG_3409_ihoilq.png)
+
+##### Experiment C Time spent in GPU Kernels
+
+## Key Observations
+
+The MAP NCCL metrics timeline for Experiment C shows the strongest performance of all four experiments. The combination of reverting to the Simple protocol, enabling GPU Direct RDMA via `NCCL_NET_GDR_LEVEL=SYS`, increasing buffer sizes to 8 MB, and adding `NCCL_MIN_CTAS=4` addressed transport-level inefficiencies that algorithm and protocol selection alone cannot  resolve.
+
+# Summary
+
+This blog demonstrated that NCCL's auto-selected algorithm and protocol are not always optimal for a given topology, and that systematic profiling with Linaro MAP provides the visibility needed to identify and resolve communication bottlenecks in distributed GPU workloads. Across three experiments, varying NCCL algorithms, protocols, and transport-level settings, MAP enabled us to diagnose each configuration's behaviour without any code changes or code recompilation.
+
+The performance gains can be summarised with Performance Reports, where we can compare the baseline with the optimised experiment C results.
+
+## Baseline 
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138876/linaro-website/IMG_3411_davz6j.png)
+
+##### Baseline performance report 
+
+### Experiment C 
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138876/linaro-website/IMG_3412_fywpan.png)
+
+##### Experiment C performance report
+
+We can see that we have improved the I/0 of the application, alongside the NCCL communication. This has lead to the application running faster and has had a significant positive impact on the power consumption of the run. Now that the NCCL collectives are tuned on the system, we are able to run a larger ML application and be sure that the NCCL AllReduce kernels will run efficiently.
+
+## Prerequisites
+
+* **NCCL ≥ 2.27.3** (earlier versions do not expose the profiling events MAP requires)
+* **Linaro Forge 26.0**
+
+## Final Thoughts
+
+If you are training at scale and want visibility into your communication patterns, we would love to hear from you. Please contact the Linaro Forge team at **[forge-support@linaro.org ](<< a href="mailto:john@example.com">>)**and we will be happy to help you get started.
