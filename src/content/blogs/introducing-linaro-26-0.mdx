@@ -100,9 +100,43 @@ Now the interesting part. Force different algorithms and re-profile to see what 
 
 ##### **Algorithm tuning (experiment A)**
 
-```
+**`1. export NCCL_ALGO=Tree`**
 
-```
+**`2. export NCCL_PROTO=Simple`**
+
+**`3. map --profile srun -n 8 --ntasks-per-node=4" \`**
+
+**`4.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782175825/linaro-website/IMG_3407_x3zaw1.png)
+
+##### Experiment A NCCL Metrics
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782175893/linaro-website/IMG_3408_tnipoa.png)
+
+##### Experiment A Energy Metrics
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782175962/linaro-website/IMG_3420_p0sjdh.png)
+
+##### Experiment A GPU Kernels
+
+### Key Observations
+
+NCCL op duration dropped 42% from 18.7 ms to 10.9 ms which indicates a speedup in AllReduce operations. Notice that in the baseline, there was an initial sawtooth in the NCCL op duration at the start. This indicates a bottleneck caused by an imbalance when setting up the first set of AllReduce operations. By changing the Algorithm to Tree, the bottleneck is removed. NCCL Sent and received metrics rose from 35.9 GB/s to 50.8 GB/s, with an aggregate NCCL collectives throughput increase of 42% against the baseline.
+
+The GPU Kernels tab confirms the GPU kernel changed from `ncclDevKernel_AllReduce_Sum_f32_RING` to `ncclDevKernel_AllReduce_Sum_f32_TREE`, with cumulative GPU kernel time dropping 33% from 2.1 minutes to 1.4 minutes across all ranks. The overall benchmark run time decreased 41% from 18.1s to 12.8s which is a clear improvement over the baseline.
+
+GPU power usage increased modestly from 538 to 567 W/node, but the 41% shorter run time means total energy consumed is lower in this experiment. MPI rose from 1.1% to 2.5%, consistent with the Tree algorithm's hierarchical structure requiring more  MPI coordination.
+
+**Protocol tuning (experiment B)**
+
+**`1. export NCCL_ALGO=Tree`**
+
+**`2. export NCCL_PROTO=LL`**
+
+**`3. map --profile srun -n 8 --ntasks-per-node=4" \`**
+
+**`4.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138273/linaro-website/IMG_3407_bpxguq.png)
 
