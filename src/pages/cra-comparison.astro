@@ -1,0 +1,361 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactForm from "@/components/forms/ContactForm.astro";
+
+// ─── Comparison table data ────────────────────────────────────────────────────
+// Products are ordered left→right: Scan, Analysis, Certify, Lifetime.
+// Each feature has a `values` tuple: [scan, analysis, certify, lifetime].
+//
+// To add a feature to a category:
+//   • Push to `features` to show it immediately.
+//   • Push to `moreFeatures` to show it only after "Show more" is clicked.
+// To add a new category, add an entry to the `categories` array below.
+
+type Feature = { name: string; values: [boolean, boolean, boolean, boolean] };
+type Category = { name: string; features: Feature[]; moreFeatures: Feature[] };
+
+const products = [
+  {
+    name: "CRA Scan",
+    description:
+      "Binary scan of a software image to produce a software bill of materials and vulnerability report",
+  },
+  {
+    name: "CRA Analysis",
+    description:
+      "Source based scanning through direct integration into the build system to produce a software bill of materials, vulnerability report and 3rd party component analysis",
+  },
+  {
+    name: "CRA Certify",
+    description:
+      "End to end services, from risk assessment, through to conformity assessment, to achieve CRA compliance",
+  },
+  {
+    name: "CRA Lifetime",
+    description:
+      "Lifetime CRA services, extending beyond the CRA certify solution to provide vulnerability management and LTS upgrades throughout the product support period",
+  },
+] as const;
+
+const categories: Category[] = [
+  {
+    name: "Core Services",
+    features: [
+      { name: "Binary scan of software image",                              values: [true,  true,  true,  true ] },
+      { name: "Software bill of materials (SBOM) generation",               values: [true,  true,  true,  true ] },
+      { name: "CVE Vulnerability report",                                   values: [true,  true,  true,  true ] },
+      { name: "Linaro hosted private dashboard",                            values: [true,  true,  true,  true ] },
+      { name: "Source based scan on software image with Linaro's toolchain",values: [false, true,  true,  true ] },
+    ],
+    moreFeatures: [
+      // Add extra Core Services features here — they appear after "Show more"
+    ],
+  },
+  {
+    name: "Advanced Analysis",
+    features: [
+      { name: "CI/CD integration for continuous scanning and SBOM generation", values: [false, true,  true,  true ] },
+      { name: "Classification of product and role",                            values: [false, false, true,  true ] },
+    ],
+    moreFeatures: [
+      // Add extra Advanced Analysis features here
+    ],
+  },
+  {
+    name: "Integration & Automation",
+    features: [
+      { name: "Cybersecurity risk assessment", values: [false, false, true, true] },
+    ],
+    moreFeatures: [
+      // Add extra Integration & Automation features here
+    ],
+  },
+  {
+    name: "Compliance & Support",
+    features: [
+      { name: "Tailored legal guidance",                  values: [false, false, true, true] },
+      { name: "Penetration testing",                      values: [false, false, true, true] },
+      { name: "Conformity assessment guidance",           values: [false, false, true, true] },
+      { name: "Cybersecurity policy for OSS stewards",   values: [false, false, true, true] },
+    ],
+    moreFeatures: [
+      // Add extra Compliance & Support features here
+    ],
+  },
+  {
+    name: "Enterprise",
+    features: [
+      { name: "Long term support", values: [false, false, false, true] },
+    ],
+    moreFeatures: [
+      // Add extra Enterprise features here
+    ],
+  },
+];
+
+// Does any category have moreFeatures to show?
+const hasMoreFeatures = categories.some((c) => c.moreFeatures.length > 0);
+
+// SVG snippets
+const checkIcon = `<svg class="w-5 h-5 mx-auto text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`;
+const minusIcon = `<svg class="w-5 h-5 mx-auto text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/></svg>`;
+const chevronIcon = `<svg class="cra-chevron w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
+---
+
+<BaseLayout
+  title="CRA Compliance Services | Linaro"
+  description="Compare Linaro's CRA offerings and choose the level of support that's right for your business."
+>
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="relative bg-background overflow-hidden">
+    <div
+      class="absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+      style="background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(103,21,232,0.35) 0%, transparent 70%);"
+    ></div>
+    <div class="container mx-auto px-4 py-28 md:py-40 text-center relative">
+      <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-2">
+        Every Month You Wait
+      </h1>
+      <h1
+        class="text-4xl md:text-6xl font-bold italic leading-tight mb-8"
+        style="background: linear-gradient(102deg, #ffce00 0%, #6715e8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      >
+        Makes CRA Compliance Harder
+      </h1>
+      <p class="text-white/70 text-lg md:text-xl max-w-2xl mx-auto">
+        Organizations that prepare early will spend less time reacting and more
+        time shipping secure products. Compare Linaro's CRA offerings and choose
+        the level of support that's right for your business.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Product cards ─────────────────────────────────────────────────────── -->
+  <section
+    class="relative py-16 md:py-20 overflow-hidden"
+    style="background: linear-gradient(180deg, #100029 0%, #100029 100%);"
+  >
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          products.map((product) => (
+            <div class="rounded-xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4">
+              <h2 class="font-bold text-lg text-white">{product.name}</h2>
+              <p class="text-white/60 text-sm leading-relaxed flex-1">
+                {product.description}
+              </p>
+              <a href="#contact" class="linaro-gradient-button-small self-start">
+                Learn more
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Comparison table ──────────────────────────────────────────────────── -->
+  <section
+    class="relative py-16 md:py-24 overflow-hidden"
+    style="background: linear-gradient(180deg, #100029 0%, #0a0a0a 100%);"
+  >
+    <div class="container mx-auto px-4">
+
+      <!-- Desktop table -->
+      <div class="hidden lg:block overflow-x-auto">
+        <table class="w-full border-collapse text-sm text-white">
+          <thead>
+            <tr>
+              <th class="w-[33%] pb-4"></th>
+              {
+                products.map((p) => (
+                  <th class="w-[16.75%] pb-4 px-4 text-left align-top">
+                    <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                      <p class="font-bold text-base text-white mb-1">{p.name}</p>
+                    </div>
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              categories.map((cat) => (
+                <>
+                  {/* Category heading */}
+                  <tr>
+                    <td colspan="5" class="pt-6 pb-2 px-4">
+                      <span class="text-xs font-bold tracking-widest uppercase text-white/50">
+                        {cat.name}
+                      </span>
+                    </td>
+                  </tr>
+
+                  {/* Always-visible features */}
+                  {cat.features.map((f) => (
+                    <tr class="border-t border-white/10">
+                      <td class="py-3 pl-4 pr-2 text-white/80">{f.name}</td>
+                      {f.values.map((included) => (
+                        <td class="py-3 px-4 text-center">
+                          {included ? (
+                            <span class="sr-only">Included</span>
+                          ) : (
+                            <span class="sr-only">Not included</span>
+                          )}
+                          <span set:html={included ? checkIcon : minusIcon} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+
+                  {/* "Show more" features — hidden by default */}
+                  {cat.moreFeatures.map((f) => (
+                    <tr class="border-t border-white/10 cra-more-row hidden">
+                      <td class="py-3 pl-4 pr-2 text-white/80">{f.name}</td>
+                      {f.values.map((included) => (
+                        <td class="py-3 px-4 text-center">
+                          {included ? (
+                            <span class="sr-only">Included</span>
+                          ) : (
+                            <span class="sr-only">Not included</span>
+                          )}
+                          <span set:html={included ? checkIcon : minusIcon} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </>
+              ))
+            }
+
+            {/* Global "Show more" row — only rendered if there are extra features */}
+            {hasMoreFeatures && (
+              <tr class="border-t border-white/10">
+                <td colspan="5" class="py-3 px-4">
+                  <button
+                    id="cra-show-more-btn"
+                    class="flex items-center gap-1 text-sm text-white/60 hover:text-white transition-colors"
+                    aria-expanded="false"
+                  >
+                    <span id="cra-show-more-label">Show more</span>
+                    <span set:html={chevronIcon} />
+                  </button>
+                </td>
+              </tr>
+            )}
+
+            {/* Contact Us CTA row */}
+            <tr class="border-t border-white/10">
+              <td class="py-6 pl-4 pr-2"></td>
+              {products.map(() => (
+                <td class="py-6 px-4 text-center">
+                  <a href="#contact" class="linaro-gradient-button-small whitespace-nowrap">
+                    Contact Us
+                  </a>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile: one card per product -->
+      <div class="lg:hidden space-y-6">
+        {
+          products.map((product, pi) => (
+            <div class="rounded-xl border border-white/10 bg-white/5 p-6">
+              <h3 class="font-bold text-lg text-white mb-1">{product.name}</h3>
+              <p class="text-white/60 text-sm mb-4">{product.description}</p>
+              {categories.map((cat) => {
+                const included = [
+                  ...cat.features,
+                  ...cat.moreFeatures,
+                ].filter((f) => f.values[pi]);
+                return (
+                  <div class="mb-3">
+                    <p class="text-xs font-bold tracking-widest uppercase text-white/40 mb-2">
+                      {cat.name}
+                    </p>
+                    {included.length > 0 ? (
+                      <ul class="space-y-1">
+                        {included.map((f) => (
+                          <li class="flex items-center gap-2 text-sm text-white/80">
+                            <svg
+                              class="w-4 h-4 flex-shrink-0 text-green-400"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              aria-hidden="true"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            {f.name}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p class="text-white/30 text-xs italic">Not included</p>
+                    )}
+                  </div>
+                );
+              })}
+              <a
+                href="#contact"
+                class="linaro-gradient-button-small mt-4 inline-block"
+              >
+                Contact Us
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Contact / CTA ─────────────────────────────────────────────────────── -->
+  <section id="contact" class="py-20 md:py-28 bg-background">
+    <div class="container mx-auto px-4 max-w-3xl text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-2">
+        Not sure where to start with CRA?
+      </h2>
+      <h2
+        class="text-3xl md:text-5xl font-bold leading-tight mb-6"
+        style="background: linear-gradient(102deg, #ffce00 0%, #6715e8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      >
+        Or need a custom approach?
+      </h2>
+      <p class="text-white/60 text-lg">
+        Contact our team and make your route to compliance faster and easier.
+      </p>
+    </div>
+    <div class="flex justify-center">
+      <ContactForm
+        form_id="cra-comparison"
+        formName="CRA Comparison Page"
+        description="Tell us about your CRA needs and we'll recommend the right solution."
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const btn = document.getElementById("cra-show-more-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      const rows = document.querySelectorAll<HTMLElement>(".cra-more-row");
+      rows.forEach((row) => row.classList.toggle("hidden", expanded));
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const label = document.getElementById("cra-show-more-label");
+      if (label) label.textContent = expanded ? "Show more" : "Show less";
+      btn.querySelector(".cra-chevron")?.classList.toggle("rotate-180", !expanded);
+    });
+  }
+</script>
