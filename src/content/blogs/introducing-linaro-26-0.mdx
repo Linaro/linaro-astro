@@ -36,17 +36,21 @@ Let's walk through a tuning exercise using NVIDIA's `nccl-tests` suite — the s
 
 ## Step 1: Build nccl-tests
 
-```
+**`1. git clone https://github.com/NVIDIA/nccl-tests.git`**
 
-```
+**`2. cd nccl-tests`**
+
+**`3. make MPI=1`**
 
 ## Step 2: Establish a Baseline
 
 First, see what NCCL auto-selects by running with `NCCL_DEBUG=INFO`:
 
-```
+**`1. export NCCL_DEBUG=INFO`**
 
-```
+**`2. srun -n 8 --ntasks-per-node=4 \`**
+
+**`3.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
 
 The `NCCL_DEBUG=INFO` output will show you which algorithm and protocol NCCL selected in the output.
 
@@ -60,9 +64,9 @@ For this blog, we focus exclusively on the Ring and Tree algorithms paired with 
 
 All that is required to obtain a MAP profile is to prepend `map --profile` to the srun command. This will run the benchmark as we did in step 2, but this time a MAP profile will be generated to obtain insights into the application.
 
-```
+**`1. map --profile srun -n 8 --ntasks-per-node=4" \`**
 
-```
+**`2.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
 
 Open the resulting `.map` file to view the NCCL communication metrics, select **Metrics → Preset: NCCL** from the menu bar. This loads a curated set of NCCL specific metrics. These presets provide a focused view of the collective communication behaviour across all ranks.
 
@@ -145,7 +149,7 @@ We can see that we have improved the I/0 of the application, alongside the NCCL 
 
 If you are training at scale and want visibility into your communication patterns, we would love to hear from you. Please contact the Linaro Forge team at forge-suport@linaro.org and we will be happy to help you get started.
 
-## About the Author 
+## About the Author
 
 Name: Rudy Shand
 
@@ -156,8 +160,6 @@ Email address: rudy.shand@linaro.org
 Bio:
 Rudy Shand is a leading expert in high-performance computing (HPC) debugging and profiling, currently serving as a Principal FAE at Linaro. With over 14 years of experience in the field, Rudy specializes in optimizing, debugging, and porting complex HPC codes to ensure maximum program correctness and scalability.
 
-
 His career includes a decade-long tenure at Arm, where he focused on the development and quality of Arm-based debuggers and profilers. Since joining the Linaro Forge team in 2022, Rudy has transitioned into a pivotal role driving technical debugging and profiling expertise across  HPC and AI/ML communities.
-
 
 An accomplished speaker and educator, Rudy has delivered key technical talks and training workshops at major industry events, including SOS’27, CUG, ATPESC, and ISC. He holds a degree in Cybernetics and Electronic Engineering from the University of Reading. Rudy is dedicated to empowering developers to conquer the challenges of modern parallel programming, from single-node systems to the world’s largest supercomputers
