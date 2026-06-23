@@ -132,10 +132,11 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
       >
         Makes CRA Compliance Harder
       </h1>
-      <!-- Body: #999999, Sofia Pro 24px/300 -->
+      <!-- Body: #999999, Sofia Pro 24px/300; Figma node 254:2273 is 1174px wide -->
+      <!-- Fixed 1.5rem (24px) — container is always ≥1174px at typical viewports, so each sentence fits one line -->
       <p
-        class="text-center mx-auto max-w-3xl"
-        style="font-family: 'sofia-pro', sans-serif; font-size: 1.5rem; font-weight: 300; color: #999999; line-height: 1.625;"
+        class="text-center mx-auto"
+        style="font-family: 'sofia-pro', sans-serif; font-size: 1.5rem; font-weight: 300; color: #999999; line-height: 1.625; max-width: 75rem;"
       >
         Organizations that prepare early will spend less time reacting and more
         time shipping secure products.<br />
@@ -178,34 +179,37 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 
           <!-- Product column headers -->
           <thead>
-            <tr>
+            <tr class="align-bottom">
               <!-- Empty feature-label column: ~1/3 width -->
-              <th class="w-[33%] p-0 align-bottom"></th>
+              <th class="w-[33%] p-0"></th>
               {
                 products.map((p) => (
-                  <th class="p-0 align-top">
+                  <th class="p-0">
                     <!-- Card: fill #ebebeb, radius mixed (top corners), pad 20px -->
+                    <!-- flex + justify-between so Contact Us is always pinned to bottom -->
                     <div
-                      class="m-3 rounded-xl p-5 flex flex-col gap-3 h-full"
-                      style="background: #ebebeb;"
+                      class="m-3 rounded-xl p-5 flex flex-col justify-between h-full"
+                      style="background: #ebebeb; min-height: 200px;"
                     >
-                      <!-- Title: Inter 16px/700, #222025 -->
-                      <p style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025;">
-                        {p.name}
-                      </p>
-                      <!-- Divider: #d9d9d9 -->
-                      <div style="height: 1px; background: #d9d9d9;"></div>
-                      <!-- Description: Sofia Pro 14px/500, #222025 -->
-                      <p
-                        class="flex-1 leading-4"
-                        style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025; letter-spacing: -0.01em;"
-                      >
-                        {p.description}
-                      </p>
-                      <!-- Contact Us button: fill #222025, white text, Sofia Pro 14px/700, radius 80 -->
+                      <div class="flex flex-col gap-3">
+                        <!-- Title: Inter 16px/700, #222025 -->
+                        <p style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025;">
+                          {p.name}
+                        </p>
+                        <!-- Divider: #d9d9d9 -->
+                        <div style="height: 1px; background: #d9d9d9;"></div>
+                        <!-- Description: Sofia Pro 14px/500, #222025 -->
+                        <p
+                          class="leading-4"
+                          style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025; letter-spacing: -0.01em;"
+                        >
+                          {p.description}
+                        </p>
+                      </div>
+                      <!-- Contact Us button pinned to bottom: fill #222025, white text, Sofia Pro 14px/700, radius 80 -->
                       <a
                         href="#contact"
-                        class="block text-center rounded-full py-1 px-6 mt-1"
+                        class="block text-center rounded-full py-1 px-6 mt-4"
                         style="background: #222025; color: #ffffff; font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 700;"
                       >
                         Contact Us
@@ -221,47 +225,23 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
             {
               categories.map((cat) => (
                 <>
-                  {/* Category heading row: fill #18181b33, text #ffce00, Sofia Pro 12px/500, tracking +0.6px, pad 12 24 */}
-                  <tr>
-                    <td
-                      colspan="5"
-                      class="px-6 pt-3 pb-1"
-                      style="background: rgba(24,24,27,0.2);"
-                    >
-                      <span
-                        style="font-family: 'sofia-pro', sans-serif; font-size: 0.75rem; font-weight: 500; color: #ffce00; letter-spacing: 0.05em;"
-                      >
-                        {cat.name}
-                      </span>
-                    </td>
-                  </tr>
-
                   {/* Always-visible features */}
-                  {cat.features.map((f) => {
-                    const isCve = f.name === "CVE Vulnerability report";
-                    return (
-                      <tr
-                        style={
-                          isCve
-                            ? "background: rgba(103,21,232,0.149); border-bottom: 1px solid rgba(37,37,37,0.302);"
-                            : "border-bottom: 1px solid rgba(141,141,141,0.302);"
-                        }
+                  {cat.features.map((f) => (
+                    <tr class="cra-feature-row" style="border-bottom: 1px solid rgba(141,141,141,0.302);">
+                      <td
+                        class="py-4 pl-6 pr-4"
+                        style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 400; color: #d4d4d8; letter-spacing: -0.01em;"
                       >
-                        <td
-                          class="py-4 pl-6 pr-4"
-                          style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 400; color: #d4d4d8; letter-spacing: -0.01em;"
-                        >
-                          {f.name}
+                        {f.name}
+                      </td>
+                      {f.values.map((included) => (
+                        <td class="py-4 text-center">
+                          <span class="sr-only">{included ? "Included" : "Not included"}</span>
+                          <span class="inline-flex justify-center" set:html={included ? checkIcon : dashIcon} />
                         </td>
-                        {f.values.map((included) => (
-                          <td class="py-4 text-center">
-                            <span class="sr-only">{included ? "Included" : "Not included"}</span>
-                            <span class="inline-flex justify-center" set:html={included ? checkIcon : dashIcon} />
-                          </td>
-                        ))}
-                      </tr>
-                    );
-                  })}
+                      ))}
+                    </tr>
+                  ))}
 
                   {/* Hidden "Show more" features */}
                   {cat.moreFeatures.map((f) => (
@@ -386,14 +366,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
       <!-- Figma node 254:2530 has fills="mixed" — first line white, second line gradient -->
       <h2
         class="text-center leading-[1.25]"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 500; color: #ffffff; line-height: 1.25;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 4.5vw, 4.5rem); font-weight: 500; color: #ffffff; line-height: 1.25;"
       >
         Not sure where to start with CRA?<br />
         Or need a custom approach?
       </h2>
       <h2
         class="text-center leading-[1.25] mb-8"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 500; line-height: 1.25; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 4.5vw, 4.5rem); font-weight: 500; line-height: 1.25; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
       >
         Let's build a CRA solution that fits your business.
       </h2>
@@ -505,6 +485,12 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .cra-feature-row:hover td {
+    background: rgba(103, 21, 232, 0.149);
+  }
+</style>
 
 <script>
   const btn = document.getElementById("cra-show-more-btn");
