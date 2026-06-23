@@ -138,6 +138,44 @@ GPU power usage increased modestly from 538 to 567 W/node, but the 41% shorter r
 
 **`4.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
 
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782176135/linaro-website/IMG_3415_jwis8r.png)
+
+##### Experiment B NCCL Metrics
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782176204/linaro-website/IMG_3416_aajscw.png)
+
+##### Metrics B Energy Metrics
+
+![]()
+
+##### Experiment B GPU Kernels
+
+### Key Observations
+
+The MAP NCCL metrics timeline for Experiment B reveals a catastrophic regression from Experiment A. NCCL op duration increased from 10.9 ms to 50 ms, and sent/received dropped from 50.8 GB/s to 13.8 GB/s, with aggregate collectives throughput falling from 102 GB/s to 27.5 GB/s. This experiment shows that the LL protocol's 8-byte atomic transfer model is unable to saturate the Slingshot-11 fabric.
+
+The overall benchmark run time increased to 47.2s, demonstrating that the LL protocol's overhead at this message size overwhelms any algorithmic benefit the Tree topology provided in experiment A. The GPU Kernels tab confirms cumulative kernel time increased from 1.4 minutes to 6 minutes executing the `ncclDevKernel_AllReduce_Sum_f32_TREE_LL` kernel.
+
+Interestingly, the GPU power usage dropped, although, combined with the longer run time, this makes Experiment B the least efficient configuration both in performance and total energy consumed by the GPU.
+
+**Buffer and channel tuning (experiment C)**
+
+**`1. export NCCL_ALGO=Tree`**
+
+**`2. export NCCL_PROTO=Simple`**
+
+**`3.`**
+
+**`4. export NCCL_NET_GDR_LEVEL=SYS`**
+
+**`5. export NCCL_MIN_CTAS=4`**
+
+**`6. export NCCL_BUFFSIZE=8388608  # 8MB instead of default 4MB`**
+
+**`7. map --profile srun -n 8 --ntasks-per-node=4" \`**
+
+**`8.    ./build/all_reduce_perf -b 1G -e 1G -g 1 -n 300`**
+
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1782138273/linaro-website/IMG_3407_bpxguq.png)
 
 ##### Experiment C NCCL Metrics
