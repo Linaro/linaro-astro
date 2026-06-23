@@ -121,14 +121,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
       <!-- "Every Month You Wait": white, Sofia Pro 96px/500, tracking -2.4px -->
       <h1
         class="text-white text-center leading-[1.05] mb-0"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2.5rem, 6vw, 6rem); font-weight: 500; letter-spacing: -0.025em;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 6rem); font-weight: 500; letter-spacing: -0.025em;"
       >
         Every Month You Wait
       </h1>
       <!-- "Makes CRA Compliance Harder": italic, gradient, same size -->
       <h1
         class="text-center leading-[1.05] mb-10"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2.5rem, 6vw, 6rem); font-weight: 500; font-style: italic; letter-spacing: -0.025em; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 6rem); font-weight: 500; font-style: italic; letter-spacing: -0.025em; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
       >
         Makes CRA Compliance Harder
       </h1>
@@ -170,11 +170,8 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
   <section class="bg-background py-16 md:py-20">
     <div class="container mx-auto px-4">
 
-      <!-- Table outer: transparent bg, white/50 border, radius 10 — matches #254:2304 -->
-      <div
-        class="hidden lg:block rounded-[10px] overflow-hidden"
-        style="border: 1px solid rgba(255,255,255,0.502);"
-      >
+      <!-- Table outer: no border (Figma 254:2304 stroke exists but not visible per user screenshots) -->
+      <div class="hidden lg:block rounded-[10px] overflow-hidden">
         <table class="w-full border-collapse text-sm">
 
           <!-- Product column headers -->
@@ -184,32 +181,30 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
               <th class="w-[33%] p-0"></th>
               {
                 products.map((p) => (
-                  <th class="p-0">
-                    <!-- Card: fill #ebebeb, radius mixed (top corners), pad 20px -->
-                    <!-- flex + justify-between so Contact Us is always pinned to bottom -->
+                  <th class="p-0 align-top">
+                    <!-- Card: fill #ebebeb, top-aligned flow — matches Figma Cra Scan/Analysis/Certify/Lifetime -->
+                    <!-- title → description → divider → button, all top-aligned (no bottom-pinning) -->
                     <div
-                      class="m-3 rounded-xl p-5 flex flex-col justify-between h-full"
-                      style="background: #ebebeb; min-height: 200px;"
+                      class="p-5 flex flex-col gap-3"
+                      style="background: #ebebeb;"
                     >
-                      <div class="flex flex-col gap-3">
-                        <!-- Title: Inter 16px/700, #222025 -->
-                        <p style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025;">
-                          {p.name}
-                        </p>
-                        <!-- Divider: #d9d9d9 -->
-                        <div style="height: 1px; background: #d9d9d9;"></div>
-                        <!-- Description: Sofia Pro 14px/500, #222025 -->
-                        <p
-                          class="leading-4"
-                          style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025; letter-spacing: -0.01em;"
-                        >
-                          {p.description}
-                        </p>
-                      </div>
-                      <!-- Contact Us button pinned to bottom: fill #222025, white text, Sofia Pro 14px/700, radius 80 -->
+                      <!-- Title: Inter 16px/700, #222025, letter-spacing 0.6px -->
+                      <p style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025; letter-spacing: 0.037em;">
+                        {p.name}
+                      </p>
+                      <!-- Description: Sofia Pro 14px/500, #222025 -->
+                      <p
+                        class="leading-4"
+                        style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025; letter-spacing: -0.01em;"
+                      >
+                        {p.description}
+                      </p>
+                      <!-- Divider: #d9d9d9 -->
+                      <div style="height: 1px; background: #d9d9d9;"></div>
+                      <!-- Contact Us: fill #222025, white text, Sofia Pro 14px/700, radius 80 -->
                       <a
                         href="#contact"
-                        class="block text-center rounded-full py-1 px-6 mt-4"
+                        class="block text-center rounded-full py-1 px-6"
                         style="background: #222025; color: #ffffff; font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 700;"
                       >
                         Contact Us
@@ -235,7 +230,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
                         {f.name}
                       </td>
                       {f.values.map((included) => (
-                        <td class="py-4 text-center">
+                        <td class="py-4 text-center" style="background: #ebebeb;">
                           <span class="sr-only">{included ? "Included" : "Not included"}</span>
                           <span class="inline-flex justify-center" set:html={included ? checkIcon : dashIcon} />
                         </td>
@@ -256,7 +251,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
                         {f.name}
                       </td>
                       {f.values.map((included) => (
-                        <td class="py-4 text-center">
+                        <td class="py-4 text-center" style="background: #ebebeb;">
                           <span class="sr-only">{included ? "Included" : "Not included"}</span>
                           <span class="inline-flex justify-center" set:html={included ? checkIcon : dashIcon} />
                         </td>
