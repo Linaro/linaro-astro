@@ -111,7 +111,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 >
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <section class="bg-background">
-    <div class="container mx-auto px-4 py-28 md:py-40 text-center">
+    <div class="container mx-auto px-4 pt-28 pb-20 md:pt-40 md:pb-28 text-center">
       <!-- "Every Month You Wait": white, Sofia Pro 96px/500, tracking -2.4px -->
       <h1
         class="text-white text-center leading-[1.05] mb-0"
@@ -486,6 +486,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
 
   /* Feature label cell (dark column) */
   .cra-label-cell {
+    background: #222025;
     padding: 16px 16px 16px 0;
     font-family: 'sofia-pro', sans-serif;
     font-size: 0.875rem;
@@ -505,12 +506,13 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
     justify-content: center;
   }
 
-  /* Hover: purple tint across the full row.
-     Label cell has dark bg (#222025), product cells have light bg (#ebebeb).
-     Use the same rgba so the tint reads consistently over both. */
+  /* Hover: light purple tint.
+     rgba(103,21,232,0.149) over #222025 (dark) = approx #2e1f45 — too dark.
+     rgba(103,21,232,0.149) over #ebebeb (light) = approx #e0d9f8 — correct light purple.
+     Use the light computed value for all cells so the row reads as a uniform light highlight. */
   .cra-feature-row:hover .cra-label-cell,
   .cra-feature-row:hover .cra-product-cell {
-    background: rgba(103, 21, 232, 0.149);
+    background: #e0d9f8;
   }
 
   /* Ensure hidden rows are truly hidden regardless of display:grid on .cra-feature-row */
