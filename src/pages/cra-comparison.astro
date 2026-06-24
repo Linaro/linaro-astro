@@ -110,8 +110,8 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
   description="Compare Linaro's CRA offerings and choose the level of support that's right for your business."
 >
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <section class="bg-background">
-    <div class="container mx-auto px-4 pt-28 pb-20 md:pt-40 md:pb-28 text-center">
+  <section class="bg-background min-h-screen flex items-center">
+    <div class="container mx-auto px-4 py-20 text-center w-full">
       <!-- "Every Month You Wait": white, Sofia Pro 96px/500, tracking -2.4px -->
       <h1
         class="text-white text-center leading-[1.05] mb-0"
@@ -506,13 +506,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
     justify-content: center;
   }
 
-  /* Hover: light purple tint.
-     rgba(103,21,232,0.149) over #222025 (dark) = approx #2e1f45 — too dark.
-     rgba(103,21,232,0.149) over #ebebeb (light) = approx #e0d9f8 — correct light purple.
-     Use the light computed value for all cells so the row reads as a uniform light highlight. */
+  /* Hover: light purple tint across all cells */
   .cra-feature-row:hover .cra-label-cell,
   .cra-feature-row:hover .cra-product-cell {
     background: #e0d9f8;
+  }
+  /* Label text must darken on hover — #d4d4d8 is unreadable on the light purple bg */
+  .cra-feature-row:hover .cra-label-cell {
+    color: #222025;
   }
 
   /* Ensure hidden rows are truly hidden regardless of display:grid on .cra-feature-row */
