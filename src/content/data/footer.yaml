@@ -29,6 +29,8 @@ nav_links:
         url: /solutions/oneboot
       - label: Confidential Computing
         url: /solutions/confidential-computing
+      - label: Cyber Resilience Act
+        url: /solutions/cra
   - label: Industries
     key: industries
     children:
