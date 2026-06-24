@@ -47,8 +47,6 @@ const categories: Category[] = [
       { name: "Source based scan on software image with Linaro's toolchain", values: [false, true,  true,  true ] },
     ],
     moreFeatures: [
-      { name: '3rd party due diligence "health" report',                     values: [false, true,  true,  true ] },
-      { name: "Customer hosted private dashboard",                           values: [false, false, true,  true ] },
     ],
   },
   {
@@ -58,9 +56,6 @@ const categories: Category[] = [
       { name: "Classification of product and role",                                     values: [false, false, true,  true ] },
     ],
     moreFeatures: [
-      { name: "Role identification e.g. manufacturer/steward/importer/distributor",     values: [false, false, true,  true ] },
-      { name: "Product classification e.g. default/class I/class II/critical",         values: [false, false, true,  true ] },
-      { name: "Identification of relevant harmonized standards",                        values: [false, false, true,  true ] },
     ],
   },
   {
@@ -69,9 +64,6 @@ const categories: Category[] = [
       { name: "Cybersecurity risk assessment",      values: [false, false, true, true] },
     ],
     moreFeatures: [
-      { name: "Product GAP analysis",               values: [false, false, true, true] },
-      { name: "Risk assessment mitigation support", values: [false, false, true, true] },
-      { name: "Security requirements support",      values: [false, false, true, true] },
     ],
   },
   {
@@ -83,7 +75,6 @@ const categories: Category[] = [
       { name: "Cybersecurity policy for OSS stewards",  values: [false, false, true, true] },
     ],
     moreFeatures: [
-      { name: "Conformity assessment submission support", values: [false, false, true, true] },
     ],
   },
   {
@@ -92,6 +83,15 @@ const categories: Category[] = [
       { name: "Long term support", values: [false, false, false, true] },
     ],
     moreFeatures: [
+      { name: '3rd party due diligence "health" report',                     values: [false, true,  true,  true ] },
+      { name: "Customer hosted private dashboard",                           values: [false, false, true,  true ] },
+      { name: "Role identification e.g. manufacturer/steward/importer/distributor",     values: [false, false, true,  true ] },
+      { name: "Product classification e.g. default/class I/class II/critical",         values: [false, false, true,  true ] },
+      { name: "Identification of relevant harmonized standards",                        values: [false, false, true,  true ] },
+      { name: "Product GAP analysis",               values: [false, false, true, true] },
+      { name: "Risk assessment mitigation support", values: [false, false, true, true] },
+      { name: "Security requirements support",      values: [false, false, true, true] },
+      { name: "Conformity assessment submission support", values: [false, false, true, true] },
       { name: "LTS support for core software components throughout the product support period", values: [false, false, false, true] },
     ],
   },
@@ -110,14 +110,8 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
   description="Compare Linaro's CRA offerings and choose the level of support that's right for your business."
 >
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <!-- bg: #222025 (--color-background), matching Figma PremiumTechnical frame fill -->
-  <section class="relative bg-background overflow-hidden">
-    <div
-      class="absolute inset-0 pointer-events-none"
-      aria-hidden="true"
-      style="background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(103,21,232,0.35) 0%, transparent 70%);"
-    ></div>
-    <div class="container mx-auto px-4 py-28 md:py-40 text-center relative">
+  <section class="bg-background">
+    <div class="container mx-auto px-4 py-28 md:py-40 text-center">
       <!-- "Every Month You Wait": white, Sofia Pro 96px/500, tracking -2.4px -->
       <h1
         class="text-white text-center leading-[1.05] mb-0"
@@ -334,14 +328,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
       <!-- Figma node 254:2530 has fills="mixed" — first line white, second line gradient -->
       <h2
         class="text-center leading-[1.25]"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 4.5vw, 4.5rem); font-weight: 500; color: #ffffff; line-height: 1.25;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 3.75vw, 4.5rem); font-weight: 500; color: #ffffff; line-height: 1.25;"
       >
         Not sure where to start with CRA?<br />
         Or need a custom approach?
       </h2>
       <h2
         class="text-center leading-[1.25] mb-8"
-        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 4.5vw, 4.5rem); font-weight: 500; line-height: 1.25; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 3.75vw, 4.5rem); font-weight: 500; line-height: 1.25; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
       >
         Let's build a CRA solution that fits your business.
       </h2>
@@ -375,7 +369,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
               required
               placeholder="First Name"
               class="w-full rounded-full border px-5 py-3 text-sm"
-              style="border-color: rgba(141,141,141,0.302); background: transparent; color: #d4d4d8; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+              style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
             />
           </div>
           <div class="flex-1">
@@ -387,7 +381,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
               required
               placeholder="Last Name"
               class="w-full rounded-full border px-5 py-3 text-sm"
-              style="border-color: rgba(141,141,141,0.302); background: transparent; color: #d4d4d8; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+              style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
             />
           </div>
         </div>
@@ -401,7 +395,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
             required
             placeholder="Company Email"
             class="w-full rounded-full border px-5 py-3"
-            style="border-color: rgba(141,141,141,0.302); background: transparent; color: #d4d4d8; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+            style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
           />
         </div>
 
@@ -421,6 +415,9 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
             </a>
           </label>
         </div>
+
+        <!-- Friendly Captcha — required by BaseLayout's form submission handler -->
+        <div id="friendly-captcha-widget" class="frc-captcha"></div>
 
         <!-- Submit: gradient pill, Sofia Pro 18px/500, white text -->
         <div class="flex gap-4 items-center mt-2">
@@ -508,14 +505,17 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xm
     justify-content: center;
   }
 
-  /* Hover: purple tint across the full row */
+  /* Hover: purple tint across the full row.
+     Label cell has dark bg (#222025), product cells have light bg (#ebebeb).
+     Use the same rgba so the tint reads consistently over both. */
   .cra-feature-row:hover .cra-label-cell,
   .cra-feature-row:hover .cra-product-cell {
     background: rgba(103, 21, 232, 0.149);
   }
-  /* Override for label cell which has no bg by default */
-  .cra-feature-row:hover .cra-label-cell {
-    background: rgba(103, 21, 232, 0.149);
+
+  /* Ensure hidden rows are truly hidden regardless of display:grid on .cra-feature-row */
+  .cra-feature-row.hidden {
+    display: none !important;
   }
 
   /* Show more button: spans all 5 columns */
