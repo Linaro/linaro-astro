@@ -13,7 +13,7 @@ const PUBLIC_FRIENDLY_CAPTCHA_SITEKEY = getEnv(
 const PIPELINE_CRM_API_KEY = getEnv("PIPELINE_CRM_API_KEY");
 const PIPELINE_CRM_APP_KEY = getEnv("PIPELINE_CRM_APP_KEY");
 
-const BILL_FLETCHER_ID = 269524;
+const INBOUND_LEADS_ID = 843111;
 
 const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
   if (!PIPELINE_CRM_API_KEY) throw new Error("PIPELINE_CRM_API_KEY is missing");
@@ -146,7 +146,7 @@ export const server = {
               body: JSON.stringify({
                 company: {
                   name: input.company,
-                  owner_id: BILL_FLETCHER_ID,
+                  owner_id: INBOUND_LEADS_ID,
                   // Optional: Add country/phone to company if desired
                 },
               }),
@@ -159,7 +159,7 @@ export const server = {
         console.log("searching person...");
 
         // B. Handle Person
-        let shouldAssignToBill = false;
+        let shouldAssignToInboundLeads = false;
         const personSearch = await pipelineFetch(
           `/people?conditions[person_email]=${encodeURIComponent(input.email)}`,
         );
@@ -185,7 +185,7 @@ export const server = {
           console.log("person created with id: ", personId);
 
           if (newPerson.id) {
-            shouldAssignToBill = true;
+            shouldAssignToInboundLeads = true;
           }
         }
 
@@ -252,15 +252,15 @@ export const server = {
           console.warn("[CRM-DEBUG] Skipping notes creation: No Person ID available.");
         }
 
-        // D. Assign to Bill (Moved to after notes creation to prevent permission lockout)
-        if (shouldAssignToBill && personId) {
-          console.log("adding bill's id...");
+        // D. Assign to Inbound Leads (Moved to after notes creation to prevent permission lockout)
+        if (shouldAssignToInboundLeads && personId) {
+          console.log("adding id for Inbound Leads...");
           //update person owner id
           await pipelineFetch(`/people/${personId}`, {
             method: "PUT",
-            body: JSON.stringify({ user_id: BILL_FLETCHER_ID }),
+            body: JSON.stringify({ user_id: INBOUND_LEADS_ID }),
           });
-          console.log("Person assigned to bill");
+          console.log("Person assigned to Inbound Leads");
         }
 
         console.log("[CRM-DEBUG] Success");
