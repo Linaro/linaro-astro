@@ -1,0 +1,550 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// ─── Comparison table data ────────────────────────────────────────────────────
+// Products are ordered left→right: Scan, Analysis, Certify, Lifetime.
+// Each feature has a `values` tuple: [scan, analysis, certify, lifetime].
+//
+// To add a feature to a category:
+//   • Add to `features` to show it immediately.
+//   • Add to `moreFeatures` to show it only after "Show more" is clicked.
+// To add a new category, add an entry to the `categories` array below.
+
+type Feature = { name: string; values: [boolean, boolean, boolean, boolean] };
+type Category = { name: string; features: Feature[]; moreFeatures: Feature[] };
+
+const products = [
+  {
+    name: "CRA Scan",
+    description:
+      "Binary scan of a software image to produce a software bill of materials and vulnerability report",
+  },
+  {
+    name: "CRA Analysis",
+    description:
+      "Source based scanning through direct integration into the build system to produce a software bill of materials, vulnerability report and 3rd party component analysis",
+  },
+  {
+    name: "CRA Certify",
+    description:
+      "End to end services, from risk assessment, through to conformity assessment, to achieve CRA compliance",
+  },
+  {
+    name: "CRA Lifetime",
+    description:
+      "Lifetime CRA services, extending beyond the CRA certify solution to provide vulnerability management and LTS upgrades throughout the product support period",
+  },
+] as const;
+
+const categories: Category[] = [
+  {
+    name: "Core Services",
+    features: [
+      { name: "Binary scan of software image",                               values: [true,  true,  true,  true ] },
+      { name: "Software bill of materials (SBOM) generation",                values: [true,  true,  true,  true ] },
+      { name: "CVE Vulnerability report",                                    values: [true,  true,  true,  true ] },
+      { name: "Linaro hosted private dashboard",                             values: [true,  true,  true,  true ] },
+      { name: "Source based scan on software image with Linaro's toolchain", values: [false, true,  true,  true ] },
+    ],
+    moreFeatures: [
+    ],
+  },
+  {
+    name: "Advanced Analysis",
+    features: [
+      { name: "CI/CD integration for continuous scanning and SBOM generation",          values: [false, true,  true,  true ] },
+      { name: "Classification of product and role",                                     values: [false, false, true,  true ] },
+    ],
+    moreFeatures: [
+    ],
+  },
+  {
+    name: "Integration & Automation",
+    features: [
+      { name: "Cybersecurity risk assessment",      values: [false, false, true, true] },
+    ],
+    moreFeatures: [
+    ],
+  },
+  {
+    name: "Compliance & Support",
+    features: [
+      { name: "Tailored legal guidance",                values: [false, false, true, true] },
+      { name: "Penetration testing",                    values: [false, false, true, true] },
+      { name: "Conformity assessment guidance",         values: [false, false, true, true] },
+      { name: "Cybersecurity policy for OSS stewards",  values: [false, false, true, true] },
+    ],
+    moreFeatures: [
+    ],
+  },
+  {
+    name: "Enterprise",
+    features: [
+      { name: "Long term support", values: [false, false, false, true] },
+    ],
+    moreFeatures: [
+      { name: '3rd party due diligence "health" report',                     values: [false, true,  true,  true ] },
+      { name: "Customer hosted private dashboard",                           values: [false, false, true,  true ] },
+      { name: "Role identification e.g. manufacturer/steward/importer/distributor",     values: [false, false, true,  true ] },
+      { name: "Product classification e.g. default/class I/class II/critical",         values: [false, false, true,  true ] },
+      { name: "Identification of relevant harmonized standards",                        values: [false, false, true,  true ] },
+      { name: "Product GAP analysis",               values: [false, false, true, true] },
+      { name: "Risk assessment mitigation support", values: [false, false, true, true] },
+      { name: "Security requirements support",      values: [false, false, true, true] },
+      { name: "Conformity assessment submission support", values: [false, false, true, true] },
+      { name: "LTS support for core software components throughout the product support period", values: [false, false, false, true] },
+    ],
+  },
+];
+
+const hasMoreFeatures = categories.some((c) => c.moreFeatures.length > 0);
+
+// Check icon: stroke #6715e8 (Linaro purple), 16×16, matches Figma Vector dimensions
+const checkIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2.67 8l3.66 3.33 7.33-6.66" stroke="#6715e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+// Dash icon: stroke #3f3f46, 16×16
+const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.33 8h9.33" stroke="#3f3f46" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+---
+
+<BaseLayout
+  title="CRA Compliance Services | Linaro"
+  description="Compare Linaro's CRA offerings and choose the level of support that's right for your business."
+>
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="bg-background min-h-screen flex items-center">
+    <div class="container mx-auto px-4 py-20 text-center w-full">
+      <!-- "Every Month You Wait": white, Sofia Pro 96px/500, tracking -2.4px -->
+      <h1
+        class="text-white text-center leading-[1.05] mb-0"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 6rem); font-weight: 500; letter-spacing: -0.025em;"
+      >
+        Every Month You Wait
+      </h1>
+      <!-- "Makes CRA Compliance Harder": italic, gradient, same size -->
+      <h1
+        class="text-center leading-[1.05] mb-10"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(2rem, 5vw, 6rem); font-weight: 500; font-style: italic; letter-spacing: -0.025em; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      >
+        Makes CRA Compliance Harder
+      </h1>
+      <!-- Body: #999999, Sofia Pro 24px/300; Figma node 254:2273 is 1174px wide -->
+      <!-- Fixed 1.5rem (24px) — container is always ≥1174px at typical viewports, so each sentence fits one line -->
+      <p
+        class="text-center mx-auto"
+        style="font-family: 'sofia-pro', sans-serif; font-size: 1.5rem; font-weight: 300; color: #999999; line-height: 1.625; max-width: 75rem;"
+      >
+        Organizations that prepare early will spend less time reacting and more
+        time shipping secure products.<br />
+        Compare Linaro's CRA offerings and choose the level of support that's right
+        for your business.
+      </p>
+
+      <!-- Scroll indicator: yellow downward chevron (stroke #ffce00), from Figma Group 2 / Vector 24 -->
+      <div class="mt-16 flex justify-center" aria-hidden="true">
+        <svg
+          width="72"
+          height="21"
+          viewBox="0 0 72 21"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 2L36 19L70 2"
+            stroke="#ffce00"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Comparison table ──────────────────────────────────────────────────── -->
+  <!-- bg: #222025 (same dark background — table sits on dark page) -->
+  <section class="bg-background py-16 md:py-20">
+    <div class="container mx-auto px-4">
+
+      <!--
+        Desktop: CSS Grid layout — 5 columns (label + 4 product), 10px gap between columns.
+        Each feature row is a single div spanning all 5 columns with an inner grid matching
+        the same column template. This gives per-column #ebebeb backgrounds, gaps between
+        columns, and rounded top corners — impossible with border-collapse: collapse tables.
+      -->
+      <div class="hidden lg:block cra-table-grid">
+
+        <!-- Header: empty label corner + 4 product cards -->
+        <!-- Each card uses flex-col so the button is pushed to the bottom via flex-1 spacer -->
+        <div></div>
+        {
+          products.map((p) => (
+            <div class="cra-product-header">
+              <!-- Top group: title + description, grows to fill available space -->
+              <div class="cra-product-top">
+                <p style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025; letter-spacing: 0.037em; margin-bottom: 8px;">
+                  {p.name}
+                </p>
+                <p style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025; letter-spacing: -0.01em; line-height: 1.14;">
+                  {p.description}
+                </p>
+              </div>
+              <!-- Bottom group: divider + Contact Us — pinned to bottom by flex layout -->
+              <div>
+                <div style="height: 1px; background: #d9d9d9; margin-bottom: 12px; margin-top: 16px;"></div>
+                <a
+                  href="#contact"
+                  style="display: block; text-align: center; border-radius: 9999px; padding: 4px 24px; background: #222025; color: #ffffff; font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 700; text-decoration: none;"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </div>
+          ))
+        }
+
+        <!-- Feature rows: each is a single grid item spanning all 5 columns,
+             containing its own inner grid with the same column template.
+             Toggling display:none on the wrapper hides the entire row cleanly. -->
+        {
+          categories.map((cat) => (
+            <>
+              {cat.features.map((f) => (
+                <div class="cra-feature-row">
+                  <div class="cra-label-cell">{f.name}</div>
+                  {f.values.map((included) => (
+                    <div class="cra-product-cell">
+                      <span class="sr-only">{included ? "Included" : "Not included"}</span>
+                      <span set:html={included ? checkIcon : dashIcon} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+              {cat.moreFeatures.map((f) => (
+                <div class="cra-feature-row cra-more-row hidden">
+                  <div class="cra-label-cell">{f.name}</div>
+                  {f.values.map((included) => (
+                    <div class="cra-product-cell">
+                      <span class="sr-only">{included ? "Included" : "Not included"}</span>
+                      <span set:html={included ? checkIcon : dashIcon} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </>
+          ))
+        }
+
+        <!-- Show more: grid-column 1/-1 spans all 5 columns including gaps -->
+        {hasMoreFeatures && (
+          <button
+            id="cra-show-more-btn"
+            class="cra-show-more-btn flex items-center justify-center gap-3 py-3"
+            aria-expanded="false"
+          >
+            <span
+              id="cra-show-more-label"
+              style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 400; color: #d4d4d8; letter-spacing: -0.01em;"
+            >
+              Show more
+            </span>
+            <svg
+              id="cra-chevron"
+              class="transition-transform duration-200"
+              width="8"
+              height="5"
+              viewBox="0 0 8 5"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M1 1l3 3 3-3" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        )}
+      </div>
+
+      <!-- Mobile: one card per product -->
+      <div class="lg:hidden space-y-6">
+        {
+          products.map((product, pi) => (
+            <div class="rounded-2xl p-6" style="background: #ebebeb;">
+              <h3 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #222025;" class="mb-2">
+                {product.name}
+              </h3>
+              <div style="height:1px; background:#d9d9d9;" class="mb-3"></div>
+              <p style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 500; color: #222025;" class="mb-4">
+                {product.description}
+              </p>
+              {categories.map((cat) => {
+                const included = [
+                  ...cat.features,
+                  ...cat.moreFeatures,
+                ].filter((f) => f.values[pi]);
+                return (
+                  <div class="mb-3">
+                    <p
+                      class="mb-2"
+                      style="font-family: 'sofia-pro', sans-serif; font-size: 0.75rem; font-weight: 500; color: #ffce00; letter-spacing: 0.05em;"
+                    >
+                      {cat.name}
+                    </p>
+                    {included.length > 0 ? (
+                      <ul class="space-y-1">
+                        {included.map((f) => (
+                          <li class="flex items-center gap-2" style="font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 400; color: #222025;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                              <path d="M2.67 8l3.66 3.33 7.33-6.66" stroke="#6715e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            {f.name}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p style="color: #999999; font-size: 0.75rem;">Not included</p>
+                    )}
+                  </div>
+                );
+              })}
+              <a
+                href="#contact"
+                class="mt-4 inline-block text-center rounded-full py-1 px-6"
+                style="background: #222025; color: #ffffff; font-family: 'sofia-pro', sans-serif; font-size: 0.875rem; font-weight: 700;"
+              >
+                Contact Us
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CTA + Form ────────────────────────────────────────────────────────── -->
+  <!-- bg: #222025 (dark — matches the Figma page background) -->
+  <section id="contact" class="bg-background py-24 md:py-32">
+    <div class="container mx-auto px-4 text-center">
+      <!-- "Not sure where to start with CRA?" + "Or need a custom approach?": white, Sofia Pro 72px/500 -->
+      <!-- "Let's build a CRA solution that fits your business.": gradient, same size -->
+      <!-- Figma node 254:2530 has fills="mixed" — first line white, second line gradient -->
+      <h2
+        class="text-center leading-[1.25]"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 3.75vw, 4.5rem); font-weight: 500; color: #ffffff; line-height: 1.25;"
+      >
+        Not sure where to start with CRA?<br />
+        Or need a custom approach?
+      </h2>
+      <h2
+        class="text-center leading-[1.25] mb-8"
+        style="font-family: 'sofia-pro', sans-serif; font-size: clamp(1.5rem, 3.75vw, 4.5rem); font-weight: 500; line-height: 1.25; white-space: nowrap; background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      >
+        Let's build a CRA solution that fits your business.
+      </h2>
+      <!-- Body: #999999, Inter 24px/300 -->
+      <p
+        class="text-center mx-auto mb-12"
+        style="font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 300; color: #999999; line-height: 1.333; max-width: 44rem;"
+      >
+        Contact our team and make your route to compliance faster and easier.
+      </p>
+
+      <!-- Form: First Name + Last Name side-by-side, Company Email full width, privacy, submit -->
+      <!-- Wired to BaseLayout's contact form handler via data-contact-form -->
+      <form
+        class="mx-auto flex flex-col items-center gap-4"
+        style="max-width: 44rem;"
+        id="contact-form"
+        data-contact-form="cra-comparison"
+        method="get"
+      >
+        <input type="hidden" name="form_id" value="cra-comparison" />
+        <input type="hidden" name="formName" value="CRA Comparison Page" />
+
+        <div class="flex gap-4 w-full">
+          <div class="flex-1">
+            <label for="firstName" class="sr-only">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              placeholder="First Name"
+              class="w-full rounded-full border px-5 py-3 text-sm"
+              style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+            />
+          </div>
+          <div class="flex-1">
+            <label for="lastName" class="sr-only">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              placeholder="Last Name"
+              class="w-full rounded-full border px-5 py-3 text-sm"
+              style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+            />
+          </div>
+        </div>
+
+        <div class="w-full">
+          <label for="email" class="sr-only">Company Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="Company Email"
+            class="w-full rounded-full border px-5 py-3"
+            style="border-color: rgba(141,141,141,0.302); background: #ffffff; color: #222025; font-family: 'sofia-pro', sans-serif; font-size: 1.125rem;"
+          />
+        </div>
+
+        <div class="flex items-center gap-3" style="font-family: 'sofia-pro', sans-serif; font-size: 1.125rem; font-weight: 500; color: #ffffff;">
+          <input
+            type="checkbox"
+            id="agreed"
+            name="agreed"
+            required
+            class="w-5 h-5 rounded-full border flex-shrink-0"
+            style="border-color: rgba(141,141,141,0.5); accent-color: #6715e8;"
+          />
+          <label for="agreed">
+            I've read and agreed to Linaro's{" "}
+            <a href="/legal#privacy" class="underline" style="color: #ffffff;">
+              Privacy Policy
+            </a>
+          </label>
+        </div>
+
+        <!-- Friendly Captcha — required by BaseLayout's form submission handler -->
+        <div id="friendly-captcha-widget" class="frc-captcha"></div>
+
+        <!-- Submit: gradient pill, Sofia Pro 18px/500, white text -->
+        <div class="flex gap-4 items-center mt-2">
+          <button
+            type="submit"
+            id="contact-submit"
+            class="rounded-full px-10 py-3 text-white"
+            style="background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); font-family: 'sofia-pro', sans-serif; font-size: 1.125rem; font-weight: 500;"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            id="contact-submitting"
+            class="rounded-full px-10 py-3 text-white hidden flex items-center gap-2"
+            style="background: linear-gradient(102deg, #ffce00 -0.43%, #6715e8 95.75%); font-family: 'sofia-pro', sans-serif; font-size: 1.125rem; font-weight: 500;"
+          >
+            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            Submitting
+          </button>
+        </div>
+      </form>
+
+      <div id="contact-feedback" class="hidden mt-6">
+        <p id="contact-feedback-text" style="color: #d4d4d8;"></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Outer grid: label col (33%) + 4 equal product cols, 10px gap ── */
+  .cra-table-grid {
+    display: grid;
+    grid-template-columns: 33% repeat(4, 1fr);
+    column-gap: 10px;
+    row-gap: 0;
+    /* align-items: stretch so header row — all 4 cards grow to the same height */
+    align-items: stretch;
+  }
+
+  /* Product header card: #ebebeb, rounded top corners, flex column so button stays at bottom */
+  .cra-product-header {
+    background: #ebebeb;
+    border-radius: 12px 12px 0 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* height is NOT fixed — all 4 cards grow to the same height via grid row alignment */
+  }
+  .cra-product-top {
+    flex: 1;
+  }
+
+  /* Feature row: spans all 5 columns, uses same inner grid for alignment */
+  .cra-feature-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 33% repeat(4, 1fr);
+    column-gap: 10px;
+    border-bottom: 1px solid rgba(141, 141, 141, 0.302);
+  }
+
+  /* Feature label cell (dark column) */
+  .cra-label-cell {
+    background: #222025;
+    padding: 16px 16px 16px 0;
+    font-family: 'sofia-pro', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #d4d4d8;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Product cells (light columns) */
+  .cra-product-cell {
+    background: #ebebeb;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hover: light purple tint across all cells */
+  .cra-feature-row:hover .cra-label-cell,
+  .cra-feature-row:hover .cra-product-cell {
+    background: #e0d9f8;
+  }
+  /* Label text must darken on hover — #d4d4d8 is unreadable on the light purple bg */
+  .cra-feature-row:hover .cra-label-cell {
+    color: #222025;
+  }
+
+  /* Ensure hidden rows are truly hidden regardless of display:grid on .cra-feature-row */
+  .cra-feature-row.hidden {
+    display: none !important;
+  }
+
+  /* Show more button: spans all 5 columns */
+  .cra-show-more-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    background: #6715e8;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("cra-show-more-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      document
+        .querySelectorAll<HTMLElement>(".cra-more-row")
+        .forEach((row) => row.classList.toggle("hidden", expanded));
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const label = document.getElementById("cra-show-more-label");
+      if (label) label.textContent = expanded ? "Show more" : "Show less";
+      document
+        .getElementById("cra-chevron")
+        ?.classList.toggle("rotate-180", !expanded);
+    });
+  }
+</script>
