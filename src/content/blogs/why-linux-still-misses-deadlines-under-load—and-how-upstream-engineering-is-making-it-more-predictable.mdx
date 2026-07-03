@@ -1,0 +1,48 @@
+---
+title: Why Linux Still Misses Deadlines Under Load—and How Upstream Engineering
+  Is Making It More Predictable
+description: Sdfghjk
+date: 2026-07-03T09:47:00.000Z
+author: alan-bennett
+tags:
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1783072220/linaro-website/IMG_3568_wqlglp.png
+related: []
+---
+Modern Linux systems are remarkably fast.
+
+They boot quickly, scale to hundreds of CPU cores, and power everything from embedded devices and smartphones to cloud infrastructure and high-performance servers. Yet many engineering teams eventually encounter a frustrating problem: systems that appear healthy under normal testing still exhibit occasional latency spikes once they reach production.
+
+A user interface stutters. An audio stream glitches. A network packet arrives late. A cloud service suddenly shows higher tail latency despite low average CPU utilization.
+
+These are some of the most difficult performance problems to diagnose because they rarely show up in averages. They appear only under specific combinations of workload, wake-up patterns, CPU contention, and prior scheduler decisions.
+
+Solving them often requires looking far deeper than the application itself—into the Linux scheduler.
+
+This is exactly the type of engineering challenge Linaro’s kernel team works on every day.
+
+## **The Challenge: Fair Isn’t Always Fast**
+
+The Linux scheduler has one of the hardest jobs in the operating system. Every scheduling decision balances competing goals:
+
+\-
+
+—
+
+\-
+
+\-
+
+\-
+
+
+
+Improving one objective often makes another worse.
+
+Recent Linux kernels introduced the Earliest Eligible Virtual Deadline First (EEVDF) scheduler, representing a significant step forward in fairness and scheduling behaviour. However, fairness alone cannot eliminate every latency problem.
+
+During investigations into scheduler behaviour under heavy load, Linaro engineers observed that some short-running interactive tasks were still waiting much longer than expected before being scheduled.
+
+These weren’t everyday failures. They were subtle edge cases that only emerged under sustained CPU contention, where thousands of successful scheduling decisions could be followed by one unexpectedly long delay.
+
+Unfortunately, those rare delays are often the ones users notice most.
