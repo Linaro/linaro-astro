@@ -4,6 +4,7 @@ import type { z } from "astro/zod";
 import CloudinaryImg from "../cloudinary/CloudinaryImg.astro";
 import { getCloudinarySrc } from "@/lib/cloudinary";
 import { marked } from "marked";
+import WhitepaperContactModal from "../forms/WhitepaperContactModal.astro";
 
 type Props = z.infer<typeof imageCardsSchema>;
 const { cards, styles, button_cards } = Astro.props;
@@ -100,7 +101,17 @@ function getImageSrc(image: { src: string; alt: string; width?: number; height?:
                 />
               )}
               {text && <div class:list={["text-xl z-20"]} set:html={content} />}
-              {button && (
+              {button && button.url.startsWith("gated:") ? (
+                <WhitepaperContactModal
+                  modal_id={`wpModal_${button.url.replace("gated:", "").replace(/[^a-zA-Z0-9]/g, "_")}`}
+                  form_id="9"
+                  formName="whitepaper_contact"
+                  button_text={button.text}
+                  description="Access Whitepaper"
+                  whitepaperId={button.url.replace("gated:", "")}
+                  styles={{ buttonStyles: styles?.button ?? "" }}
+                />
+              ) : button && (
                 <a
                   href={button.url}
                   class="no-underline"

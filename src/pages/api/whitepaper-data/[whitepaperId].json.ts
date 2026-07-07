@@ -5,6 +5,8 @@ const whitepapers: Record<string, string> = {
   // Add the correct key from your original page
   "from-x86-to-arm":
     "https://static.linaro.org/assets/WP+-+From+x86+to+Arm_v9_combined.pdf",
+  "space-debris-linaro-map":
+    "https://static.linaro.org/assets/LinaroForge_CaseStudy_OKAPI_20260706.pdf",
   // add more here
 };
 
@@ -31,5 +33,8 @@ export const GET: APIRoute = async ({ params }) => {
 };
 
 export function getStaticPaths() {
-  return [{ params: { whitepaperId: "from-x86-to-arm" } }];
+  return [
+    { params: { whitepaperId: "from-x86-to-arm" } },
+    { params: { whitepaperId: "space-debris-linaro-map" } },
+  ];
 }
