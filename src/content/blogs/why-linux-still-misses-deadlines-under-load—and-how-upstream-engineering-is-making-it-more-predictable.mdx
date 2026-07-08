@@ -1,5 +1,5 @@
 ---
-title: Why Linux Still Misses Deadlines Under Load—and How Upstream Engineering
+title: Why Linux Still Misses Deadlines Under Load and How Upstream Engineering
   Is Making It More Predictable
 description: Sdfghjk
 date: 2026-07-03T09:47:00.000Z
@@ -25,17 +25,12 @@ This is exactly the type of engineering challenge Linaro’s kernel team works o
 
 The Linux scheduler has one of the hardest jobs in the operating system. Every scheduling decision balances competing goals:
 
-\-
-
-—
-
-\-
-
-\-
-
-\-
-
-
+* Fairness between tasks 
+* Interactive responsiveness 
+* Overall system throughout 
+* Power Efficiency 
+* CPU topology and cache locality 
+* Scalability across everything from small embedded systems to multi-socket servers
 
 Improving one objective often makes another worse.
 
@@ -46,3 +41,106 @@ During investigations into scheduler behaviour under heavy load, Linaro engineer
 These weren’t everyday failures. They were subtle edge cases that only emerged under sustained CPU contention, where thousands of successful scheduling decisions could be followed by one unexpectedly long delay.
 
 Unfortunately, those rare delays are often the ones users notice most.
+
+At the [OSPM conference](https://lwn.net/Articles/1078696/), our engineer presented his results and some solutions to improve the scheduling decisions.
+
+## **Following the Evidence**
+
+Finding problems like these is rarely straightforward. The investigation began by reproducing heavily loaded systems using well-established scheduler benchmarks including cyclictest, hackbench and rt-app. Together these workloads simulate many of the scheduling patterns found in production systems, combining frequent wake-ups, task migrations, background activity, and interactive workloads competing for CPU time. Then, the milliseconds culprit scheduling pattern was recorded using ftrace and synthetic events to catch it among the hundreds of seconds of tests.
+
+The results showed a clear pattern: although average scheduling latency remained acceptable, the worst-case behaviour did not.
+
+Under overload, some short-running tasks waited almost their entire scheduling slice before running. In certain cases, maximum latency approached 9 milliseconds, while the 99.9th percentile frequently exceeded 4 milliseconds.
+
+For applications that depend on predictable response times, those occasional outliers matter far more than the average.
+
+Rather than uncovering one obvious bug, the investigation revealed several subtle scheduler interactions that, together, produced these latency spikes.
+
+## **Small Corner Cases, Large Effects**
+
+The Linux scheduler is an extraordinarily complex piece of software, and many of its behaviours exist to preserve fairness across thousands of different workloads.
+
+Linaro’s investigation identified several independent corner cases where these mechanisms interacted in unexpected ways.
+
+One issue involved how tasks retained negative lag after sleeping, allowing them to be penalized more than intended when they became runnable again. Another involved wake-up preemption, where shortcut mechanisms could occasionally bypass the task that EEVDF itself considered most eligible to run. A third involved delayed dequeue behaviour that prevented short-running interactive tasks from preempting the current workload quickly enough.
+
+Individually, none of these behaviours appeared significant.
+
+Collectively, they produced measurable increases in long-tail scheduling latency.
+
+Addressing these issues required careful changes that improved responsiveness without sacrificing the fairness guarantees or throughput expected from the Linux scheduler.
+
+## **From Milliseconds to Microseconds**
+
+The results were significant.
+
+After addressing these scheduler interactions, the 99.9th percentile latency dropped from more than 4 milliseconds to below 700 microseconds across nearly every workload tested.
+
+That represents an order-of-magnitude improvement in scheduling predictability while preserving the fairness properties that modern Linux systems depend upon.
+
+Not every workload has been solved, and several additional areas—including positive-lag decay and certain wake-up corner cases—continue to be investigated with the upstream Linux community. A new [set of fixes](https://lore.kernel.org/all/20260624151229.1710703-1-vincent.guittot@linaro.org/) have been sent for review on the ailing list. 
+
+That iterative process is one of the strengths of upstream kernel development. Improvements are proposed, reviewed, challenged, measured, refined, and validated across many architectures and workloads before becoming part of Linux itself.
+
+## **Why Tail Latency Matters**
+
+Although this investigation focused on scheduler benchmarks, the underlying problem extends far beyond synthetic tests.
+
+Predictable scheduling behaviour is critical across a wide range of industries:
+
+* Android devices balancing responsiveness and battery life
+* Networking infrastructure handling burst traffic
+* Cloud platforms serving latency-sensitive applications
+* Embedded Linux products where user experience depends on consistent responsiveness 
+
+For these systems, average latency tells only part of the story.
+
+It is the rare scheduling delays—the long tail—that determine whether users perceive a product as responsive, reliable, and deterministic.
+
+Reducing those outliers improves far more than benchmark numbers, it improves real products.
+
+## **Why Upstream Matters**
+
+Many organizations can develop scheduler patches for their own products.
+
+Far fewer can successfully upstream those improvements.
+
+Maintaining private kernel modifications increases engineering cost over time. Every new kernel release requires rebasing, retesting, and validating downstream changes. As products mature, maintaining those patches becomes more expensive than developing them.
+
+Working upstream changes that equation.
+
+Code reviewed and accepted by the Linux community benefits from continuous testing, broader architectural validation, and long-term maintenance as Linux evolves. Rather than carrying permanent downstream technical debt, organizations gain improvements that become part of the platform they depend upon.
+
+This upstream-first approach has been central to Linaro’s engineering model for more than a decade.
+
+Our engineers work alongside Linux maintainers and the broader open source community to solve problems once, upstream, whenever practical.
+
+## **Beyond the Scheduler**
+
+The techniques demonstrated in this investigation extend well beyond scheduling.
+
+Modern Linux platform development increasingly requires deep expertise across kernel subsystems, CPU architecture, power management, firmware, topology awareness, performance analysis, benchmarking, and upstream development.
+
+Whether the challenge involves scheduler latency, power optimization, Arm platform enablement, memory management, virtualization, or silicon bring-up, success depends on understanding not only how Linux behaves today, but how improvements can be designed, validated, and integrated into the upstream kernel.
+
+That combination of technical depth and upstream experience is difficult to build—and exactly why many organizations choose to partner with Linaro.
+
+## **Building Better Linux Together**
+
+Linux continues to evolve because engineers across the open source community work together to solve increasingly complex problems.
+
+The scheduler improvements discussed here are one example of that ongoing journey. They demonstrate that even in one of the kernel’s most mature subsystems, careful measurement, rigorous engineering, and collaboration can still deliver meaningful improvements for users around the world.
+
+If your organization is bringing new Arm-based hardware to market, investigating difficult kernel performance problems, optimizing Linux for demanding workloads, or upstreaming platform support, Linaro’s engineers can help.
+
+From architecture and performance analysis to upstream kernel development and long-term platform maintenance, we work directly in the Linux kernel to help organizations solve complex engineering problems while reducing long-term maintenance costs.
+
+**Interested in working with the engineers behind these upstream improvements? [Contact Linaro ](<https://www.linaro.org/contact >)to discuss how we can help accelerate your Linux platform development.**
+
+### About the Author
+
+Behan Webster is a computer engineer with more than three decades of experience spanning telecom, datacom, optical, wireless, automotive, medical, defence, and games industries. His work has consistently focused on Linux, covering embedded systems, kernels, drivers, bootloaders, software architecture, compilers, and build systems.
+
+He is an early contributor to Debian Linux and the Linux kernel, a former lead of the LLVMLinux project (now ClangBuiltLinux), and the first Yocto Project Ambassador. His career has evolved from hands-on engineering into building teams, mentoring engineers, and delivering advanced, engineer-led training.
+
+For over a decade, Behan has authored and taught in-depth courses on the Linux kernel, debugging, security, the Yocto Project, and embedded systems for engineers in industry and government worldwide.
