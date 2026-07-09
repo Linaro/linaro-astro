@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: "Case Study: Making Space Missions Safe | Simulating the evolution of Space Debris with Linaro MAP"
+            image:
+              src: linaro-website/images/news/IMG_3581_pzj3wy.png
+              alt: ""
+            button:
+              text: Read more
+              url: "gated:space-debris-linaro-map"
           - text: Preparing For The EU Cyber Resilience Act (CRA) with Linaro
             image:
               src: linaro-website/graphics/IMG_2076_h5tjnn.png

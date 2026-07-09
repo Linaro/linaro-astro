@@ -1,5 +1,5 @@
 ---
-const { form_id, formName, description, whitepaperId } = Astro.props;
+const { form_id, formName, description, whitepaperId, modal_id } = Astro.props;
 
 const inputFields = [
   {
@@ -20,7 +20,7 @@ const inputFields = [
     class="flex flex-col items-start gap-8"
     id="contact-form"
     data-contact-form={form_id}
-    method="get"
+    method={modal_id ? "modal" : "get"}
   >
     {
       description && (
@@ -58,7 +58,7 @@ const inputFields = [
               name="contactByExpert"
               value="Yes"
               checked
-              class="form-radio text-white"
+              class="form-radio text-blue-600 checked:bg-blue-600"
             />
             <span class="ml-2 text-white">Yes</span>
           </label>
@@ -67,7 +67,7 @@ const inputFields = [
               type="radio"
               name="contactByExpert"
               value="No"
-              class="form-radio text-white"
+              class="form-radio text-blue-600 checked:bg-blue-600"
             />
             <span class="ml-2 text-white">No</span>
           </label>
@@ -84,7 +84,7 @@ const inputFields = [
               name="newsletter"
               value="Yes"
               checked
-              class="form-radio text-blue-600"
+              class="form-radio text-blue-600 checked:bg-blue-600"
             />
             <span class="ml-2 text-white">Yes</span>
           </label>
@@ -93,7 +93,7 @@ const inputFields = [
               type="radio"
               name="newsletter"
               value="No"
-              class="form-radio text-blue-600"
+              class="form-radio text-blue-600 checked:bg-blue-600"
             />
             <span class="ml-2 text-white">No</span>
           </label>
@@ -101,15 +101,21 @@ const inputFields = [
       </div>
     </div>
     <div>
-      <div id="friendly-captcha-widget" class="frc-captcha"></div>
-      <input type="checkbox" name="agreed" id="agreed" class="mr-2" required />
-      <label for="agreed" class="text-white"
-        >I’ve read and agreed to Linaro’s <a
+      <input
+        type="checkbox"
+        name="agreed"
+        id={modal_id ? `agreed-${modal_id}` : "agreed"}
+        class="mr-2"
+        required
+      />
+      <label for={modal_id ? `agreed-${modal_id}` : "agreed"} class="text-white"
+        >I've read and agreed to Linaro's <a
           href="/legal#privacy"
           class="text-white">Privacy Policy</a
         ></label
       >
     </div>
+    <div id="friendly-captcha-widget" class="frc-captcha"></div>
     <div class="flex gap-8">
       <button type="submit" class="linaro-gradient-button" id="contact-submit"
         >Submit</button
@@ -136,9 +142,30 @@ const inputFields = [
         </svg>
         Submitting</button
       >
+      {
+        modal_id && (
+          <button
+            class="text-white font-bold"
+            onclick={`window.${modal_id}.close()`}
+          >
+            Close
+          </button>
+        )
+      }
     </div>
   </form>
   <div id="contact-feedback" class="hidden">
     <p id="contact-feedback-text" class="text-white"></p>
+
+    {
+      modal_id && (
+        <button
+          class="text-white font-bold"
+          onclick={`window.${modal_id}.close()`}
+        >
+          Close
+        </button>
+      )
+    }
   </div>
 </div>
