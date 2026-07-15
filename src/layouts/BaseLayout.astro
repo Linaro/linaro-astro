@@ -346,6 +346,15 @@ const { title, description, type = "website", image } = Astro.props;
 
         delete payload.agreed;
 
+        // Split the single "Full Name" field into first/last name so the
+        // Pipeline CRM integration continues to receive them separately.
+        if (payload.fullName) {
+          const nameParts = String(payload.fullName).trim().split(/\s+/);
+          payload.firstName = nameParts.shift() ?? "";
+          payload.lastName = nameParts.join(" ");
+          delete payload.fullName;
+        }
+
         console.log(payload);
 
         // -----------------------

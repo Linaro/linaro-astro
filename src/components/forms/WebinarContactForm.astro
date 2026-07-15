@@ -2,16 +2,8 @@
 const { form_id, formName, description, modal_id, webinarDataId } = Astro.props;
 
 const inputFields = [
-  {
-    name: "firstName",
-    label: "First Name",
-    type: "text",
-  },
-  { name: "lastName", label: "Last Name", type: "text" },
+  { name: "fullName", label: "Full Name", type: "text" },
   { name: "email", label: "Customer email", type: "email" },
-  { name: "jobTitle", label: "Job title", type: "text" },
-  { name: "company", label: "Company Name", type: "text" },
-  { name: "country", label: "Country", type: "text" },
 ];
 ---
 
@@ -46,60 +38,6 @@ const inputFields = [
         </>
       ))
     }
-    <div class="space-y-6">
-      <div>
-        <p class="text-lg font-medium text-white">
-          I would like to be contacted by a Linaro Expert
-        </p>
-        <div class="flex items-center space-x-4 mt-2">
-          <label class="inline-flex items-center">
-            <input
-              type="radio"
-              name="contactByExpert"
-              value="Yes"
-              checked
-              class="form-radio text-blue-600"
-            />
-            <span class="ml-2 text-white">Yes</span>
-          </label>
-          <label class="inline-flex items-center">
-            <input
-              type="radio"
-              name="contactByExpert"
-              value="No"
-              class="form-radio text-blue-600"
-            />
-            <span class="ml-2 text-white">No</span>
-          </label>
-        </div>
-      </div>
-      <div>
-        <p class="text-lg font-medium text-white">
-          Subscribe to Linaro Insights, our monthly newsletter
-        </p>
-        <div class="flex items-center space-x-4 mt-2">
-          <label class="inline-flex items-center">
-            <input
-              type="radio"
-              name="newsletter"
-              value="Yes"
-              checked
-              class="form-radio text-blue-600"
-            />
-            <span class="ml-2 text-white">Yes</span>
-          </label>
-          <label class="inline-flex items-center">
-            <input
-              type="radio"
-              name="newsletter"
-              value="No"
-              class="form-radio text-blue-600"
-            />
-            <span class="ml-2 text-white">No</span>
-          </label>
-        </div>
-      </div>
-    </div>
     <div>
       <input
         type="checkbox"
