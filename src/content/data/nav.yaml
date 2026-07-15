@@ -5,8 +5,6 @@
       url: /services/upstreaming-linux-kernel
     - label: BSP Development
       url: /services/bsp-development
-    - label: CRA & Software Supply Chain Management
-      url: /services/software-supply-chain-management
     - label: Qualcomm Platform Services
       url: /services/qualcomm-platform
     - label: NXP Platform Services
