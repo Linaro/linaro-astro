@@ -93,5 +93,6 @@ export default defineConfig({
     "/projects/cloud-computing": "/",
     "/solutions/codelinaro": "/",
     "/confidential-computing": "/solutions/confidential-computing",
+    "/services/software-supply-chain-management": "/solutions/cra",
   },
 });

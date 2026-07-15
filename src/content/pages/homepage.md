@@ -34,13 +34,6 @@ hero:
         image:
           src: linaro-website/graphics/freepik__a-dynamic-and-abstract-image-showing-an-embedded-e__65960_1_a4xr3n.png
           alt: Linaro development
-      - title: Software Supply Chain Management
-        button:
-          text: Find out more about CRA Compliance
-          url: /services/software-supply-chain-management
-        image:
-          src: linaro-website/graphics/freepik__dynamic-image-of-software-supply-chain-managementn__15216_1_lsycrd.png
-          alt: Linaro collaboration
       - title: Linaro Addresses the Demands of the Next Era of AI and Compute with New Model and Brings Open Collaboration to All
         button:
           text: Read the Press Release
@@ -124,11 +117,6 @@ flow:
               alt: ""
           - title: IoT & Embedded
             url: /solutions/onelab
-            image:
-              src: linaro-website/graphics/circle-gradient-border
-              alt: ""
-          - title: CRA & Software Supply Chain Management
-            url: /services/software-supply-chain-management
             image:
               src: linaro-website/graphics/circle-gradient-border
               alt: ""
