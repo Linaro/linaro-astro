@@ -8,9 +8,8 @@ const webinar_credentials: Record<string, string | Record<string, string>> = {
   cra_compliance_journey:
     "https://static.linaro.org/webinar_credentials/cra-compliance-journey-webinar-credentials.json",
   mastering_parallel_debugging_and_profiling_with_linaro_forge: {
-    type: "link",
-    url: "https://bit.ly/42L94i6",
-    passcode: "",
+    type: "video",
+    url: "https://static.linaro.org/videos/mastering_parallel_debugging_and_profiling_with_linaro_forge.mp4",
   },
 };
 export const GET: APIRoute = async ({ params, request }) => {
