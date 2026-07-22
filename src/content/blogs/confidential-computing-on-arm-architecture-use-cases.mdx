@@ -1,7 +1,7 @@
 ---
 title: "Confidential Computing on Arm: Architecture & Use Cases"
-description: Asdfghjkl
-date: 2026-07-22T13:19:00.000Z
+description: This is the second post in a series, exploring the trajectory of CCA in depth.
+date: 2026-07-22T14:55:00.000Z
 author: benjamin-mordaunt
 tags:
   - confidential-computing
@@ -12,4 +12,81 @@ tags:
 image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784726541/linaro-website/IMG_3633_a9ts2u.png
 related: []
 ---
-Asdfghjkl
+## Introduction
+
+In the first part of this series (which you can find [here](https://www.linaro.org/blog/what-is-confidential-computing/)), we explored the definition and founding principles of Confidential Computing. In this post, we will explore how Arm has designed and implemented the components necessary to realise these ideas within a system, from microarchitectural CPU extensions, to changes in memory controllers and the software that sits atop the silicon.
+
+## Why a new architecture was needed
+
+Confidential Computing asks for something the classical Arm security model was never built to provide: an execution environment that a cloud tenant owns, that is protected even from the hypervisor scheduling it, and that can be created and destroyed thousands of times over on shared hardware. TrustZone gives us exactly two worlds, and its Secure World is a single, statically partitioned trust domain typically owned by the platform vendor. It is the right tool for a handful of fixed platform services, but it has no room for many mutually-distrustful tenants who also distrust the host.
+
+Arm’s answer is the Confidential Compute Architecture (CCA), part of Armv9-A. CCA is not one feature but a coordinated set of changes spanning the CPU, the memory system, the interconnect, the SMMU, and a new software stack. Its cornerstone is the Realm Management Extension (RME).
+
+## The four worlds and where they live
+
+RME re-partitions the processor’s security state from two worlds into four. In a non-RME Processing Element (PE), the Secure and Non-secure worlds form the traditional TrustZone split. RME extends this with new ***Realm*** and ***Root*** worlds. The PE resets into the Root world, which enables trusted boot and switching between the worlds; the Realm world provides an execution environment for VMs that is isolated from both the Normal and Secure worlds.
+
+A Realm executes in its own set of Exception Levels. Importantly, the controlling firmware running in the Realm world can access Normal world memory to enable shared buffers - confidentiality runs one way, so a Realm can deliberately expose a window for I/O while the host can never reach inward. The Root world holds the EL3 Monitor: the small, most-privileged body of firmware that owns world switching and the structures that enforce isolation. Keeping it in its own world, rather than sharing a security state with ordinary Secure services, is what keeps the EL3 Monitor running at the highest security level auditably small.
+
+## Granule Protection: the enforcement core
+
+The mechanism that gives the four worlds teeth is *Granule Protection Checking* (GPC). Every page-sized granule of physical memory is assigned a Physical Address Space (PAS) - Non-secure, Secure, Realm, or Root - recorded in the *Granule Protection Table* (GPT), which the Root-world Monitor exclusively owns.
+
+The GPT's defining contribution is that a granule's world is not fixed at boot: memory can be moved between security states at runtime, which is what makes dynamic, short-lived Realms possible at all. On every access that resolves to a physical address, the hardware performs a GPC alongside the usual stage 1 and stage 2 translation, and faults the access before any data leaves the memory system if the issuing world is not permitted to touch that PAS. The hypervisor can try to map a page that was not shared by the Realm into its own tables; but GPC will fault on translation. Isolation no longer rests on the hypervisor behaving - it rests on a check the hypervisor cannot influence, because access to the GPT is reserved to the EL3 monitor. As a Realm is built, granules are delegated from Non-secure to Realm PAS and, on teardown, scrubbed and undelegated back, with new RME instructions to manage these aspects in both the processor caches and the TLBs.
+
+## The SMMU: extending the boundary to devices
+
+The CPU-only isolation boundary is insufficient the moment a workload wants real I/O. A network card or GPU issuing DMA can read and write physical memory directly, bypassing the CPU’s translation regime entirely - so the same guarantees must hold for device traffic. This is the role of the System Memory Management Unit (SMMU), and it is where the architecture has moved most in recent years, with changes to the [RME System Architecture](https://developer.arm.com/documentation/den0129/ca/) and [RME Guide](https://developer.arm.com/documentation/den0126/latest/) focussing on SMMU-side device assignment, and the first upstream Linux enablement posted as an [RFC ](https://lwn.net/Articles/1031686/)in July 2025. 
+
+
+The crucial design decision is that the GPT is checked not only by processors but also by the Arm SMMU, which gates device accesses. Applying granule protection to every client device’s access is the SMMU’s counterpart to what \`FEAT_RME\` provides on the PE side. Just as a PE carries a security state, every device transaction carries a Stream ID resolved through the Stream Table and Context Descriptors into a translation, and the resulting physical access is then subject to GPC. An SMMU normally keys off a transaction’s StreamID to select which translations to apply, but some blocks, the GIC and the Debug Access Port among them, access memory without one. RME lets such StreamID-less transactions be granule-protection-checked while skipping stage 1 and stage 2 translation, bringing these previously-unmediated requesters inside the same protection boundary.
+
+## RME Device Assignment
+
+GPC prevents unwanted access to Realm memory, but the far more valuable capability is to *grant* it - to hand a GPU or NIC directly to a Realm at native speed and capabilities without the host being able to peer in. This is RME Device Assignment (RME-DA) and it is where CCA meets the [PCle TDISP ecosystem](https://pcisig.com/blog/ide-and-tdisp-overview-pcie%C2%AE-technology-security-features). 
+
+Under Device Assignment, a device is bound to a single Realm, and that Realm can attest it before letting it near any confidential data. Once assigned, the device is walled off from everything the Realm does not trust: other Realms and the hypervisor included. This protection extends to the device’s MMIO interfaces, caches and DMA. Assignment turns on the Realm’s own judgement. The device presents attestation evidence, measurements and certificates from its security manager which is appraised against a trusted reference before the Realm consents. That appraisal is typically delegated to a third-party verifier, but can also be performed locally. On that consent, the RMM drives the device through the TDISP (TEE Device Interface Security Protocol) state machine, assuming device support. Until a device has been attested and accepted, it says outside every Realm’s boundary by default.
+
+Architecturally, RME-DA extends the SMMU specification to support DMA out of Realm memory by adding a Realm-world programming interface, letting the RMM manage Realm streams aimed at device DMA. Other additions include a new structure to ensure that devices that cache their own address translations (PCI-ATS) cannot present addresses outside their Realm to the memory system.
+
+TDISP relies on a set of associated protocols during the Device Assignment flow, in order to securely communicate information between the RMM and device’s security manager. IDE (Integrity and Data Encryption) enables the link itself to be protected, to prevent PCI bus snooping from observing plaintext, by encrypting traffic between the PCI Root Port and device interface. The exact process of key programming and exchanging attestation and certificate information is out of scope for now. Interrupts (MSI-X) can also be contained within the Realm boundary: a TDISP-compatible device may issue MSIs configured via its protected MMIO region, which arrive at the SMMU with a Realm security attribute rather than Non-secure, so it may be safely translated against the Realm stream table.
+
+The end-to-end flow: the RMM transitions the device into a running state and enables the SMMU stream, after which the device can DMA out of the Realm’s address space; the DSM monitors the device’s configuration and, on detecting a violation, moves it into an error state from which only a reset - clearing any confidential information held in the device - is possible.
+
+There is substantial complexity in the full procedure. I implore you to explore Arm’s excellent “Learn the Architecture” docs for CCA and SMMU, or even watch the [DA Implementation Talk](https://www.youtube.com/watch?v=d8E_8yZXhuE&t=1481s) at Linaro Connect ‘25 to learn more. 
+
+## The software stack
+
+Hardware draws the boundaries; firmware manages what lives inside them, from a deliberately minimal trusted base. At EL3 in the Root world sits the Monitor, in practice a component of Trusted Firmware-A, owning the GPT, servicing granule delegation, and managing transitions between worlds. In the Realm world at R_EL2 runs the **Realm Management Monitor (RMM)**, the trusted component managing each Realm’s lifecycle; its open reference implementation, [TF-RMM](https://www.trustedfirmware.org/projects/tf-rmm/), is developed under Trusted Firmware. The RMM exposes the *Realm Management Interface* (RMI) to the host and the *Realm Services Interface* (RSI) to Realms. Alongside them, the Normal-world hypervisor and host OS keep doing what they always have - allocating resources, scheduling, and handling I/O - but launch and feed Realms only by asking the RMM through the RMI. The host controls *whether* a Realm runs and what it is offered; it is locked out of *what* the Realm computes. Availability stays with the host; confidentiality and integrity do not.
+
+In 2023-24, Linaro upstreamed RME extension support in QEMU system (TCG) emulation.
+
+Device Assignment support is actively being upstreamed into Linux: a 2025 patch series builds Arm CCA DA on the kernel’s TSM framework, threading device binding, IOMMU/`iommufd` integration, and guest attestation requests through both host and guest, against Arm's RME-DA architecture specification. KVM host support for the RME extensions is being upstreamed by Arm, while Linaro’s work continues to centre on providing an end-to-end solution building on this foundation. Namely, TF-A, RMM, KVM and 3rd party verification support.
+
+## Where this matters: use cases
+
+**Confidential cloud workloads.** Process regulated data - health records, financial transactions, Personally Identifiable Information (PII) - on public infrastructure while the operator schedules the compute without ever seeing it. The threat model shifts from trusting the provider to verifying the hardware.
+
+**Confidential AI and accelerated inference.** A use-case Device Assignment unlocks. A proprietary model’s weights stay confidential even from the host, the user’s prompt stays confidential from the model owner and, crucially, both can be processed on an attested GPU assigned directly to the Realm, rather than being trapped in CPU-only enclaves. This is what makes confidential computing viable for modern, accelerator-bound ML rather than only for lightweight CPU workloads.
+
+**Multi-party computation and data clean rooms.** Several parties each attest the exact code that will run, contribute inputs no one else (nor the host) can extract, and receive only an agreed aggregate. This forms a  neutral framework for activities such as cross-bank fraud models or pooled advertising measurement.
+
+**Security at the edge.** The same machinery applies to telecoms network functions on shared edge hardware or government workloads on distrusted infrastructure, with attestation supplying auditable proof of the deployed configuration.
+
+## In conclusion
+
+Arm CCA builds confidentiality in layers. The four-world split provides an isolated environment for Realms to run, Granule Protection enforces that isolation in hardware against an untrusted host, while the SMMU and RME Device Assignment carry that out to devices with full attestation and verification. Enabling this cross-cutting architecture in software is a massive undertaking, and one that is still ongoing; touching firmware (TF-A, TF-RMM), kernel, KVM and device F/W. Linaro is playing a key role in ensuring a secure foundation is available for vendors looking to integrate CCA into their system architecture today. Later in this series, we will explore the process of attestation, third-party verification and what a complete CCA solution looks like.
+
+
+Want to go deeper? We have an upcoming webinar on September 9th at 5:30 PM (BST): **Confidential Computing on Arm: Accelerating Trusted AI with Linaro.** Register [here](https://bit.ly/4frKV67).
+
+Look out for continuations in this series! Also, we offer engineering services, training courses and support on Confidential Computing. Visit our training portal: [here](https://bit.ly/4sKMnoO). 
+
+## 
+About the Author
+
+Benjamin Mordaunt is a Senior Engineer at Linaro, where he produces and delivers training materials on a variety of topics, as well as contributes to several software projects across the firmware space.
+
+He trained as an electronic engineer as an apprentice with Arm, and has spent almost a decade in the automotive and robotics industry, ensuring software can leverage the cutting-edge of Arm CPU/GPU features (SIMD, GPU partitioning and virtualisation) in a safety-critical environment.
+
+He is a contributor to TF-A and several compiler toolchains, and has consistently worked with the Linux kernel, RTOS’s and bootloader/firmware projects such as EDKII and U-Boot.
