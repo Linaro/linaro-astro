@@ -1,0 +1,70 @@
+---
+title: Reduce Hardware Validation OPEX and Cycle Times with ONELab v1.6.0
+description: "Linaro’s ONELab v1.6.0 release delivers full automated support for
+  Arm Architecture Compliance Suite (ACS) v3.1.2 and direct LAVA test
+  orchestration from the UI. "
+date: 2026-07-24T12:05:00.000Z
+author: mike-holmes
+tags:
+  - compliance
+  - iot-embedded
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784895217/linaro-website/IMG_3581_c7vuyb.png
+related: []
+---
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784894999/linaro-website/IMG_3650_hxueha.jpg)
+
+*Figure 1: ONELab v1.6.0 continuous validation workflow integrating UI test submission, LAVA orchestration, and Arm ACS v3.1.2 compliance payloads.*
+
+Linaro’s **ONELab v1.6.0** release delivers full automated support for **Arm Architecture Compliance Suite (ACS) v3.1.2** and direct **LAVA test orchestration** from the UI. By shifting from manual validation to continuous automated testing, silicon vendors, OEMs, and OS providers can cut platform verification cycles from weeks to hours, reduce testing OPEX by up to 75%, and ensure continuous readiness for regulatory standards like the **EU Cyber Resilience Act (CRA)**.
+
+## **Overview & Value Proposition**
+
+Validating firmware compliance across heterogeneous Arm fleets has historically been a manual, multi-week bottleneck that inflates Operational Expenditure (OPEX) and delays time-to-market.
+
+We are excited to announce the general availability of **ONELab v1.6.0**! This milestone update eliminates validation bottlenecks by introducing complete support for **Arm Architecture Compliance Suite (ACS) v3.1.2**, automated Linaro Automation and Validation Architecture (LAVA) orchestration, and direct UI job submission—enabling continuous, zero-touch verification for Arm SystemReady standards.
+
+## **What’s New in ONELab v1.6.0**
+
+ONELab streamlines device interoperability testing for silicon vendors, Original Equipment Manufacturers (OEMs), and operating system providers. Version 1.6.0 introduces four major capabilities:
+
+* **Arm ACS v3.1.2 Integration:** Full alignment with the latest compliance benchmarks for Arm SystemReady DT (Desktop/Server) and IR (IoT/Embedded) standards.
+* **Accelerated LAVA Orchestration:** Streamlined test automation covering target firmware flashing, payload execution, and log collection.
+* **Enhanced Dashboard Reporting:** Upgraded real-time status tracking, granular log capture, and public result publishing.
+* **Deeper insights into testing with full LAVA log visualisation** 
+* **Direct UI LAVA Job Submission:** Ability to submit custom, arbitrary LAVA test definitions directly through the ONELab interface without manual pipeline setup.
+
+## **Sample LAVA Job Definition**
+
+Below is a snippet of an arbitrary LAVA test job payload that engineers can now submit directly via the ONELab v1.6.0 UI
+
+```
+
+```
+
+
+Learn more about test definitions at [LAVA Docs ](https://lava.readthedocs.io/en/latest/)and running them at [LAA Docs](https://hub.linaro.com/library/laa/laa). Linaro supports many pre-written test cases and integrations, such as with [KernelCl Pull Labs | Linaro Solutions Hub  ](https://hub.linaro.com/pull-labs)
+
+## **Why ACS v3.1.2 Support Matters**
+
+The Arm Architecture Compliance Suite (ACS) is essential for verifying that hardware platforms conform to Arm SystemReady specifications. Integrating ACS v3.1.2 into ONELab’s continuous testing framework delivers key advantages:
+
+1. **75% Reduction in Validation Cycles:** Shift from multi-week manual bench testing to automated, continuous integration runs completed in hours.
+2. **Early Regression Detection:** Automatically catch firmware compliance breakages on every code check-in before deploying hardware to production.
+3. **Reduced Validation OPEX:** Eliminate dedicated manual testing lab costs through federated, automated lab orchestration.
+
+## **Strategic & Regulatory Impact (EU CRA & Upstream Sustainability)**
+
+As regulatory frameworks like the **EU Cyber Resilience Act (CRA)** mandate strict supply chain security and continuous vulnerability management, hardware vendors can no longer treat compliance as a point-in-time check.
+
+ONELab v1.6.0 provides an audit-ready, continuous verification baseline that ensures firmware and OS updates maintain SystemReady security and architectural integrity over the entire product lifecycle, while reinforcing upstream open-source sustainability through continuous testing against upstream Linux kernels and LAVA frameworks.
+
+## **Get Started & Next Steps**
+
+Whether you are validating continuous compliance for existing commercial fleets or onboarding new hardware prototypes, ONELab v1.6.0 provides the scalable infrastructure to prove interoperability with confidence.
+
+* **For Engineers & Developers:** Explore public compliance test results or inspect execution logs on the [ONELab Explore Board.](https://onelab.linaro.org)
+* **For Decision-Makers & Managers:** Ready to cut your platform validation OPEX? [Schedule an ONELab Onboarding Demonstration](https://www.linaro.org/contact/) with our engineering team or consultant the [ONELab Documentation.](https://docs.linaro.org)
+
+## **About the Author**
+
+**Mike Holmes** is the Senior Director of Products and Solutions at Linaro, where he leads the strategic development of continuous integration, open-source enablement, and automated validation ecosystems. With extensive experience bridging the gap between complex software stacks and physical hardware, Mike has spearheaded initiatives ranging from performance analysis tools to federated lab architectures. At Linaro, he is at the forefront of solving the embedded industry's most pressing challenges—helping organisations reduce time-to-market, navigate rigorous hardware compliance, and securely scale their test infrastructures in the face of new regulatory landscapes like the EU Cyber Resilience Act (CRA).
