@@ -9,7 +9,7 @@ tags:
 image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784994806/linaro-website/IMG_3655_dg17gv.png
 related: []
 ---
-In our last blog post, we talked about how to track Mainline Linux Kernel Performance in Cloud Environments. In this blog, we examine the architecture of a working Linux kernel performance regression detection system: how payloads are selected and test plans generated, how target kernels are built and benchmarks executed, and how results are processed into reproducible regression signals and visualised. The analysis distinguishes regressions that reproduce across the expected range of concurrency from effects that appear only at a single level. The system is built around existing kernel testing infrastructure - Linux Kernel Functional Testing ([LKFT](https://lkft.linaro.org/)) is a set of tools and projects providing a kernel *functional* testing service.
+In our [last blog ](https://bit.ly/4foMm6E)post, we talked about how to track Mainline Linux Kernel Performance in Cloud Environments. In this blog, we examine the architecture of a working Linux kernel performance regression detection system: how payloads are selected and test plans generated, how target kernels are built and benchmarks executed, and how results are processed into reproducible regression signals and visualised. The analysis distinguishes regressions that reproduce across the expected range of concurrency from effects that appear only at a single level. The system is built around existing kernel testing infrastructure - Linux Kernel Functional Testing ([LKFT](https://lkft.linaro.org/)) is a set of tools and projects providing a kernel *functional* testing service.
 
 ## **Goals and Boundaries**
 
@@ -19,7 +19,7 @@ The purpose of this system is to continuously produce decision-grade regression 
 
 The system is built around a simple separation into three layers - *execution* generates raw artifacts, *analytics* turns them into regression signals and *visualization*. The boundary between these layers is intentional: it makes every conclusion traceable to inputs - kernel source/build/env/benchmark parameters.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785162800/linaro-website/IMG_3670_qjdbko.jpg)
 
 The diagram maps the mentioned layers to exact components. First steps correspond to an execution path that produces benchmark outputs together with the required context: kernel version, build configuration, runtime parameters, system information, and benchmark parameters. This stage is triggered by new release tags in the target Linux repository. This ensures that every measurement is tied to a fully defined environment.
 
@@ -44,7 +44,7 @@ The analytics plane is responsible for turning raw artefacts into decision‑gra
 
   This design guarantees that the same data and logic always produce the same conclusions, regardless of how the results are explored.
 
-  ## **Payload Selection and Test Plan Generation**
+## **Payload Selection and Test Plan Generation**
 
 Performance testing requires precise control over what is tested and how. Pinnacle utility defines the payload - which kernel revisions to test, on which targets, with which benchmarks and parameters. It generates versioned TuxSuite plans that include:
 
@@ -114,11 +114,22 @@ These inputs are combined into a classification outcome:
 This process produces a structured, reproducible set of findings that can be directly surfaced to users for review, triage, or reporting.
 
 ```
+Classification Summary (1520 total regressions):
+================================================================================
+Red (247):
+  - futex3-threads/futex3 ops[2] exp:8472f8a828861511/6a79292489cdc639 (v6.16 / v6.17) -12.7% [Score: 87.5]
+  ...
+  - pthread_mutex1-threads/pthread_mutex1 ops[21] exp:8472f8a828861511/21e588a36c7405a9 (v6.16 / v6.17-rc2) -8.6% [Score: 87.5]
+  ...
+Yellow (319):
+  - execl/execl[128] exp:e9936429ec8ec111/4f238a19eafc138c (v6.3 / v6.4) -5.1% [Score: 67.5]
+  ...
+  - bad-altstack/bad-altstack ops[32] exp:6a242d0b0b587457/15d69162396d375e (v6.18-rc7 / v6.18) -5.3% [Score: 67.5]
+  ...
 
 ```
 
-
-**Systematic Regression Detection**
+## **Systematic Regression Detection**
 
 Not all regressions are equal. Some appear only at specific concurrency levels or on specific hardware configurations. Others are consistent across the full range of tested conditions. This step identifies the latter — systematic regressions — which more likely reflect general kernel behavior rather than scaling or platform-specific effects.
 
@@ -168,4 +179,4 @@ Reliable kernel performance testing requires more than running benchmarks, it re
 
 # **About the author**
 
-Konstantin specialises in automation across backend systems, infrastructure, data processing, testing and performance evaluation, with practical experience in Linux kernel benchmarking and regression analysis. He develops systems that automate engineering workflows and data analysis, and support regression investigation and root cause analysis. He also applies modern AI tools to accelerate analysis, streamline workflows and improve related processes.
+**Konstantin** specialises in automation across backend systems, infrastructure, data processing, testing and performance evaluation, with practical experience in Linux kernel benchmarking and regression analysis. He develops systems that automate engineering workflows and data analysis, and support regression investigation and root cause analysis. He also applies modern AI tools to accelerate analysis, streamline workflows and improve related processes.
