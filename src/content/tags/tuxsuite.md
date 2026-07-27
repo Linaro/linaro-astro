@@ -1,3 +1,3 @@
 ---
-name: "TuxSuite "
+name: TuxSuite
 ---
