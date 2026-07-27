@@ -126,7 +126,6 @@ Yellow (319):
   ...
   - bad-altstack/bad-altstack ops[32] exp:6a242d0b0b587457/15d69162396d375e (v6.18-rc7 / v6.18) -5.3% [Score: 67.5]
   ...
-
 ```
 
 ## **Systematic Regression Detection**
@@ -142,7 +141,20 @@ Systematic cases are ranked by severity and consistency score, and passed downst
 Here is sample output of this step:
 
 ```
-
+wis/futex3/futex3-threads[futex3 ops]
+  Kernels: v6.16 → v6.17-rc2
+  Experiments: 8472f8a828861511 vs 21e588a36c7405a9
+  Concurrency lvls affected: 10 (2, 5, 8, 12, 21, 30, 48, 79, 110, 128)
+  Severity: RED: 10
+  Avg Score: 87.5
+  Median diffs: [-12.45% to -11.36%]
+wis/futex3/futex3-threads[futex3 ops]
+  Kernels: v6.16 → v6.17-rc6
+  Experiments: 8472f8a828861511 vs 147689cb3269380f
+  Concurrency lvls affected: 10 (2, 5, 8, 12, 21, 30, 48, 79, 110, 128)
+  Severity: RED: 10
+  Avg Score: 87.5
+  Median diffs: [-12.39% to -11.15%]
 ```
 
 ## **Visualization**
@@ -153,15 +165,15 @@ The primary visualization tool is Percolator, which is a custom-build multi–pa
 
 * Kernel-level summary: Aggregated view showing the overall regression status per kernel version or experiment group.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785163718/linaro-website/IMG_3671_b0kcw7.jpg)
 
 * Benchmark suite overview: Breakdown of regressions and improvements by suite (e.g., stress-ng, unixbench).
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785163718/linaro-website/IMG_3672_ooo1dk.jpg)
 
 * Test-level drilldown: Detailed view of each test-operation-metric combination, with effect sizes, confidence levels, and trend plots.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785163718/linaro-website/IMG_3673_fkknuc.jpg)
 
 * Instance-level comparison: Direct comparison of raw benchmark outputs, logs, and environment metadata between baseline and target.
 
