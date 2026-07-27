@@ -38,88 +38,46 @@ ONELab streamlines device interoperability testing for silicon vendors, Original
 Below is a snippet of an arbitrary LAVA test job payload that engineers can now submit directly via the ONELab v1.6.0 UI
 
 ```
-
-```
-
 deploy:
-
     timeout:
-
       minutes: 15
-
     to: tftp
-
     kernel:
-
       url: https://firmwares....../Image
-
       type: image
-
     dtb:
-
       url: https://firmwares....../dtb
-
     nfsrootfs:
-
       compression: xz
-
       url: https://storage..../rootfs.tar.xz
-
     os: debian
-
-\- boot:
-
+- boot:
     method: u-boot
-
     commands: nfs
-
     auto_login:
-
       login_prompt: 'login:'
-
       username: root
-
     prompts:
-
-\- :~#
-
+    - :~#
     timeout:
-
       minutes: 5
-
-\- test:
-
+- test:
     timeout:
-
       minutes: 5
-
     definitions:
-
-\- from: inline
-
+    - from: inline
       repository:
-
         metadata:
-
           format: Lava-Test Test Definition 1.0
-
           name: commands
-
         run:
-
           steps:
-
-\- "lava-test-case command --shell echo 'Hello world'"
-
+      		- "lava-test-case command --shell echo 'Hello world'"
 from: inline
-
 path: command
-
 name: commands 
 
-
-
-
+```
 
 Learn more about test definitions at [LAVA Docs ](https://lava.readthedocs.io/en/latest/)and running them at [LAA Docs](https://hub.linaro.com/library/laa/laa). Linaro supports many pre-written test cases and integrations, such as with [KernelCl Pull Labs | Linaro Solutions Hub  ](https://hub.linaro.com/pull-labs)
 
