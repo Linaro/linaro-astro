@@ -137,19 +137,30 @@ export const server = {
 
           if (companySearch.entries && companySearch.entries.length > 0) {
             // Found existing company
-            companyId = companySearch.entries[0].id;
+            const existingCompany = companySearch.entries[0];
+            companyId = existingCompany.id;
             console.log("company exists: ", companyId);
+
+            // Backfill the country only when the company doesn't already have
+            // one, so we don't overwrite curated CRM data.
+            if (input.country && !existingCompany.country) {
+              await pipelineFetch(`/companies/${companyId}`, {
+                method: "PUT",
+                body: JSON.stringify({
+                  company: { country: input.country },
+                }),
+              });
+            }
           } else {
             // Create new company
+            const companyPayload: any = {
+              name: input.company,
+              owner_id: INBOUND_LEADS_ID,
+            };
+            if (input.country) companyPayload.country = input.country;
             const newCompany = await pipelineFetch("/companies", {
               method: "POST",
-              body: JSON.stringify({
-                company: {
-                  name: input.company,
-                  owner_id: INBOUND_LEADS_ID,
-                  // Optional: Add country/phone to company if desired
-                },
-              }),
+              body: JSON.stringify({ company: companyPayload }),
             });
             companyId = newCompany.id;
             console.log("company created:", companyId);
@@ -166,6 +177,21 @@ export const server = {
 
         if (personSearch.entries && personSearch.entries.length > 0) {
           personId = personSearch.entries[0].id;
+
+          // The create branch below is skipped for existing people, so update
+          // any provided fields here. Pipeline stores a person's country as
+          // `work_country` (there is no flat `country` field on People) and
+          // their job title as `position`.
+          const personUpdate: any = {};
+          if (input.country) personUpdate.work_country = input.country;
+          if (input.jobTitle) personUpdate.position = input.jobTitle;
+
+          if (Object.keys(personUpdate).length > 0) {
+            await pipelineFetch(`/people/${personId}`, {
+              method: "PUT",
+              body: JSON.stringify({ person: personUpdate }),
+            });
+          }
         } else {
           const personPayload: any = {
             first_name: input.firstName,
@@ -175,8 +201,8 @@ export const server = {
 
           if (input.phone) personPayload.phone = input.phone;
           if (companyId) personPayload.company_id = companyId; // Link to Company
-          if (input.jobTitle) personPayload.position_title = input.jobTitle;
-          if (input.country) personPayload.country = input.country;
+          if (input.jobTitle) personPayload.position = input.jobTitle;
+          if (input.country) personPayload.work_country = input.country;
           const newPerson = await pipelineFetch("/people", {
             method: "POST",
             body: JSON.stringify({ person: personPayload }),
