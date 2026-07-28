@@ -25,7 +25,6 @@ The challenge isn’t virtualization itself. It’s delivering a seamless user e
 
 Modern virtualization platforms can successfully run multiple operating systems on a single SoC. What remains difficult is creating a unified graphical user experience. Each guest OS typically manages its own display server and compositor, making it difficult to integrate application windows into a shared cockpit or industrial HMI.
 
-
 Developers often end up:
 
 * Duplicating UI layers
@@ -41,14 +40,13 @@ Before anything appears on your screen, the operating system performs a process 
 
 For a VM, the monitor is actually a virtual display. This serves as a graphics buffer that the host compositor uses to render to the physical monitor. Inside the VM, its own compositor decides where its applications appear. But from the host’s point of view, the VM’s output is just a blank texture—the host only sees the final image the VM gives it, not what happens inside.
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784724955/linaro-website/IMG_3631_u9z5ol.png)
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785165663/linaro-website/IMG_3675_jnhfdt.jpg)
 
 So how do we bridge the gap between virtualized apps and the physical display? The aim is to let the host’s compositor treat these virtual windows just like native ones, so they can appear smoothly alongside other host applications.
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784724955/linaro-website/IMG_3630_ckxzeu.png)
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785165662/linaro-website/IMG_3676_bv0zve.jpg)
 
-## 
-Core Technologies
+## Core Technologies
 
 To make host-based VM graphics composition work, we need to look at a few important open-source technologies that serve as building blocks.
 
@@ -82,20 +80,19 @@ Bringing these technologies together lets us run a variety of guest operating sy
 
 The system's architectural design, which supports both Wayland and cross-domain context, is straightforward and requires minimal setup—especially on Linux with [crosvm, ](https://crosvm.dev/book/introduction.html)a virtual machine monitor (VMM) similar to QEMU.
 
-
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784724955/linaro-website/IMG_3629_xzhhtt.png)
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785165769/linaro-website/IMG_3677_tlpyza.jpg)
 
  In the diagram above, the red arrow shows the flow of 3D graphics commands, while the yellow arrow traces the path of Wayland messages. When a guest system needs to render graphics, those requests pass through its graphics library (like Mesa), then move to the graphics context provided by virtio-gpu (such as virgl or venus), followed by rutabaga_gfx (the VMM backend implementation), and finally reach the host’s GPU. For Wayland messages, instead of going to the guest’s compositor, they’re sent to sommelier, then through the virtio-gpu cross-domain context, and ultimately to the host’s compositor. This approach lets the host compositor interact directly with guest applications, allowing their windows to be seamlessly integrated into the host desktop experience.
 
 Some systems, like Android, don’t support Wayland by default, so special adjustments are needed. Android relies on SurfaceFlinger as its compositor, which isn’t compatible with Wayland. That’s why Waydroid is essential—it brings Wayland support to Android, and together with sommelier, lets Android apps display seamlessly alongside other guest applications on the host.
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784724955/linaro-website/IMG_3628_vmdwfz.png)
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785165762/linaro-website/IMG_3678_jhoo7q.jpg)
 
 It takes a bit of work to get everything running smoothly, though. For instance, Waydroid was originally built for LineageOS and meant to run inside a Linux container, so it needs to be adapted for AOSP Cuttlefish. Likewise, sommelier has to be tweaked to build with AOSP’s Soong system.
 
 Lastly, for VMs running on a remote host—or in setups where cross-domain context isn’t available—graphics output can be managed differently.
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1784724955/linaro-website/IMG_3627_guqgdg.png)
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785165761/linaro-website/IMG_3679_nqhoih.jpg)
 
 Waypipe keeps the guest’s graphics buffer in sync with the host and also forwards Wayland messages between them.
 
@@ -134,3 +131,5 @@ Whether you’re building a next-generation digital cockpit, industrial HMI, med
 # About the Author
 
 Ryosuke Saito is an Embedded Systems and Kernel Engineer at Linaro, specializing in ARM architecture, virtualization, and low-level platform enablement. With over a decade of systems experience—including building Type-1 hypervisors on ARM, debugging kernel internals at Red Hat, and developing VirtIO device implementations in RTOS—his current work focuses on ARM board support, custom Yocto layer development, and Linux/RTOS integration. He has also contributed upstream patches to the Linux kernel, U-Boot, and Yocto projects.
+
+👉 **Co-contributor:** Koudai Iwahori (Waydroid porting for AOSP Cuttlefish)
