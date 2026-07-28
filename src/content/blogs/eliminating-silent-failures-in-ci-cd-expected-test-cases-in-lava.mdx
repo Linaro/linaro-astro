@@ -2,7 +2,7 @@
 title: "Eliminating Silent Failures in CI/CD: Expected Test Cases in LAVA"
 description: A passing test suite does not always mean all of your tests actually ran.
 date: 2026-07-27T14:51:00.000Z
-author: remi-duraffort-1
+author: remi-duraffort
 tags:
   - testing
   - compliance
@@ -16,7 +16,7 @@ The 2026.01 release of [LAVA (Linaro Automated Validation Architecture)](https:/
 
 The result is more trustworthy Continuous Integration and Continuous Delivery (CI/CD) pipelines, faster detection of regressions, and greater confidence in validation results.
 
-This feature was funded by [Schneider Electric ](https://www.se.com/)and implemented by [Linaro](https://linaro.org/) engineers as part of our ongoing work to improve the reliability and scalability of automated validation systems.
+This feature was funded by [Schneider Electric](https://www.se.com/) and implemented by [Linaro](https://linaro.org/) engineers as part of our ongoing work to improve the reliability and scalability of automated validation systems.
 
 ## The Problem: When Missing Tests Look Like Success
 
@@ -140,7 +140,6 @@ actions:
           from: git
           path: posix/smoke-tests-basic.yaml
           name: smoke-tests-basic
-
 ```
 
 
@@ -170,7 +169,6 @@ With LAVA 2026.01, the expected test cases can be declared directly within the j
           - linux-posix-ifconfig
           - linux-posix-lscpu
           - linux-posix-lsb_release
-
 ```
 
 
@@ -254,6 +252,6 @@ We would be happy to discuss how LAVA, automation infrastructure, and Linaro eng
 
 **Rémi Duraffort** is a computer engineer with 20 years of experience spanning multiple fields, from software and automation for embedded devices to cloud and scalable SaaS.
 
-Rémi contributed to multiple Open Source projects, including VLC or v8. Rémi is the maintainer and technical leader of LAVA, the open source testing automation software created by Linaro 20 years ago.
+Rémi contributed to multiple Open Source projects, including [VLC](https://www.videolan.org/vlc) or [V8](https://v8.dev/). Rémi is the maintainer and technical leader of [LAVA](https://lava.readthedocs.io), the open source testing automation software created by Linaro 20 years ago.
 
-In the last years, Rémi led the development of the Linaro Automation Appliance, one box that automates embedded device testing, from firmware to user-space, on your own hardware.
+In the last years, Rémi led the development of the [Linaro Automation Appliance](https://hub.linaro.com/library/laa/laa), one box that automates embedded device testing, from firmware to user-space, on your own hardware.
