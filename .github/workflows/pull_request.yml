@@ -96,6 +96,13 @@ jobs:
           node -v
           npm ci
 
+          # Clear any stale state lock left behind by a previously cancelled
+          # deploy for this stage. The workflow's concurrency group guarantees
+          # only one job per PR runs at a time, so any existing lock is orphaned
+          # (not a genuine concurrent deploy) and safe to remove.
+          echo "Clearing any stale SST lock..."
+          npx sst unlock --stage pr-${{ github.event.number }} || true
+
           echo "Starting deployment..."
           # Deploy and capture output
           # SST v3 prints outputs at the end. We capture stdout.
