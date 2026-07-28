@@ -1,0 +1,259 @@
+---
+title: "Eliminating Silent Failures in CI/CD: Expected Test Cases in LAVA"
+description: A passing test suite does not always mean all of your tests actually ran.
+date: 2026-07-27T14:51:00.000Z
+author: remi-duraffort-1
+tags:
+  - testing
+  - compliance
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785164650/linaro-website/IMG_3674_w4hluw.png
+related: []
+---
+A passing test suite does not always mean all of your tests actually ran.
+
+The 2026.01 release of [LAVA (Linaro Automated Validation Architecture)](https://www.lavasoftware.org/)  introduces **expected test cases**, a new capability that allows engineers to define exactly which test results a job must produce. Missing test results are automatically flagged as failures, turning silent gaps in test coverage into visible, actionable issues.
+
+
+The result is more trustworthy Continuous Integration and Continuous Delivery (CI/CD) pipelines, faster detection of regressions, and greater confidence in validation results.
+
+This feature was funded by [Schneider Electric ](https://www.se.com/)and implemented by [Linaro](https://linaro.org/) engineers as part of our ongoing work to improve the reliability and scalability of automated validation systems.
+
+## The Problem: When Missing Tests Look Like Success
+
+Modern software development relies heavily on automation. Every code change, kernel update, firmware revision, or platform integration can trigger hundreds or thousands of automated tests.
+
+Organizations depend on those test results to make decisions:
+
+* Can this software be released?
+* Is this regression fixed?
+* Is the platform stable enough for customers?
+* Can we safely upgrade a kernel, bootloader, or firmware component?
+* Have we maintained compliance with internal quality requirements?
+
+Most Continuous Integration systems are very good at identifying tests that fail.
+
+They are often much less effective at identifying tests that never ran.
+
+Consider a test suite that normally reports six test results. If a device crashes halfway through execution, a test harness encounters an unexpected error, a network outage interrupts reporting, or an infrastructure issue prevents later tests from running, only a subset of the expected results may be recorded.
+
+Those recorded tests may all report **PASS**.
+
+At first glance, the dashboard appears healthy.
+
+The problem is that several tests are never executed at all.
+
+In many environments, these missing tests can remain unnoticed for days or weeks. Engineers reviewing dashboards see green results and move on. Release processes continue. Validation coverage silently decreases.
+
+The danger is not necessarily that a failing test is hidden.
+
+The danger is that **the absence of a test result is rarely treated as a failure condition.**
+
+## Why This Matters
+
+Silent failures create a dangerous form of false confidence.
+
+A missing test result can be caused by:
+
+* Device instability
+* Infrastructure failures
+* Test framework regressions
+* Boot failures
+* Network interruptions
+* Timeout conditions
+* Changes to the test suite itself
+
+In all of these cases, teams may believe functionality was validated when it was not.
+
+For organizations shipping embedded systems, industrial devices, automotive software, networking products, or cloud infrastructure, this can translate into:
+
+* Increased debugging effort
+* Longer validation cycles
+* Reduced trust in CI/CD results
+* Delayed regression detection
+* Higher operational costs
+
+The larger the test infrastructure becomes, the harder these problems are to detect manually.
+
+This challenge was recognized by Schneider Electric, which worked with Linaro to address a common but often overlooked weakness in automated validation workflows.
+
+## A Better Approach: Treat Test Completeness as a Requirement
+
+The key insight behind this feature is straightforward:
+
+A test suite should not only verify whether tests pass or fail.
+
+It should also verify that all expected tests actually ran.
+
+Starting with LAVA 2026.01, job submitters can define the complete set of test cases that must be reported during execution.
+
+At the end of a test action, LAVA compares the expected list against the results it actually received.
+
+If any expected test case is missing, LAVA automatically records that test as failed.
+
+The absence of a result becomes an explicit failure condition.
+
+This transforms test completeness from an implicit assumption into an enforceable contract.
+
+# What Is LAVA?
+
+[LAVA (Linaro Automated Validation Architecture)](https://www.lavasoftware.org/) is an open-source automated testing framework designed to validate software on real hardware.
+
+LAVA is widely used to automate testing for:
+
+* Linux kernels
+* Embedded Linux platforms
+* Firmware
+* Bootloaders
+* Android systems
+* Operating system distributions
+* Silicon enablement programs
+
+LAVA enables organizations to deploy software, boot physical devices, execute test suites, collect results, and integrate those results into broader CI/CD workflows.
+
+Learn more about LAVA: https://lava.readthedocs.io/
+
+## Example: A Standard LAVA Test Job
+
+The following job deploys a Debian container, boots it, and executes a simple test suite.
+
+```
+actions:
+  - deploy:
+      to: docker
+      image: debian:trixie
+      timeout:
+        minutes: 5
+
+  - boot:
+      command: bash
+      method: docker
+      prompts:
+        - "root@lava:/#"
+      timeout:
+        minutes: 2
+
+  - test:
+      timeout:
+        minutes: 5
+      definitions:
+        - repository: https://gitlab.com/lava/functional-tests.git
+          from: git
+          path: posix/smoke-tests-basic.yaml
+          name: smoke-tests-basic
+
+```
+
+
+Under normal circumstances, this job reports six test cases.
+
+However, if the container crashes, the test definition changes unexpectedly, or execution terminates early, some results may never be recorded.
+
+Historically, those missing results could be difficult to identify.
+
+## Expected Test Cases in Action
+
+With LAVA 2026.01, the expected test cases can be declared directly within the job definition.
+
+```
+- test:
+    timeout:
+      minutes: 5
+    definitions:
+      - repository: https://gitlab.com/lava/functional-tests.git
+        from: git
+        path: posix/smoke-tests-basic.yaml
+        name: smoke-tests-basic
+        expected:
+          - linux-posix-pwd
+          - linux-posix-uname
+          - linux-posix-vmstat
+          - linux-posix-ifconfig
+          - linux-posix-lscpu
+          - linux-posix-lsb_release
+
+```
+
+
+At the end of execution, LAVA validates that every expected result was reported.
+
+If any expected test case is missing, LAVA automatically records it as a failure.
+
+The resulting test report accurately reflects both execution status and coverage completeness.
+
+## Detecting Unexpected Results
+
+The feature also works in the opposite direction.
+
+If a test suite produces results that are not listed in the expected set, LAVA flags those results as failures.
+
+This helps detect:
+
+* Test suite drift
+* Misconfigured test definitions
+* Unexpected reporting behavior
+* Synchronization issues between job definitions and test suites
+
+By validating both missing and unexpected results, LAVA ensures that the reported outcome precisely matches the job author's intent.
+
+## Why Linaro's Approach Matters
+
+Many organizations encounter this problem.
+
+Far fewer solve it in a way that scales across large validation infrastructures.
+
+What makes this feature particularly valuable is that the validation logic is embedded directly within the job definition itself.
+
+The job becomes self-describing.
+
+The expected behavior, execution process, and validation criteria are all defined in a single place.
+
+This aligns with broader engineering principles that Linaro promotes across its projects:
+
+* Infrastructure as Code
+* Reproducible automation
+* Transparent validation
+* Scalable CI/CD architectures
+
+The result is a system that is easier to audit, easier to maintain, and less dependent on manual oversight.
+
+For organizations operating large test farms or validating software across hundreds of devices, those advantages quickly compound.
+
+## Beyond a Feature: Improving Trust in Validation
+
+Expected test cases are not simply a convenience feature.
+
+They improve the reliability of the information that engineering teams use to make decisions.
+
+When a validation pipeline reports success, engineers should be able to trust that:
+
+* The tests ran.
+* The expected results were reported.
+* Missing coverage was not silently ignored.
+
+That trust becomes increasingly important as organizations scale automation efforts across larger hardware fleets and more complex software stacks.
+
+This work is an excellent example of how collaboration between industry partners and Linaro engineering test automation teams produces practical improvements that solve real-world problems.
+
+# Learn More
+
+Documentation for expected test cases and other LAVA features is available at: [https://lava.readthedocs.io/](https://lava.readthedocs.io/)
+
+The LAVA project continues to evolve through contributions from Linaro engineers, industry partners, and the broader open-source community.
+
+## Need Help Improving Your Validation Infrastructure?
+
+Linaro helps organizations design, deploy, scale, and optimize automated validation systems for embedded, cloud, mobile, and infrastructure platforms.
+
+Whether you are building a new test lab, modernizing an existing validation pipeline, integrating hardware into CI/CD workflows, or scaling automated testing across large device fleets, Linaro's engineering teams can help.
+
+To learn more or discuss your requirements, [contact Linaro.](https://bit.ly/4cGJsZW)
+
+We would be happy to discuss how LAVA, automation infrastructure, and Linaro engineering services can help improve the reliability and efficiency of your software validation processes.
+
+# About the Author
+
+**Rémi Duraffort** is a computer engineer with 20 years of experience spanning multiple fields, from software and automation for embedded devices to cloud and scalable SaaS.
+
+Rémi contributed to multiple Open Source projects, including VLC or v8. Rémi is the maintainer and technical leader of LAVA, the open source testing automation software created by Linaro 20 years ago.
+
+In the last years, Rémi led the development of the Linaro Automation Appliance, one box that automates embedded device testing, from firmware to user-space, on your own hardware.
