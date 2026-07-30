@@ -15,6 +15,12 @@ const PIPELINE_CRM_APP_KEY = getEnv("PIPELINE_CRM_APP_KEY");
 
 const INBOUND_LEADS_ID = 843111;
 
+// The name of the lead source (Pipeline CRM's "Source" column) that all
+// website form submissions should be attributed to. This must match a lead
+// source that already exists in the Pipeline CRM account (Settings > Lead
+// Sources); matching is case-insensitive.
+const WEBSITE_LEAD_SOURCE_NAME = "Website (contactus@linaro.org) & Webform";
+
 const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
   if (!PIPELINE_CRM_API_KEY) throw new Error("PIPELINE_CRM_API_KEY is missing");
   if (!PIPELINE_CRM_APP_KEY) throw new Error("PIPELINE_CRM_APP_KEY is missing");
@@ -41,6 +47,44 @@ const pipelineFetch = async (endpoint: string, options: RequestInit = {}) => {
   }
 
   return res.json();
+};
+
+// Resolve (and cache) the Pipeline CRM lead source id for website submissions.
+// Pipeline exposes the "Source" column on a person via `lead_source_id`, which
+// must reference an existing lead source. We look it up by name once and reuse
+// it for the lifetime of the server process.
+let cachedWebsiteLeadSourceId: number | null = null;
+
+const getWebsiteLeadSourceId = async (): Promise<number | null> => {
+  if (cachedWebsiteLeadSourceId !== null) return cachedWebsiteLeadSourceId;
+
+  try {
+    const res = await pipelineFetch("/admin/lead_sources");
+    const sources = Array.isArray(res) ? res : res.entries || [];
+
+    const match = sources.find(
+      (s: any) =>
+        typeof s?.name === "string" &&
+        s.name.trim().toLowerCase() ===
+          WEBSITE_LEAD_SOURCE_NAME.toLowerCase(),
+    );
+
+    if (match?.id) {
+      cachedWebsiteLeadSourceId = match.id;
+      console.log(
+        `[CRM-DEBUG] Resolved "${WEBSITE_LEAD_SOURCE_NAME}" lead source id:`,
+        match.id,
+      );
+    } else {
+      console.warn(
+        `[CRM-DEBUG] No lead source named "${WEBSITE_LEAD_SOURCE_NAME}" found in Pipeline CRM. The Source column will be left blank.`,
+      );
+    }
+  } catch (e) {
+    console.error("[CRM-DEBUG] Failed to fetch lead sources:", e);
+  }
+
+  return cachedWebsiteLeadSourceId;
 };
 
 export const craSubmit = defineAction({
@@ -128,6 +172,10 @@ export const server = {
         let companyId: number | null = null;
         let personId: number | null = null;
 
+        // Resolve the "Website" lead source so leads show the correct Source
+        // in Pipeline CRM.
+        const websiteLeadSourceId = await getWebsiteLeadSourceId();
+
         // A. Handle Company
         if (input.company) {
           // Check for exact match
@@ -185,6 +233,14 @@ export const server = {
           const personUpdate: any = {};
           if (input.country) personUpdate.work_country = input.country;
           if (input.jobTitle) personUpdate.position = input.jobTitle;
+          // Only stamp the source when the person doesn't already have one, so
+          // we don't overwrite an existing (possibly more specific) source.
+          if (
+            websiteLeadSourceId &&
+            !personSearch.entries[0].lead_source_id
+          ) {
+            personUpdate.lead_source_id = websiteLeadSourceId;
+          }
 
           if (Object.keys(personUpdate).length > 0) {
             await pipelineFetch(`/people/${personId}`, {
@@ -203,6 +259,8 @@ export const server = {
           if (companyId) personPayload.company_id = companyId; // Link to Company
           if (input.jobTitle) personPayload.position = input.jobTitle;
           if (input.country) personPayload.work_country = input.country;
+          if (websiteLeadSourceId)
+            personPayload.lead_source_id = websiteLeadSourceId;
           const newPerson = await pipelineFetch("/people", {
             method: "POST",
             body: JSON.stringify({ person: personPayload }),
