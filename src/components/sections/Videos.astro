@@ -27,7 +27,7 @@ function getYouTubeThumbnail(url: string): string {
       const thumbnail = video.thumbnail || getYouTubeThumbnail(video.src);
 
       return (
-        <li class:list={[styles?.card]} class="w-full max-w-md">
+        <li class:list={["w-full", styles?.card ?? "max-w-md"]}>
           {isYouTube ? (
             <a
               href={video.src}
@@ -49,13 +49,12 @@ function getYouTubeThumbnail(url: string): string {
             <video
               src={video.src}
               poster={video.thumbnail}
-              onmouseover="this.setAttribute('controls','controls')"
-              onmouseout="this.removeAttribute('controls')"
+              controls
               class:list={[
                 styles?.video,
-                "rounded-xl w-full aspect-video object-cover",
+                "rounded-xl w-full aspect-video object-contain",
               ]}
-              preload="none"
+              preload="metadata"
             />
           )}
 
