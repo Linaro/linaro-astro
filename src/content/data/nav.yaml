@@ -11,6 +11,8 @@
       url: /services/nxp-platform-services
     - label: Test Automation
       url: /services/testingandautomation
+    - label: Virtualization
+      url: /services/virtualization
 - label: Solutions
   key: solutions
   children:

@@ -1,0 +1,136 @@
+---
+import type { processWheelSchema } from "@/content/schemas/sections";
+import type { z } from "astro/zod";
+import { marked } from "marked";
+
+type Props = z.infer<typeof processWheelSchema>;
+
+const { steps, center_label, styles } = Astro.props;
+
+// Position the numbered nodes on the ring (top, right, bottom, left).
+const nodePositions = [
+  { cx: 160, cy: 40 },
+  { cx: 280, cy: 160 },
+  { cx: 160, cy: 280 },
+  { cx: 40, cy: 160 },
+];
+const nodes = steps.slice(0, 4);
+const centerLines = (center_label ?? "").split("\n");
+---
+
+<div
+  class:list={[
+    "grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-16 items-center max-w-6xl mx-auto",
+    styles?.container,
+  ]}
+>
+  <!-- Circular process graphic -->
+  <div
+    class:list={[
+      "w-full max-w-md mx-auto lg:max-w-none lg:mx-0",
+      styles?.wheel,
+    ]}
+  >
+    <svg
+      viewBox="0 0 320 320"
+      role="img"
+      aria-label="Four-stage engagement cycle"
+      class="w-full h-auto"
+    >
+      <defs>
+        <linearGradient id="processWheelGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffce00"></stop>
+          <stop offset="100%" stop-color="#6715e8"></stop>
+        </linearGradient>
+      </defs>
+
+      <!-- Segmented gradient ring -->
+      <circle
+        cx="160"
+        cy="160"
+        r="120"
+        fill="none"
+        stroke="url(#processWheelGradient)"
+        stroke-width="16"
+        stroke-dasharray="168 20"
+        stroke-linecap="round"
+        transform="rotate(-90 160 160)"></circle>
+
+      <!-- Inner disc -->
+      <circle cx="160" cy="160" r="86" fill="#222025" stroke="rgba(255,255,255,0.15)"></circle>
+      {
+        centerLines.map((line, i) => (
+          <text
+            x="160"
+            y={160 - (centerLines.length - 1) * 11 + i * 22}
+            text-anchor="middle"
+            dominant-baseline="middle"
+            font-size="16"
+            font-weight="700"
+            fill="#ffffff"
+          >
+            {line}
+          </text>
+        ))
+      }
+
+      <!-- Numbered nodes -->
+      {
+        nodes.map((_, i) => (
+          <>
+            <circle
+              cx={nodePositions[i].cx}
+              cy={nodePositions[i].cy}
+              r="19"
+              fill="url(#processWheelGradient)"
+            />
+            <text
+              x={nodePositions[i].cx}
+              y={nodePositions[i].cy}
+              text-anchor="middle"
+              dominant-baseline="central"
+              font-size="16"
+              font-weight="700"
+              fill="#ffffff"
+            >
+              {i + 1}
+            </text>
+          </>
+        ))
+      }
+    </svg>
+  </div>
+
+  <!-- Numbered steps -->
+  <ol class="list-none p-0 m-0 flex flex-col gap-6">
+    {
+      steps.map((step, index) => (
+        <li class="flex items-start gap-5">
+          <div
+            class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 shrink-0 relative z-10"
+            style="padding: 2px; border-radius: 9999px; background: linear-gradient(180deg, #FFCE00 0%, #6715E8 100%);"
+            aria-hidden="true"
+          >
+            <div
+              class="w-full h-full rounded-full flex items-center justify-center"
+              style="background-color: #222025;"
+            >
+              <span class="linaro-gradient-text text-xl sm:text-2xl font-bold">
+                {index + 1}
+              </span>
+            </div>
+          </div>
+          <div class="text-left">
+            <h3 class="text-xl sm:text-2xl font-bold text-white !my-0">
+              {step.title}
+            </h3>
+            <div
+              class="text-lg text-white/90 prose-a:text-blue-300 mt-1"
+              set:html={marked.parse(step.text)}
+            />
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>
