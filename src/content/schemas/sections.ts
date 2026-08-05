@@ -564,6 +564,23 @@ export const ctaBlockSchema = z.object({
   styles: z.object({ container: z.string().optional(), subtext: z.string().optional() }).optional(),
 });
 
+export const processWheelSchema = z.object({
+  component: component("process_wheel"),
+  center_label: z.string().optional(),
+  styles: z
+    .object({
+      container: z.string().optional(),
+      wheel: z.string().optional(),
+    })
+    .optional(),
+  steps: z.array(
+    z.object({
+      title: z.string(),
+      text: z.string(),
+    }),
+  ),
+});
+
 export const expandingCardsSchema = z.object({
   component: component("expandingcards"),
   styles: z
@@ -628,4 +645,5 @@ export default z.discriminatedUnion("component", [
   neutrumEvidenceCtaSchema,
   ctaBlockSchema,
   expandingCardsSchema,
+  processWheelSchema,
 ]);

@@ -9,6 +9,9 @@ hero:
   background_image: linaro-website/graphics/testingandautomation-bg.png
   description: |
     Whether you need to develop software before silicon exists, scale your CI without a hardware farm, or ship standardized virtual devices that let guest VMs run unchanged across multiple platforms, Linaro can help you unlock the full potential of virtualization on Arm.
+  button:
+    text: Book a Discovery Call
+    url: /contact
   styles:
     text_container: max-w-2xl
     title: max-w-2xl mb-12
@@ -16,6 +19,21 @@ hero:
     background: bg-right-top xl:bg-right
     background_container: p-[5%] md:ml-[5%]
 flow:
+  - row: container_row
+    styles:
+      outer: bg-background
+      inner: py-16 md:py-20
+    sections:
+      - component: stat_grid
+        stats:
+          - value: 70
+            label: QEMU subsystems with a Linaro maintainer
+          - value: 90
+            label: "% of Arm CPU emulation features contributed by Linaro"
+          - value: 80
+            label: "% of Arm-related QEMU patches authored or reviewed over the past 5 years"
+          - value: 2
+            label: "OASIS VirtIO specifications authored: virtio-msg and virtio-wifi"
   - row: container_row
     title: Why Choose Linaro for Virtualization?
     styles:
@@ -149,6 +167,29 @@ flow:
             secondIcon: linaro-website/graphics/circle-gradient-border
             flip_image: true
   - row: container_row
+    title: How We Work With You
+    styles:
+      outer: bg-background
+      inner: py-16 lg:py-24 px-4 md:px-8
+    sections:
+      - component: process_wheel
+        center_label: |
+          Scope
+          to upstream
+        steps:
+          - title: Assessment
+            text: |
+              We work out which parts of your platform are worth emulating and which are not, and what the emulation has to be faithful about to be useful to your software teams.
+          - title: Modelling & Development
+            text: |
+              Device models, VirtIO backends and firmware bring-up against the emulated platform, developed in the open where possible and under NDA where it has to be.
+          - title: Validation & Compliance
+            text: |
+              Conformance against the VirtIO specification and architecture requirements, wired into emulation-backed CI through ONELab so regressions surface on every change.
+          - title: Upstreaming & Maintenance
+            text: |
+              We carry the work through upstream review and keep it merged, so the community maintains it and you stop paying to rebase it every release.
+  - row: container_row
     title: Proof Points
     sections:
       - component: cards
@@ -167,23 +208,6 @@ flow:
               * Our engineers implement new OASIS VirtIO specifications, including virtio-msg and virtio-wifi.
               * We help maintain key components such as vhost-user in both rust-vmm and QEMU, alongside the corresponding kernel drivers.
               * We collaborate across adjacent areas including specification compliance and CI/CD.
-  - row: container_row
-    title: Commercial Offerings
-    sections:
-      - component: cards
-        styles:
-          container: mx-auto flex justify-around my-24 prose-a:break-all border-2 border-grey rounded-3xl p-6 gap-16
-          card: w-[50ch] text-left
-          card_title: text-2xl
-        cards:
-          - text: |
-              * QEMU emulation and virtualization consulting
-              * Custom device emulation
-              * VirtIO and vhost-user development services
-              * OASIS specification design
-              * Compliance testing enablement
-              * Performance optimization
-              * Code upstreaming
   - row: container_row
     no_border: true
     styles:
