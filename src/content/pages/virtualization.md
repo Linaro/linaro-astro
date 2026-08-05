@@ -1,6 +1,6 @@
 ---
 slug: services/virtualization
-title: Open Source Virtualization
+title: Virtualization
 description: |
   Work with the Experts Who Build and Maintain Open Source Virtualization
 hero:
