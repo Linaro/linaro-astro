@@ -33,7 +33,7 @@ flow:
           - value: 80
             label: "% of Arm-related QEMU patches authored or reviewed over the past 5 years"
           - value: 2
-            label: "OASIS VirtIO specifications authored: virtio-msg and virtio-wifi"
+            label: "OASIS VirtIO specifications authored"
   - row: container_row
     title: Why Choose Linaro for Virtualization?
     styles:
@@ -115,11 +115,11 @@ flow:
             text: |
               ### OASIS specification design
 
-              We author and implement new specifications, including virtio-msg and virtio-wifi, and can drive your requirements through the standards process.
+              We author and implement new specifications and can drive your requirements through the standards process.
 
               ### Device and backend implementation
 
-              The virtio and vhost-user device layer: virtio-gpu, virtio-snd, and vhost-user-rng, -gpio, -snd and -rtc, among others.
+              The virtio and vhost-user device layer: virtio-gpu, virtio-snd, virtio-media, and vhost-user-rng, -gpio, -snd and -rtc, among others.
 
               ### Kernel and userspace
 
@@ -205,7 +205,7 @@ flow:
               * Our maintainers not only write code but set the strategic technical direction of the project.
               * Linaro has contributed — authored or reviewed — more than 80% of Arm-related patches and over 50% of overall QEMU patches over the past five years.
               * Responsible for the project's own governance, developer guides, CI infrastructure, and general administration.
-              * Our engineers implement new OASIS VirtIO specifications, including virtio-msg and virtio-wifi.
+              * Our engineers implement new OASIS VirtIO specifications.
               * We help maintain key components such as vhost-user in both rust-vmm and QEMU, alongside the corresponding kernel drivers.
               * We collaborate across adjacent areas including specification compliance and CI/CD.
   - row: container_row
