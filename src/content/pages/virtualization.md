@@ -77,6 +77,7 @@ flow:
           video: rounded-xl
         videos:
           - src: https://static.linaro.org/videos/virtualization_with_timelines.mp4
+            thumbnail: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1786013093/linaro-website/graphics/virtualization-video-poster-image_besjpt.webp
   - row: container_row
     title: Linaro’s Expertise Across the Virtualization Stack
     styles:
