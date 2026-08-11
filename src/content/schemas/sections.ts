@@ -11,12 +11,14 @@ export const buttonsSchema = z.object({
         text: z.string(),
         url: z.string(),
         style: z.string(),
+        cta_id: z.string().optional(),
       }),
       z.object({
         type: z.literal("insight"),
         button_text: z.string(),
         formName: z.string(),
         style: z.string().optional(),
+        cta_id: z.string().optional(),
       }),
     ]),
   ),
@@ -91,6 +93,7 @@ export const cardsSchema = z.object({
         .object({
           text: z.string(),
           url: z.string(),
+          cta_id: z.string().optional(),
         })
         .optional(),
       image: z
@@ -108,6 +111,7 @@ export const cardsSchema = z.object({
           type: z.string(),
           title: z.string().optional(),
           formName: z.string(),
+          cta_id: z.string().optional(),
         })
         .optional(),
     }),
@@ -478,6 +482,7 @@ export const largeCardSchema = z.object({
         .object({
           text: z.string(),
           url: z.string(),
+          cta_id: z.string().optional(),
         })
         .optional(),
     }),
@@ -561,6 +566,7 @@ export const ctaBlockSchema = z.object({
   subtext: z.string(),
   button_text: z.string(),
   button_url: z.string(),
+  cta_id: z.string().optional(),
   styles: z.object({ container: z.string().optional(), subtext: z.string().optional() }).optional(),
 });
 

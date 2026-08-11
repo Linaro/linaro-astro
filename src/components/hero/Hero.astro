@@ -118,6 +118,7 @@ const descriptionMarkdown = description
               <a
                 href={button.url}
                 target={button.url.startsWith("https://") ? "_blank" : "self"}
+                data-cta-id={button.cta_id}
                 class="mt-12 no-underline inline-block"
               >
                 <div class="linaro-gradient-button">{button.text}</div>
