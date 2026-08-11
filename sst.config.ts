@@ -70,13 +70,14 @@ export default $config({
 
     // This is *TEMPORARILY* needed because of a bug between SST v3
     // and Pulumi, missing out an additional permission required by AWS.
+    // dependsOn ensures this doesn't race with SST's own FunctionUrl permission.
     if (site?.nodes?.server) {
       new aws.lambda.Permission("MyServiceInvokePermission", {
         action: "lambda:InvokeFunction",
         function: site.nodes.server.name,
         principal: "*",
         statementId: "FunctionURLInvokeAllowPublicAccess",
-      });
+      }, { dependsOn: [site.nodes.server] });
     }
 
     return {
