@@ -35,20 +35,20 @@ const { cards, styles } = Astro.props;
               ]}
             >
               {secondIcon ? (
-                <div class="basis-2/5 grow-[1] relative">
+                <div class="basis-2/5 grow-[1] flex items-center justify-center relative min-h-[200px]">
                   <CloudinaryImg
                     src="linaro-website/graphics/circle-gradient-border"
                     alt="circle"
                     height={200}
                     width={200}
-                    class="absolute not-prose top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    class="absolute not-prose inset-0 m-auto"
                   />
 
                   <Icon
                     name={icon}
                     size={100}
                     class:list={[
-                      "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+                      "relative z-10",
                       styles?.icon,
                     ]}
                   />

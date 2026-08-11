@@ -71,6 +71,15 @@ jobs:
           NODE_OPTIONS: --experimental-wasm-modules
           IS_PUBLIC: "true"
           IS_PREVIEW: "true"
+          # The Cloudinary cloud name and API key are public identifiers
+          # (visible in every image URL on the live site). They are not
+          # secrets and are safe to hardcode here for the build.
+          CLOUDINARY_CLOUD_NAME: "dl7c2wmhi"
+          CLOUDINARY_API_KEY: "166967243526213"
+          PUBLIC_CLOUDINARY_CLOUD_NAME: "dl7c2wmhi"
+          # Decap CMS config generation needs this; value is irrelevant
+          # for build validation — real value used in deploy workflow.
+          DECAP_DOMAIN: "https://placeholder.invalid"
         run: npm run build
 
       - name: Save PR metadata
@@ -83,7 +92,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: site-build-pr-${{ github.event.number }}
+          name: site-build
           path: |
             dist/
             build-metadata/
