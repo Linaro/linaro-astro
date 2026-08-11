@@ -78,6 +78,9 @@ jobs:
           DECAP_DOMAIN: "https://placeholder.invalid"
           CLOUDINARY_CLOUD_NAME: "placeholder"
           CLOUDINARY_API_KEY: "placeholder"
+          # astro-cloudinary reads this via import.meta.env at build time
+          # for OG image URL generation (BaseHead.astro):
+          PUBLIC_CLOUDINARY_CLOUD_NAME: "placeholder"
         run: npm run build
 
       - name: Save PR metadata
