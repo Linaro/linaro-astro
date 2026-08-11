@@ -1,0 +1,95 @@
+name: Build PR Artifact
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+# Cancel in-progress jobs or runs for the current pull request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22.15.0"
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Fetch git repository
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: "0"
+
+      - name: Create local main branch
+        run: git fetch origin main:main || true
+
+      - name: Restore main cache first
+        uses: actions/cache/restore@v5
+        id: main-cache
+        with:
+          path: cache
+          key: cache-main
+
+      - name: Restore PR cache
+        uses: actions/cache/restore@v5
+        id: pr-cache
+        with:
+          path: cache
+          key: cache-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            cache-${{ github.sha }}-
+            cache-main
+
+      - name: Initialise status
+        run: |
+          export STATUSES_URL=$(jq -r ".pull_request.statuses_url" $GITHUB_EVENT_PATH)
+          export DATA='{"state": "pending", "target_url": "", "context": "Deploy preview", "description": "Waiting for site to build"}'
+          curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL"
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge test branch
+        uses: linaro-its/merge-test-branch@v2.7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro Site
+        env:
+          NODE_OPTIONS: --experimental-wasm-modules
+          IS_PUBLIC: "true"
+          IS_PREVIEW: "true"
+        run: npm run build
+
+      - name: Save PR metadata
+        run: |
+          mkdir -p build-metadata
+          echo "${{ github.event.number }}" > build-metadata/pr_number.txt
+          echo "${{ github.sha }}" > build-metadata/commit_sha.txt
+          jq -r ".pull_request.statuses_url" $GITHUB_EVENT_PATH > build-metadata/statuses_url.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build-pr-${{ github.event.number }}
+          path: |
+            dist/
+            build-metadata/
+
+      - name: Save PR cache
+        uses: actions/cache/save@v5
+        with:
+          path: cache
+          key: cache-${{ github.sha }}-${{ github.run_id }}
