@@ -38,9 +38,16 @@ jobs:
 
       - name: Remove SST Stage
         run: |
-          npx sst remove --stage pr-${{ github.event.number }}
+          # Only attempt removal if the stage actually exists. If the deploy
+          # workflow never ran (e.g. build failed, or PR closed before deploy),
+          # there's nothing to tear down.
+          if npx sst unlock --stage pr-${{ github.event.number }} 2>/dev/null; then
+            echo "Stage exists, removing..."
+            npx sst remove --stage pr-${{ github.event.number }}
+          else
+            echo "No stage found for pr-${{ github.event.number }}, nothing to clean up."
+          fi
         env:
-          # Pass necessary env vars if sst remove needs them to load config (it typically does)
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
@@ -48,5 +55,4 @@ jobs:
           PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
           PUBLIC_FRIENDLY_CAPTCHA_SITEKEY: ${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
           FRIENDLY_CAPTCHA_API_KEY: ${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
-          # Mock customs/others even if not used in remove, to satisfy config validation
           CUSTOM_DOMAIN: "linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"

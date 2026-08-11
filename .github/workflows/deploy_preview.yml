@@ -1,0 +1,149 @@
+name: Deploy Preview
+
+on:
+  workflow_run:
+    workflows: ["Build PR Artifact"]
+    types:
+      - completed
+
+# Cancel in-progress jobs or runs for the same head branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22.15.0"
+
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+  id-token: write
+  actions: read
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    # Only run if the triggering workflow succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-build-pr-${{ github.event.workflow_run.pull_requests[0].number }}
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read PR metadata
+        id: pr
+        run: |
+          echo "PR_NUM=$(cat build-metadata/pr_number.txt)" >> $GITHUB_OUTPUT
+          echo "COMMIT_SHA=$(cat build-metadata/commit_sha.txt)" >> $GITHUB_OUTPUT
+          echo "STATUSES_URL=$(cat build-metadata/statuses_url.txt)" >> $GITHUB_OUTPUT
+
+      - name: Fetch git repository
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: "0"
+
+      - name: Create local main branch
+        run: git fetch origin main:main || true
+
+      - name: Merge test branch
+        uses: linaro-its/merge-test-branch@v2.7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::691071635361:role/github-actions-oidc-role
+          aws-region: us-east-1
+
+      - name: Deploy Preview
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_OPTIONS: --experimental-wasm-modules
+          IS_PUBLIC: "true"
+          IS_PREVIEW: "true"
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          PUBLIC_FRIENDLY_CAPTCHA_SITEKEY: ${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
+          FRIENDLY_CAPTCHA_API_KEY: ${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
+          PIPELINE_CRM_ENDPOINT: ${{ vars.PIPELINE_CRM_ENDPOINT }}
+          PIPELINE_CRM_W2LID: ${{ vars.PIPELINE_CRM_W2LID }}
+          PIPELINE_CRM_API_KEY: ${{ secrets.PIPELINE_CRM_API_KEY }}
+          PIPELINE_CRM_APP_KEY: ${{ secrets.PIPELINE_CRM_APP_KEY }}
+          DECAP_DOMAIN: ${{ vars.DECAP_DOMAIN }}
+          CUSTOM_DOMAIN: linaro-astro-pr-${{ steps.pr.outputs.PR_NUM }}.ghactions.linaro.org
+        run: |
+          echo "Installing dependencies..."
+          node -v
+          npm ci
+
+          # Clear any stale state lock left behind by a previously cancelled
+          # deploy for this stage. The workflow's concurrency group guarantees
+          # only one job per PR runs at a time, so any existing lock is orphaned
+          # (not a genuine concurrent deploy) and safe to remove.
+          echo "Clearing any stale SST lock..."
+          npx sst unlock --stage pr-${{ steps.pr.outputs.PR_NUM }} || true
+
+          echo "Starting deployment..."
+          # Deploy and capture output
+          if OUTPUT=$(npx sst deploy --stage pr-${{ steps.pr.outputs.PR_NUM }} 2>&1); then
+            echo "Deployment Success!"
+            echo "$OUTPUT"
+          else
+            echo "Deployment Failed!"
+            echo "$OUTPUT"
+            exit 1
+          fi
+
+          # Extract URL from SST output
+          URL=$(echo "$OUTPUT" | grep "url: https://" | head -n 1 | awk '{print $2}')
+
+          if [ -z "$URL" ]; then
+            echo "Could not find deployment URL in output"
+          else
+            echo "Deployment URL: $URL"
+
+            # Report to GitHub
+            STATUSES_URL="${{ steps.pr.outputs.STATUSES_URL }}"
+            if [ -n "$STATUSES_URL" ]; then
+                DATA=$(jq -n \
+                  --arg state "success" \
+                  --arg url "$URL" \
+                  --arg context "Deploy preview" \
+                  --arg desc "Deployment complete" \
+                  '{state: $state, target_url: $url, context: $context, description: $desc}')
+
+                echo "Posting status to GitHub..."
+                curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL"
+            else
+                echo "Error: STATUSES_URL not found."
+            fi
+          fi
+
+      - name: Report failure
+        if: failure()
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          STATUSES_URL="${{ steps.pr.outputs.STATUSES_URL }}"
+          if [ -n "$STATUSES_URL" ]; then
+            DATA=$(jq -n \
+              --arg state "failure" \
+              --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --arg context "Deploy preview" \
+              --arg desc "Deployment failed" \
+              '{state: $state, target_url: $url, context: $context, description: $desc}')
+            curl -s -S -H "Content-Type: application/json" -H "Authorization: token $TOKEN" -d "$DATA" "$STATUSES_URL"
+          fi
