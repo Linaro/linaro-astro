@@ -71,16 +71,15 @@ jobs:
           NODE_OPTIONS: --experimental-wasm-modules
           IS_PUBLIC: "true"
           IS_PREVIEW: "true"
-          # Placeholder values for the Decap CMS config generation.
-          # These are not secret — they are only needed so the build
-          # script (replace-config.mjs) does not throw on missing vars.
-          # The real values are used in the deploy workflow.
+          # The Cloudinary cloud name and API key are public identifiers
+          # (visible in every image URL on the live site). They are not
+          # secrets and are safe to hardcode here for the build.
+          CLOUDINARY_CLOUD_NAME: "dl7c2wmhi"
+          CLOUDINARY_API_KEY: "166967243526213"
+          PUBLIC_CLOUDINARY_CLOUD_NAME: "dl7c2wmhi"
+          # Decap CMS config generation needs this; value is irrelevant
+          # for build validation — real value used in deploy workflow.
           DECAP_DOMAIN: "https://placeholder.invalid"
-          CLOUDINARY_CLOUD_NAME: "placeholder"
-          CLOUDINARY_API_KEY: "placeholder"
-          # astro-cloudinary reads this via import.meta.env at build time
-          # for OG image URL generation (BaseHead.astro):
-          PUBLIC_CLOUDINARY_CLOUD_NAME: "placeholder"
         run: npm run build
 
       - name: Save PR metadata
