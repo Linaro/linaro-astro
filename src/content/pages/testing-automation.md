@@ -1,6 +1,6 @@
 ---
 slug: services/testing-automation
-title: Testing and Automation Services
+title: Testing & Automation Services
 description: |
   Eliminating the complexity of embedded device testing and ensuring your hardware just works.
 hero:
