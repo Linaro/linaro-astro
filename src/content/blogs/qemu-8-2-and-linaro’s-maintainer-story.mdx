@@ -65,17 +65,17 @@ Support for QEMU and RMM are still being staged into upstream Trusted Firmware, 
 
 A [set of binaries ](https://fileserver.linaro.org/s/Grjs6kSkBYd8DkX)has been created using the above instructions as a demonstration.  Unpack the tar file and execute “rmm-example/run-host.sh”:
 
-{% include image.html path="/assets/images/content/rmm-example-run-host.sh.png" alt="Picture of QEMU running with tabs for the host and realm consoles as well as the secure and non-secure serial ports." %}
+![]()
 
 The firmware and the kernel’s earlycon will log to serial0, the secure monitor will log to serial1, and the host and realm guests consoles will be on HostConsole and RealmConsole respectively.
 
 Log into the host as “root” with no password, then execute “/mnt/run-guest.sh”.  The debugging that is enabled within the firmware will immediately begin logging about the realm creation:
 
-{% include image.html path="/assets/images/content/mnt-run-guest.sh.png" alt="Picture of QEMU continuing to run, this time with the serial port outputting diagnostics from the Realm Machine Manager (RMM)" %}
+![]()
 
 Within a few minutes, the guest will boot:
 
-{% include image.html path="/assets/images/content/guest-will-boot.png" alt="Picture of QEMU continuing to run, this time with the Realm Console showing the login prompt of the Realm image that has been started." %}
+![]()
 
 Again, one may log in as “root” without password.  The guest filesystem is minimal, so there is really very little to see at this point.  However, it does demonstrate a successful boot to Realm user-space.  Hooray!
 
