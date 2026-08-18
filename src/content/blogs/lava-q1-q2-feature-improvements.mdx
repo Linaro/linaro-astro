@@ -1,0 +1,164 @@
+---
+title: LAVA Q1-Q2 feature improvements
+description: >
+  
+  Since the beginning of 2026, LAVA has introduced several major feature updates designed to reduce CI/CD infrastructure overhead and accelerate testing throughput. With the release of LAVA 2026.06, we are highlighting key improvements that will simplify your testing infrastructure and improve reliability
+date: 2026-08-14T13:41:00.000Z
+author: remi-duraffort
+tags:
+  - open-source
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1770907663/linaro-website/IMG_2026_vai8fh.jpg
+related: []
+---
+## Introduction
+
+
+Since the beginning of 2026, LAVA has introduced several major feature updates designed to reduce CI/CD infrastructure overhead and accelerate testing throughput. With the release of LAVA 2026.06, we are highlighting key improvements that will simplify your testing infrastructure and improve reliability:
+
+* Support to download from storage backends using rclone
+* Starting test services on the worker while running tests
+* Faster image modification using e2fsprogs
+* Support for QDL to flash Qualcomm devices
+
+## Cloud storage download
+
+LAVA is now able to download artifacts from cloud storage backends like S3, Nextcloud or Cloudflare R2. LAVA is leveraging rclone that supports more than 70 cloud providers. 
+
+Multiple companies are using cloud storage services to upload and keep build and test artifacts. Prior to this release, using artifacts from cloud storage services required an http server to allow for direct download. The support for rclone is removing the need for any additional service as LAVA can directly access the cloud storage service from its API.
+
+To use the rclone support, use the following snippet in the job definition:
+
+```
+- deploy:
+    to: tmpfs
+    images:
+      rootfs:
+        url: rclone://s3remote/bucket/images/rootfs.img.gz
+        compression: gz
+```
+
+Either the administrator or the job submitter should provide the cloud storage service configuration. A job submitter can provide the configuration in the job secret field:
+
+```
+secrets:
+  rclone_env:
+    RCLONE_CONFIG_S3REMOTE_TYPE: "s3”
+    RCLONE_CONFIG_S3REMOTE_PROVIDER: "AWS"
+    RCLONE_CONFIG_S3REMOTE_ACCESS_KEY_ID: "EXAMPLE"
+    RCLONE_CONFIG_S3REMOTE_SECRET_ACCESS_KEY: "EXAMPLEKEY"
+    RCLONE_CONFIG_S3REMOTE_REGION: "us-east-1"
+```
+
+Learn more about[ LAVA clone support](https://lava.readthedocs.io/en/latest/technical-references/job-definition/actions/deploy/index.html#rclone).
+
+## Starting test services
+
+LAVA now supports running test services on the worker. Test services are Docker Compose-based containers started on the LAVA worker, enabling custom services for test definitions. For example, LAVA can now start an Over-The-Air Upgrade(OTA) server that a device under test can connect to.
+
+Thanks to this feature, testing the interaction between a device under test and an external service will not require to set up a test service before starting the tests, LAVA will handle creation and tear down of the service at test start.
+
+To use this feature, add \`services\` to the test action:
+
+```
+- test:
+    services:
+      - name: my-service
+          compose:
+            version: "3"
+            services: ota-server:
+            image: my-ota-server:latest
+            ports: - "8080:8080"
+    definitions:
+      - repository: https://example.com/tests.git
+        from: git
+        path: testdefs/ota.yaml
+        name: ota-test
+```
+
+ The feature is disabled by default. It must be explicitly enabled in the device dictionary by the lab admin or device owner. And the worker that the device attached to should have access to the Docker images needed by the services.
+
+Learn more about[ test services in the documentation](https://lava.readthedocs.io/en/latest/technical-references/job-definition/actions/test.html#services). 
+
+## Faster image modification using e2fsprogs
+
+Since release [2020.02](https://gitlab.com/lava/lava/-/wikis/releases/2020.02#image-modification),  LAVA is able to modify the artifacts to deploy on a Device-Under-Test (DUT) right before deploying it. This can be used, for example, to add some modules to the root filesystem. The job definition would look like:
+
+```
+- deploy:
+  to: tftp
+  rootfs:
+    url: http://example.com/rootfs.ext4.xz
+    compression: xz
+    format: ext4
+    overlays:
+      modules:
+        url: http://example.com/modules.tar.gz
+        compression: gz
+        format: tar
+        path: /
+```
+
+LAVA will download [roofts.ext4.xz ](http://rootfs.ext4.xz)and [modules.tar.gz](http://modules.tar.gz). The ext4 filesystem will be decompressed and updated to append the modules at the root.
+
+Starting from release 2026.06, LAVA is using e2fsprogs to update disk images. This will replace [libguesfs](https://www.libguestfs.org/) that proved to not fit the LAVA use case.
+
+Thanks to this change, updating disk images is now way faster and more portable across workers.
+
+Learn more about [Image modification in the documentation](https://gitlab.com/lava/lava/-/wikis/releases/2020.02#image-modification).
+
+## Support for QDL to flash Qualcomm devices
+
+LAVA now supports [gdl](https://github.com/linux-msm/qdl/), the tool used to flash Qualcomm devices. The typical device life cycle is:
+
+* deploy to qdl: download a tarball containing all artifacts and add the LAVA overlay
+* boot to qdl: flash the board using the tarball contents. This step can be repeated to flash the various storage types (spinor, nvme, ufs, emmc, ...)
+* boot using another method depending on the software build (minimal, u-boot, fastboot, ...)
+
+A job definition would look like:
+
+```
+- deploy:
+    to: qdl
+    rootfs_image: "disk-sdcard.img2"
+    overlay_path: "/"
+    qcomflash:
+      url: 'https://example.com/qcomflash.tar.gz'
+      apply-overlay: true
+    timeout:
+      minutes: 200
+- boot:
+    method: qdl
+    firehose_program: "prog_firehose_ddr.elf"
+    rawprogram: "rawprogram0.xml"
+    patch: "patch0.xml"
+    storage: "ufs"
+    path: "."
+    timeout:
+      minutes: 5
+- boot:
+    method: minimal
+    prompts:
+    - root@debian
+    timeout:
+      minutes: 3
+```
+
+Learn more about [QDL support in the documentation](https://lava.readthedocs.io/en/latest/technical-references/job-definition/actions/deploy/to-qdl.html). 
+
+## Need Help Improving Your Validation Infrastructure?
+
+As creator and primary maintainer of LAVA, Linaro helps organizations design, deploy, scale, and optimize automated validation systems for embedded, cloud, mobile, and infrastructure platforms.
+
+Whether you are building a new test lab, modernizing an existing validation pipeline, integrating hardware into CI/CD workflows, or scaling automated testing across large device fleets, Linaro's engineering teams can help.
+
+To learn more or discuss your requirements,[ contact Linaro.](https://www.linaro.org/contact) 
+
+We would be happy to discuss how LAVA, automation infrastructure, and Linaro engineering services can help improve the reliability and efficiency of your software validation processes.
+
+## About the Author
+
+Rémi Duraffort is a computer engineer with 20 years of experience spanning multiple fields, from software and automation for embedded devices to cloud and scalable SaaS.
+
+Rémi contributed to multiple Open Source projects, including VLC or v8. Rémi is the maintainer and technical leader of LAVA, the open source testing automation software created by Linaro 20 years ago.
+
+In the last years, Rémi led the development of the Linaro Automation Appliance, one box that automates embedded device testing, from firmware to user-space, on your own hardware.
