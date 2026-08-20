@@ -1,0 +1,194 @@
+---
+title: "How virtio-msg Works: A Technical Deep Dive into Message-Based Virtio"
+description: This article takes a technical deep dive into how virtio-msg works,
+  from its message-based control plane and shared-memory data plane to its
+  separation of transport and bus-specific functionality. It explores the
+  protocol, initialization flow, notifications, and example bus bindings such as
+  FF-A, PCI, and Xen.
+date: 2026-08-26T07:30:00.000Z
+author: viresh-kumar
+tags:
+  - qemu
+  - virtualization
+  - open-source
+  - arm
+  - android
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1776265052/linaro-website/business-people-coding-team-information-technology-with-computer-screen-programming-software-development-code-overlay-futuristic-collaboration-meeting-with-programmer-group-office_ligpau.jpg
+related: []
+---
+In the first article**\[MUST ADD THE LINK HERE]**, we explored the problem that virtio-msg is designed to solve: bringing standard Virtio devices to environments where PCI and MMIO are not natural communication mechanisms. Rather than introducing a new device model, virtio-msg keeps Virtio’s existing programming model while replacing register accesses with structured messages.
+
+This article takes a closer look at how that transport works. We’ll examine its architecture, how it separates transport from bus-specific functionality, and how it preserves compatibility with existing Virtio devices while enabling new deployment models.
+
+Rather than redesigning Virtio itself, the designers deliberately confined the changes to the transport layer. Existing Virtio device models, drivers, and virtqueue semantics therefore remain applicable.
+
+## **Control plane vs data plane**
+
+Rather than redesigning Virtio itself, the designers deliberately confined the changes to the transport layer. Existing Virtio device models, drivers, and virtqueue semantics therefore remain applicable.
+
+A central design goal of virtio-msg was to preserve as much of the existing Virtio architecture as possible. Virtio already uses virtqueues for efficient data movement, so virtio-msg leaves the data path unchanged. Instead, it replaces the transport-specific register accesses used for device discovery, configuration, and queue management with structured messages.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239046/linaro-website/image5_sbah4s.png)
+
+As shown in Figure 1, virtio-msg changes only the control plane. Bulk data continues to flow through standard Virtio virtqueues in shared memory.
+
+### Control plane (messages):
+
+Discovery, feature negotiation, configuration, virtqueue setup, device status (such as `DRIVER_OK`and reset), and transport notifications are performed through standardized request/response messages and events.
+
+### Data plane (virtqueues):
+
+Bulk data transfer continues to use standard Virtio virtqueues in shared memory, just as with existing transports. Transport messages configure and signal those queues—they do not carry descriptor traffic or payload data. Optional shared-memory regions (`GET_SHM`) describe additional device-owned memory when required by a device type or feature.
+
+## **Two layers: transport and bus**
+
+One of virtio-msg’s key architectural decisions is to separate generic Virtio transport semantics from the mechanisms used to carry those messages. The transport layer defines how drivers and devices communicate, while each bus binding defines how those messages are delivered between endpoints.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239046/linaro-website/image1_g83yfk.png)
+
+Figure 2 illustrates this separation. Drivers interact only with the common virtio-msg transport, while individual bus bindings provide the environment-specific mechanisms needed to carry those messages.
+
+### **Transport**
+
+The transport layer standardizes the protocol used by Virtio drivers and devices. It defines the messages for feature negotiation, device configuration, virtqueue management, device status, and runtime events. These message semantics are identical regardless of the underlying bus.
+
+### **Bus**
+
+The bus layer is responsible for moving those messages between endpoints. It provides device discovery (where applicable), validates device numbers, defines address interpretation and memory-sharing rules, and delivers notifications. Different deployments may use FF-A, shared-memory AMP, Xen grants, or other messaging mechanisms without changing the transport protocol itself.
+
+Device drivers such as **virtio-net** and **virtio-blk** communicate exclusively through the transport protocol. The bus underneath may differ completely between systems, but the transport messages remain the same. This separation allows Virtio device implementations to be reused across very different communication mechanisms.
+
+### **The transport protocol**
+
+**Revision 1** defines a small set of standardized messages that cover the entire transport protocol. Most are request/response operations initiated by the driver during device initialization and configuration, while a small number are asynchronous events generated by either the driver or the device during normal operation.
+
+xxxx
+
+Devices implement the complete transport protocol, including GET_SHM. Drivers implement the subset required by the devices they support; GET_SHM is optional for drivers because many Virtio devices do not expose device-owned shared-memory regions.
+
+### **Initialization**
+
+Once the bus has exposed a device to the driver by assigning it a device number, initialization closely follows the normal Virtio lifecycle. The difference is that operations traditionally performed through transport registers are now exchanged as protocol messages.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239045/linaro-website/image3_hqw6nr.png)
+
+Figure 3 shows the overall initialization flow. Although the transport changes from register accesses to protocol messages, the sequence closely mirrors the standard Virtio device lifecycle.
+
+1. **`GET_DEVICE_INFO`** — the only transport message permitted before the normal device-status sequence begins. The response reports the device type, vendor ID, a **16-byte device UUID** (or the nil UUID if none is assigned), the number of **feature blocks**, configuration-space size, `max_virtqueues` (up to 65,536, including any admin virtqueues), and the optional **admin virtqueue** range (`admin_vq_start, admin_vq_count`).
+2. **Reset and status** — `SET_DEVICE_STATUS` is used to reset the device and drive it through the standard Virtio status states, including `ACKNOWLEDGE` and `DRIVER`.
+3. **Feature negotiation** — the driver retrieves the device’s supported feature bits using `GET_DEVICE_FEATURES`, selects the subset it will use with `SET_DRIVER_FEATURES`, and verifies the result through the normal `FEATURES_OK `status. Transport feature bits (such as strict configuration handling) are properties of the bus instance rather than the Virtio device itself, and are therefore negotiated separately from device features.
+4. **Configuration and virtqueues** —` GET_CONFIG` and` SET_CONFIG` access the device configuration space using the active configuration profile, while` SET_VQUEUE `and `GET_VQUEUE `configure and query each virtqueue.
+5. **`DRIVER_OK`** — once the driver enters the `DRIVER_OK `state, normal virtqueue traffic can begin.
+
+The specification also requires devices **not** to offer `VIRTIO_F_NOTIF_CONFIG_DATA` on this transport. `VIRTIO_F_NOTIFICATION_DATA` may be negotiated for` EVENT_AVAIL `encoding only when the underlying bus can preserve the required notification semantics.
+
+### **Configuration semantics profiles**
+
+Revision 1 defines two configuration profiles, selected by the `VIRTIO_MSG_F_STRICT_CONFIG_GENERATION `transport feature bit advertised by the bus instance. Both use the same configuration messages, but differ in how configuration updates are validated.
+
+* **Baseline:** Drivers always send `generation = 0 `in `SET_CONFIG` requests. Devices ignore the generation field and do not reject writes because of a generation mismatch.
+* **Strict:** Drivers track the configuration generation reported by `GET_CONFIG `and` EVENT_CONFIG`, then include that value in subsequent `SET_CONFIG `requests. Devices reject configuration writes that use a stale generation value, preventing updates based on out-of-date state.
+
+Regardless of the selected profile, devices increment the configuration generation whenever the configuration may have changed asynchronously. They also use `EVENT_CONFIG `to notify drivers of asynchronous configuration or status changes. This event is not used for synchronous status updates that the driver has already performed through `SET_DEVICE_STATUS`.
+
+For` SET_CONFIG`, the response `length` field forms part of the success indication. A successful write is applied in full and returns the requested length. If the write cannot be completed, the device reports a length of zero. Partial non-zero writes are not considered successful.
+
+### **Common message format**
+
+Every virtio-msg message begins with a fixed **8-byte header** that identifies the message, the target device, and the information needed to correlate requests with responses.
+
+The header contains the following fields:
+
+* **`type`** — identifies whether the message is a request or response (bit 0), and whether it is a transport or bus message (bit 1). Events are encoded as request-type messages rather than responses.
+* **`msg_id`** — identifies the operation being performed. Bits 0–5 contain the message number, bit 6 distinguishes events from request/response messages, and bit 7 indicates whether the message is standardized or implementation-defined.
+* **`dev_num`** — identifies the target device for transport messages. Bus messages always use 0, although device number 0 remains a valid transport device identifier.
+* **`token`** — an opaque identifier used to match responses with requests. The bus may rewrite the token when routing messages, but the device always copies the request token into the response before any such rewrite occurs.
+* **`msg_size`** — the total message length, including the header.
+
+All multi-byte fields are encoded in little-endian format. Apart from token handling and generic validation (such as enforcing maximum message sizes), bus implementations forward transport payloads unchanged without interpreting their contents.
+
+### **Ordering, errors, and completion**
+
+The transport distinguishes between **requests**, which always complete with either a protocol response or a transport-visible failure reported by the bus, and **events**, which are one-way notifications that may be dropped unless a bus binding specifies otherwise.
+
+Requests for different devices may be interleaved. For any individual driver/device pair, however, the bus presents requests to the device in the order they are received, and the device processes them in that same order. When a bus supports multiple outstanding requests, the token field is used to match responses with their corresponding requests rather than relying on response order. Events may be interleaved with normal request/response traffic at any time.
+
+Malformed or unsupported messages are silently discarded rather than generating synthetic error responses. Drivers are expected to detect failures using bounded timeouts and recover through the normal Virtio reset and status mechanisms. The transport itself defines no dedicated error message; instead, routing failures, policy decisions, timeouts, and other transport-level problems are reported by the underlying bus as transport-visible failures for the original request.
+
+### **Bus messages and discovery**
+
+In addition to the transport protocol, bus bindings may define a small set of optional bus-specific messages. Unlike transport messages, these always use dev_num = 0 because they apply to the bus itself rather than an individual Virtio device.
+
+* **`GET_DEVICES`** — returns bitmap windows describing the device numbers currently present on the bus.
+* **`PING`** — a simple health-check message that echoes the request data in its response.
+* **`EVENT_DEVICE`** — notifies peers when devices are added or removed using the `DEVICE_BUS_STATE_ADDED` (`0x0001`) and `DEVICE_BUS_STATE_REMOVED` (`0x0002`) states.
+
+Bus bindings may implement any subset of these messages. A particular bus binding may instead rely on existing discovery mechanisms such as Device Tree, ACPI, or hypervisor-provided configuration data. Regardless of how discovery is performed, the bus remains responsible for validating `dev_num `values, routing transport messages without interpreting their payloads, and performing generic checks such as enforcing maximum message sizes.
+
+Because `dev_num` is a 16-bit value, a single bus instance can address approximately 65,000 devices. Larger deployments can simply expose multiple independent bus instances, allowing the transport to scale without changing the protocol.
+
+Each bus instance also advertises a small set of transport parameters, including the supported protocol revision, the maximum message size (Revision 1 permits messages between 52 and 65,535 bytes, with 264 bytes recommended), and the transport feature bits available on that bus.
+
+### **Runtime notifications**
+
+Once the driver has entered the `DRIVER_OK` state, normal virtqueue operation begins. Systems may use either event-driven notifications or polling, depending on the capabilities of the underlying bus and the needs of the deployment.
+
+Polling-only operation is permitted when both endpoints agree. In that case, `EVENT_AVAIL` and/or `EVENT_USED` notifications may be omitted, with each side polling the virtqueues directly for new work or completed buffers.
+
+When notifications are used, the underlying bus may either deliver the event messages directly or use an out-of-band signaling mechanism as a wake-up hint. In the latter case, the receiving side synthesizes the corresponding event message before presenting it to the transport, ensuring that the transport observes the same notification semantics regardless of how the bus delivers the signal.
+
+When `VIRTIO_F_NOTIFICATION_DATA` has been negotiated,` EVENT_AVAIL` carries both the virtqueue index and the packed `next_off / next_wrap` values in the `next_offset` field.
+
+## **Informative bus bindings**
+
+The virtio-msg specification defines a common transport protocol but deliberately leaves the underlying message delivery mechanism to individual bus bindings. The current draft includes several informative bus bindings that demonstrate how the same transport can be used across very different communication environments.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239047/linaro-website/image4_mawa5g.png)
+
+As Figure 4 illustrates, virtio-msg standardizes the transport protocol while allowing individual bus bindings to define how messages are delivered, how devices are discovered (where applicable), and how memory sharing and notifications are implemented for a particular environment.
+
+### **Virtio message bus over FF-A**
+
+The Arm Firmware Framework for A-profile (FF-A) binding demonstrates how virtio-msg can be used for communication between the Normal and Secure worlds, as well as between hosts and guests or between guest virtual machines. It illustrates how virtio-msg can build on an existing message-oriented framework without requiring changes to the transport protocol itself.
+
+### **PCI for AMP**
+
+The PCI binding explores the use of virtio-msg in heterogeneous SoCs and multi-host PCIe systems, where software components communicate across a PCI-based interconnect rather than through a traditional emulated Virtio PCI device. The HVAC demonstration project provides a proof-of-concept implementation of this approach.
+
+### **Xen grants and events**
+
+Support for Xen is also under discussion. This work explores how virtio-msg could integrate with Xen’s grant tables and event channels, including questions around queue address spaces and memory sharing.
+
+Prototype implementations developed as part of the HVAC project—including QEMU, OpenAMP, and heterogeneous multi-core SoC demonstrations—helped validate the design and informed the specification, but they are not themselves part of the standard.
+
+Future work discussed by the community also includes carrying virtio-msg over admin virtqueues on virtio-pci, allowing existing PCI Virtio devices to expose additional message-based sub-devices.
+
+## **Looking ahead**
+
+virtio-msg deliberately limits its scope to the transport layer, preserving the Virtio programming model while extending it to environments where message passing is a more natural communication mechanism than PCI or MMIO registers. Existing Virtio devices, drivers, and virtqueues continue to behave as they always have, while new bus bindings provide the flexibility to deploy them across secure partitions, heterogeneous SoCs, virtualization platforms, and other distributed software environments.
+
+Although the specification continues to evolve, its architecture already demonstrates how a common transport can enable interoperability across a wide range of communication mechanisms without requiring new device models or transport-specific Virtio implementations. As additional bus bindings and implementations emerge, virtio-msg has the potential to extend the reach of the Virtio ecosystem while preserving the programming model developers already know.
+
+## **Ongoing development through the Core Collective**
+
+Development of virtio-msg is continuing within the Virtualization Working Group of the [Core Collective](https://bit.ly/46ioaND),  an open forum that brings together companies across the Arm ecosystem to collaborate on virtualization technologies.
+
+Current discussions within the Virtualization Working Group can be found [here](https://groups.google.com/a/corecollective.dev/g/virtualization).
+
+Whether you’re connecting application processors and companion processors, integrating secure partitions, virtualizing multiple operating systems, or designing a new Arm-based architecture, Linaro can help you evaluate the right Virtio and virtualization approach.
+
+## **Further Reading**
+
+Readers interested in the ongoing standardization effort, prototype implementations, or related technologies can explore the following resources:
+
+* [Virtio specification source **(`transport-msg.tex`**](https://github.com/Linaro/virtio-msg-spec/)**)** – The current draft specification defining the virtio-msg transport protocol, message formats, and transport semantics.
+* [Virtio-comment mailing list cover letter](https://lore.kernel.org/all/cover.1781514628.git.bertrand.marquis@arm.com/) **(June 2026)** – The RFC introducing the latest revision of the proposal, together with design rationale and community discussion.
+* [Arm FF-A virtio-msg bus binding ](https://documentation-service.arm.com/static/68f647791134f773ab3f0a7c)**(informative)** – An example of how virtio-msg can be transported over the Arm Firmware Framework for Arm A-profile (FF-A), illustrating one possible bus binding while remaining separate from the transport specification itself.
+* HVAC ([Heterogeneous VirtIO  for Automotive Computing](https://linaro.atlassian.net/wiki/spaces/HVAC/overview)) **overview** – Background on the initiative that originally motivated the development of virtio-msg and explores its application to heterogeneous embedded and automotive platforms.
+* [HVAC demonstration repository](https://github.com/wmamills/hvac-demo) - Prototype implementations and demonstrations showing virtio-msg operating across heterogeneous systems and helping validate the architectural approach.
+* [Linux Kernel virtio-msg branch ](https://git.kernel.org/pub/scm/linux/kernel/git/vireshk/linux.git)and [RFC](https://lore.kernel.org/all/cover.1753865268.git.viresh.kumar@linaro.org/) - Experimental kernel support for virtio-msg, including the original Linux RFC discussion and prototype implementation.
+
+## About the Author
+
+Viresh Kumar is a Senior Kernel Engineer at Linaro and an active Linux kernel maintainer. He has worked extensively on virtualization technologies including Virtio, Xen, QEMU, and Rust-VMM. His recent work includes the development of the virtio-msg transport, and Rust-based Virtio backends. Beyond virtualization, he co-maintains the Linux CPUFreq and OPP frameworks and has been an upstream Linux kernel contributor for over two decades.
