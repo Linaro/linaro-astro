@@ -43,7 +43,7 @@ Although these systems differ considerably, they share one characteristic: both 
 
 **virtio-msg** is the proposed answer: keep Virtio's device model (features, config space, virtqueues, standard device types like net and blk), but implement the **transport layer** by exchanging structured messages instead of MMIO-style register access.
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239028/linaro-website/image2_yzb9cg.jpg)
 
 ## **Why standardize this in Virtio**
 
@@ -77,7 +77,7 @@ Current discussions within the Virtualization Working Group can be found [here](
 
 Readers interested in the ongoing standardization effort, prototype implementations, or related technologies can explore the following resources:
 
-* Virtio specification source` `**`(transport-msg.tex)`** – The current draft specification defining the virtio-msg transport protocol, message formats, and transport semantics.
+* Virtio specification source``**`(transport-msg.tex)`** – The current draft specification defining the virtio-msg transport protocol, message formats, and transport semantics.
 * Virtio-comment mailing list cover letter **(June 2026)** – The RFC introducing the latest revision of the proposal, together with design rationale and community discussion.
 * Arm FF-A virtio-msg buds binding **(informative)** – An example of how virtio-msg can be transported over the Arm Firmware Framework for Arm A-profile (FF-A), illustrating one possible bus binding while remaining separate from the transport specification itself.
 * HVAC (Heterogeneous VirtIO for Automotive Computing)  **overview** – Background on the initiative that originally motivated the development of virtio-msg and explores its application to heterogeneous embedded and automotive platforms.
