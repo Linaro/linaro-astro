@@ -12,7 +12,7 @@ tags:
   - qemu
   - linux-kernel
   - open-source
-image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1771841213/linaro-website/IMG_2082_fyfgnx.jpg
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787298979/linaro-website/IMG_3626_ncuv5i.png
 related: []
 ---
 Virtio has become the de facto standard for paravirtualized devices in Linux and many other operating systems. Whether providing virtual networking, storage, or other devices, it has traditionally relied on PCI or memory-mapped I/O (MMIO) transports to communicate between drivers and devices.
@@ -41,7 +41,7 @@ That assumption holds for virtual machines and many embedded systems. Increasing
 
 Although these systems differ considerably, they share one characteristic: both ends of the Virtio connection are typically implemented in software, yet there is no obvious place to expose a PCI BAR or an MMIO register block. What they do have is an existing messaging mechanism.
 
-**virtio-msg** is the proposed answer: keep Virtio's device model (features, config space, virtqueues, standard device types like net and blk), but implement the **transport layer** by exchanging structured messages instead of MMIO-style register access.
+**Virtio-msg** is the proposed answer: keep Virtio's device model (features, config space, virtqueues, standard device types like net and blk), but implement the **transport layer** by exchanging structured messages instead of MMIO-style register access.
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239028/linaro-website/image2_yzb9cg.jpg)
 
@@ -49,7 +49,7 @@ Although these systems differ considerably, they share one characteristic: both 
 
 Once communication becomes message-based, every implementation faces the same challenge: how should drivers negotiate features, configure devices, initialize virtqueues, and exchange status information? Without a common transport, each project risks inventing its own incompatible protocol.
 
-virtio-msg addresses that by standardizing the transport layer while leaving transport-specific delivery mechanisms to individual bus bindings. Drivers and devices can therefore reuse the same transport implementation regardless of whether messages are carried over FF-A, shared-memory AMP, Xen, or another messaging framework.
+Virtio-msg addresses that by standardizing the transport layer while leaving transport-specific delivery mechanisms to individual bus bindings. Drivers and devices can therefore reuse the same transport implementation regardless of whether messages are carried over FF-A, shared-memory AMP, Xen, or another messaging framework.
 
 This separation is particularly valuable in heterogeneous embedded systems. For automotive platforms—the original motivation behind HVAC—an application processor can communicate with standard Virtio devices running on companion processors once an appropriate bus binding has been defined.
 
