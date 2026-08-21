@@ -1,0 +1,89 @@
+---
+title: What is virtio-msg? A message-based Virtio Transport for Heterogeneous Systems
+description: Virtio-msg is a proposed message-based Virtio transport for
+  heterogeneous systems where PCI and MMIO are not a natural fit. This blog
+  explores its architecture, use cases, and ongoing standardization.
+date: 2026-08-20T13:59:00.000Z
+author: viresh-kumar
+tags:
+  - android
+  - arm
+  - virtualization
+  - qemu
+  - linux-kernel
+  - open-source
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787298979/linaro-website/IMG_3626_ncuv5i.png
+related: []
+---
+Virtio has become the de facto standard for paravirtualized devices in Linux and many other operating systems. Whether providing virtual networking, storage, or other devices, it has traditionally relied on PCI or memory-mapped I/O (MMIO) transports to communicate between drivers and devices.
+
+Those transports work well for virtual machines, but they become increasingly awkward in heterogeneous systems where both endpoints are software, or where PCI and MMIO simply aren’t natural abstractions. Examples include secure partitions, asymmetric multiprocessing (AMP) systems, firmware co-processors, and communication between independent operating systems.
+
+That is the problem virtio-msg aims to solve. Rather than changing the Virtio device model itself, it introduces a message-based transport that preserves existing Virtio semantics while allowing those devices to operate over a much broader range of communication mechanisms.
+
+Virtio has long relied on **virtio-pci** and **virtio-mmio** as the transport methods: the driver configures devices by reading and writing transport registers, usually through PCI BARs or memory-mapped I/O. **virtio-msg** keeps the same Virtio device model: feature bits, configuration space, virtqueues, and standard device types such as net and block. Only the transport changes: those operations become structured messages.
+
+Virtio Over Messages (virtio-msg) is a proposed new Virtio transport that is currently under active standardization. Bill Mills (Linaro) ([posted](https://lore.kernel.org/all/20260126163230.1122685-1-bill.mills@linaro.org/)) he initial version and Bertrand Marquis (Arm) is [continuing](https://lore.kernel.org/all/cover.1781514628.git.bertrand.marquis@arm.com/) the work, with the specification currently being developed in [Linaro’s Virgil repository. ](https://github.com/Linaro/virtio-msg-spec/tree/virtio-msg)
+
+The work began under Linaro’s HVAC (Heterogeneous VirtIO for Automotive Computing) initiative, with contributions from engineers at Linaro, Arm, AMD, STMicroelectronics, Google, and other organizations. The objective is not to replace virtio-pci or virtio-mmio where those transports are appropriate, but to extend Virtio to environments where trap-and-emulate register access is inefficient or impractical, including heterogeneous SoCs, secure partitions, software endpoints, and multi-system interconnects.
+
+## **When PCI and MMIO are not the optimal abstraction**
+
+The success of virtio-pci and virtio-mmio comes from a simple assumption: the driver can directly access a register interface exposed by the device. Feature negotiation, configuration, queue management, and notifications all happen through reads and writes to well-defined registers.
+
+That assumption holds for virtual machines and many embedded systems. Increasingly, however, modern heterogeneous systems no longer have a natural register interface between software components. Typical scenarios include:
+
+* **Userspace backends** in the same operating system, where there is no hardware register interface to trap on.
+* **Host-to-guest or guest-to-guest communication,** where a hypervisor naturally exposes a messaging mechanism rather than emulated MMIO.
+* **Normal and Secure worlds** communicating through Arm FF-A, where software components exchange messages rather than accessing shared registers.
+* **Companion processors** such as MCUs or DSPs in heterogeneous SoCs, communicating through shared memory and doorbells.
+* **Independent operating systems on separate machines** connected by PCIe, where both endpoints are software but neither naturally exposes a Virtio register interface.
+
+Although these systems differ considerably, they share one characteristic: both ends of the Virtio connection are typically implemented in software, yet there is no obvious place to expose a PCI BAR or an MMIO register block. What they do have is an existing messaging mechanism.
+
+**Virtio-msg** is the proposed answer: keep Virtio's device model (features, config space, virtqueues, standard device types like net and blk), but implement the **transport layer** by exchanging structured messages instead of MMIO-style register access.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787239028/linaro-website/image2_yzb9cg.jpg)
+
+## **Why standardize this in Virtio**
+
+Once communication becomes message-based, every implementation faces the same challenge: how should drivers negotiate features, configure devices, initialize virtqueues, and exchange status information? Without a common transport, each project risks inventing its own incompatible protocol.
+
+Virtio-msg addresses that by standardizing the transport layer while leaving transport-specific delivery mechanisms to individual bus bindings. Drivers and devices can therefore reuse the same transport implementation regardless of whether messages are carried over FF-A, shared-memory AMP, Xen, or another messaging framework.
+
+This separation is particularly valuable in heterogeneous embedded systems. For automotive platforms—the original motivation behind HVAC—an application processor can communicate with standard Virtio devices running on companion processors once an appropriate bus binding has been defined.
+
+The same approach applies to secure partitions, where mechanisms such as SHARE and LEND remain the responsibility of the FF-A binding rather than the Virtio transport itself.
+
+This division of responsibility is one of virtio-msg’s key design decisions. The transport standardizes feature negotiation, configuration, queue management, and status handling, while each bus binding remains responsible for endpoint discovery, memory ownership, interrupt delivery, and address interpretation.
+
+## **Looking ahead**
+
+virtio-msg extends Virtio into environments where traditional PCI and MMIO transports are no longer the best fit, without requiring new device models or abandoning existing Virtio semantics. By standardizing the transport layer while allowing individual bus bindings to handle discovery, routing, and memory sharing, it enables Virtio to be used across a much wider range of heterogeneous systems.
+
+As work on the specification continues, virtio-msg has the potential to make Virtio a common interoperability layer for software components communicating across operating systems, security domains, processors, and even independent systems, allowing developers to reuse existing Virtio devices in places where that was previously impractical.
+
+As heterogeneous computing continues to evolve, the need for a standardized transport that works across processors, security domains, operating systems, and virtualization environments will only grow. virtio-msg represents an important step toward extending the Virtio ecosystem without changing the programming model that developers already know.
+
+Whether you’re building embedded Linux systems, hypervisors, secure execution environments, or next-generation automotive platforms, now is an excellent time to review the proposal, experiment with the prototype implementations, and contribute to the discussion.
+
+## **Ongoing development through the Core Collective**
+
+Development of virtio-msg is continuing within the Virtualization Working Group of the [Core Collective](https://bit.ly/46ioaND), an open forum that brings together companies across the Arm ecosystem to collaborate on virtualization technologies.
+
+Current discussions within the Virtualization Working Group can be found [here](https://groups.google.com/a/corecollective.dev/g/virtualization). Whether you’re connecting application processors and companion processors, integrating secure partitions, virtualizing multiple operating systems, or designing a new Arm-based architecture, Linaro can help you evaluate the right Virtio and virtualization approach.
+
+## **Further Reading**
+
+Readers interested in the ongoing standardization effort, prototype implementations, or related technologies can explore the following resources:
+
+* Virtio specification source``**`(transport-msg.tex)`** – The current draft specification defining the virtio-msg transport protocol, message formats, and transport semantics.
+* Virtio-comment mailing list cover letter **(June 2026)** – The RFC introducing the latest revision of the proposal, together with design rationale and community discussion.
+* Arm FF-A virtio-msg buds binding **(informative)** – An example of how virtio-msg can be transported over the Arm Firmware Framework for Arm A-profile (FF-A), illustrating one possible bus binding while remaining separate from the transport specification itself.
+* HVAC (Heterogeneous VirtIO for Automotive Computing)  **overview** – Background on the initiative that originally motivated the development of virtio-msg and explores its application to heterogeneous embedded and automotive platforms.
+* HVAC demonstration repository - Prototype implementations and demonstrations showing virtio-msg operating across heterogeneous systems and helping validate the architectural approach.
+* Linux Kernel virtio-msg branch and RFC Experimental kernel support for virtio-msg, including the original Linux RFC discussion and prototype implementation.
+
+## About the Author
+
+Viresh Kumar is a Senior Kernel Engineer at Linaro and an active Linux kernel maintainer. He has worked extensively on virtualization technologies including Virtio, Xen, QEMU, and Rust-VMM. His recent work includes the development of the virtio-msg transport, and Rust-based Virtio backends. Beyond virtualization, he co-maintains the Linux CPUFreq and OPP frameworks and has been an upstream Linux kernel contributor for over two decades.
