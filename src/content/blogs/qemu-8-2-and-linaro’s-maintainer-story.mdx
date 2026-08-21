@@ -17,7 +17,7 @@ Without trying to make me out as more of a greybeard than I actually am, I celeb
 
 I’ll talk about some of those new features later in the post but first I want to talk a little about QEMU’s maintainer story.
 
-# Maintainership Matters
+## Maintainership Matters
 
 At Linaro we take our responsibilities to the wider Free, Libre and Open Source (FLOSS) ecosystem very seriously. While open source empowers anybody to download, examine and modify code, maintainers play a key role in keeping projects and communities active and productive. In QEMU maintainers are responsible for the bulk of code review as well as collecting patches for their subsystems and funnelling that code into tested pull requests that are eventually merged into the mainline. It is usually maintainers who are involved in the essential work of modernising and renovating the creakier legacy parts of the code base to keep the project fit for the current generation.
 
@@ -35,11 +35,11 @@ In the years since I joined we have continued to invest in the project as it has
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1785856807/linaro-website/IMG_3756_t4yplb.jpg)
 
-# What’s new in 8.2
+## What’s new in 8.2
 
 While every QEMU release brings [news features to Arm](<there is more to implement than just the feature itself. When the feature specifies it depends on other features being present we have to backfill those in our support matrix. As FEAT_RME was only introduced with the Arm v9 architecture, we have to ensure QEMU can now model that baseline. If you want to see the full list of what we had to implement feel free to peruse our>) this release is the culmination of several QEMU releases to bring FEAT_RME emulation to QEMU. The Realm Management Extension (RME) is a key component of Arm’s Confidential Compute Architecture (CCA). The additional realm state allows guests to run in such a way that even the non-secure host cannot access any area of the Realm unless explicitly shared by the Realm itself. In common with other big features we’ve implemented previously (e.g. [SVE](https://www.linaro.org/blog/sve-in-qemu-linux-user/), [TrustZone](https://www.linaro.org/blog/arm-trustzone-qemu/)) there is more to implement than just the feature itself. When the feature specifies it depends on other features being present we have to backfill those in our support matrix. As FEAT_RME was only introduced with the Arm v9 architecture, we have to ensure QEMU can now model that baseline. If you want to see the full list of what we had to implement feel free to peruse our [JIRA cards](https://linaro.atlassian.net/browse/QEMU-466). 
 
-![Diagram of the ARM security architecture showing the various security states and exception levels interact.](/assets/images/content/arm-cca-software-architecture.png)
+![Diagram of the ARM security architecture showing the various security states and exception levels interact.](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787251719/linaro-website/IMG_4008_yhmifs.jpg)
 
 For now we only support software realms (securely interfacing realm guests to real HW involves a lot more work). As the feature is so new we still recommend that those who wish to experiment with it track QEMU’s master branch so they can get the benefit of fixes as soon as they are patched. 
 
@@ -65,28 +65,28 @@ Support for QEMU and RMM are still being staged into upstream Trusted Firmware, 
 
 A [set of binaries ](https://fileserver.linaro.org/s/Grjs6kSkBYd8DkX)has been created using the above instructions as a demonstration.  Unpack the tar file and execute “rmm-example/run-host.sh”:
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787251728/linaro-website/IMG_4007_bhfeuw.jpg)
 
 The firmware and the kernel’s earlycon will log to serial0, the secure monitor will log to serial1, and the host and realm guests consoles will be on HostConsole and RealmConsole respectively.
 
 Log into the host as “root” with no password, then execute “/mnt/run-guest.sh”.  The debugging that is enabled within the firmware will immediately begin logging about the realm creation:
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787251738/linaro-website/IMG_4006_ggljfe.jpg)
 
 Within a few minutes, the guest will boot:
 
-![]()
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1787251749/linaro-website/IMG_4005_dcccyd.jpg)
 
 Again, one may log in as “root” without password.  The guest filesystem is minimal, so there is really very little to see at this point.  However, it does demonstrate a successful boot to Realm user-space.  Hooray!
 
 Run “halt” on the guest and then host to shutdown cleanly, or abruptly kill the entire emulation by closing the window or “quit” from the QEMU monitor on stdin.  
 
-# Final Thoughts
+## Final Thoughts
 
 The work to enable FEAT_RME supports a number of aims of the [core QEMU Team](https://linaro.atlassian.net/wiki/spaces/QEMU/overview) within Linaro. We upstream useful architectural features so the wider open source community can experiment with them before general availability of hardware. We also provide reference platforms for the rest of Linaro to develop software. You can expect more activity over the next year as our Linaro colleagues work to ensure all layers of the software stack are ready for real silicon when it arrives. As what is going on inside the real hardware will be inscrutable by design I’m sure engineers will also appreciate having the ability to peek inside the inner workings of QEMU when it comes to the inevitable debugging phase of the project.
 
 As we look to the new year we still have a number of upcoming features to implement for the architecture as well as improvements for using QEMU in early modelling and bring-up tasks. You can see our upcoming roadmap on the [team’s project page](https://linaro.atlassian.net/wiki/spaces/QEMU/overview). We’ll see you on the[ qemu-devel mailing list.](https://lists.gnu.org/archive/html/qemu-devel/)
 
-About the author
+## About the author
 
 **Alex** is the Senior Emulation and Virtualisation Tech Lead at Linaro, where he leads the QEMU team. Holding a degree in Chemistry, his software journey began in the 80s home computer era, evolving into decades of hands-on experience across embedded systems, telecom hardware, and open-source software. A long-time Linux practitioner and avid Emacs enthusiast, Alex is always ready to advocate for the "One True Editor."
