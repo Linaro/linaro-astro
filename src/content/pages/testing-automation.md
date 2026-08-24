@@ -20,9 +20,7 @@ hero:
     background: bg-right-top xl:bg-right
     background_container: p-[5%] md:ml-[5%]
 flow:
-  # Figures need verifying before publication: device and kernel counts are
-  # carried over from services/testingandautomation, the distribution count and
-  # the engineering-time figure come from the Testing & Automation idea doc.
+  # TODO-BENCLAUDE: verify stat figures before publication
   - row: container_row
     styles:
       outer: bg-background
@@ -175,28 +173,28 @@ flow:
           card_title: text-2xl
         cards:
           - title: GitLab Runner Integration
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: Put your board directly into a GitLab pipeline. Push code, open a merge request, and it is tested on the real device automatically.
             button:
               text: See How Teams Wire This Up
               url: https://hub.linaro.com
               cta_id: cicd.usecase.gitlab-runner
           - title: KernelCI Pull-Labs
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: Continuous upstream kernel testing with no infrastructure to manage. kci-runner boots and tests kernels on your hardware and reports to the KernelCI dashboard.
             button:
               text: Get Your Hardware Into Upstream CI
               url: https://hub.linaro.com/pull-labs
               cta_id: cicd.usecase.kernelci-pull-labs
           - title: LAVA Worker Expansion
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: Add a device to any LAVA instance. Connect it, configure it in LAVA Managed Services, and start submitting jobs.
             button:
               text: Read the LAVA Documentation
               url: https://lava.readthedocs.io/en/latest/
               cta_id: cicd.usecase.lava-worker
           - title: Secure Remote Access
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: Host your device anywhere, in a lab, on a desk or on customer premises, and grant encrypted, permission-gated console access to developers or customers anywhere in the world.
             button:
               text: Give Your Customers a Virtual Lab
@@ -232,21 +230,21 @@ flow:
           card_title: text-2xl
         cards:
           - title: The Gateway
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: The LAA hardware appliance for localised, hands-off automation. One box, your devices, no lab rebuild.
             button:
               text: Start With One Appliance
               url: /contact
               cta_id: cicd.tier.gateway
           - title: The Orchestrator
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: Managed LAVA Managed Services, giving your teams full fleet management and test scheduling across sites.
             button:
               text: Discuss Fleet Management
               url: /contact
               cta_id: cicd.tier.orchestrator
           - title: The Enterprise Fleet
-            style: text-white border border-black rounded-3xl p-10 bg-linaro-gradient-vertical
+            style: text-white border border-grey rounded-3xl p-10 bg-darker
             text: A dedicated LAVA Managed Services setup for full-scale hardware integration across global deployments.
             button:
               text: Talk About a Global Deployment
