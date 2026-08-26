@@ -34,8 +34,6 @@ flow:
             label: Linux distributions ONELab boots on your platform
           - value: 40000
             label: kernels built per month across Linaro CI
-          - value: 25
-            label: "% of senior engineer time lost to managing lab plumbing"
 
   - row: container_row
     title: The True Cost of Hardware Validation
@@ -52,18 +50,15 @@ flow:
           container: justify-center gap-x-16 md:mx-24
           card_title: bg-linaro-gradient text-transparent bg-clip-text
         cards:
-          - title: The Downstream Tax
+          - title: The Duplication Tax
             text: |
-              Hardware vendors spend millions fixing the same bugs in silos. The industry duplicates the effort, and every vendor pays for it separately.
-          - title: The OS Gap
-            text: |
-              Getting your hardware to run standard Linux distributions without a custom BSP is a genuine hurdle, and customers judge you on it.
+              You fix the same bugs over and over across different hardware implementations. Every board variant repeats work your team has already done once.
           - title: Engineering Overhead
             text: |
-              Private labs and bespoke software forks slow you down. Senior engineers routinely lose a fifth of their time to lab plumbing rather than product work.
+              Private labs and bespoke software forks slow you down. Senior engineers lose 15 to 25% of their time to lab plumbing rather than product work.
           - title: Compliance Pressure
             text: |
-              The EU Cyber Resilience Act and its peers demand verified, up-to-date firmware security out of the box, continuously, not once at launch.
+              The EU Cyber Resilience Act and its peers demand verified, up-to-date security out of the box, across your whole stack and continuously, not once at launch.
 
   - row: container_row
     no_border: true
@@ -84,7 +79,7 @@ flow:
       outer: purple-gradient-container-no-padding
     sections:
       - component: text
-        text_content: As the industry battles continuous software regressions, the teams that catch them early stop paying for them downstream. Managed automation is how you surface regression data while it is still cheap to act on.
+        text_content: A bug caught in CI costs a developer an afternoon. The same bug caught in a release costs a support case, a respin and a customer's confidence. Managed automation moves the catch to the cheap end.
         style: text-center text-2xl mx-auto font-bold mb-12 md:mx-32
       - component: buttons
         buttons:
@@ -215,7 +210,7 @@ flow:
         cta_id: cicd.usecase.virtual-lab-discussion
 
   - row: container_row
-    title: Ways to Buy
+    title: Plans & Pricing
     styles:
       inner: py-16 md:px-16
       outer: bg-background
