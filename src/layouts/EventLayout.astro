@@ -26,6 +26,7 @@ const {
   data: {
     title,
     description,
+    intro,
     image,
     event_start,
     event_end,
@@ -101,7 +102,21 @@ const upcomingEvents = (
         "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
-      <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
+      <h1
+        class:list={[
+          "text-5xl font-bold max-w-4xl",
+          intro ? "mb-6" : "mb-16",
+        ]}
+      >
+        {title}
+      </h1>
+      {
+        intro && (
+          <p class="text-xl md:text-2xl leading-relaxed mb-12 max-w-4xl text-white/90">
+            {intro}
+          </p>
+        )
+      }
       <p class="flex gap-4 flex-wrap items-start block my-4">
         <div
           data-pagefind-meta={`event_start`}
@@ -133,47 +148,46 @@ const upcomingEvents = (
           )
         }
       </p>
-      <div>
-        {
-          webinarContactButton ? (
+      {
+        !webinarContactButton && button && (
+          <div>
+            <a
+              href={button.url}
+              data-pagefind-meta="button_text, button_url[href]"
+              target="_blank"
+              class="my-8 no-underline inline-block"
+            >
+              <div class="linaro-gradient-button ">{button.text}</div>
+            </a>
+          </div>
+        )
+      }
+      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
+        >{summary}</span
+      >
+    </section>
+    <ArticleContent Content={Content} image={image} upcoming={isUpcoming}>
+      {
+        webinarContactButton && (
+          <div slot="cta" class="not-prose mb-10">
+            <section id="webinar-video-container" class="hidden">
+              <div id="webinar-video-content" class="mb-8" />
+            </section>
             <WebinarContactModal
               modal_id={webinarContactButton.modal_id}
               form_id={webinarContactButton.form_id}
               formName={webinarContactButton.formName}
               button_text={webinarContactButton.button_text}
               description={webinarContactButton.description}
-              styles={{ buttonStyles: "my-8 no-underline inline-block" }}
+              styles={{
+                buttonStyles: "my-2 no-underline inline-block",
+              }}
               webinarDataId={webinarContactButton.webinarDataId}
             />
-          ) : (
-            button && (
-              <a
-                href={button.url}
-                data-pagefind-meta="button_text, button_url[href]"
-                target="_blank"
-                class="my-8 no-underline inline-block"
-              >
-                <div class="linaro-gradient-button ">{button.text}</div>
-              </a>
-            )
-          )
-        }
-      </div>
-      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
-        >{summary}</span
-      >
-    </section>
-    {
-      webinarContactButton && (
-        <section
-          id="webinar-video-container"
-          class="container mx-auto max-w-5xl px-8 xl:px-0 hidden"
-        >
-          <div id="webinar-video-content" class="my-8" />
-        </section>
-      )
-    }
-    <ArticleContent Content={Content} image={image} upcoming={isUpcoming} />
+          </div>
+        )
+      }
+    </ArticleContent>
   </main>
   {
     upcomingEvents.length > 0 && (
