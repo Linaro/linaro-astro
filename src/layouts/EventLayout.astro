@@ -99,9 +99,10 @@ const upcomingEvents = (
   <main data-pagefind-body data-pagefind-filter="type:events" class="z-0">
     <section
       class:list={[
-        "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
+        "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0",
       ]}
     >
+      <div class="relative z-10">
       <h1
         class:list={[
           "text-5xl font-bold max-w-4xl",
@@ -112,7 +113,7 @@ const upcomingEvents = (
       </h1>
       {
         intro && (
-          <p class="text-xl md:text-2xl leading-relaxed mb-12 max-w-4xl text-white/90">
+          <p class="text-2xl md:text-3xl font-extrabold leading-snug mb-12 max-w-4xl text-linaro-yellow drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
             {intro}
           </p>
         )
@@ -165,6 +166,7 @@ const upcomingEvents = (
       <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
         >{summary}</span
       >
+      </div>
     </section>
     <ArticleContent Content={Content} image={image} upcoming={isUpcoming}>
       {
