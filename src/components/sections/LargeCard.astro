@@ -76,6 +76,7 @@ const { cards, styles } = Astro.props;
               <a
                 href={button.url}
                 target={button.url.startsWith("https") ? "_blank" : "_self"}
+                data-cta-id={button.cta_id}
                 class="no-underline inline-block mt-auto"
               >
                 <div
