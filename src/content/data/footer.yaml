@@ -15,7 +15,7 @@ nav_links:
       - label: NXP Platform Services
         url: /services/nxp-platform-services
       - label: Test Automation
-        url: /services/testingandautomation
+        url: /services/testing-automation
       - label: Virtualization
         url: /services/virtualization
   - label: Solutions
