@@ -129,6 +129,9 @@ export const server = {
         country: z.string().optional(),
         whitepaperId: z.string().optional(),
         webinarDataId: z.string().optional(),
+        howCanWeHelp: z.string().optional(),
+        howCanWeHelpOther: z.string().optional(),
+        hearAboutWebinar: z.string().optional(),
       })
       .passthrough(),
     handler: async (input) => {
@@ -157,9 +160,12 @@ export const server = {
           });
         }
       } else if (
-        ["contact-form", "whitepaper_contact", "webinar_contact"].includes(
-          formName,
-        )
+        [
+          "contact-form",
+          "whitepaper_contact",
+          "webinar_contact",
+          "webinar_followup",
+        ].includes(formName)
       ) {
         throw new ActionError({
           code: "BAD_REQUEST",
@@ -309,6 +315,17 @@ export const server = {
             extraDetails.push(`Contact by Expert: ${input.contactByExpert}`);
           if (input.newsletter)
             extraDetails.push(`Newsletter: ${input.newsletter}`);
+          if (input.howCanWeHelp) {
+            const howCanWeHelpValue =
+              input.howCanWeHelp === "Other" && input.howCanWeHelpOther
+                ? `Other: ${input.howCanWeHelpOther}`
+                : input.howCanWeHelp;
+            extraDetails.push(`How can we help: ${howCanWeHelpValue}`);
+          }
+          if (input.hearAboutWebinar)
+            extraDetails.push(
+              `Where did you hear about this webinar: ${input.hearAboutWebinar}`,
+            );
 
           if (extraDetails.length > 0) {
             messageContent += `\n\n--- Additional Info ---\n${extraDetails.join("\n")}`;
