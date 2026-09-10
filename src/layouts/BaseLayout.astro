@@ -56,6 +56,110 @@ const { title, description, type = "website", image } = Astro.props;
           dataLayer: Record<string, any>[];
         }
       }
+
+      interface CtaDetail {
+        id: string;
+        text: string;
+        destination: string;
+        outbound: boolean;
+        page: string;
+      }
+
+      const CTA_PANEL_ID = "cta-debug-panel";
+
+      function ctaDebugEnabled(): boolean {
+        return new URLSearchParams(window.location.search).has("ctadebug");
+      }
+
+      function ctaDebugPanel(): HTMLElement {
+        const existing = document.getElementById(CTA_PANEL_ID);
+        if (existing) return existing;
+
+        const panel = document.createElement("div");
+        panel.id = CTA_PANEL_ID;
+        panel.innerHTML =
+          '<strong style="display:block;margin-bottom:6px;color:#FFCE00">' +
+          "CTA clicks captured</strong>" +
+          '<ol style="margin:0;padding-left:18px"></ol>';
+        Object.assign(panel.style, {
+          position: "fixed",
+          right: "12px",
+          bottom: "12px",
+          zIndex: "9999",
+          maxWidth: "24rem",
+          maxHeight: "45vh",
+          overflowY: "auto",
+          padding: "10px 12px",
+          borderRadius: "10px",
+          border: "1px solid #6715E8",
+          background: "rgba(0,0,0,0.9)",
+          color: "#fff",
+          font: "12px/1.5 ui-monospace, monospace",
+        });
+        document.body.appendChild(panel);
+        return panel;
+      }
+
+      function ctaDebugRecord(cta: CtaDetail): void {
+        const list = ctaDebugPanel().querySelector("ol");
+        if (!list) return;
+        const item = document.createElement("li");
+        item.style.marginBottom = "6px";
+        item.textContent = cta.id;
+        const dest = document.createElement("div");
+        dest.style.opacity = "0.65";
+        dest.textContent = (cta.outbound ? "outbound " : "") + cta.destination;
+        item.appendChild(dest);
+        list.appendChild(item);
+      }
+
+      function isOutbound(destination: string): boolean {
+        try {
+          return new URL(destination, window.location.href).host !== window.location.host;
+        } catch {
+          return false;
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const trigger = target.closest("[data-cta-id]");
+        if (!(trigger instanceof HTMLElement)) return;
+
+        const id = trigger.dataset.ctaId;
+        if (!id) return;
+
+        const href = trigger instanceof HTMLAnchorElement ? trigger.href : "";
+        const destination = href || "form:" + id;
+
+        const cta: CtaDetail = {
+          id,
+          text: (trigger.textContent || "").trim().replace(/\s+/g, " "),
+          destination,
+          outbound: href ? isOutbound(href) : false,
+          page: window.location.pathname,
+        };
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "cta_click", cta });
+
+        if (ctaDebugEnabled()) ctaDebugRecord(cta);
+      });
+
+      ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+        document.addEventListener(event, () => {
+          if (ctaDebugEnabled()) ctaDebugPanel();
+        });
+      });
+    </script>
+    <script>
+      declare global {
+        interface Window {
+          dataLayer: Record<string, any>[];
+        }
+      }
       ["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
         document.addEventListener(event, addListeners);
       });
