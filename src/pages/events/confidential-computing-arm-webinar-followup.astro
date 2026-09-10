@@ -1,0 +1,51 @@
+---
+// Standalone landing page for attendees of the "Confidential Computing on
+// Arm: Accelerating Trusted AI with Linaro" webinar to request more info or
+// ask follow-up questions. Deliberately NOT linked from any site navigation
+// (no entry in src/content/data/nav.yaml, and not part of the events
+// collection) — it is only reachable via direct URL, e.g. shared in a
+// post-webinar email.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CloudinaryImg from "@/components/cloudinary/CloudinaryImg.astro";
+import WebinarFollowupForm from "@/components/forms/WebinarFollowupForm.astro";
+
+const heroImage =
+  "https://res.cloudinary.com/dl7c2wmhi/image/upload/v1788873440/linaro-website/images/events/IMG_4161_oycee2.png";
+---
+
+<BaseLayout
+  title="Confidential Computing on Arm Webinar Follow-Up"
+  description="Have follow-up questions about the Confidential Computing on Arm: Accelerating Trusted AI with Linaro webinar? Send us a message."
+  image={heroImage}
+>
+  <head>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+
+  <main class="container mx-auto px-4 md:px-8 py-16 md:py-24 max-w-4xl">
+    <div class="rounded-3xl overflow-hidden mb-12">
+      <CloudinaryImg
+        src={heroImage}
+        alt="Confidential Computing on Arm: Accelerating Trusted AI with Linaro"
+        width={1200}
+        height={630}
+        class="w-full h-auto object-cover"
+      />
+    </div>
+
+    <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 text-center">
+      Thank you for your interest in Confidential Computing on Arm:
+      Accelerating Trusted AI with Linaro webinar!
+    </h1>
+
+    <p class="text-lg md:text-xl text-white/90 mb-12 text-center max-w-2xl mx-auto">
+      Have follow-up questions for Behan Webster or the Linaro engineering
+      team? Send us a message using the form below.
+    </p>
+
+    <WebinarFollowupForm
+      form_id="webinar-followup-confidential-computing-arm"
+      formName="webinar_followup"
+    />
+  </main>
+</BaseLayout>

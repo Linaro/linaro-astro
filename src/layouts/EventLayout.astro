@@ -26,6 +26,7 @@ const {
   data: {
     title,
     description,
+    intro,
     image,
     event_start,
     event_end,
@@ -98,10 +99,26 @@ const upcomingEvents = (
   <main data-pagefind-body data-pagefind-filter="type:events" class="z-0">
     <section
       class:list={[
-        "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
+        "relative hero-background-image pt-32 container mx-auto max-w-5xl px-8 xl:px-0",
+        intro && "hero-background-faded",
       ]}
     >
-      <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
+      <div class="relative z-10">
+      <h1
+        class:list={[
+          "text-5xl font-bold max-w-4xl",
+          intro ? "mb-6" : "mb-16",
+        ]}
+      >
+        {title}
+      </h1>
+      {
+        intro && (
+          <p class="text-2xl md:text-3xl font-extrabold leading-snug mb-12 max-w-4xl text-linaro-yellow drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+            {intro}
+          </p>
+        )
+      }
       <p class="flex gap-4 flex-wrap items-start block my-4">
         <div
           data-pagefind-meta={`event_start`}
@@ -133,47 +150,47 @@ const upcomingEvents = (
           )
         }
       </p>
-      <div>
-        {
-          webinarContactButton ? (
+      {
+        !webinarContactButton && button && (
+          <div>
+            <a
+              href={button.url}
+              data-pagefind-meta="button_text, button_url[href]"
+              target="_blank"
+              class="my-8 no-underline inline-block"
+            >
+              <div class="linaro-gradient-button ">{button.text}</div>
+            </a>
+          </div>
+        )
+      }
+      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
+        >{summary}</span
+      >
+      </div>
+    </section>
+    <ArticleContent Content={Content} image={image} upcoming={isUpcoming}>
+      {
+        webinarContactButton && (
+          <div slot="cta" class="not-prose mb-10">
+            <section id="webinar-video-container" class="hidden">
+              <div id="webinar-video-content" class="mb-8" />
+            </section>
             <WebinarContactModal
               modal_id={webinarContactButton.modal_id}
               form_id={webinarContactButton.form_id}
               formName={webinarContactButton.formName}
               button_text={webinarContactButton.button_text}
               description={webinarContactButton.description}
-              styles={{ buttonStyles: "my-8 no-underline inline-block" }}
+              styles={{
+                buttonStyles: "my-2 no-underline inline-block",
+              }}
               webinarDataId={webinarContactButton.webinarDataId}
             />
-          ) : (
-            button && (
-              <a
-                href={button.url}
-                data-pagefind-meta="button_text, button_url[href]"
-                target="_blank"
-                class="my-8 no-underline inline-block"
-              >
-                <div class="linaro-gradient-button ">{button.text}</div>
-              </a>
-            )
-          )
-        }
-      </div>
-      <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
-        >{summary}</span
-      >
-    </section>
-    {
-      webinarContactButton && (
-        <section
-          id="webinar-video-container"
-          class="container mx-auto max-w-5xl px-8 xl:px-0 hidden"
-        >
-          <div id="webinar-video-content" class="my-8" />
-        </section>
-      )
-    }
-    <ArticleContent Content={Content} image={image} upcoming={isUpcoming} />
+          </div>
+        )
+      }
+    </ArticleContent>
   </main>
   {
     upcomingEvents.length > 0 && (
@@ -205,5 +222,22 @@ const upcomingEvents = (
     @media (min-width: theme(--breakpoint-lg)) {
       @apply bg-position-[top_right_-50%];
     }
+  }
+
+  /* Fade the yellow map so Linaro-yellow intro text stays readable */
+  .hero-background-image.hero-background-faded {
+    background-image: none;
+  }
+
+  .hero-background-image.hero-background-faded::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--backgroundUrl);
+    background-repeat: no-repeat;
+    background-position: inherit;
+    opacity: 0.28;
   }
 </style>

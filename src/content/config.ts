@@ -126,6 +126,7 @@ const events = defineCollection({
     image: z.string(),
     type: z.enum(["webinar", "presenter", "attend", "tech_days", "sponsor"]),
     location: z.string(),
+    intro: z.string().optional(),
     button: z.object({ text: z.string(), url: z.string() }).optional(),
     webinarContactButton: z
       .object({
