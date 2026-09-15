@@ -6,6 +6,7 @@ const { form_id, formName, description, modal_id, webinarDataId } = Astro.props;
 const inputFields = [
   { name: "fullName", label: "Full Name", type: "text" },
   { name: "email", label: "Work email", type: "email" },
+  { name: "company", label: "Company", type: "text" },
 ];
 
 const countryFieldId = modal_id ? `country-${modal_id}` : "country";
