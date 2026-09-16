@@ -11,6 +11,10 @@ const webinar_credentials: Record<string, string | Record<string, string>> = {
     type: "video",
     url: "https://static.linaro.org/videos/mastering_parallel_debugging_and_profiling_with_linaro_forge.mp4",
   },
+  confidential_computing_on_arm: {
+    type: "video",
+    url: "https://static.linaro.org/videos/1_277DB14E9E0E6068BC3112FC37C7CD0E.mp4",
+  },
 };
 export const GET: APIRoute = async ({ params, request }) => {
   const id = params.webinarDataId;
@@ -78,5 +82,6 @@ export function getStaticPaths() {
           "mastering_parallel_debugging_and_profiling_with_linaro_forge",
       },
     },
+    { params: { webinarDataId: "confidential_computing_on_arm" } },
   ];
 }

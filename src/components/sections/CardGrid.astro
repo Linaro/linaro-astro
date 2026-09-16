@@ -91,6 +91,7 @@ const { cards, styles, divider, gradient_border } = Astro.props;
               <a
                 href={button.url}
                 target={button.url.startsWith("https") ? "_blank" : "_self"}
+                data-cta-id={button.cta_id}
                 class="no-underline inline-block mt-auto"
               >
                 <div
@@ -113,6 +114,7 @@ const { cards, styles, divider, gradient_border } = Astro.props;
                       button_text={contact_button.button_text}
                       description={contact_button.title}
                       formName={contact_button.formName}
+                      cta_id={contact_button.cta_id}
                     />
                   );
                 }
