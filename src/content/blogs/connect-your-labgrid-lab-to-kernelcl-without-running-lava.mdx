@@ -13,7 +13,7 @@ related: []
 ---
 The latest Linaro Automation Appliance release lets existing Labgrid-based labs participate in KernelCI without deploying or maintaining a LAVA server, making it easier than ever to contribute hardware testing capacity.
 
-TL;DR
+## TL;DR
 
 * The Linaro Automation Appliance (LAA) now runs KernelCI jobs through Labgrid as well as tuxrun.
 * Labgrid labs can contribute boards to KernelCI without deploying or operating a LAVA server.
@@ -36,7 +36,7 @@ The LAA and the pull-lab model remove that at two different layers. The applianc
 
 ![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1789729110/linaro-website/IMG_4282_xfsu0n.jpg)
 
-FIGURE 1 GOES HERE. The flow it shows: a KernelCI job is queued; the Linaro Automation Appliance polls for it, downloads and deploys; it routes to the configured backend, either Labgrid using pytest fixtures or tuxrun; that drives real hardware over power control, serial console and network boot; results return to KernelCI as JUnit XML via the callback API.
+The flow it shows: a KernelCI job is queued; the Linaro Automation Appliance polls for it, downloads and deploys; it routes to the configured backend, either Labgrid using pytest fixtures or tuxrun; that drives real hardware over power control, serial console and network boot; results return to KernelCI as JUnit XML via the callback API.
 
 *The appliance is the execution layer. Labgrid and tuxrun are interchangeable from KernelCI's side: the same job goes in and the same result format comes back, whichever one ran it.*
 
