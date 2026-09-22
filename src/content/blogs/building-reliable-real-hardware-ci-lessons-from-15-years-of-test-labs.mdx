@@ -76,7 +76,11 @@ The first is a program. The second is electricity, cables and connectors, and it
 
 The software harness deploys the software under test to the device under test (DUT), boots it, runs the tests and collects the results. Several mature open-source options exist:
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1790001782/linaro-website/IMG_4334_zpifay.jpg)
+| Harness       | Software to test                  | Architecture                 | Testing Community                                                          |
+| ------------- | --------------------------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| Gitlab/Github | User space                        | Runner                       |                                                                              |
+| Labgrid       | Firmware, Kernel, OS, user space  | Single process               | KernelCI, …                                                                  |
+| LAVA          | Firmware, Kernel, OS, user space  | On server, multiple workers  | KernelCI, Onelab, Civil Infrastructure Platform, Automotive Grade Linux, …   |
 
 Depending on your exact use case and requirements, you have multiple reliable options for the software harness.
 
@@ -97,7 +101,44 @@ All these features should be driven from a set of commands that the software har
 
 Building a hardware harness is then a matter of combining several components:
 
-![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1790001783/linaro-website/IMG_4335_yc5rko.jpg)
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Interface</th>
+      <th>Component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">Power On/Off</td>
+      <td>ATX Power Supply</td>
+      <td rowspan="2">Managed relays</td>
+    </tr>
+    <tr>
+      <td>Jack Barrel</td>
+    </tr>
+    <tr>
+      <td>USB</td>
+      <td>Managed USB hub</td>
+    </tr>
+    <tr>
+      <td>Serial (UART)</td>
+      <td></td>
+      <td>FTDI to USB</td>
+    </tr>
+    <tr>
+      <td>Boot, Enter recovery, …</td>
+      <td>Press buttons / toggle dip switches</td>
+      <td>Managed relays</td>
+    </tr>
+    <tr>
+      <td>Network services</td>
+      <td>DHCP, DNS, NTP, TFTP, …</td>
+      <td>Switches and servers</td>
+    </tr>
+  </tbody>
+</table>
 
 The worker is responsible for driving the different components, and usually controls around 5 to 10 boards.
 
