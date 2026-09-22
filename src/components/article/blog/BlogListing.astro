@@ -34,7 +34,7 @@ const content =
 ---
 
 <li
-  class="w-80 border-[0.25px] border-grey rounded-3xl hover:border-transparent hover:linaro-gradient-border cursor-pointer bg-background flex flex-col justify-between"
+  class="w-80 border-[0.25px] border-grey rounded-3xl linaro-gradient-border-base hover:border-transparent hover:[&::before]:bg-linaro-gradient cursor-pointer bg-background flex flex-col justify-between"
   data-blog-card
   data-blog-title={blog.title}
   data-blog-tags={JSON.stringify(tags.map(t => t.data.name))}

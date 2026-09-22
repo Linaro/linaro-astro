@@ -164,29 +164,30 @@
   padding: 0.5rem 1.5rem;
   border-radius: 9999px;
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
   cursor: pointer;
-  @apply bg-linaro-gradient text-white;
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 150px;
-    height: 100%;
-    background-image: linear-gradient(
+  background-image: var(--background-image-linaro-gradient),
+    linear-gradient(
       120deg,
       rgba(255, 255, 255, 0) 30%,
       rgba(255, 255, 255, 0.3),
       rgba(255, 255, 255, 0) 70%
     );
-    top: 0;
-    left: -150px;
-    transition: none;
-  }
+  background-size:
+    100% 100%,
+    150px 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    0 0,
+    -150px 0;
+  color: var(--color-white);
+  transition: none;
 
-  &:hover::before {
-    left: 100%;
-    transition: all 0.65s ease-out;
+  &:hover {
+    background-position:
+      0 0,
+      calc(100% + 150px) 0;
+    transition: background-position 0.65s ease-out;
   }
 }
 
@@ -194,29 +195,30 @@
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
   cursor: pointer;
-  @apply bg-linaro-gradient text-white;
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 150px;
-    height: 100%;
-    background-image: linear-gradient(
+  background-image: var(--background-image-linaro-gradient),
+    linear-gradient(
       120deg,
       rgba(255, 255, 255, 0) 30%,
       rgba(255, 255, 255, 0.3),
       rgba(255, 255, 255, 0) 70%
     );
-    top: 0;
-    left: -150px;
-    transition: none;
-  }
+  background-size:
+    100% 100%,
+    150px 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    0 0,
+    -150px 0;
+  color: var(--color-white);
+  transition: none;
 
-  &:hover::before {
-    left: 100%;
-    transition: all 0.65s ease-out;
+  &:hover {
+    background-position:
+      0 0,
+      calc(100% + 150px) 0;
+    transition: background-position 0.65s ease-out;
   }
 }
 
@@ -243,7 +245,7 @@
 }
 
 /* gradient-border */
-@utility linaro-gradient-border {
+@utility linaro-gradient-border-base {
   position: relative;
   background-clip: padding-box;
 
@@ -258,6 +260,14 @@
     margin: -10px;
     border-radius: inherit;
     box-sizing: border-box;
+    background-image: none;
+  }
+}
+
+@utility linaro-gradient-border {
+  @apply linaro-gradient-border-base;
+
+  &::before {
     @apply bg-linaro-gradient;
   }
 }
