@@ -3,7 +3,7 @@ title: "Building Reliable Real-Hardware CI: Lessons from 15 Years of Test Labs"
 description: What we learned from running hardware test labs and the engineering
   approach behind the Linaro Automation Appliance.
 date: 2026-09-21T14:14:00.000Z
-author: Remi Duraffort lin
+author: remi-duraffort
 tags:
   - ci
   - test-automation
@@ -14,7 +14,7 @@ related: []
 ---
 TL;DR
 
-Real-hardware CI is valuable, but building and maintaining the hardware automation around each Device Under Test (DUT) is difficult:
+[Real-hardware CI is valuable](https://www.linaro.org/services/testing-automation), but building and maintaining the hardware automation around each Device Under Test (DUT) is difficult:
 
 * Testing detects bugs that would cost 100 times more to fix if part of a release
 * Testing on real hardware is required to ensure your software works on the hardware your customers will use
@@ -121,9 +121,14 @@ A recent study based on internal KPIs at Linaro showed that maintaining such wor
 
 # Introducing the Linaro Automation Appliance
 
-<https://assets.linaro.com/videos/laa/what-is-laa.mp4>
-
-(<https://assets.linaro.com/videos/laa/what-is-laa.jpg> for the thumbnail)
+<video
+  controls
+  class="object-contain mx-auto"
+  poster="https://assets.linaro.com/videos/laa/what-is-laa.jpg"
+>
+  <source src="https://assets.linaro.com/videos/laa/what-is-laa.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Linaro has been managing test labs for the last 15 years with up to 200 active boards. The labs used to make use of custom hardware harnesses described above.
 
@@ -167,9 +172,14 @@ Thanks to this firmware, every LAA in the fleet runs the exact same software and
 
 In case of a software regression, the LAA firmware can be quickly reverted to the previously working version. This is critical for the stability of your testing lab, and often impossible with traditional deployments.
 
-<https://assets.linaro.com/videos/laa/ota-updates.mp4>
-
-(<https://assets.linaro.com/videos/laa/ota-updates.jpg> for the thumbnail)
+<video
+  controls
+  class="object-contain mx-auto"
+  poster="https://assets.linaro.com/videos/laa/ota-updates.jpg"
+>
+  <source src="https://assets.linaro.com/videos/laa/ota-updates.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ## One appliance, one board, one private network
 
