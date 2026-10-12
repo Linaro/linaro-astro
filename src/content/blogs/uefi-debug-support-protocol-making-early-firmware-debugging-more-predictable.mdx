@@ -1,0 +1,78 @@
+---
+title: "UEFI Debug Support Protocol: Making Early-FIrmware Debugging More Predictable"
+description: Bringing a common debugging interface to U-Boot and Little Kernel,
+  while strengthening support in EDK2.
+date: 2026-10-12T12:11:00.000Z
+author: paul-liu
+tags:
+  - u-boot
+  - android
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1791806912/linaro-website/IMG_4326_ee7jns.png
+related: []
+---
+# Introduction
+
+Debugging early-stage firmware across different bootloaders often requires fragmented, adhoc tooling. By implementing the UEFI Debug Support Protocol (EFI_DEBUG_SUPPORT_PROTOCOL) in U-Boot and Little Kernel (LK), alongside contributions to EDK2, Linaro establish a standardized debug interface across diverse boot environment paradigms. This article explores the challenge of early-stage debugging, our implementation approach, and how it simplifies software development across open-source firmware ecosystems.
+
+In early boot stages, developer visibility into system execution is severely restricted. When a bootloader experiences a fault prior to rich OS initialization, developers frequently rely on manual register inspection, custom low-level print routines, or platform-dependent hardware debug interfaces. As open-source bootloaders like U-Boot and LK increasingly adopt UEFI standards to improve platform interoperability, providing a unified, standardized debugging interface becomes essential.
+
+## CHAPTER 1 - CONTEXT / CHALLENGE
+
+The UEFI specification defines the [EFI_DEBUG_SUPPORT_PROTOCOL](https://uefi.org/specs/UEFI/2.10_A/18_Protocols_Debugger_Support.html) to provide a standardized interface between bootloaders and debugging environments, enabling hardware debuggers (such as JTAG/SWD probes) to interact cleanly with early-stage execution states.
+
+When leveraging hardware debuggers during early boot, developers face two major hurdles:
+
+1. Lack of Standardized Interfaces in Lightweight Bootloaders: While EDK2 provides reference implementation structures for UEFI debug support, lightweight bootloaders like U-Boot and LK historically lacked native support for EFI_DEBUG_SUPPORT_PROTOCOL. As a result, hardware debug tools could not rely on a consistent UEFI-compliant interface when switching between different boot environments.
+2. Tooling Fragmentation Across Platforms: Without a unified protocol implementation, developers using JTAG debuggers often had to rely on custom, platform-specific hooks or manual memory mapping to locate symbol tables, determine execution states, or manage break logic across different bootloader projects.
+
+By standardizing hardware debugger support via EFI_DEBUG_SUPPORT_PROTOCOL, bootloaders can expose a unified debug control and visibility surface to JTAG-based tools regardless of the underlying boot engine.
+
+## CHAPTER 2 - APPROACH / SOLUTION
+
+To bridge this gap, we implemented the UEFI Debug Support Protocol across U-Boot and LK, while contributing enhancements to EDK2 to ensure ecosystem alignment.
+
+#### Key Implementation Highlights:
+
+* U-Boot Integration: We integrated EFI_DEBUG_SUPPORT_PROTOCOL into U-Boot's UEFI payload execution subsystem. This provides standardized interfaces for external hardware debugger integration, and reading/writing application context structures.
+* Little Kernel (LK) Adaptation: LK is widely used in resource-constrained or secondary boot environments. We implemented the core debug support protocol in LK, bridging its native thread and exception handling mechanisms to match the standard UEFI interface definitions.
+* EDK2 Upstream Contributions: We refined and contributed fixes to EDK2's existing debug support capabilities, ensuring strict compliance with the UEFI specification and improving compatibility across target architectures.
+
+## CHAPTER 3 - RESULTS / LESSONS
+
+By unifying hardware debug interface capabilities across U-Boot, LK, and EDK2, Linaro achieved seamless cross-bootloader debug observability:
+
+* Consistent Debug Agent Support: External diagnostic utilities and JTAG probes can attach to U-Boot and LK payloads using identical, spec-compliant interfaces.
+* Simplified Symbol Resolution: Hardware debuggers can easily discover the load addresses of EFI applications to dynamic load debug symbols into GDB, eliminating manual address calculations during early boot debugging.
+* Cross-Bootloader Parity: Bringing LK and U-Boot up to parity with EDK2 in terms of UEFI debug primitives reinforces the viability of lightweight bootloaders in modern UEFI-compliant systems.
+
+To demonstrate these capabilities in action, I presented this work at DebConf26 under the track *Kernel, early boot, and low level*. The session highlights how the EFI_DEBUG_SUPPORT_PROTOCOL streamlines JTAG-based debugging for EFI applications and showcases live debug workflows across U-Boot, EDK2, and LK.
+
+* Watch the presentation and live demo:[ UEFI Debug Support Protocol for U-boot, EDK2 and LK (DebConf26)](https://debconf26.debconf.org/talks/11-uefi-debug-support-protocol-for-u-boot-edk2-and-lk/)
+
+## CHAPTER 4 - FROM ONE BOOTLOADER TO AN ECOSYSTEM
+
+As the Linux and ARM embedded ecosystems transition toward standardized boot architectures (such as EBBR and SystemReady), bootloaders must deliver consistent, spec-compliant interfaces not just for OS loading, but also for system diagnostics and software quality assurance. Establishing standardized debug protocol support across EDK2, U-Boot, and LK lowers the barrier to entry for platform enablement, reduces debugging friction, and strengthens open-source firmware reliability.
+
+And as the embedded and mobile ecosystems evolve, standardizing boot interfaces has become essential too. Not just for traditional enterprise or server platforms, but also for modern mobile and automotive architectures.
+
+A prime example of this transition is [Android’s Generic Bootloader](https://source.android.com/docs/core/architecture/bootloader/generic-bootloader) (GBL) project. Built around UEFI application standards, GBL relies on underlying firmware implementations (such as EDK2, U-Boot, or LK) to provide spec-compliant boot services and protocols.
+
+By implementing EFI_DEBUG_SUPPORT_PROTOCOL across U-Boot and LK:
+
+* Enabling Seamless GBL Debugging: Developers working on GBL for Android can now use standardized hardware debuggers (like JTAG/SWD probes) to inspect, trace, and debug GBL payloads seamlessly, regardless of whether the base firmware runs U-Boot, Little Kernel, or EDK2.
+* Unified Tooling Across Ecosystems: Hardware debug tools no longer need platform-dependent hacks or custom symbol resolution methods for different bootloaders. A single, spec-compliant UEFI debug interface works across Arm SystemReady platforms as well as Android GBL boot chains.
+* Accelerating Platform Bring-up: Lowering the barrier for hardware debugger integration speeds up low-level bring-up, diagnostics, and issue root-causing across all open-source firmware targets.
+
+## WHAT WE LEARNED
+
+Standardizing hardware debug support across U-Boot, LK, and EDK2 marks a major step forward in firmware observability. Whether powering enterprise boot workflows or debugging next-generation Android bootloaders like GBL, spec-compliant interfaces like EFI_DEBUG_SUPPORT_PROTOCOL provide developers with a consistent, reliable foundation for hardware-assisted debugging. 
+
+## WANT TO GO DEEPER
+
+If you're working on UEFI-based firmare, Arm platform bring-up, or early-boot debugging, the Debug Support Protocol is a good example of where interoperability can have a practical impact on day-to-day engineering.
+
+[Talk to Linaro](http://www.linaro.org/contact) and our OS & Firmaware engineers who work across the open source firmware ecosystem to help platform teams with UEFI, bootloader integration, upstreaming and early-boot debugging.
+
+### About the Author 
+
+Ying-Chun Liu (PaulLiu) is a senior engineer at Linaro specializing in low-level system software, embedded firmware, and open-source enablement across ARM64 and diverse architecture ecosystems.
