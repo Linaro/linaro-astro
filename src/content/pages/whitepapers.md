@@ -28,6 +28,13 @@ flow:
           card_title: text-xl m-0 text-black font-normal
           image: w-full h-[10rem] max-w-full object-cover rounded-2xl
         cards:
+          - text: Keeping Hardware CI Available for Time-Critical Testing: A Nine-Board Juno Case Study
+            image:
+              src: linaro-website/images/blog-hero-images/IMG_4324_cdrlgk.png
+              alt: ""
+            button:
+              text: Read more
+              url: https://static.linaro.org/assets/Keeping+Hardware+CI+Available+for+Time-Critical+Testing_+A+Nine-Board+Juno+Case+Study.pdf
           - text: "Case Study: Making Space Missions Safe | Simulating the evolution of Space Debris with Linaro MAP"
             image:
               src: linaro-website/images/news/IMG_3581_pzj3wy.png
