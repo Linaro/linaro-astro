@@ -7,6 +7,9 @@ const webinar_credentials: Record<string, string | Record<string, string>> = {
     "https://static.linaro.org/webinar_credentials/inside-linux-on-snapdragon-webinar-credentials-2.json",
   cra_compliance_journey:
     "https://static.linaro.org/webinar_credentials/cra-compliance-journey-webinar-credentials.json",
+  cra_practical_path: {
+    url: "https://drive.google.com/file/d/1DJ9yxD25dL_4SzujfXQxkOGuyGJLrNZi/view?usp=drivesdk",
+  },
   mastering_parallel_debugging_and_profiling_with_linaro_forge: {
     type: "video",
     url: "https://static.linaro.org/videos/mastering_parallel_debugging_and_profiling_with_linaro_forge.mp4",
@@ -76,6 +79,7 @@ export function getStaticPaths() {
     { params: { webinarDataId: "linux_snapdragon" } },
     { params: { webinarDataId: "onelab_scaling" } },
     { params: { webinarDataId: "cra_compliance_journey" } },
+    { params: { webinarDataId: "cra_practical_path" } },
     {
       params: {
         webinarDataId:
