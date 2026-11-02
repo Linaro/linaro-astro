@@ -164,6 +164,18 @@ const upcomingEvents = (
           </div>
         )
       }
+      {
+        webinarContactButton && (
+          <a
+            href={`/events/${post.id}`}
+            data-pagefind-meta="button_text, button_url[href]"
+            class="hidden"
+            data-pagefind-ignore
+          >
+            {webinarContactButton.button_text}
+          </a>
+        )
+      }
       <span data-pagefind-meta="summary" class="hidden" data-pagefind-ignore
         >{summary}</span
       >
