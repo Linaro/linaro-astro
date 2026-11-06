@@ -10,7 +10,6 @@ tags:
 image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1793891040/linaro-website/IMG_4321_bw0yai.png
 related: []
 ---
-
 There are lots of distributed CI systems used for kernel testing at the moment,
 
 with prominent ones being the Linux Foundation’s KernelCI project, Intel’s kernel test robot, or the Sashiko review bot. For personal build testing, there is also Linaro’s tuxsuite, which allows scaling up build testing for interactive and automated uses. These are obviously all useful projects, but I ended up rolling my own about 15 years ago and am still using it.
@@ -53,15 +52,15 @@ The build setup is a set of small scripts and a single makefile that handles par
 
 ## Makefiles
 
-The most important part of my scripts is the top-level makefile, named (lowercase) ‘makefile’ so it can live in the source tree. and coexist with the kernel’s own (uppercase) ‘Makefile’, forwarding all normal build commands to build in the default object tree. Using ‘make’ itself as the build tool can take advantage of the jobserver infrastructure means that multiple kernels can be built in parallel with a fixed number of parallel compile or link jobs, which is much faster than doing only one build at a time when a large portion of the build is limited to single-threaded jobs. This was recently discussed in <https://lwn.net/Articles/1093398/> after a patch series by Lorenzo Stoakes to increase parallelism within a kernel build.
+The most important part of my scripts is the top-level makefile, named (lowercase) ‘makefile’ so it can live in the source tree. and coexist with the kernel’s own (uppercase) ‘Makefile’, forwarding all normal build commands to build in the default object tree. Using ‘make’ itself as the build tool can take advantage of the jobserver infrastructure means that multiple kernels can be built in parallel with a fixed number of parallel compile or link jobs, which is much faster than doing only one build at a time when a large portion of the build is limited to single-threaded jobs. This was recently discussed in[ this article](< https://lwn.net/Articles/1093398/>) after a patch series by Lorenzo Stoakes to increase parallelism within a kernel build.
 
 What I found is that doing three kernel builds in parallel, I usually get a CPU utilization close to 100%, so my regular builds do a loop of 300 kernels on each of the three architectures I care about (arm, arm64, x86), and then the three loops run in parallel. If a new linux-next version shows a lot of regressions, my script just rebuilds all currently failing kernels in parallel to validate any fixes, and the jobserver limits the number of simultaneous kernel builds to the number of CPUs I give it. I tend to use 20 cores for kernel builds, leaving four cores for running my desktop.
 
 ## Toolchain
 
-In order to be able to build kernels for all architectures, I also build cross-compilers for every gcc release. These are the same compilers I upload to <https://mirrors.edge.kernel.org/pub/tools/crosstool/>, and from there they are integrated into  tuxmake [<https://tuxmake.org/>], tuxsuite [<https://tuxsuite.com/>] and other tools. For simplicity, these are ‘nolibc’ builds that are only good for building the kernel, though this means there is no build coverage on the tools directory.
+In order to be able to build kernels for all architectures, I also build cross-compilers for every gcc release. These are the same compilers I upload [here](https://mirrors.edge.kernel.org/pub/tools/crosstool/), and from there they are integrated into [tuxmake](https://tuxmake.org/), [tuxsuite](https://tuxsuite.com/) and other tools. For simplicity, these are ‘nolibc’ builds that are only good for building the kernel, though this means there is no build coverage on the tools directory.
 
-For clang based builds, I use the ones similarly provided by Nathan Chancellor at <https://mirrors.edge.kernel.org/pub/tools/llvm/>.
+For clang based builds, I use the ones similarly provided by Nathan Chancellor [here](https://mirrors.edge.kernel.org/pub/tools/llvm/).
 
 ## Configuration
 
@@ -87,7 +86,7 @@ In rare cases, I also end up annotating a Kconfig option as ‘depends on BROKEN
 
 ## Common findings
 
-Over the years, I ended up submitting thousands of bug fixes that were integrated into the kernel as part of this, to the point of leading the statistics about most bugfix patches ever submitted <https://pebblebed.com/blog/kernel-bugs-part2>. The vast majority of these bugfixes are simple and uninteresting, so all that is required is to do the obvious one-line change and send it to the maintainer. I figured out early on that sending a bugfix is the easiest way to report a problem, and is far more effective than merely reporting a regression in order to get it fixed.
+Over the years, I ended up submitting thousands of bug fixes that were integrated into the kernel as part of this, to the point of leading the statistics about most bugfix patches ever submitted, see more details [here](< https://pebblebed.com/blog/kernel-bugs-part2>). The vast majority of these bugfixes are simple and uninteresting, so all that is required is to do the obvious one-line change and send it to the maintainer. I figured out early on that sending a bugfix is the easiest way to report a problem, and is far more effective than merely reporting a regression in order to get it fixed.
 
 A side effect of sending all these bugfixes is that I got to interact with basically every subsystem maintainer in the kernel and learn about their processes and preferences.
 
@@ -109,7 +108,7 @@ The most common randconfig bug is an incorrect dependency chain in the Kconfig l
 * A driver uses ‘select’ to enable a driver in another subsystem, but that feature in turn has a dependency on a third symbol. Kconfig produces a warning about this when the third symbol is not enabled, and to fix this, you have to either find a way to change the ‘select’ to ‘depends on’, or add an explicit dependency for the driver to list every dependency of the symbols it selects.
 * The combination of ‘select’ and ‘depends on’ lines in one driver causes a dependency loop with a group of other symbols. Again, the solution here is usually to find one ‘select’ in that chain that can be turned into ‘depends on’.
 
-Julian Braha is working on a tool called kconfirm that hopefully automates some of this a little better, see <https://github.com/julianbraha/kconfirm>.
+Julian Braha is working on a tool called kconfirm that hopefully automates some of this a little better, see [Kconfirm](https://github.com/julianbraha/kconfirm.). 
 
 ## Superpowers
 
