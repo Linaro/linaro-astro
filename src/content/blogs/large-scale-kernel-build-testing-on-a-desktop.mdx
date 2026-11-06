@@ -1,0 +1,171 @@
+---
+title: Large scale kernel build testing on a desktop
+description: In this post, I am going to share how I organize my testing and
+  bugfixing, what I have learned from this over the years, and how this has
+  helped me in my work as a kernel developer and maintainer.
+date: 2026-11-05T14:42:00.000Z
+author: vincent-guittot
+tags:
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1793891040/linaro-website/IMG_4321_bw0yai.png
+related: []
+---
+There are lots of distributed CI systems used for kernel testing at the moment,
+
+with prominent ones being the Linux Foundation’s KernelCI project, Intel’s kernel test robot, or the Sashiko review bot. For personal build testing, there is also Linaro’s tuxsuite, which allows scaling up build testing for interactive and automated uses. These are obviously all useful projects, but I ended up rolling my own about 15 years ago and am still using it.
+
+In this post, I am going to share how I organize my testing and bugfixing, what I have learned from this over the years, and how this has helped me in my work as a kernel developer and maintainer.
+
+I originally talked about this topic at the [Kernel Recipes 2026](https://kernel-recipes.org/en/2026/) conference in Paris, which has released a [video](https://www.youtube.com/watch?v=Gxw7lorBEKA&list=PLEVVgAZOU9P8&index=6) version of my talk. Following up on this at the Linux Plumbers conference, I ran a [session](https://lpc.events/event/20/contributions/2642/) at the Kernel Testing and Dependability [microconference](https://gtucker.io/posts/2026-10-19-lpc-testing-mc/), to discuss with the wider kernel testing community about integrating concepts into places like kernelci or the kernel build system itself.
+
+## Motivation
+
+I originally started out with the need for build testing when I took over maintenance of the arm-soc kernel tree in 2012. A lot of code changes came in through this tree as we were, and they frequently caused build regressions.  Reworking the Arm kernel code to allow multiple platforms to coexist in one binary and to use devicetree probing added more churn, so needed a way to address the regressions quickly.
+
+The main concept that I have been using ever since is:
+
+* use all extra CPU cycles of my desktop for testing kernels
+* test my own work on top of linux-next
+* keep the build clean and submit fixes immediately
+
+While this initially covered only the 32-bit Arm defconfig builds, these eventually became stable enough that I could move on to allmodconfig and randconfig builds that find and fix a lot more bugs, getting these to be stable as well.  As fixing Arm randconfig bugs occasionally caused regressions on other architectures, I had to start build testing x86 as well. Most of my tests today are done on arm32, arm64, and x86, with occasional tests on riscv, s390 and powerpc.
+
+The setup continues to be invaluable for testing the soc tree, but the main usage these days is to help ensure quality of Arm kernel builds, and to allow testing invasive cross-subsystem changes that none of the other CI systems are good at.
+
+## Hardware
+
+The current system runs on an Apple Mac Studio M2 workstation with Debian testing, which I use for all my regular work. Being able to quickly test arm64 kernels in a VM guest is the main requirement for having an Arm based workstation, this one has a good balance between power efficiency and both single-thread and multi-thread performance. The main downside compared to its x86 predecessors is that there is no easy way to fix individual parts after it wears out from continuous use.
+
+Over the years, the kernel build kept getting a little slower, while the machines got a little faster, but  overall I could maintain around 1000 randconfig kernels built on a normal day. The main difference I noticed is how each machine got quieter and used less electricity.
+
+2024-2026 Apple Mac Studio M2 Ultra, 24 cores, 64GB LPDDR5
+
+2022-2024 Apple Mac Studio M1 Ultra, 20 cores, 64GB LPDDR5
+
+2017-2022 AMD Threadripper 1950, 16 cores, 128GB ECC memory
+
+2014-2017 Dual AMD Opteron 6344, 24 cores, 128GB ECC memory
+
+## Implementation
+
+The build setup is a set of small scripts and a single makefile that handles parallel kernel builds. Most of the small hacks that I needed to reliably build randconfigs eventually made it upstream, but I keep maintaining my own set of patches on top of linux-next that I need to rebase every day to get a clean build. I keep both the defconfig file and the build output for each build I do, and interactively fix bugs until all of the previously failing builds are clean again. Building with ‘make -s’ and ‘CONFIG_WERROR=y’ means that builds are either clean and successful, or they fail with a build error.
+
+## Makefiles
+
+The most important part of my scripts is the top-level makefile, named (lowercase) ‘makefile’ so it can live in the source tree. and coexist with the kernel’s own (uppercase) ‘Makefile’, forwarding all normal build commands to build in the default object tree. Using ‘make’ itself as the build tool can take advantage of the jobserver infrastructure means that multiple kernels can be built in parallel with a fixed number of parallel compile or link jobs, which is much faster than doing only one build at a time when a large portion of the build is limited to single-threaded jobs. This was recently discussed in[ this article](< https://lwn.net/Articles/1093398/>) after a patch series by Lorenzo Stoakes to increase parallelism within a kernel build.
+
+What I found is that doing three kernel builds in parallel, I usually get a CPU utilization close to 100%, so my regular builds do a loop of 300 kernels on each of the three architectures I care about (arm, arm64, x86), and then the three loops run in parallel. If a new linux-next version shows a lot of regressions, my script just rebuilds all currently failing kernels in parallel to validate any fixes, and the jobserver limits the number of simultaneous kernel builds to the number of CPUs I give it. I tend to use 20 cores for kernel builds, leaving four cores for running my desktop.
+
+## Toolchain
+
+In order to be able to build kernels for all architectures, I also build cross-compilers for every gcc release. These are the same compilers I upload [here](https://mirrors.edge.kernel.org/pub/tools/crosstool/), and from there they are integrated into [tuxmake](https://tuxmake.org/), [tuxsuite](https://tuxsuite.com/) and other tools. For simplicity, these are ‘nolibc’ builds that are only good for building the kernel, though this means there is no build coverage on the tools directory.
+
+For clang based builds, I use the ones similarly provided by Nathan Chancellor [here](https://mirrors.edge.kernel.org/pub/tools/llvm/).
+
+## Configuration
+
+In order to speed up the build and avoid some known problematic cases, there are a few configuration options that I always force using a Kconfig fragment:
+
+\# maximize search space, disable options not worth testing
+
+CONFIG_COMPILE_TEST=y
+
+\# avoid long build times
+
+\# PROFILE_ALL_BRANCHES is not set
+
+\# reduce compile-time dependencies
+
+CONFIG_STANDALONE=y
+
+CONFIG_PREVENT_FIRMWARE_BUILD=y
+
+The most important bit here is CONFIG_COMPILE_TEST, which in both makes it possible to test more of the regular options and prevents some other options from being set, e.g. CONFIG_LTO_CLANG_FULL or CONFIG_GCOV_PROFILE_ALL can only be enabled when not compile testing because they do not improve coverage as much as they increase the time to build one kernel.
+
+In rare cases, I also end up annotating a Kconfig option as ‘depends on BROKEN’ if I cannot figure out a way to make something build cleanly in all configurations.
+
+## Common findings
+
+Over the years, I ended up submitting thousands of bug fixes that were integrated into the kernel as part of this, to the point of leading the statistics about most bugfix patches ever submitted, see more details [here](< https://pebblebed.com/blog/kernel-bugs-part2>). The vast majority of these bugfixes are simple and uninteresting, so all that is required is to do the obvious one-line change and send it to the maintainer. I figured out early on that sending a bugfix is the easiest way to report a problem, and is far more effective than merely reporting a regression in order to get it fixed.
+
+A side effect of sending all these bugfixes is that I got to interact with basically every subsystem maintainer in the kernel and learn about their processes and preferences.
+
+While it can be hard for newcomers to start dealing with an upstream maintainer while trying to upstream a new driver, people are generally happy when you point out a regression in their code and send a bugfix at the same time.
+
+There are a few classes of bugs that seem to never end and are worth mentioning here:
+
+## Stack frame warning
+
+Every process in Linux has its own kernel stack, which is typically 8KiB or 16KiB and this must be enough for any call chain. Unfortunately, it sometimes is not, and this leads to the kernel immediately crashing. In order to reduce the chance of this happening, the compiler emits a warning if a single function uses more than a configurable number of bytes, typically between 1024 and 2048 bytes for a kernel function. In randconfig builds, these tend to show up where nobody has looked before, often as a result of a combination of configuration options that bring the compiler into a state where it produces badly optimized object code.
+
+Debugging these warnings can be very laborious when they are not caused by badly written kernel code or a missed optimization in the compiler but a combination of the two. 
+
+## Kconfig dependency errors
+
+The most common randconfig bug is an incorrect dependency chain in the Kconfig language that describes how driver modules interact with one another. Since Kconfig uses tristate options instead of boolean (true/false) values, there are a lot of ways that developers can get this subtly wrong. The way this goes wrong is often one of these cases:
+
+* A driver can optionally use a kernel feature that is provided by another subsystem that can be in a loadable module, but can also support working without that feature. However when the other subsystem is in a loadable module, using it from a built-in driver causes a link failure. To express this in Kconfig language, you need to write the somewhat confusing ‘depends on FEATURE || !FEATURE’, or alternatively  ‘depends on FEATURE if FEATURE’, which makes no sense in boolean logic.
+* A driver uses ‘select’ to enable a driver in another subsystem, but that feature in turn has a dependency on a third symbol. Kconfig produces a warning about this when the third symbol is not enabled, and to fix this, you have to either find a way to change the ‘select’ to ‘depends on’, or add an explicit dependency for the driver to list every dependency of the symbols it selects.
+* The combination of ‘select’ and ‘depends on’ lines in one driver causes a dependency loop with a group of other symbols. Again, the solution here is usually to find one ‘select’ in that chain that can be turned into ‘depends on’.
+
+Julian Braha is working on a tool called kconfirm that hopefully automates some of this a little better, see [Kconfirm](https://github.com/julianbraha/kconfirm.). 
+
+## Superpowers
+
+Being able to quickly build test changes has helped me many times in unexpected ways, and there are many patches I have done over the years that would not have attempted otherwise. Here are some examples for that:
+
+## Clang bringup
+
+Back when clang first became an alternative for building kernels, I could use my experience from fixing the Arm build to go through the same process and over time help fix a lot of corner cases where clang ran into a build warning or failure, either from a kernel bug or a compiler bug. While I don’t normally build with both clang and gcc, I switch between them occasionally as I run out of other things to fix.
+
+## New warning options
+
+Each compiler has hundreds of warning options that can spot potential issues in the code. The kernel has a default set of options that are always enabled and expected to still produce a clean build, with additional options that can be enabled with ‘make W=1’. I have spent a considerable amount of time going through these additional options, trying to turn them on one at a time for the kernel.
+
+In my ever growing backlog, I carry have patches to address all instances of
+
+\-Wframe-larger-than=1280
+
+\-Wunused-const-variable
+
+\-Wtautological-constant-out-of-range-compare
+
+\-Wformat-security
+
+\-Wformat-overflow
+
+\-Wmissing-include-dirs
+
+\-Wmain
+
+\-Wunused-but-set-variable
+
+\-Woverride-init
+
+One day, these should all get merged upstream and the warnings enabled by default in order to catch potential bugs earlier.
+
+## API changes
+
+Some interface changes can be completely scripted, with the help of coccinelle or other tools. In other cases, it is very hard to find instances of an old interface without testing every kernel variation. When I run randconfig builds on my working tree, I can implement interface changes that are mostly complete and then watch as the build script runs into the case I have missed, to address those as well.
+
+This is especially helpful when the actual changes are nontrivial and touch files that are not already covered by a simple allmodconfig build.
+
+An example of this was the recent conversion of the gpiolib interfaces to only build new gpio-descriptor based interfaces by default and leave out the old number based variant.
+
+## Indirect header inclusions
+
+A lot of compile time is wasted parsing indirectly included header files, often many megabytes of them for a single source file, out of which very little is used for a given file. Reducing the indirect inclusions always causes build regressions when some code relies on a header being included but doesn’t explicitly ask for it. Moreover, some indirect inclusions are conditional based on configuration, so these can only really be found in randconfig builds.
+
+## Future outlook
+
+At the moment, I sit on about 600 patches of backlog, including many that I have submitted in the past, but also several patch series that I have started in the past but never fully upstreamed. This means this tree is in need of pruning, to see which parts are actually still needed upstream, which ones require a separate effort, and which ones can be dropped again.
+
+The flow of bug fix patches helps maintain the high quality of the SoC tree and upstream Arm kernels overall.
+
+As new projects come up in the Linaro kernel team, I expect to keep finding creative ways to integrate the testing into the workflow I described here as well as help our users come up with their own ways for doing continuous testing. Our flagship Tuxsuite project for distributed build testing is built around a lot of the same underlying cross-toolchain builds and has incorporated optimizations and experiences from my private tests.
+
+At the Plumbers Conference, I discussed some ideas about potentially integrating my own build results and fixes into the [KCIDB database](https://docs.kernelci.org/components/kcidb/submitting/), and about sharing my local scripting to allow others to build-test kernels across configurations and toolchains more easily. These discussions are still ongoing, and I’d be happy to hear from additional people that are interested in this.
+
+## About the author
+
+Arnd is one of the maintainers of the SoC tree in the kernel, which is the central point for merging vendor specific code for Arm SoC into the Linux kernel. He has 25 years of experience working on Linux kernel code across all major subsystems and architectures. Arnd has been a member of Linaro’s kernel team since its beginning in 2010.
