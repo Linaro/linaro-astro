@@ -14,11 +14,11 @@ We're excited to announce the release of Linaro Forge 26.1. This release brings 
 
 **Kokkos View support in Linaro DDT.** Kokkos has become one of the most popular ways to write a single code that runs well on CPUs and on GPUs from different vendors. Its central building block is the View, a multi-dimensional array that can live in host or GPU memory. Until now, looking at a View in a debugger meant digging through layers of template internals to find your data. DDT now shows Kokkos Views as the arrays you wrote, with their real dimensions. You can see them in the Locals panel, evaluate single elements, and open whole Views in the Multi-Dimensional Array Viewer, all while stopped inside a GPU kernel.
 
-**The MPI communication matrix in Linaro MAP.** Every MPI code has a communication pattern: which ranks talk to which, and how much. MAP can now record how much data every rank sends to every other rank, how many calls it makes and how long they take, and draw it as a heat map. One look tells you whether your code is communicating the way you think it is.
+**The MPI communication matrix in Linaro MAP.** Every MPI code has a communication pattern: which ranks talk to which, and how much is communicated between ranks. MAP can now record how much data every rank sends to every other rank, how many calls it makes and how long they take, and draw it as a heat map. One look tells you whether your code is communicating the way you think it is.
 
-In this release, Kokkos View support covers Kokkos 5.x with the CUDA backend, and the communication matrix covers communication on `MPI_COMM_WORLD`. Recording a communication matrix needs a licence that includes the feature, which comes with Forge Ultimate; you don't need it to open a profile that already contains a matrix.
+In this release, Kokkos View support covers Kokkos 5.x with the CUDA backend, and the communication matrix covers communication on `MPI_COMM_WORLD`. Recording a communication matrix needs a licence that includes the feature, which comes with Forge Ultimate; you don't need it to open a profile that already contains a matrix. Recording a communication matrix needs a licence that includes the feature. It comes with Forge Ultimate, but existing Forge Ultimate customers need a re-issued licence file to use it, so please email support@forge.linaro.com to request one. You don't need the feature in your licence to open a profile that already contains a matrix.
 
-Rather than just describe the features, we'd like to show you what they're for. We took CloverLeaf, a well-known hydrodynamics mini-app with a Kokkos version, and introduced two small bugs of the kind that slip into real .oItone in a Kokkos kernel and, but existingoFerge Ultimate c stomersineen a re-issued licence file t  use it, so please **\[licence cottact to add]** to request one. You donhe MPI cmhe feature in your licencemunication. Neither bug crashes the program, and neither produces an error message. Both are found in a few minutes with DDT and MAP, and in this post we'll walk you through how.
+Rather than just describe the features, we'd like to show you what they're for. We took CloverLeaf, a well-known hydrodynamics mini-app with a Kokkos version, and introduced two small bugs of the kind that slip into real codes: one in a Kokkos kernel and one in the MPI communication. Neither bug crashes the program, and neither produces an error message. Both are found in a few minutes with DDT and MAP, and in this post we'll walk you through how.
 
 ## The setup
 
@@ -158,8 +158,6 @@ It gives the right answer, which is why nobody notices. There are really two pro
 
 The first is the easy one: the check runs ten times as often as it should. Moving the call inside the `if` puts it back on the summary steps:
 
-We profile again and open the matrix.
-
 ```
 if (globals.config.summary_frequency != 0) {
   if (globals.step % globals.config.summary_frequency == 0) {
@@ -200,12 +198,12 @@ The bands either side of the diagonal are now all the same colour: rank 5 sends 
 
 On 16 ranks on one node, the old check didn't cost a great deal: about 6% of the run. But every rank sending its whole chunk of the grid to one rank is exactly the kind of pattern that stops a code from scaling. At a thousand ranks, rank 0 would be receiving a thousand chunks every time the check ran, and everyone else would be waiting for it. The MPI communication matrix showed it to us on 16 ranks, before it became a problem at scale.
 
-## Final Thoughts
+## What the tool showed us
 
 Neither of these bugs crashed the program, and neither would have shown up in a quick test. The first only showed itself in an energy figure at the end of the run, and the second only in a profile. These are the bugs that cost the most time, because there's no error message to start from.
 
 With Kokkos View support, DDT let us stop inside a GPU kernel and look straight at the data, laid out the way we think about it, and the missing row was obvious. With the communication matrix, MAP let us compare the communication we expected with the communication that actually happened, and the extra traffic to rank 0 stood out at a glance.
 
-## Tell us what you'd like next
+## Help share what comes next
 
-Both features are a first step, and we'd like your help deciding where to take them. For Kokkos, that might mean support for AMD and for CPU-only builds, clearer displays of DualViews and other View types, or Kokkos-aware profiling in MAP. For the communication matrix, it might mean covering communicators beyond `MPI_COMM_WORLD`, such as those created with `MPI_Comm_split` or Cartesian topologies, a JSON export for your own scripts, or a view that relates communication to the nodes it runs on. If one of these would make a difference to your work, or there's something we haven't thought of, tell us which matters most to you: [Contact us](https://bit.ly/4z7WeIq).
+We have plenty of ideas for where to take both features next, and we'd like your help choosing. For Kokkos, that might mean support for AMD and for CPU-only builds, clearer displays of DualViews and other View types, or Kokkos-aware profiling in MAP. For the communication matrix, it might mean covering communicators beyond MPI_COMM_WORLD, such as those created with MPI_Comm_split or Cartesian topologies, a JSON export for your own scripts, or a view that relates communication to the nodes it runs on. If one of these would make a difference to your work, or there's something we haven't thought of, email support@forge.linaro.com and tell us which matters most to you.
