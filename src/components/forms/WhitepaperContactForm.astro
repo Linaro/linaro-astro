@@ -1,4 +1,6 @@
 ---
+import CountryStateFields from "./CountryStateFields.astro";
+
 const { form_id, formName, description, whitepaperId, modal_id } = Astro.props;
 
 const inputFields = [
@@ -11,7 +13,6 @@ const inputFields = [
   { name: "email", label: "Email", type: "email" },
   { name: "jobTitle", label: "Job Title", type: "text" },
   { name: "company", label: "Company Name", type: "text" },
-  { name: "country", label: "Country", type: "text" },
 ];
 ---
 
@@ -46,6 +47,7 @@ const inputFields = [
         </>
       ))
     }
+    <CountryStateFields idSuffix={modal_id} />
     <div class="space-y-6">
       <div>
         <p class="text-lg font-medium text-white">

@@ -1,0 +1,61 @@
+---
+import { countries } from "@/lib/countries";
+import { usStates } from "@/lib/usStates";
+
+interface Props {
+  idSuffix?: string;
+}
+
+const { idSuffix } = Astro.props;
+const countryFieldId = idSuffix ? `country-${idSuffix}` : "country";
+const stateFieldId = idSuffix ? `state-${idSuffix}` : "state";
+---
+
+<label for={countryFieldId} class="sr-only">Country</label>
+<select
+  name="country"
+  id={countryFieldId}
+  required
+  data-country-select
+  class="text-black pl-2 h-12 w-full"
+>
+  <option value="" disabled selected>Country</option>
+  {countries.map((country) => <option value={country}>{country}</option>)}
+</select>
+<label for={stateFieldId} class="sr-only">State</label>
+<select
+  name="state"
+  id={stateFieldId}
+  disabled
+  data-state-select
+  class="text-black pl-2 h-12 w-full hidden"
+>
+  <option value="" disabled selected>State</option>
+  {usStates.map((state) => <option value={state}>{state}</option>)}
+</select>
+
+<script>
+  import { US_COUNTRY } from "@/lib/usStates";
+
+  // Show the State select only when United States is chosen. While hidden it
+  // is disabled, so it is skipped by validation and left out of FormData.
+  document
+    .querySelectorAll<HTMLSelectElement>("[data-country-select]")
+    .forEach((countrySelect) => {
+      const stateSelect = countrySelect
+        .closest("form")
+        ?.querySelector<HTMLSelectElement>("[data-state-select]");
+      if (!stateSelect) return;
+
+      const sync = () => {
+        const isUS = countrySelect.value === US_COUNTRY;
+        stateSelect.classList.toggle("hidden", !isUS);
+        stateSelect.disabled = !isUS;
+        stateSelect.required = isUS;
+        if (!isUS) stateSelect.value = "";
+      };
+
+      countrySelect.addEventListener("change", sync);
+      sync();
+    });
+</script>
