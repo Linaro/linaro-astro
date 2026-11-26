@@ -1,0 +1,114 @@
+---
+title: Scaling Linux Kernel Testing Without Expanding Your Hardware Labs
+description: Here is a look at how modern kernel teams use TuxSuite to
+  fast-track development, optimize costs, and scale testing when needed without
+  the overhead of hardware management.
+date: 2026-11-05T15:37:00.000Z
+author: alok-ranjan
+tags:
+  - linux-kernel
+  - ci
+  - tuxsuite
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1793893263/linaro-website/IMG_4318_exwa7k.png
+related: []
+---
+Testing is one of the main bottlenecks in Linux kernel development. Traditionally, validating a patch across multiple architectures often required access to physical hardware or slower local emulation, or waiting hours for local emulators to crunch through tests sequentially.
+
+By shifting from physical hardware to cloud-hosted, emulated environments via [TuxSuite by Linaro](https://tuxsuite.com), teams can reduce the amount of bare-metal testing needed during early stage validation.
+
+Here is a look at how modern kernel teams use TuxSuite to fast-track development, optimize costs, and scale testing when needed without the overhead of hardware management.
+
+## **The Core Blueprint: Decoupling Testing from Hardware**
+
+Maintaining a physical device lab comes with flaky boards, and strict queue limitations. TuxSuite can move a large part of early kernel validation away from physical hardware by moving the entire runtime environment into the cloud.
+
+At the heart of this execution engine is [TuxRun](https://www.google.com/url?q=https://tuxrun.org/&sa=D&source=editors&ust=1793897086287424&usg=AOvVaw2v-Rya9bzLFMCZGxjF34iM),  which orchestrates test jobs across a variety of emulators:
+
+* QEMU: For widespread, highly reliable architecture emulation (x86, ARM, RISC-V, MIPS, and more).
+* **FVP (Fixed Virtual Platforms):** For precise, architecture-accurate simulation of ARM platforms before physical silicon even leaves the factory.
+* **AVH (Arm Virtual Hardware):** For cloud-native, scalable validation of complex Arm-based workloads.
+
+Because these emulated environments live in the cloud, developers and enterprise teams get immediate, predictable test beds on demand. There are no boards to burn out, no cables to untangle.
+
+## **Where Hardware Still Fits**
+
+TuxSuite can cover a large part of the kernel testing, but it does not replace testing on real hardware.
+
+Some issues only appear on physical devices. For example problems with firmware, peripherals, power management, thermal behaviour, or things that are specific to one board.
+
+For this type of testing, [LAVA](https://www.google.com/url?q=https://lava.readthedocs.io/en/latest/&sa=D&source=editors&ust=1793897541745642&usg=AOvVaw1nJ0zqhPTNF-TJLpyEuI11) and the [Linaro Automation Appliance (LAA) ](https://www.google.com/url?q=https://hub.linaro.com/laa&sa=D&source=editors&ust=1793897541745755&usg=AOvVaw3eUu6b6N5fqQ4amyfJWUGs)can be used to continue the validation on real hardware.
+
+You can read more about how LAVA and LAA make hardware testing easier here: [Why is LAVA is now easier to use? ](https://www.google.com/url?q=https://www.linaro.org/blog/why-is-lava-now-easier-to-use&sa=D&source=editors&ust=1793897541745968&usg=AOvVaw2z_AUdrKA_SAKHnOrtJqVT)
+
+## **Smart Parallelization via TuxSuite Plans**
+
+When validating kernel patches, testing a single configuration is rarely enough. You often need to build and test across multiple architectures, compiler versions (GCC, Clang), and distinct kconfigs.
+
+If you run these sequentially, your feedback loop takes hours. [TuxSuite](https://www.google.com/url?q=https://docs.tuxsuite.com/&sa=D&source=editors&ust=1793897541746285&usg=AOvVaw2Yy53tEghZ2ZRZrpDom4Vl) solve this through [TuxSuite Plans](https://www.google.com/url?q=https://docs.tuxsuite.com/plan/kernel/&sa=D&source=editors&ust=1793897541746369&usg=AOvVaw3g55IzuMMucsb724g__tjD), which use a single configuration file to define a massive matrix of build and test jobs.
+
+The system handles dependencies intelligently: **dozens of independent builds fire off simultaneously in the cloud.** Then, the moment a specific build finishes, all of its dependent test jobs launch in parallel with the option to run a quick sanity test first before the rest of the test suite fires. 
+
+By running independent builds and tests in parallel, [TuxSuite](https://www.google.com/url?q=https://docs.tuxsuite.com/&sa=D&source=editors&ust=1793897541746609&usg=AOvVaw3GM8PsbSXL7KQD2t3hziQg) can reduce total validation time substantially compared with running the same matrix sequentially, often much faster.
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1793972568/linaro-website/IMG_5078_mypj9x.jpg)
+
+*[plan.yaml ](https://www.google.com/url?q=https://drive.google.com/file/d/1YKHo7fE_kah87AInPLnvPk6yOzbzH_0t/view?usp%3Dsharing&sa=D&source=editors&ust=1793897541746848&usg=AOvVaw3gNqe7JETabtFG2ShU2uHB)*
+
+For instance this plan will build the given kernel revision for arm64 and x86-64 with different toolchains (GCC and Clang) versions. For each resulting kernel binary, a Qemu test job will run the specified test suite (ltp-fsx, ltp-nptl, …)
+
+With one command, you are able to build 16 different variants of the same kernel and run 80 Qemu tests. As everything runs in the cloud, fully in parallel, the full process will finish in less than 10 minutes, something that would have taken multiple hours on a single machine.
+
+### Plan Specification
+
+A TuxSuite plan is a YAML file used to define kernel builds and tests in a structured way. It allows you to specify build configurations, test environments, and multiple build/test combinations for CI and validation workflows.
+
+For the complete plan syntax and supported options, see the [TuxSuite Plan Specification. ](https://www.google.com/url?q=https://docs.tuxsuite.com/plan/kernel/specifications/&sa=D&source=editors&ust=1793897541747419&usg=AOvVaw1t9Q6ih_mq0DhRD1uMBIvg)
+
+## **Platform-Agnostic CI Integration**
+
+TuxSuite TuxSuite can be integrated with existing CI systems such as GitLab CI, GitHub Actions and Jenkins.
+
+* **GitLab CI:**
+
+   Heavily utilized by massive validation projects like LKFT (Linux Kernel Functional Testing) to run regular regression test matrices.
+* **itHub Actions & Jenkins:** Frequently adopted by enterprise engineering groups and independent developers to trigger automatic TuxSuite runs on every pull request or git push. Clangbuiltlinux uses GitHub Actions to submit jobs to TuxSuite.
+
+Because TuxSuite handles the heavy lifting of environment provisioning, cross-compilation toolchains, and emulator orchestration in the cloud, your CI configuration files stay incredibly lightweight, clean, and easy to maintain.
+
+## **Benefits for Developers and Engineering Team**
+
+Using an emulated cloud pipeline can simplify architecture-specific testing and provide a consistent environment for development and CI.
+
+### **For Independent Developers**
+
+* **Reduced setup:** Developers can run builds and tests without maintaining local cross-compilers or configuring local QEMU environments.
+* **Faster feedback:** Build and test results can be returned without requiring developers to run longer serial test cycles locally.
+* **Architecture coverage:** Developers can test changes against architectures that may not be available locally, including RISC-V and different ARM configurations.
+* **Reduced local resource usage:** Compilation and emulation workloads can be moved to cloud infrastructure rather than consuming local CPU and memory resources.
+
+### **For Enterprise Engineering Teams**
+
+* **Reduced hardware requirements:** Emulation can complement physical hardware labs and reduce the need to provision hardware for every architecture and test configuration.
+* **Scalable testing:** Cloud-based infrastructure can provide additional test capacity when development or release activity increases.
+* **Early regression testing:** Automated testing can run as part of CI, allowing issues to be identified before changes reach production branches.
+* **Consistent Environments:** Containerized build and test environments provide a standardized setup across developers and CI runners, reducing differences between test environments.
+
+### **Ready to scale your Kernel Testing?**
+
+Stop waiting hours for serial builds and tests based on local emulation to finish. Whether you need instant developer test beds or scalable matrix testing inside GitHub Actions, GitLab CI, or Jenkins, TuxSuite offloads the heavy lifting to the cloud.
+
+**[Sign up for a free TuxSuite community account](https://forms.gle/3NaW5fuNykGstsMq6)** today to discover how TuxSuite scales and speed up your kernel development and testing workflow.
+
+Need dedicated capacity or enterprise CI integrations? You can seamlessly upgrade to our paid plans anytime or[ **explore the TuxSuite Plan Specification**](https://docs.tuxsuite.com/plan/kernel/specifications/) to see how easy it is to configure your first cloud test matrix.
+
+#### Useful Links:
+
+[https://tuxsuite.com/](https://tuxsuite.com/)
+
+[https://docs.tuxsuite.com/](https://docs.tuxsuite.com/)
+
+[https://learn.tuxsuite.com/](https://learn.tuxsuite.com/)
+
+### **About the Author**
+
+Alok Ranjan is an Engineer at Linaro and a maintainer of TuxSuite. He works with the Automation & CI team, focusing mainly on software development, CI/CD, DevOps, and infrastructure. With around five years of experience in software engineering, he enjoys working on automation and building tools that make software development and delivery easier.

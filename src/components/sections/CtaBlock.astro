@@ -5,9 +5,10 @@ interface Props {
   subtext: string;
   button_text: string;
   button_url: string;
+  cta_id?: string;
   styles?: { subtext?: string };
 }
-const { heading, heading_highlight, subtext, button_text, button_url, styles } = Astro.props;
+const { heading, heading_highlight, subtext, button_text, button_url, cta_id, styles } = Astro.props;
 ---
 
 <div class="text-center">
@@ -27,6 +28,7 @@ const { heading, heading_highlight, subtext, button_text, button_url, styles } =
   <p class="text-lg mb-8 max-w-2xl mx-auto text-linaro-yellow">{subtext}</p>
   <a
     href={button_url}
+    data-cta-id={cta_id}
     class="linaro-gradient-button no-underline inline-block text-white font-medium px-8 py-3 rounded-full"
     target={button_url.startsWith("https") ? "_blank" : "_self"}
   >

@@ -2,7 +2,8 @@
 import ContactForm from "./ContactForm.astro";
 import ServicesFormFields from "./ServicesFormFields.astro";
 
-const { modal_id, form_id, formName, button_text, description } = Astro.props;
+const { modal_id, form_id, formName, button_text, description, cta_id } =
+  Astro.props;
 ---
 
 <style lang="scss">
@@ -20,6 +21,7 @@ const { modal_id, form_id, formName, button_text, description } = Astro.props;
 
 <button
   class="linaro-gradient-button"
+  data-cta-id={cta_id}
   onclick={`window.${modal_id}.showModal()`}>{button_text}</button
 >
 <div class="relative w-full">

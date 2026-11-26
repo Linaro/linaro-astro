@@ -13,7 +13,13 @@ const pages = defineCollection({
           title: z.string(),
           background_image: z.string().optional(),
           description: z.string().optional(),
-          button: z.object({ text: z.string(), url: z.string() }).optional(),
+          button: z
+            .object({
+              text: z.string(),
+              url: z.string(),
+              cta_id: z.string().optional(),
+            })
+            .optional(),
           bottom_fade: z.boolean().optional(),
           styles: z
             .object({
@@ -120,6 +126,7 @@ const events = defineCollection({
     image: z.string(),
     type: z.enum(["webinar", "presenter", "attend", "tech_days", "sponsor"]),
     location: z.string(),
+    intro: z.string().optional(),
     button: z.object({ text: z.string(), url: z.string() }).optional(),
     webinarContactButton: z
       .object({

@@ -95,9 +95,14 @@ if (related.length > 0) {
   >
     <section
       class:list={[
-        "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
+        "relative pt-32 pb-16 container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
+      <div
+        class="hero-background-image absolute inset-x-0 top-0 h-64 lg:h-96 overflow-hidden pointer-events-none z-[-1]"
+        aria-hidden="true"
+      >
+      </div>
       <h1 class="text-5xl font-bold mb-16 max-w-4xl">{title}</h1>
       <div class="flex items-center gap-6">
         {
@@ -159,16 +164,26 @@ if (related.length > 0) {
   /* Ensure we can see global theme variables */
   @reference "../styles/global.css";
 
+  /*
+    The map graphic lives in its own absolutely-positioned, fixed-height,
+    overflow-hidden band pinned to the top of the section (see the markup
+    above), instead of being a background on the section that contains the
+    title/date/tags. The title's height is unpredictable (it can wrap to
+    several lines on narrow viewports with long headlines), so the image
+    can never be reliably kept "above" that text using background-position
+    tricks alone. Clipping it to its own fixed-height box means it always
+    occupies the same physical space regardless of viewport width or title
+    length, it can never grow into the date/tag row below, and there's no
+    breakpoint jump because nothing about its size or position changes.
+    The bottom edge is faded out with a mask so text that wraps over it
+    stays legible against the page's solid dark background.
+  */
   .hero-background-image {
     background-image: var(--backgroundUrl);
     background-repeat: no-repeat;
-
-    /* Base Styles (Mobile) */
-    @apply bg-center bg-[position:top_left] pb-144 -mb-144;
-
-    /* Desktop Styles (replaces lg:bg-[...]) */
-    @media (min-width: theme(--breakpoint-lg)) {
-      @apply bg-position-[top_right_-50%];
-    }
+    background-position: top center;
+    background-size: auto 100%;
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
   }
 </style>

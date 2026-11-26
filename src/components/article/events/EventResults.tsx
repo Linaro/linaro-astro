@@ -50,7 +50,12 @@ const EventResult = ({ event, isSsr }: { event: any; isSsr: boolean }) => {
       {event.meta.button_text && (
         <div class="px-4 py-8 justify-self-end">
           <button class="linaro-gradient-button">
-            <a href={event.meta.button_url} target="_blank">
+            <a
+              href={event.meta.button_url}
+              target={
+                event.meta.button_url?.startsWith("/") ? undefined : "_blank"
+              }
+            >
               {buttonLabel()}
             </a>
           </button>

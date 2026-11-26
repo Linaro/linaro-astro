@@ -1,7 +1,5 @@
 ---
-import { getCloudinarySrc } from "@/lib/cloudinary";
 import BaseLayout from "./BaseLayout.astro";
-import { getImage } from "astro:assets";
 import { getEntry, getEntries, getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -37,17 +35,6 @@ const tags = await getEntries(tagList);
 
 const readTime = `${Math.ceil(body.split(" ").length / 183)} min read`;
 
-const optimizedBackground = await getImage({
-  src: getCloudinarySrc({
-    src: "linaro-website/graphics/bg-logo-3",
-    alt: "",
-    width: 1724.55,
-    height: 1182.9,
-  }),
-  format: "webp",
-  width: 1724.55,
-  height: 1182.9,
-});
 const { Content, headings } = await render(post);
 
 let relatedPosts;
@@ -73,7 +60,7 @@ if (related && related.length > 0) {
   <main data-pagefind-filter={`type:${collection}`} class="z-0">
     <section
       class:list={[
-        "relative hero-background-image pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
+        "relative pt-32 pb-16  container mx-auto max-w-5xl px-8 xl:px-0 z-[-1]",
       ]}
     >
       <h1 data-pagefind-meta="title" class="text-5xl font-bold mb-16 max-w-4xl">
@@ -175,21 +162,3 @@ if (related && related.length > 0) {
     });
   });
 </script>
-
-<style define:vars={{ backgroundUrl: `url(${optimizedBackground.src})` }}>
-  /* Ensure we can see global theme variables */
-  @reference "../styles/global.css";
-
-  .hero-background-image {
-    background-image: var(--backgroundUrl);
-    background-repeat: no-repeat;
-
-    /* Base Styles (Mobile) */
-    @apply bg-center bg-[position:top_left] pb-144 -mb-144;
-
-    /* Desktop Styles (replaces lg:bg-[...]) */
-    @media (min-width: theme(--breakpoint-lg)) {
-      @apply bg-position-[top_right_-50%];
-    }
-  }
-</style>

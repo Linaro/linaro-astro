@@ -1,0 +1,87 @@
+---
+title: "Linaro’s Contributions to Linux 7.3: Platform updates and reducing
+  scheduling tail-latency"
+description: Slashing scheduling tail latency, streamlining GICv5 ACPI probe
+  dependencies, and reducing long-term maintenance costs for modern Arm SoCs.
+date: 2026-10-19T12:34:00.000Z
+author: vincent-guittot
+tags:
+  - linux-kernel
+image: https://res.cloudinary.com/dl7c2wmhi/image/upload/v1792413556/linaro-website/IMG_4325_qfksxq.png
+related: []
+---
+The release of Linux 7.3 brings a range of enhancements to the kernel, continuing the collective effort to improve support for Arm platforms and infrastructure. Linaro engineers have been actively involved across key areas this cycle, focusing on platform maintenance, advancements in the SoC tree, and significant improvements to scheduling latency. This release is another step towards a stable, performant, and well-maintained Linux ecosystem for all.
+
+# Fair scheduler tail-latency improvements
+
+Interactive systems can’t afford or at least aim to minimize jitter and significant scheduling delay, when interacting with the end user; yet the fair scheduler has not always been able to ensure low latency for short interactive tasks when they run alongside CPU-intensive workload. The situation began to improve with EEVDF, which allows userspace to set the slice of a task, which can be seen as its expected running duration. The scheduler then picks shorter slice tasks to run first without breaking the overall fairness although some outlier values were still present. v7.3 has seen significant improvements for the tail latency of short running tasks as this release incorporates several changes to ensure that they will be prioritized whenever the fairness is not impacted.
+
+To evaluate this improvement, we have used the well known cyclictest tool with a number of background activities such as hackbench, which runs up to 80 tasks concurrently, or  rt-app with a json profile that emulates a mid load system. The figures below have been gathered on a Qualcomm Dragonboard RB5 over 130 seconds execution time per test to catch most of the corner cases.
+
+Linux 7.2 (Default Slice 2.8ms) : 	\[############################] 7,966 us
+
+Linux 7.2 (Tuned Slice 8ms/16ms):	\[###################] 5,285 us
+
+Linux 7.3 (EEVDF changes) : 		\[##] 535 us (-89.8% reduction)
+
+***figure 1. cyclictest Tail Latency (99.9th Percentile Under Concurrent Hackbench Load)***
+
+The 99.9 percentile remains below 1ms for the testsThe detailed results can be found in table 1
+
+![](https://res.cloudinary.com/dl7c2wmhi/image/upload/v1792413526/linaro-website/IMG_4591_xaduru.jpg)
+
+***Table1. Detailed latency results***
+
+Scheduling optimization remains an iterative effort. Subsequent kernel cycles will introduce additional wake-up fixes to better accommodate multiple low-latency tasks waking concurrently and fixes remaining issues..
+
+# GICv5 and ACPI Probe Ordering
+
+Modern enterprise and server-class Arm platforms rely on ACPI firmware to bootstrap. In Linux 7.3, Lorenzo Pieralisi led enhancements to defer ACPI devices probing when a Generic Interrupt Controller v5 (GICv5) Interconnect Wire Bridge (IWB) dependency is present.
+
+By introducing code to enforce probe-deferral handling for devices whose IRQs are routed to a GICv5 IWB interrupt controller ([lore reference](https://lore.kernel.org/linux-acpi/CAJZ5v0hDK+C+ZJ4YKd0xbyHW+vEot9z-YrivWSrg1ag7Ebx4cA@mail.gmail.com/)), the kernel guarantees that peripherals do not probe prematurely before the GICv5 IWB interrupt controller driver has probed, preventing probe failures in large-scale cloud and server deployments.
+
+# Qualcomm Mainline Support
+
+Linaro contributed a number of patches for platform support of the Qualcomm Snapdragon SM8650. Linaro engineers added support for complex VR displays. We also added more features to support the Ayaneo Pocket S2 gaming console and large fixes for peripheral (audio, LED, ADC, thermal, etc.) nodes.  This SoC will see more support coming in future kernel revisions as well.
+
+# Arm SoC maintenance
+
+The 7.3 release is scheduled to be an LTS/SLTS kernel and is going to be supported for many years in the future. Some of the older 32-bit platforms are still expected to work but have very few or no users at all and are starting to get in the way of new code development. Four years ago, most of the traditional arm board files were marked as deprecated for the linux-6.1 SLTS release and removed shortly after.
+
+At the time there were 1516 devicetree based 32-bit boards supported by the kernel, while the number of legacy boards dropped from 158 in linux-6.1 to 29 in linux-6.3.
+
+While only three of those were removed since then, Arnd Bergmann has now gone through the list once more and marked an additional 19 as deprecated in Linux-7.3 when there are no known users and no progress on converting them to devicetree based boot. Patches to remove these in Linux-7.5 are already in flight, which leaves just seven legacy board files in addition to the now 1727 32-bit and 1599 64-bit devicetree files.
+
+Along the same lines, several devicetree based platforms are deprecated as well, in cases where the CPU support is getting in the way and there are no active users remaining. Notably this includes the TI OMAP24xx and NXP i.MX31 SoCs using early revisions of the ARM1136 CPU core, and several platforms using Cortex-M4 and M7 CPUs.
+
+The Intel IXP4xx SoC now once again supports both big-endian and little-endian operation, after it was the only Arm platform for many years that could only be used in big-endian mode. Following the lead of 64-bit Arm kernels, this also allowed marking big-endian 32-bit kernels as deprecated. While 64-bit big-endian support is already in the process of getting removed entirely in Linux-7.4, there is no specific plan to remove it for 32-bit just yet, but the writing is on the wall.
+
+# Platforms upstream
+
+The SoC tree for 7.3 contains around 1000 patches from 263 individual authors, which is roughly in line with usual release cycles. Most of these are 64-bit Arm [devicetree updates](https://lore.kernel.org/lkml/65b2fd96-9f44-407a-84f6-b42db271c3de@app.fastmail.com), as well as some RISC-V and 32-bit Arm devicetree updates and driver changes.
+
+The newly added code contains a few SoCs, all of which are part of product families that were already supported:
+
+* Three additional variants of the Apple M3 SoC
+* Samsung Exynos 1580 mobile phone SoC
+* Canaan K230 RISC-V AI SoC
+* Sophgo SG2000 now supports both Arm and RISC-V modes
+* Altera Agilex72
+* Qualcomm Shikra
+
+Surprisingly, most of these are already two or three years old and only now made it into upstream Linux, only the Altera and Qualcomm chips are new products that are being upstreamed along with the product launch.
+
+# By the Numbers
+
+Linux 7.3 includes:
+
+* 135 authored commits from Linaro engineers
+* 12 contributors
+* 150 Reviewed-by or Acked-by contributions
+* 399 committed patches
+
+# Looking Ahead
+
+For organizations building Linux-based Arm products, upstream development is often the most sustainable path to long-term maintainability, reduced integration costs, and faster adoption of future innovations.
+
+If your organization is facing similar challenges—whether upstreaming platform support, reducing BSP maintenance, improving performance or power efficiency, or validating Linux across a growing hardware portfolio—Linaro's engineering teams can help. Reach out on[ www.linaro.org/contact](< www.linaro.org/contact>).
