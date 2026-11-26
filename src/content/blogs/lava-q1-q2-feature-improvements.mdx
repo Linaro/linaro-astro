@@ -98,7 +98,7 @@ Since release [2020.02](https://gitlab.com/lava/lava/-/wikis/releases/2020.02#im
         path: /
 ```
 
-LAVA will download [roofts.ext4.xz ](http://rootfs.ext4.xz)and [modules.tar.gz](http://modules.tar.gz). The ext4 filesystem will be decompressed and updated to append the modules at the root.
+LAVA will download roofts.ext4.xz and modules.tar.gz. The ext4 filesystem will be decompressed and updated to append the modules at the root.
 
 Starting from release 2026.06, LAVA is using e2fsprogs to update disk images. This will replace [libguesfs](https://www.libguestfs.org/) that proved to not fit the LAVA use case.
 
