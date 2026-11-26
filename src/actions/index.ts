@@ -196,31 +196,16 @@ export const server = {
           );
 
           if (companySearch.entries && companySearch.entries.length > 0) {
-            // Found existing company
-            const existingCompany = companySearch.entries[0];
-            companyId = existingCompany.id;
+            // Found existing company. Location (country/state) is stored only
+            // on the person's work address, so the company is left untouched.
+            companyId = companySearch.entries[0].id;
             console.log("company exists: ", companyId);
-
-            // Backfill the country and state only when the company doesn't
-            // already have them, so we don't overwrite curated CRM data.
-            const companyUpdate: any = {};
-            if (input.country && !existingCompany.country)
-              companyUpdate.country = input.country;
-            if (usState && !existingCompany.state) companyUpdate.state = usState;
-            if (Object.keys(companyUpdate).length > 0) {
-              await pipelineFetch(`/companies/${companyId}`, {
-                method: "PUT",
-                body: JSON.stringify({ company: companyUpdate }),
-              });
-            }
           } else {
-            // Create new company
+            // Create new company (no location; that belongs on the person)
             const companyPayload: any = {
               name: input.company,
               owner_id: INBOUND_LEADS_ID,
             };
-            if (input.country) companyPayload.country = input.country;
-            if (usState) companyPayload.state = usState;
             const newCompany = await pipelineFetch("/companies", {
               method: "POST",
               body: JSON.stringify({ company: companyPayload }),
