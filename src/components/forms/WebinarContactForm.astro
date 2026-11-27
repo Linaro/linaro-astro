@@ -1,5 +1,5 @@
 ---
-import { countries } from "@/lib/countries";
+import CountryStateFields from "./CountryStateFields.astro";
 
 const { form_id, formName, description, modal_id, webinarDataId } = Astro.props;
 
@@ -8,8 +8,6 @@ const inputFields = [
   { name: "email", label: "Work email", type: "email" },
   { name: "company", label: "Company", type: "text" },
 ];
-
-const countryFieldId = modal_id ? `country-${modal_id}` : "country";
 ---
 
 <div class="bg-black lg:min-w-[40rem] max-w-xl rounded-3xl px-8 py-4 w-full">
@@ -43,18 +41,7 @@ const countryFieldId = modal_id ? `country-${modal_id}` : "country";
         </>
       ))
     }
-    <label for={countryFieldId} class="sr-only">Country</label>
-    <select
-      name="country"
-      id={countryFieldId}
-      required
-      class="text-black pl-2 h-12 w-full"
-    >
-      <option value="" disabled selected>Country</option>
-      {countries.map((country) => (
-        <option value={country}>{country}</option>
-      ))}
-    </select>
+    <CountryStateFields idSuffix={modal_id} />
     <div>
       <input
         type="checkbox"

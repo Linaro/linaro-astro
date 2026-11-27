@@ -1,5 +1,6 @@
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
+import { US_COUNTRY } from "@/lib/usStates";
 
 const getEnv = (key: string) => {
   return import.meta.env[key] || process.env[key];
@@ -127,6 +128,7 @@ export const server = {
         newsletter: z.any().optional(),
         jobTitle: z.string().optional(),
         country: z.string().optional(),
+        state: z.string().optional(),
         whitepaperId: z.string().optional(),
         webinarDataId: z.string().optional(),
         howCanWeHelp: z.string().optional(),
@@ -136,6 +138,10 @@ export const server = {
       .passthrough(),
     handler: async (input) => {
       const { formName, "frc-captcha-response": captchaResponse } = input;
+
+      // The State field is only shown for US visitors; ignore it otherwise.
+      const usState =
+        input.country === US_COUNTRY && input.state ? input.state : undefined;
 
       // 1. Verify Friendly Captcha
       if (captchaResponse) {
@@ -190,28 +196,16 @@ export const server = {
           );
 
           if (companySearch.entries && companySearch.entries.length > 0) {
-            // Found existing company
-            const existingCompany = companySearch.entries[0];
-            companyId = existingCompany.id;
+            // Found existing company. Location (country/state) is stored only
+            // on the person's work address, so the company is left untouched.
+            companyId = companySearch.entries[0].id;
             console.log("company exists: ", companyId);
-
-            // Backfill the country only when the company doesn't already have
-            // one, so we don't overwrite curated CRM data.
-            if (input.country && !existingCompany.country) {
-              await pipelineFetch(`/companies/${companyId}`, {
-                method: "PUT",
-                body: JSON.stringify({
-                  company: { country: input.country },
-                }),
-              });
-            }
           } else {
-            // Create new company
+            // Create new company (no location; that belongs on the person)
             const companyPayload: any = {
               name: input.company,
               owner_id: INBOUND_LEADS_ID,
             };
-            if (input.country) companyPayload.country = input.country;
             const newCompany = await pipelineFetch("/companies", {
               method: "POST",
               body: JSON.stringify({ company: companyPayload }),
@@ -238,6 +232,7 @@ export const server = {
           // their job title as `position`.
           const personUpdate: any = {};
           if (input.country) personUpdate.work_country = input.country;
+          if (usState) personUpdate.work_state = usState;
           if (input.jobTitle) personUpdate.position = input.jobTitle;
           // Only stamp the source when the person doesn't already have one, so
           // we don't overwrite an existing (possibly more specific) source.
@@ -265,6 +260,7 @@ export const server = {
           if (companyId) personPayload.company_id = companyId; // Link to Company
           if (input.jobTitle) personPayload.position = input.jobTitle;
           if (input.country) personPayload.work_country = input.country;
+          if (usState) personPayload.work_state = usState;
           if (websiteLeadSourceId)
             personPayload.lead_source_id = websiteLeadSourceId;
           const newPerson = await pipelineFetch("/people", {
@@ -311,6 +307,7 @@ export const server = {
           let messageContent = input.message || "";
 
           const extraDetails = [];
+          if (usState) extraDetails.push(`State: ${usState}`);
           if (input.contactByExpert)
             extraDetails.push(`Contact by Expert: ${input.contactByExpert}`);
           if (input.newsletter)
